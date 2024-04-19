@@ -1,0 +1,397 @@
+\documentclass[10pt,a4paper,oneside]{article}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{bigints}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[noblocks]{authblk}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{float}
+\usepackage{framed}
+\usepackage{multirow}
+%\usepackage{hyperref}
+\usepackage{url}  % This makes \url work
+\usepackage{multicol}
+\usepackage{subcaption}
+\setlength{\columnsep}{1cm}
+\usepackage{pifont}
+\usepackage{colortbl}
+\usepackage{framed}
+\usepackage{listings}
+\usepackage{bm}
+\usepackage{eurosym}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{suffix}
+\usepackage{tikz}
+\usepackage{bbm}
+\usetikzlibrary{matrix}
+\usepackage[customcolors]{hf-tikz}
+
+\usepackage[toc,page]{appendix}
+
+\newcommand{\cmark}{\ding{51}}%
+\floatname{algorithm}{Procedure}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+%%enviroments for Theorems, propositions
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{problem}{Open Problem}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+\newtheorem{example}[theorem]{Example}
+\newenvironment{proof}{\noindent{\bf Proof:}}{\hfill$\square$}
+
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\erfc}{erfc}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+
+\title{On the computation and inversion of the Normal Inverse Gaussian cumulative distribution function}
+\author{
+ \normalsize  Guillermo Navas-Palencia\\
+  \texttt{\normalsize  g.navas.palencia@gmail.com}
+}
+
+\date{\small \today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+\section{Introduction}
+
+Variance-mean mixture distribution
+\begin{equation}
+Z \sim \mathcal{IG}(\delta \gamma, \gamma^2), \quad X \sim \mathcal{N}(\mu + \beta Z, Z),
+\end{equation}
+where $\gamma = \sqrt{\alpha^2 - \beta^2}$. The domain of the parameters is
+\begin{equation}
+0 \le |\beta| < \alpha, \quad \mu \in \mathbb{R}, \quad \delta  > 0.
+\end{equation}
+
+The density function is given by
+\begin{equation}
+f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alpha\sqrt{\delta^2 + (x-\mu)^2}\right)}{\sqrt{\delta^2 + (x-\mu)^2}} e^{\delta \gamma + \beta(x-\mu)}
+\end{equation}
+
+The cumulative distribution function is given by
+\begin{equation}\label{integral_k1}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{x} \frac{K_1\left(\alpha\sqrt{\delta^2 + (t-\mu)^2}\right)}{\sqrt{\delta^2 + (t-\mu)^2}} e^{\beta(t-\mu)} \mathop{dt}
+\end{equation}
+
+\begin{equation}\label{integral_phi}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\delta}{\sqrt{2\pi}}\int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{(\delta - \gamma t)^2}{2t}} \mathop{dt}
+\end{equation}
+
+\paragraph{Integral representations}
+
+\begin{proposition} Because $|\beta| < \alpha$, we can write $\beta = \alpha \tanh(\theta)$. Substituting in \eqref{integral_k1} $x-\mu = \delta \sinh(\theta + u)$ we obtain
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{\tau} K_1 \left(\alpha \delta \cosh(\theta + u)\right) e^{\beta \delta \sinh(\theta + u)} \mathop{du},
+\end{equation}
+where
+\begin{equation}
+\tau = \arcsinh\left(\frac{x - \mu}{\delta}\right) - \theta.
+\end{equation}
+
+\end{proposition}
+
+\paragraph{Standard case $\mu = 0$ and $\delta = 1$}
+\paragraph{Case $\mu = 0$}
+\paragraph{Case $\delta = 0$}
+\paragraph{Case $x=\mu$}
+
+If $x = \mu$ and $\beta = 0$ then $F(x; \alpha, 0, \mu, \delta) = \frac{1}{2}$.
+
+\section{Preliminaries}
+
+In this section, we present some results to be used throughout this work.
+
+\subsection{The function $\Phi\left(\frac{a}{\sqrt{t}} + b\sqrt{t}\right)$}
+
+The function $F(t; a, b) = \Phi\left(\frac{a}{\sqrt{t}} + b\sqrt{t}\right)$ is part of the integrand of the integral representation in \eqref{integral_phi}. Given its relevance throughout this work, we introduce here some results that shall be used subsequently. $F(t; a, b)$ has the following integral representation \cite[\S 7.7.6]{NIST:DLMF}
+\begin{equation}\label{integral_erfc_ab}
+F(t; a, b) = \frac{1}{2}\erfc\left(-\frac{\frac{a}{\sqrt{t}} + b\sqrt{t}}{\sqrt{2}}\right)  = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \int_{-b/\sqrt{2}}^{\infty} e^{-(tu^2 - \sqrt{2}au)} \mathop{du}
+\end{equation}
+
+\subsubsection{Expansion $t \to 0$}
+
+Let us consider the case $a < 0$, since we can use the mirror property $\Phi(z) = 1 - \Phi(-z)$ otherwise. To obtain an expansion for $t \to 0$, we expand $e^{-tu^2}$ and interchange summation and integration obtaining
+\begin{equation*}
+F(t; a, b) = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \sum_{k=0}^{\infty} \frac{(-t)^k}{k!}\int_{-b/\sqrt{2}}^{\infty} e^{\sqrt{2}a u} u^{2k}\mathop{du}.
+\end{equation*}
+For $a < 0$ the integral can be expressed in closed-form in terms of the incomplete gamma function, $\Gamma(a, x)$
+\begin{equation*}
+\int_{-b/\sqrt{2}}^{\infty} e^{\sqrt{2}a u} u^{2k}\mathop{du} = \frac{\Gamma(2k+1, -ab)}{(\sqrt{2}a)^{2k+1}},
+\end{equation*}
+and for the special case $b=0$, it reduces to
+\begin{equation*}
+\int_{0}^{\infty} e^{\sqrt{2}a u} u^{2k}\mathop{du} = \frac{\Gamma(2k+1)}{(\sqrt{2}a)^{2k+1}}.
+\end{equation*}
+Then, we obtain the series expansion valid for $t \to 0$, $a \to -\infty$ and fixed $b$
+\begin{equation}
+F(t; a, b) = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \sum_{k=0}^{\infty} \frac{(-1)^{k+1} t^k}{k!}\frac{\Gamma(2k + 1, ab)}{(\sqrt{2}a)^{2k+1}}.
+\end{equation}
+
+Moreover, another expansion valid for large values of $a > 0$ and $b$ can be obtained after expanding $F(t;a,b)$ at $t=0$. The first coefficients are
+\begin{equation}
+c_0 = \frac{1}{a}, \quad c_1 = \frac{ab + 1}{a^3}, \quad c_2 = \frac{a^2b² +3ab + 3}{a^5}, \quad c_3 = \frac{a^3b^3 + 6a^2b^3 + 15ab + 15}{a^7}
+\end{equation}
+and the expansion reads
+\begin{equation}
+F(t; a, b) = 1 + \frac{e^{-\frac{1}{2} \left(\frac{a}{\sqrt{t}} + b\sqrt{t} \right)^2}}{\sqrt{2\pi}}\sum_{k=0}^{\infty}(-1)^{k+1}c_k t^{k + \frac{1}{2}}.
+\end{equation}
+The coefficients are expressible in terms of Bessel polynomials $y_k(x)$ \cite[\S A001498]{OEIS}, and it follows that
+\begin{equation}
+F(t; a, b) = 1 + \frac{e^{-\frac{1}{2} \left(\frac{a}{\sqrt{t}} + b\sqrt{t} \right)^2}}{a\sqrt{2\pi}}\sum_{k=0}^{\infty}(-1)^{k+1} \left(\frac{b}{a}\right)^k y_k\left(\frac{1}{ab}\right) t^{k + \frac{1}{2}},
+\end{equation}
+where $y_k(x)$ has an explicit formula
+\begin{equation}
+y_k(x) = \sum_{m=0}^k \binom{k}{m} (k + 1)_m \left(\frac{x}{2}\right)^m.
+\end{equation}
+
+Using the connection of the Bessel polynomials with the modified Bessel function of the second kind $K_k(x)$ given by \cite[\S 33.1.3]{Temme2015}
+\begin{equation}
+y_k(x) = \sqrt{\frac{2}{\pi x}}e^{1/x} K_{k + \frac{1}{2}}\left(\frac{1}{x}\right),
+\end{equation}
+the resulting expansion is represented as a Bessel-type expansion
+\begin{equation}
+F(t; a, b) = 1 + \frac{e^{-\frac{a^2}{2t} - \frac{b^2}{2}t}}{\pi}\sqrt{\frac{b}{a}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{b}{a}\right)^k K_{k + \frac{1}{2}}(ab)t^{k + \frac{1}{2}}.
+\end{equation}
+The expansion is convergent for $t < 1$. The convergence follows from the asymptotic estimate of $(b/a)^k K_k(ab) \sim (b/a)^k \sqrt{\frac{\pi}{2ab}}e^{-ab}$ as $|ab| \to \infty$. The expansion can be seen as an asymptotic expansion for large $a$, or as a uniform asymptotic expansion for $a \sim b$. The coefficients can be computed by using a recurrence relation for the modified Bessel function.
+
+\subsubsection{Expansion $t \to \infty$}
+
+Let us focus on the case $t \to \infty$. We can develop an asymptotic expansion after expanding the term $e^{\sqrt{2}au}$ in \eqref{integral_erfc_ab}, which yields
+\begin{equation*}
+F(t; a, b) = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \sum_{k=0}^{\infty}\frac{(\sqrt{2}a)^k}{k!}\int_{-b/\sqrt{2}}^{\infty} e^{-t u^2} u^k \mathop{du}.
+\end{equation*}
+Considering the case $b < 0$ (again, we can use the mirror property), the integral has a closed-form
+\begin{equation*}
+\int_{-b/\sqrt{2}}^{\infty} e^{-t u^2} u^k \mathop{du} = \frac{\Gamma\left(\frac{k+1}{2}, \frac{b^2}{2}t\right)}{2 t^{\frac{k+1}{2}}}.
+\end{equation*}
+Thus,
+\begin{equation}\label{phi_expansion_incgamma}
+F(t; a, b) = \sqrt{\frac{t}{\pi}} \frac{e^{-\frac{a^2}{2t}}}{2}  \sum_{k=0}^{\infty}\frac{(\sqrt{2}a)^k}{k!} \frac{\Gamma\left(\frac{k+1}{2}, \frac{b^2}{2}t\right)}{t^{\frac{k+1}{2}}}.
+\end{equation}
+The asymptotic behaviour of the terms in the series is
+\begin{equation*}
+\frac{\Gamma\left(\frac{k+1}{2}, \frac{b^2}{2}t\right)}{t^{\frac{k+1}{2}}} \sim \left(\frac{b^2}{2}\right)^{\frac{k+1}{2}} e^{-\frac{b^2}{2} t}, \quad t\to\infty.
+\end{equation*}
+In fact this series is convergent, as can be observed taking the asymptotic estimate of $\Gamma(k, x)$ as $k \to \infty$. A simpler convergent expansion can be obtained transforming the integral in \eqref{integral_erfc_ab}
+\begin{equation*}
+\sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \int_{-b/\sqrt{2}}^{\infty} e^{-(tu^2 - \sqrt{2}au)} \mathop{du} = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t} -ab - \frac{b^2}{2}t}\int_0^{\infty}e^{\sqrt{2}(a+bt)u} e^{-tu^2}\mathop{dt},
+\end{equation*}
+and expanding $e^{\sqrt{2}(a+bt)u}$ obtaining
+\begin{equation}
+F(t; a, b) = \sqrt{\frac{t}{\pi}} \frac{e^{-\frac{a^2}{2t} -ab - \frac{b^2}{2}t}}{2} \sum_{k=0}^{\infty} \frac{(\sqrt{2}(a+bt))^k}{k!}\frac{\Gamma\left(\frac{k+1}{2}\right)}{t^{\frac{k+1}{2}}}.
+\end{equation}
+
+Similarly to the expansion at $t \to 0$, we can obtain an asymptotic expansion expanding $F(t; a, b)$ at $t \to \infty$. For $b > 0$, the first terms of the expansion are
+\begin{equation}
+c_0 = 1, \quad c_1 = 2 + 2ab + a^2 b^2, \quad c_2 = 24 + 24ab + 12a^2b^2 + 4a^3b^3 + a^4b^4,
+\end{equation}
+\begin{equation}
+F(t; a, b) = 1 + \frac{e^{-ab - \frac{b^2}{2}t}}{\sqrt{2\pi}}\sum_{k=0}^{\infty}\frac{(-1)^{k+1}}{2^k k!}\frac{c_k}{b^{2k+1}}\left(\frac{1}{t}\right)^{k+\frac{1}{2}}.
+\end{equation}
+The coefficients $c_k$ are expressible in terms of the incomplete gamma function, since
+\begin{equation*}
+c_k = \sum_{j=0}^{2k}\frac{(2k)!}{j!}(ab)^j = e^{ab}\Gamma(2k+1, ab).
+\end{equation*}
+Rearranging terms, we get
+\begin{equation}
+F(t; a, b) = 1 + \frac{e^{- \frac{b^2}{2}t}}{\sqrt{2\pi}}\sum_{k=0}^{\infty}\frac{(-1)^{k+1}}{2^k k!}\frac{\Gamma(2k+1, ab)}{b^{2k+1}}\left(\frac{1}{t}\right)^{k+\frac{1}{2}}.
+\end{equation}
+
+\subsubsection{Expansion $t \to u$}
+
+Lastly, we study the expansion of $F(t;a,b)$ at $t=u$. This expansion shall be crucial when developing various Bessel-type asymptotic expansions later on. The first coefficients of the Taylor series are
+\begin{equation*}
+c_0 = \Phi\left(\frac{a}{\sqrt{u}} + b\sqrt{u}\right)d_0,\quad c_1 = \phi\left(\frac{a}{\sqrt{u}} + b\sqrt{u}\right) d_1, \quad c_2 = -\phi\left(\frac{a}{\sqrt{u}} + b\sqrt{u}\right) d_2, \quad
+c_3 = \phi\left(\frac{a}{\sqrt{u}} + b\sqrt{u}\right) d_3,
+\end{equation*}
+where
+\begin{align*}
+d_0 &= 1\\
+d_1 &= \frac{-a + bu}{2u^{3/2}}\\
+d_2 &=\frac{a^3 -3au -a^2 bu + bu^2 -ab^2 u^2 + b^3u^3}{8 u^{7/2}}\\
+d_3 &= \frac{-a^5 +10a^3u + a^4bu -15au^2 - 6a^2bu^2 + 2a^3 b^2 u^2 +3bu^3 -6ab^2u^3 - 2a^2b^3 u^3 + 2b^3 u^4 -ab^4u^4 + b^5 u^5}{48 u^{11/2}},
+\end{align*}
+and $\phi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$ is the probability density function of the standard normal distribution. Thus, we have
+\begin{equation}
+F(t; a, b) = \sum_{k=0}^{\infty} c_k (t-u)^k.
+\end{equation}
+Additional terms satisfy the following recurrence
+\begin{equation}
+c_{k+4} = \frac{f_0(k) c_k + f_1(k) c_{k+1} + f_2(k) c_{k+2} + f_3(k) c_{k+3}}{f_4(k)}, \quad k \ge 0
+\end{equation}
+where
+\begin{align*}
+f_0(k) &= -kb^3\\
+f_1(k) &= -(1 + k) b (1 + 2k -ab + 3b^3u)\\
+f_2(k) &= (2 + k)(5a + 2ka +a^2b - 8bu - 6kbu +2ab^2u -3b^3u^2)\\
+f_3(k) &= -(3 + k)(a^3 - 11au -4kau - a^2bu + 13bu^2 + 6kbu^2 -ab^2u^2 + b^3 u^3)\\
+f_4(k) &= 2 (3 + k) (4 + k) u^2 (-a + bu)
+\end{align*}
+
+\subsection{Bessel-type expansions}
+
+\section{Methods of computation}
+\subsection{Expansions $|x-\mu| \to 0$}
+The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
+\begin{equation*}
+F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+\end{equation*}
+and replacing $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ by the expansion in \eqref{phi_expansion_incgamma}
+\begin{equation*}
+F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\int_0^{\infty}\Gamma\left(\frac{k+1}{2}, \frac{\beta^2}{2}t\right) t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+\end{equation*}
+where $\omega = \sqrt{\delta^2 + (x-\mu)^2}$. Consider the ascending series of the incomplete gamma function given by \cite[\S 8.7]{NIST:DLMF}
+\begin{equation}
+\Gamma(a, x) = \Gamma(a) - \sum_{j=0}^{\infty} \frac{(-1)^j x^{a+j}}{j! (a+ j)}.
+\end{equation}
+We proceed splitting the inner integral into two terms
+\begin{align}
+T_1 &= \Gamma\left(\frac{k+1}{2}\right)\int_0^{\infty}t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}\\
+T_2 &= \sum_{j=0}^{\infty} \frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)}\int_0^{\infty} t^{j-1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+\end{align}
+and observe that both integrals are expressible in terms of modified Bessel function, resulting in the sums $S_1$ and $S_2$, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$, defined as follows
+\begin{align}
+S_1 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right)2 K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\\
+S_2 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\sum_{j=0}^{\infty}\frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)} 2 K_j(\omega \gamma) \left(\frac{\omega}{\gamma}\right)^j.
+\end{align}
+Interchanging the order of summation in $S_2$, we observe that the sum in $k$ is convergent an expressible in terms of the lower incomplete gamma function $\gamma(a, x)$. Assuming $\beta > 0$
+\begin{equation}
+\sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k! (\frac{k+1}{2}+ j)} \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}} = -\frac{\sqrt{2}}{(x-\mu)^{2j+1}\beta^{2j}} \gamma \left(2j + 1, -(x-\mu)\beta\right).
+\end{equation}
+Thus,
+\begin{equation*}
+S_2 = -2\sqrt{2} \sum_{j=0}^{\infty} \frac{(-1)^j}{j!}\frac{\gamma \left(2j + 1, -(x-\mu)\beta\right)}{(x-\mu)^{2j+1}\beta^{2j}} \left(\frac{\beta^2}{2}\right)^j  K_j(\omega \gamma) \left(\frac{\omega}{\gamma}\right)^j
+\end{equation*}
+Rearranging terms
+\begin{align}
+F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\pi \sqrt{2}} \bigg[& \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right) K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\nonumber\\
+& + \sqrt{2}\sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\frac{\gamma \left(2k + 1, -(x-\mu)\beta\right)}{(x-\mu)^{2k+ 1}}  K_k(\omega \gamma) \left(\frac{\omega}{2\gamma}\right)^k \bigg]
+\end{align}
+
+If $\beta < 0$ then $F(x;\alpha, \beta, \mu, \delta) = 1 - F(-x;\alpha, -\beta, -\mu, \delta)$. The expansion is convergent for small $x-\mu$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters.
+
+\subsubsection{Case $\delta \to \infty$}
+
+
+\subsubsection{Special value $\beta = 0$}
+
+We use the integral \eqref{integral_phi}. For $|x - \mu| \to 0$, we use the series expansion of $\Phi(x)$ given by
+
+\begin{equation*}
+\Phi(x) = \frac{1}{2} + \frac{1}{\sqrt{2\pi}}\sum_{k=0}^{\infty} \frac{(-1)^k x^{2k + 1}}{2^k k! (2k+1)}
+\end{equation*}
+
+\begin{equation*}
+\Phi(x) = \frac{1}{2} + \frac{e^{-x^2 / 2}}{\sqrt{2\pi}}\sum_{k=0}^{\infty} \frac{x^{2k+1}}{(2k + 1)!!}
+\end{equation*}
+
+Use closed-form in terms of the modified Bessel function. Alternating series
+\begin{equation}
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi}\sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\alpha}{\delta}\right)^{k+1}K_{k+1}(\alpha \delta).
+\end{equation}
+Asymptotic analysis of $K_{k+1}(\alpha \delta)$. To obtain a series with positive term for $x - \mu > 0$, use alternative expansion of $\Phi(x)$
+
+\begin{equation}
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
+\end{equation}
+
+
+\subsection{Expansion $\alpha \to \infty, \delta \to \infty$}
+
+\subsection{Expansion $|x-\mu| \to \infty$}
+
+The expansion of $\Phi\left(\frac{x-(\mu + \beta t)}{\sqrt{t}}\right)$ at $t\to 0$ is given in terms of the Bessel polynomial $y_k(x)$. To simplify notation, we take $a = x-\mu$ and $b=-\beta$. Then,
+
+\begin{equation}
+\Phi\left(\frac{a}{\sqrt{t}} + b\sqrt{t}\right) = 1 + \frac{e^{-a^2/(2t) -ab - b^2/2 t}}{a\sqrt{2\pi}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{b}{a}\right)^k y_k\left(\frac{1}{ab}\right) t^{\frac{1}{2} + k}
+\end{equation}
+
+Using the connection of the Bessel polynomials with the modified Bessel function of the second kind $K_n(x)$ given by
+\begin{equation}
+y_n(x) = \sqrt{\frac{2}{\pi x}}e^{1/x} K_{n + \frac{1}{2}}\left(\frac{1}{x}\right),
+\end{equation}
+we replace in the integral, we obtain
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{b}{2a\pi^3}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{b}{a}\right)^k K_{k + \frac{1}{2}}(ab)\int_0^{\infty}t^{k-1} e^{-\frac{\delta^2 + a^2}{2t} -\frac{\gamma^2 + b^2}{2}t} \mathop{dt}
+\end{equation}
+
+\begin{equation}
+\int_0^{\infty}t^{k-1} e^{-\frac{\delta^2 + a^2}{2t} -\frac{\gamma^2 + b^2}{2}t} \mathop{dt} = 2 K_k(\omega \alpha) \left(\frac{\omega}{\alpha}\right)^k,
+\end{equation}
+where $\omega = \sqrt{\delta^2 + (x-\mu)^2}$. Rearranging terms
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{2\beta}{(\mu-x)\pi^3}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{\beta \omega}{\alpha(\mu-x)}\right)^k K_{k + \frac{1}{2}}((\mu-x)\beta) K_k(\omega \alpha) 
+\end{equation}
+
+\section{Other expansions}
+
+\begin{proposition} For $x - \mu < 0$
+\begin{equation}\label{integral_k0}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\sqrt{2}\delta e^{\delta \gamma}}{\pi}\int_{\beta / \sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu)t} K_0\left(\sqrt{2\left( (x-\mu)^2 + \delta^2\right)} \sqrt{\frac{\gamma^2}{2} + t^2}\right) \mathop{dt}
+\end{equation}
+\end{proposition}
+\begin{proof}
+Consider the integral representation of the function $\Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right)$
+\begin{equation*}
+\Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right) = \sqrt{\frac{t}{\pi}} e^{-\frac{(x-\mu)^2}{2t}}\int_{\beta/\sqrt{2}}^{\infty} e^{-(tu^2 - \sqrt{2}(x-\mu) u)} \mathop{du}.
+\end{equation*}
+Replacing in \eqref{integral_phi} and interchanging the order of integration we obtain
+\begin{equation*}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2}\pi} \int_{\beta/\sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu) u} \int_{0}^{\infty} t^{-1} e^{-\frac{\left((x-\mu)^2 + \delta^2\right)}{2t} - \left(\frac{\gamma^2}{2} + u^2\right)t} \mathop{dt} \mathop{du}.
+\end{equation*}
+The observation that the inner integral can be represented in terms of the modified Bessel function $K_0$
+\begin{equation*}
+\int_{0}^{\infty} t^{-1} e^{-\frac{\left((x-\mu)^2 + \delta^2\right)}{2t} - \left(\frac{\gamma^2}{2} + u^2\right)t} \mathop{dt} = 2 K_0\left(2\sqrt{\frac{(x-\mu)^2 + \delta^2}{2}} \sqrt{\frac{\gamma^2}{2} + t^2}\right).
+\end{equation*}
+\end{proof}
+
+A similar expansion can be obtained from the integral representation \eqref{integral_k0}, expanding $e^{\sqrt{2}(x-\mu)t}$
+\begin{equation*}
+e^{\sqrt{2}(x-\mu)t} = \sum_{k=0}^{\infty} \frac{2^{k/2} (x-\mu)^k}{k!} t^k
+\end{equation*}
+
+\begin{equation*}
+F(x; \alpha, 0, \mu, \delta) = \frac{\sqrt{2}\delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty} \frac{2^{k/2} (x-\mu)^k}{k!} \int_{0}^{\infty} t^k K_0\left(\sqrt{2\left( (x-\mu)^2 + \delta^2\right)} \sqrt{\frac{\gamma^2}{2} + t^2}\right) \mathop{dt}
+\end{equation*}
+Use closed-form in terms of the modified Bessel function
+\begin{equation}
+F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{(x-\mu)^k}{2^{k/2} \Gamma\left(\frac{k}{2} + 1\right)}\left(\frac{\alpha}{\omega}\right)^{\frac{k+1}{2}}K_{\frac{k+1}{2}}(\omega \alpha), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
+\end{equation}
+
+
+\section{Inversion methods}
+
+\section{Numerical experiments}
+
+
+
+\bibliographystyle{plain}
+\bibliography{bib}
+
+\end{document}

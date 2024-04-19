@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: nig.aux
+The style file: plain.bst
+Database file #1: bib.bib
+Warning--empty booktitle in OEIS
+Warning--empty year in OEIS
+You've used 3 entries,
+            2118 wiz_defined-function locations,
+            516 strings with 4481 characters,
+and the built_in function-call counts, 646 in all, are:
+= -- 54
+> -- 15
+< -- 1
++ -- 8
+- -- 4
+* -- 32
+:= -- 103
+add.period$ -- 8
+call.type$ -- 3
+change.case$ -- 11
+chr.to.int$ -- 0
+cite$ -- 5
+duplicate$ -- 33
+empty$ -- 73
+format.name$ -- 4
+if$ -- 139
+int.to.chr$ -- 0
+int.to.str$ -- 3
+missing$ -- 3
+newline$ -- 17
+num.names$ -- 4
+pop$ -- 27
+preamble$ -- 1
+purify$ -- 9
+quote$ -- 0
+skip$ -- 18
+stack$ -- 0
+substring$ -- 16
+swap$ -- 5
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 10
+warning$ -- 2
+while$ -- 4
+width$ -- 4
+write$ -- 29
+(There were 2 warnings)
