@@ -16,6 +16,7 @@
 \contentsline {subsubsection}{\numberline {3.1.2}Special value $\beta = 0$}{6}
 \contentsline {subsection}{\numberline {3.2}Expansion $\alpha \to \infty , \delta \to \infty $}{7}
 \contentsline {subsection}{\numberline {3.3}Expansion $|x-\mu | \to \infty $}{7}
+\contentsline {subsubsection}{\numberline {3.3.1}Special value $\beta = 0$}{7}
 \contentsline {section}{\numberline {4}Other expansions}{7}
 \contentsline {section}{\numberline {5}Inversion methods}{8}
 \contentsline {section}{\numberline {6}Numerical experiments}{8}

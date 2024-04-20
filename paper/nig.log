@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.5.26)  20 APR 2024 00:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.5.26)  20 APR 2024 22:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1031,11 +1031,11 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 Missing character: There is no Â in font cmr10!
 Missing character: There is no ² in font cmr10!
  [3] [4] [5]
-[6] (./nig.bbl [7]) [8] (./nig.aux) ) 
+[6] [7] (./nig.bbl) [8] (./nig.aux) ) 
 Here is how much of TeX's memory you used:
  26183 strings out of 492982
  505027 string characters out of 6134896
- 542818 words of memory out of 5000000
+ 542820 words of memory out of 5000000
  29323 multiletter control sequences out of 15000+600000
  544549 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1062,7 +1062,7 @@ re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/tex
 live/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on nig.pdf (8 pages, 265227 bytes).
+Output written on nig.pdf (8 pages, 266426 bytes).
 PDF statistics:
  134 PDF objects out of 1000 (max. 8388607)
  92 compressed objects within 1 object stream

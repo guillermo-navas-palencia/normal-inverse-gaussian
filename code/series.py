@@ -3,7 +3,7 @@ import numpy as np
 from scipy import special
 
 
-def series_x_mu_b_zero(
+def series_x_mu_b0(
     x: float,
     alpha: float,
     mu: float,
@@ -25,7 +25,7 @@ def series_x_mu_b_zero(
     kn = special.kn(1, ad)
     knp1 = special.kn(2, ad)
 
-    num = xmu * aod
+    num = C * xmu * aod
     s = num * kn
 
     num *= -xmu2 * aod / 2.0
@@ -42,7 +42,7 @@ def series_x_mu_b_zero(
 
         # Check convergence
         if abs(1.0 - sp / s) < eps:
-            return 0.5 + C * s, k
+            return 0.5 + s, k
         else:
             kn = knp1
             knp1 = knn
@@ -52,7 +52,7 @@ def series_x_mu_b_zero(
     return -1, maxiter
 
 
-def series_x_mu_b_zero_pos(
+def series_x_mu_b0_pos(
     x: float,
     alpha: float,
     mu: float,
@@ -77,7 +77,7 @@ def series_x_mu_b_zero_pos(
     kn = special.kn(1, aw)
     knp1 = special.kn(2, aw)
 
-    num = xmu * aow
+    num = C * xmu * aow
     s = num * kn
 
     num *= xmu2 * aow / 3
@@ -94,7 +94,7 @@ def series_x_mu_b_zero_pos(
 
         # Check convergence
         if abs(1.0 - sp / s) < eps:
-            return 0.5 + C * s, k
+            return 0.5 + s, k
         else:
             kn = knp1
             knp1 = knn
@@ -104,7 +104,7 @@ def series_x_mu_b_zero_pos(
     return -1, maxiter
 
 
-def asymtotic_x_mu_b_zero(
+def asymtotic_x_mu_b0_neg(
     x: float,
     alpha: float,
     mu: float,
@@ -154,4 +154,77 @@ def asymtotic_x_mu_b_zero(
             sp = s
 
     # No convergence
-    return -1, maxiter        
+    return -1, maxiter
+
+
+def asymptotic_alpha_b0(
+    x: float,
+    alpha: float,
+    mu: float,
+    delta: float,
+    maxiter: int = 200,
+    eps: float = 5e-15
+) -> tuple[float, int]:
+
+    xmu = x - mu
+
+    mirror = xmu < 0
+
+    a = xmu / np.sqrt(2)
+    b = delta / alpha
+
+    z = alpha * alpha / 2
+    h = -1 / 2
+    xi = b * z
+
+    # Constant
+    C = delta * np.exp(delta * alpha) / np.sqrt(2 * np.pi) * z ** (-h)
+
+    # Compute the first two terms of the Phi((x-mu) / sqrt(t)) at t=b
+    c0 = special.erfc(-a / np.sqrt(b)) / 2
+    c1 = -a/2 * np.exp(-a*a / b) / (np.sqrt(np.pi) * b ** (3/2))
+
+    # Compute first elements of binomial sum of Bessel functions recursion
+    kh = special.kv(h, 2 * xi)
+    khp2 = special.kv(h + 2, 2 * xi)
+
+    q0 = 2 * xi ** h * kh
+    q1 = 0
+    q2 = 2 * xi ** (h + 2) * (khp2 - kh)
+
+    s = c0 * q0
+    ovz = 1 / z
+    num = ovz
+
+    sp = s
+    for k in range(2, maxiter):
+        # Phi recursion
+        n = k - 2
+        ck = ((n + 1) * c1 * (2*a**2 - 4*b*n - 3*b) - (2*n**2 + n) * c0) / (2*b**2 * (n+1) * (n+2))
+
+        # Bessel recursion
+        if k >= 3:
+            n = k - 2
+            qk = (n + h + 1 - 2 * xi) * q2 + xi * (2 * n + h + 1) * q1 + n * xi ** 2 * q0
+        else:
+            qk = q2
+
+        # New term
+        num *= ovz
+        s += num * ck * qk
+        print(k, abs(num * ck * qk))
+
+        if abs(1.0 - sp / s) < eps or k == maxiter - 1:
+            return C * s, k
+        else:
+            c0 = c1
+            c1 = ck
+
+            if k >= 3:
+                q0 = q1
+                q1 = q2
+                q2 = qk
+
+            sp = s
+
+    return -1, maxiter
