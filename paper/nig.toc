@@ -1,22 +1,23 @@
 \contentsline {section}{\numberline {1}Introduction}{2}
-\contentsline {paragraph}{Integral representations}{2}
 \contentsline {paragraph}{Standard case $\mu = 0$ and $\delta = 1$}{2}
 \contentsline {paragraph}{Case $\mu = 0$}{2}
 \contentsline {paragraph}{Case $\delta = 0$}{2}
 \contentsline {paragraph}{Case $x=\mu $}{2}
 \contentsline {section}{\numberline {2}Preliminaries}{2}
 \contentsline {subsection}{\numberline {2.1}The function $\Phi \left (\frac {a}{\sqrt {t}} + b\sqrt {t}\right )$}{2}
-\contentsline {subsubsection}{\numberline {2.1.1}Expansion $t \to 0$}{3}
-\contentsline {subsubsection}{\numberline {2.1.2}Expansion $t \to \infty $}{4}
+\contentsline {subsubsection}{\numberline {2.1.1}Expansion $t \to 0$}{2}
+\contentsline {subsubsection}{\numberline {2.1.2}Expansion $t \to \infty $}{3}
 \contentsline {subsubsection}{\numberline {2.1.3}Expansion $t \to u$}{4}
 \contentsline {subsection}{\numberline {2.2}Bessel-type expansions}{5}
-\contentsline {section}{\numberline {3}Methods of computation}{5}
+\contentsline {section}{\numberline {3}Expansions: case $\beta = 0$}{5}
 \contentsline {subsection}{\numberline {3.1}Expansions $|x-\mu | \to 0$}{5}
-\contentsline {subsubsection}{\numberline {3.1.1}Case $\delta \to \infty $}{6}
-\contentsline {subsubsection}{\numberline {3.1.2}Special value $\beta = 0$}{6}
-\contentsline {subsection}{\numberline {3.2}Expansion $\alpha \to \infty , \delta \to \infty $}{7}
-\contentsline {subsection}{\numberline {3.3}Expansion $|x-\mu | \to \infty $}{7}
-\contentsline {subsubsection}{\numberline {3.3.1}Special value $\beta = 0$}{7}
-\contentsline {section}{\numberline {4}Other expansions}{7}
-\contentsline {section}{\numberline {5}Inversion methods}{8}
-\contentsline {section}{\numberline {6}Numerical experiments}{8}
+\contentsline {subsection}{\numberline {3.2}Expansion $|x-\mu | \to \infty $}{5}
+\contentsline {subsection}{\numberline {3.3}Expansion $\alpha \to \infty $}{5}
+\contentsline {section}{\numberline {4}Expansions: general case}{5}
+\contentsline {subsection}{\numberline {4.1}Expansions $|x-\mu | \to 0$ (option 1)}{5}
+\contentsline {subsection}{\numberline {4.2}Expansions $|x-\mu | \to 0$ (option 2)}{5}
+\contentsline {subsection}{\numberline {4.3}Expansion $\alpha \to \infty , \delta \to \infty $}{6}
+\contentsline {subsection}{\numberline {4.4}Expansion $|x-\mu | \to \infty $}{6}
+\contentsline {section}{\numberline {5}Numerical integration}{7}
+\contentsline {section}{\numberline {6}Inversion methods}{9}
+\contentsline {section}{\numberline {7}Numerical experiments}{9}
