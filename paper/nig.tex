@@ -127,7 +127,7 @@ Let us consider the case $a < 0$, since we can use the mirror property $\Phi(z) 
 \begin{equation*}
 F(t; a, b) = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \sum_{k=0}^{\infty} \frac{(-t)^k}{k!}\int_{-b/\sqrt{2}}^{\infty} e^{\sqrt{2}a u} u^{2k}\mathop{du}.
 \end{equation*}
-For $a < 0$ the integral can be expressed in closed-form in terms of the incomplete gamma function, $\Gamma(a, x)$
+For $a < 0$ the integral can be expressed in closed form in terms of the incomplete gamma function, $\Gamma(a, x)$
 \begin{equation*}
 \int_{-b/\sqrt{2}}^{\infty} e^{\sqrt{2}a u} u^{2k}\mathop{du} = \frac{\Gamma(2k+1, -ab)}{(\sqrt{2}a)^{2k+1}},
 \end{equation*}
@@ -430,26 +430,47 @@ The observation that the inner integral can be represented in terms of the modif
 \end{equation*}
 \end{proof}
 
-\begin{proposition}
-For $x - \mu > 0$, a Fourier cosine transform integral representation in terms of the exponential integral $E_1(x)$ is given by
-\begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_0^{\infty} E_1\left((x-\mu)(\sqrt{t^2 + \alpha^2} - \beta)\right) \cos(\delta t) \mathop{dt}.
-\end{equation}
 
-A Fourier sine transform integral representation in terms of basic functions is
+
+\begin{proposition}
+The Fourier sine transform of the cumulative distribution function in terms of elementary functions is given by
+\begin{equation}\label{sine_transform}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}, \quad x-\mu > 0,
+\end{equation}
+and $1 - F(-x;\alpha, -\beta, -\mu, \delta)$ for $x-\mu < 0$.
+\end{proposition}
+\begin{proof}
+Consider the integral representation \eqref{integral_k1}. We use the sine transform \cite[\S 2.4]{Bateman1954}
+\begin{equation*}
+\frac{K_1(\alpha \sqrt{t^2 + \delta^2}}{\sqrt{t^2 + \delta^2}} = \frac{1}{\alpha\delta}\int_0^{\infty} \frac{z e^{-t\sqrt{z^2 + \alpha^2}}}{\sqrt{z^2 + \alpha^2}} \sin(\delta z) \mathop{dz},
+\end{equation*}
+valid for $t \ge 0$. Replacing in \eqref{integral_k1} and interchanging the order of integration, we have
+\begin{align*}
+F(x; \alpha, \beta, \mu, \delta) &= 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\frac{1}{\alpha\delta}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \int_{x-\mu}^{\infty} e^{-t\sqrt{z^2 + \alpha^2} + \beta t} \mathop{dt} \mathop{dz}\\
+&= 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \frac{e^{-(x-\mu)\left(\sqrt{z^2 + \alpha^2} - \beta\right)}}{\sqrt{z^2 + \alpha^2} - \beta} \mathop{dz}
+\end{align*}
+where the inner integral converges for $t\in [x-\mu, \infty)$.
+\end{proof}
+
+In a similar manner, we can obtain a Fourier cosine transform in terms of the exponential integral.
+\begin{proposition}
+The Fourier cosine transform integral representation in terms of the exponential integral $E_1(x)$ is given by
 \begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = 1- \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{te^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)} \sin(\delta t) \mathop{dt}.
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_0^{\infty} E_1\left((x-\mu)(\sqrt{t^2 + \alpha^2} - \beta)\right) \cos(\delta t) \mathop{dt}, \quad x-\mu > 0.
 \end{equation}
 \end{proposition}
 \begin{proof}
+This result can be derived from the sine transform in \eqref{sine_transform} using integration by parts. Alternatively, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
 \begin{equation*}
-\frac{K_1\left(\alpha\sqrt{\delta^2 + z^2}\right)}{\sqrt{\delta^2 + z^2}} = \frac{1}{\alpha z}\int_0^{\infty} e^{-z\sqrt{t^2 + \alpha^2}} \cos(\delta t) \mathop{dt}.
+\frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} = \frac{1}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz}.
 \end{equation*}
+Thus,
 \begin{equation*}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\int_{x-\mu}^{\infty} \frac{e^{\beta z}}{\alpha z}\int_0^{\infty} e^{-z\sqrt{t^2 + \alpha^2}} \cos(\delta t) \mathop{dt} \mathop{dz}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\int_{x-\mu}^{\infty} \frac{e^{\beta t}}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz} \mathop{dt},
 \end{equation*}
+where the inner integral is expressible in closed form in terms of the exponential integral $E_1(x)$
 \begin{equation*}
-\int_{x-\mu}^{\infty}\frac{1}{z}e^{-(\sqrt{t^2 + \alpha^2} - \beta)z} \mathop{dz} = E_1\left((x-\mu)(\sqrt{t^2 + \alpha^2} - \beta)\right).
+\int_{x-\mu}^{\infty}\frac{1}{t}e^{-(\sqrt{z^2 + \alpha^2} - \beta)t} \mathop{dt} = E_1\left((x-\mu)(\sqrt{z^2 + \alpha^2} - \beta)\right).
 \end{equation*}
 \end{proof}
 

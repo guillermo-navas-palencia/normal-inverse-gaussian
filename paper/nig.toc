@@ -20,4 +20,4 @@
 \contentsline {subsection}{\numberline {4.4}Expansion $|x-\mu | \to \infty $}{6}
 \contentsline {section}{\numberline {5}Numerical integration}{7}
 \contentsline {section}{\numberline {6}Inversion methods}{9}
-\contentsline {section}{\numberline {7}Numerical experiments}{9}
+\contentsline {section}{\numberline {7}Numerical experiments}{10}
