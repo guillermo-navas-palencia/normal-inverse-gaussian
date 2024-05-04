@@ -12,6 +12,16 @@ H.~Bateman and Bateman~Manuscript Project.
 \newblock F.~W.~J. Olver, A.~B. {Olde Daalhuis}, D.~W. Lozier, B.~I. Schneider,
   R.~F. Boisvert, C.~W. Clark, B.~R. Miller and B.~V. Saunders, eds.
 
+\bibitem{gradshteyn2007}
+I.~S. Gradshteyn and I.~M. Ryzhik.
+\newblock {\em Table of integrals, series, and products}.
+\newblock Elsevier/Academic Press, Amsterdam, seventh edition, 2007.
+
+\bibitem{Lebedev1972}
+N.~N. Lebedev.
+\newblock {\em Special Functions and Their Applications}.
+\newblock Dover Publications, 1972.
+
 \bibitem{OEIS}
 N.~J.~A. Sloane.
 \newblock The {On}-{L}ine {E}ncyclopedia of {I}nteger {S}equences.

@@ -5,45 +5,45 @@ The style file: plain.bst
 Database file #1: bib.bib
 Warning--empty booktitle in OEIS
 Warning--empty year in OEIS
-You've used 4 entries,
+You've used 6 entries,
             2118 wiz_defined-function locations,
-            523 strings with 4637 characters,
-and the built_in function-call counts, 906 in all, are:
-= -- 78
-> -- 28
+            536 strings with 4880 characters,
+and the built_in function-call counts, 1380 in all, are:
+= -- 121
+> -- 48
 < -- 1
-+ -- 13
-- -- 8
-* -- 44
-:= -- 149
-add.period$ -- 12
-call.type$ -- 4
-change.case$ -- 15
++ -- 21
+- -- 14
+* -- 66
+:= -- 232
+add.period$ -- 18
+call.type$ -- 6
+change.case$ -- 23
 chr.to.int$ -- 0
-cite$ -- 6
-duplicate$ -- 45
-empty$ -- 95
-format.name$ -- 8
-if$ -- 194
+cite$ -- 8
+duplicate$ -- 69
+empty$ -- 139
+format.name$ -- 14
+if$ -- 295
 int.to.chr$ -- 0
-int.to.str$ -- 4
-missing$ -- 5
-newline$ -- 23
-num.names$ -- 6
-pop$ -- 35
+int.to.str$ -- 6
+missing$ -- 9
+newline$ -- 33
+num.names$ -- 10
+pop$ -- 51
 preamble$ -- 1
-purify$ -- 13
+purify$ -- 20
 quote$ -- 0
-skip$ -- 25
+skip$ -- 38
 stack$ -- 0
-substring$ -- 21
-swap$ -- 6
+substring$ -- 31
+swap$ -- 8
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 12
+type$ -- 16
 warning$ -- 2
-while$ -- 6
-width$ -- 5
-write$ -- 41
+while$ -- 10
+width$ -- 7
+write$ -- 62
 (There were 2 warnings)
