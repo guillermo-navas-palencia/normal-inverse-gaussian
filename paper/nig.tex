@@ -229,7 +229,15 @@ and
 \Phi(x) = \frac{1}{2} + \frac{e^{-x^2 / 2}}{\sqrt{2\pi}}\sum_{k=0}^{\infty} \frac{x^{2k+1}}{(2k + 1)!!}.
 \end{equation}
 
-Replacing $\Phi(-\beta\sqrt{t})$ in the integral \eqref{integral_phi} with the expansion \eqref{phi_expansion_1} and interchanging the order of integration and summation, we obtain the alternating series
+Replacing $\Phi(-\beta\sqrt{t})$ in the integral \eqref{integral_phi} with the expansion \eqref{phi_expansion_1} and interchanging the order of integration and summation, we obtain
+\begin{equation}\label{expansion_x=mu_pre}
+F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{2\pi}\sum_{k=0}^{\infty}\frac{(-1)^k (-\beta)^{2k+1}}{2^k k! (2k+1)} \int_0^{\infty} t^{k - 1} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+\end{equation}
+where we can express the integral in terms of the modified Bessel function
+\begin{equation}\label{bessel_integral}
+\int_0^{\infty} t^{\lambda - 1}e^{-a/t - zt} \mathop{dt} = 2\left(\frac{\alpha}{z}\right)^{\lambda/2} K_{\lambda}(2\sqrt{\alpha z}).
+\end{equation}
+Plugging in \eqref{expansion_x=mu_pre}, now yields the alternating series
 \begin{equation}\label{series_x=mu_1}
 F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty} \frac{(-1)^k (-\beta)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\delta}{\gamma}\right)^k K_k(\gamma \delta).
 \end{equation}
@@ -242,16 +250,16 @@ The latter expansion being more convenient when $\gamma \to 0$, i.e., $\alpha \s
 \subsection{Expansions: case $\beta = 0$}
 
 \subsubsection{Expansions $|x-\mu| \to 0$}
-
-Use closed-form in terms of the modified Bessel function. Alternating series
-\begin{equation}
+Proceeding as in the previous Section, we can expand $\Phi\left(\frac{x-\mu}{\sqrt{t}}\right)$ using \eqref{phi_expansion_1} and interchange the order of integration and summation. The resulting integral has the form \eqref{bessel_integral}. Thus, we obtain the alternating series
+\begin{equation}\label{expansion_xmu_b0_alternating}
 F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi}\sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\alpha}{\delta}\right)^{k+1}K_{k+1}(\alpha \delta).
 \end{equation}
-Asymptotic analysis of $K_{k+1}(\alpha \delta)$. To obtain a series with positive term for $x - \mu > 0$, use alternative expansion of $\Phi(x)$
-
-\begin{equation}
+To obtain a series with positive terms for $x - \mu > 0$, use alternative expansion of $\Phi(x)$ \eqref{phi_expansion_2}, obtaining
+\begin{equation}\label{expansion_xmu_b0_positive}
 F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
 \end{equation}
+
+TODO: explanation about convergence and when to use it effectively.
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
 For $x - \mu < 0$
@@ -261,8 +269,45 @@ F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\pi} \sum_{k=0}^{
 \end{equation}
 
 
-\subsubsection{Expansion $\alpha \to \infty$}
-See \cite[\S 27]{Temme2015}
+\subsubsection{Uniform expansion $\alpha \to \infty$, $\alpha \sim \delta$ and $|x-\mu| \gg 0$}
+For large $\alpha$, we consider the uniform asymptotic expansion in terms of modified Bessel functions described in \cite{Temme1990c} and \cite[\S 27]{Temme2015}. We write the Laplace-type integral \eqref{integral_phi} in the standard form
+\begin{equation*}
+F_{\lambda}(z, r) = C\int_0^{\infty} t^{\lambda - 1} e^{-z\left(t + r^2/t\right)} f(t) \mathop{dt},
+\end{equation*}
+where $C$ is a normalizing constant, $\lambda=-1/2$, $z = \alpha^2/2$, $r=\delta/\alpha$ and $f(t) = \Phi((x-\mu)/\sqrt{t})$. The saddle point of $e^{-z\left(t + r^2/t\right)}$ occurs at $\pm r$, but only the positive saddle point $r$ lies inside the interval of integration. Thus, we expand $f(t)$ at the saddle point $r$
+\begin{equation*}
+f(t) = \sum_{k=0}^{\infty} c_k(r)(t-r)^k,
+\end{equation*}
+after interchanging the order of summation and integration, we obtain 
+\begin{equation}
+F_{\lambda}(z, r) \sim \frac{1}{z^{\lambda}} \sum_{k=0}^{\infty} \frac{c_k(r) Q_k(\zeta)}{z^k}, \quad z \to \infty,
+\end{equation}
+where
+\begin{equation*}
+Q_k(\zeta) = \zeta^{\lambda + k}\int_0^{\infty} t^{\lambda - 1}(t-1)^k e^{-\zeta(t + 1/t)} \mathop{dt}, \quad \zeta = rz.
+\end{equation*}
+
+For $f(t) = \Phi((x-\mu)/\sqrt{t})$ the coefficients at $t=r$ satisfy the recurrence in \eqref{phi_expansion_at_u} setting $a=x-\mu$ and $b=0$. In particular, the recurrence can be simplified as follows
+\begin{equation}
+c_0(r) = \Phi\left(\frac{x-\mu}{\sqrt{r}}\right), \quad c_1(r) = -\frac{(x-\mu)}{2 r^{3/2}} \phi\left(\frac{x-\mu}{\sqrt{r}}\right)
+\end{equation}
+and
+\begin{equation}
+c_k(r) = \frac{(k - 1) ((x-\mu)^2 - 4 r(k-2) - 3r) c_{k-1}(r) - (2(k-2)^2 + k-2) c_{k-2}(r)}{2r^2 (k-1) k}, \quad k\ge 2.
+\end{equation}
+The functions $Q_k(\zeta)$ can be expressed as a binomial sum of modified Bessel functions, and satisfy the recurrence relation \cite[\S 27.3.28]{Temme2015}
+\begin{equation}
+Q_{k+2}(\zeta) = \left(k + \frac{1}{2} -2\zeta\right) Q_{k+1}(\zeta) + \zeta\left(2k + \frac{1}{2}\right)Q_k(\zeta) + k\zeta^2 Q_{k-1}(\zeta), \quad k\ge 1,
+\end{equation}
+with initial values
+\begin{equation}
+Q_0(\zeta) = \frac{2}{\sqrt{\zeta}} K_{\frac{1}{2}}(2 \zeta), \quad Q_1(\zeta) = 0, \quad Q_2(\zeta) = 2 \zeta^{3/2} \left(K_{\frac{3}{2}}(2\zeta) - K_{\frac{1}{2}}(2 \zeta)\right),
+\end{equation}
+where the special case $K_{m+1/2}(x)$, $m \in \mathbb{N}$, is a terminating sum of elementary functions requiring $m$ terms, see [Ref to Appendix]. Thus, rearranging terms we have
+\begin{equation}\label{uniform_expansion_a_large}
+F(x; \alpha, 0, \mu, \delta) = \frac{\alpha \delta e^{\delta \alpha}}{2 \sqrt{\pi}} \sum_{k=0}^{\infty} \frac{2^k c_k\left(\frac{\delta}{\alpha}\right) Q_k\left(\frac{\alpha \delta}{2}\right)}{\alpha^{2k}}, \quad \alpha \to \infty.
+\end{equation}
+The expansion \eqref{uniform_expansion_a_large} is a uniform expansion as $\alpha \to \infty$, uniformly with respect to $\delta / \alpha > 0$. Note that large values of $\delta$ improves the rate of convergence of the expansion, as observed taking well-know asymptotic estimates for large argument of the modified Bessel function. We remark that expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} are also adequate for large values of $\alpha$ and $\delta$, but unlike the present expansion, the number of terms increases significantly for $|x-\mu| \gg 0$.
 
 \subsection{Expansions: general case}
 \subsubsection{Expansions $|x-\mu| \to 0$ (option 1)}
@@ -426,11 +471,14 @@ Ideas:
 \end{itemize}
 
 \section{Algorithmic details and implementation}
+\subsection{Handling large parameters}
+Exponent overflow issues in $\exp(\alpha \delta)$. Logarithmic transformation. Use scaled Bessel function.
 \subsection{Evaluation of Bessel-type expansions}
 
 \subsection{Evaluation of asymptotic expansions}
 
 \subsection{Implementation}
+
 
 \section{Numerical experiments}
 
@@ -549,7 +597,7 @@ d_2 &=\frac{a^3 -3au -a^2 bu + bu^2 -ab^2 u^2 + b^3u^3}{8 u^{7/2}}\\
 d_3 &= \frac{-a^5 +10a^3u + a^4bu -15au^2 - 6a^2bu^2 + 2a^3 b^2 u^2 +3bu^3 -6ab^2u^3 - 2a^2b^3 u^3 + 2b^3 u^4 -ab^4u^4 + b^5 u^5}{48 u^{11/2}},
 \end{align*}
 and $\phi(x) = \frac{e^{-x^2/2}}{\sqrt{2\pi}}$ is the probability density function of the standard normal distribution. Thus, we have
-\begin{equation}
+\begin{equation}\label{phi_expansion_at_u}
 F(t; a, b) = \sum_{k=0}^{\infty} c_k (t-u)^k.
 \end{equation}
 Additional terms satisfy the following recurrence
