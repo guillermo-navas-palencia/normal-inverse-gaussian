@@ -7,24 +7,25 @@
 \contentsline {subsection}{\numberline {3.1}Expansions: case $x = \mu $}{4}
 \contentsline {subsection}{\numberline {3.2}Expansions: case $\beta = 0$}{5}
 \contentsline {subsubsection}{\numberline {3.2.1}Expansions $|x-\mu | \to 0$}{5}
-\contentsline {subsubsection}{\numberline {3.2.2}Expansion $|x-\mu | \to \infty $}{5}
-\contentsline {subsubsection}{\numberline {3.2.3}Uniform expansion $\alpha \to \infty $, $\alpha \sim \delta $ and $|x-\mu | \gg 0$}{5}
-\contentsline {subsection}{\numberline {3.3}Expansions: general case}{6}
-\contentsline {subsubsection}{\numberline {3.3.1}Expansions $|x-\mu | \to 0$ (option 1)}{6}
-\contentsline {subsubsection}{\numberline {3.3.2}Expansions $|x-\mu | \to 0$ (option 2)}{6}
-\contentsline {subsubsection}{\numberline {3.3.3}Expansion $\alpha \to \infty , \delta \to \infty $}{7}
-\contentsline {subsubsection}{\numberline {3.3.4}Expansion $|x-\mu | \to \infty $}{7}
-\contentsline {subsection}{\numberline {3.4}Numerical integration}{7}
-\contentsline {subsection}{\numberline {3.5}Inversion methods}{8}
-\contentsline {section}{\numberline {4}Algorithmic details and implementation}{8}
-\contentsline {subsection}{\numberline {4.1}Handling large parameters}{8}
-\contentsline {subsection}{\numberline {4.2}Evaluation of Bessel-type expansions}{9}
-\contentsline {subsection}{\numberline {4.3}Evaluation of asymptotic expansions}{9}
-\contentsline {subsection}{\numberline {4.4}Implementation}{9}
-\contentsline {section}{\numberline {5}Numerical experiments}{9}
-\contentsline {section}{\numberline {6}Conclusions}{9}
-\contentsline {section}{\numberline {A}The function $\Phi \left (\frac {a}{\sqrt {t}} + b\sqrt {t}\right )$}{9}
-\contentsline {subsubsection}{\numberline {A.0.1}Expansion $t \to 0$}{9}
-\contentsline {subsubsection}{\numberline {A.0.2}Expansion $t \to \infty $}{10}
-\contentsline {subsubsection}{\numberline {A.0.3}Expansion $t \to u$}{11}
-\contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{11}
+\contentsline {subsubsection}{\numberline {3.2.2}Expansion $|x-\mu | \to \infty $}{6}
+\contentsline {subsubsection}{\numberline {3.2.3}Uniform expansion $\alpha \to \infty $, $\alpha \sim \delta $ and $|x-\mu | \gg 0$}{6}
+\contentsline {subsection}{\numberline {3.3}Expansions: general case}{7}
+\contentsline {subsubsection}{\numberline {3.3.1}Expansions $|x-\mu | \to 0$ (option 1)}{7}
+\contentsline {subsubsection}{\numberline {3.3.2}Expansions $|x-\mu | \to 0$ (option 2)}{7}
+\contentsline {subsubsection}{\numberline {3.3.3}Expansion $\alpha \to \infty , \delta \to \infty $}{8}
+\contentsline {subsubsection}{\numberline {3.3.4}Expansion $|x-\mu | \to \infty $}{8}
+\contentsline {subsection}{\numberline {3.4}Numerical integration}{8}
+\contentsline {subsection}{\numberline {3.5}Inversion methods}{9}
+\contentsline {section}{\numberline {4}Algorithmic details and implementation}{9}
+\contentsline {subsection}{\numberline {4.1}Handling large parameters}{9}
+\contentsline {subsection}{\numberline {4.2}Evaluation of Bessel-type expansions}{10}
+\contentsline {subsubsection}{\numberline {4.2.1}Partial sums recurrence}{10}
+\contentsline {subsection}{\numberline {4.3}Evaluation of asymptotic expansions}{10}
+\contentsline {subsection}{\numberline {4.4}Implementation}{10}
+\contentsline {section}{\numberline {5}Numerical experiments}{10}
+\contentsline {section}{\numberline {6}Conclusions}{10}
+\contentsline {section}{\numberline {A}The function $\Phi \left (\frac {a}{\sqrt {t}} + b\sqrt {t}\right )$}{10}
+\contentsline {subsubsection}{\numberline {A.0.1}Expansion $t \to 0$}{10}
+\contentsline {subsubsection}{\numberline {A.0.2}Expansion $t \to \infty $}{11}
+\contentsline {subsubsection}{\numberline {A.0.3}Expansion $t \to u$}{12}
+\contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{12}

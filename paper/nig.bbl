@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{Bateman1954}
 H.~Bateman and Bateman~Manuscript Project.
@@ -12,6 +12,12 @@ H.~Bateman and Bateman~Manuscript Project.
 \newblock F.~W.~J. Olver, A.~B. {Olde Daalhuis}, D.~W. Lozier, B.~I. Schneider,
   R.~F. Boisvert, C.~W. Clark, B.~R. Miller and B.~V. Saunders, eds.
 
+\bibitem{Gaunt2016}
+R.~E. Gaunt.
+\newblock { Uniform bounds for expressions involving modified Bessel
+  functions}.
+\newblock {\em Math. Inequal. Appl.}, 19:1003--1012, 2016.
+
 \bibitem{gradshteyn2007}
 I.~S. Gradshteyn and I.~M. Ryzhik.
 \newblock {\em Table of integrals, series, and products}.
@@ -21,6 +27,18 @@ I.~S. Gradshteyn and I.~M. Ryzhik.
 N.~N. Lebedev.
 \newblock {\em Special Functions and Their Applications}.
 \newblock Dover Publications, 1972.
+
+\bibitem{Luke1972}
+Y.~L. Luke.
+\newblock Inequalities for generalized hypergeometric functions.
+\newblock {\em Journal of Approximation Theory}, 5(1):41--65, 1972.
+
+\bibitem{Segura2023}
+J.~Segura.
+\newblock {Simple bounds with best possible accuracy for ratios of modified
+  Bessel functions}.
+\newblock {\em Journal of Mathematical Analysis and Applications},
+  526(1):127211, 2023.
 
 \bibitem{OEIS}
 N.~J.~A. Sloane.
@@ -38,5 +56,10 @@ N.~M. Temme.
 \newblock {\em Asymptotic Methods for Integrals}, volume~6 of {\em Series in
   Analysis}.
 \newblock World Scientific Publishing Co. Pte. Ltd., Hackensack, NJ, 2015.
+
+\bibitem{Wendel1948}
+J.~G. Wendel.
+\newblock {Note on the Gamma Function}.
+\newblock {\em American Mathematical Monthly}, 55:563, 1948.
 
 \end{thebibliography}

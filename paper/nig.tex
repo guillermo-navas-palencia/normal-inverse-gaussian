@@ -259,7 +259,85 @@ To obtain a series with positive terms for $x - \mu > 0$, use alternative expans
 F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
 \end{equation}
 
-TODO: explanation about convergence and when to use it effectively.
+Comment about absolute convergence.
+
+Tail bounds for the convergent series.
+\begin{equation}\label{expansion_xmu_b0_positive_error_term}
+\sum_{k=0}^{\infty} T_k = \sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty}T_k, \quad T_k = \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^k \frac{K_{k+1}(\alpha \omega)}{(2k +1)!!},
+\end{equation}
+and the error term is bounded by comparison with a geometric series
+\begin{equation}
+\left|\sum_{k=N}^{\infty} T_k \right| \le \frac{|T_N|}{1 - C}, \quad C = \left|\frac{T_{N+1}}{T_N}\right|
+\end{equation}
+iff $C < 1$, where $T_N$ is the first omitted term in the expansion.
+
+We will need the following Lemma
+\begin{lemma}\label{lemma_1}
+For $x \ge 0$ and $\nu \ge -\frac{1}{2}$
+\begin{equation}
+K_{\nu + 1}(x) < \frac{\Gamma(\nu + 1)2^{\nu}}{x^{\nu + 1}}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Combine the uniform bound in \cite[Lemma 2.5]{Gaunt2016}
+\begin{equation}
+x K_{\nu + 1}(x) I_{\nu}(x) \le 1.
+\end{equation}
+and the lower bound \cite[Eq. (6.25)]{Luke1972}
+\begin{equation}
+\left(\frac{x}{2}\right)^{\nu}\frac{1}{\Gamma(\nu + 1)} < I_{\nu}(x)
+\end{equation}
+\begin{equation}
+K_{\nu + 1}(x) \le \frac{1}{x I_{\nu}(x)} < \frac{\Gamma(\nu + 1)2^{\nu}}{x^{\nu + 1}}.
+\end{equation}
+\end{proof}
+
+\begin{theorem}
+Given $\alpha > 0$ and $\omega > 0$, $x-\mu \in \mathbb{R}$ and $N \in \mathbb{N}$, the error term in \eqref{expansion_xmu_b0_positive_error_term} satisfies
+\begin{equation}
+\left|\sum_{k=N}^{\infty} T_k \right| \le \frac{|T_N|}{1 - C},
+\end{equation}
+where
+\begin{equation}
+T_N < \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{\pi}{N + 1/2}}.
+\end{equation}
+and
+\begin{equation}
+C \le \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{2N + 3}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Using Lemma \ref{lemma_1}
+\begin{align*}
+T_N &= \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^N \frac{K_{N+1}(\alpha \omega)}{(2N +1)!!}\\
+&<  \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^N \frac{\Gamma(N + 1)2^N}{(\alpha\omega)^{N + 1}(2N +1)!!}\\
+&= \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \frac{(N! 2^N)^2}{(2N + 1)!} 
+\end{align*}
+\begin{equation*}
+\frac{(N! 2^N)^2}{(2N + 1)!} = \frac{\sqrt{\pi}}{2}\frac{\Gamma(N+1)}{\Gamma(N + 3/2)} \le \frac{1}{2}\sqrt{\frac{\pi}{N + 1/2}}
+\end{equation*}
+we use $\Gamma(N + 3/2) = (N + 1/2) \Gamma(N + 1/2)$ and the upper bound of the ratio of gamma \cite{Wendel1948}
+\begin{equation}
+\frac{\Gamma(x + 1)}{\Gamma(x+s)} \le (x + s)^{1-s}, \quad s \in (0, 1).
+\end{equation}
+Thus, the last term $T_N$ is bounded
+\begin{equation}
+T_N < \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{\pi}{N + 1/2}}.
+\end{equation}
+
+\begin{equation}
+C = \frac{T_{N+1}}{T_N} = \frac{(x-\mu)^2 \alpha}{\omega (2N + 3)} \frac{K_{N+2}(\alpha\omega)}{K_{N+1}(\alpha\omega)}.
+\end{equation}
+Using \cite{Segura2023}
+\begin{equation}
+\frac{K_{N+2}(\alpha\omega)}{K_{N+1}(\alpha\omega)} \le \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{\alpha \omega},
+\end{equation}
+and
+\begin{equation}
+C \le \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{2N + 3}.
+\end{equation}
+\end{proof}
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
 For $x - \mu < 0$
@@ -474,6 +552,30 @@ Ideas:
 \subsection{Handling large parameters}
 Exponent overflow issues in $\exp(\alpha \delta)$. Logarithmic transformation. Use scaled Bessel function.
 \subsection{Evaluation of Bessel-type expansions}
+
+\subsubsection{Partial sums recurrence}
+As an example, series \eqref{expansion_xmu_b0_positive}.
+
+\begin{equation}
+F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi}\frac{(x-\mu) \alpha}{\omega}S_K,
+\end{equation}
+where $S_K$ is the $k$-th partial sum. The first partial sums are
+\begin{equation}
+S_0 = 0, \quad S_1 = K_1(\alpha \omega), \quad S_2 = S_1 + \frac{K_2(\alpha \omega)z}{3},
+\end{equation}
+and for $k \ge 0$, the partial sums satisfy the recursion relation
+\begin{equation}
+S_{k+3} = \frac{-\alpha\omega z^2 S_k + z \left(-2 (2+k) (3 + 2k) + \alpha\omega\right) S_{k+1} + (3 + 2k) \left((5 + 2k) \alpha\omega + 2(2+k)z\right) S_{k+2}}{(3 + 2k) (5 + 2k) \alpha \omega},
+\end{equation}
+where
+\begin{equation}
+z = \frac{(x-\mu)^2 \alpha}{\omega}.
+\end{equation}
+Stopping criterion is
+\begin{equation}
+\left|1 - \frac{S_{K}}{S_{K-1}} \right| < \epsilon.
+\end{equation}
+
 
 \subsection{Evaluation of asymptotic expansions}
 

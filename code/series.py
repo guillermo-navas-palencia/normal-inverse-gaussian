@@ -91,6 +91,7 @@ def series_x_mu_b0_pos(
         # New term
         num *= xmu2 * aow / (2 * k + 1)
         s += num * knn
+        # print(k, s, num, knn)
 
         # Check convergence
         if abs(1.0 - sp / s) < eps:
@@ -99,6 +100,75 @@ def series_x_mu_b0_pos(
             kn = knp1
             knp1 = knn
             sp = s        
+
+    # No convergence
+    return -1, maxiter
+
+
+def series_x_mu_b0_pos_robust(
+    x: float,
+    alpha: float,
+    mu: float,
+    delta: float,
+    maxiter: int = 1000,
+    eps: float = 5e-15    
+) -> tuple[float, int]:
+
+    # Parameters
+    xmu = x - mu
+    xmu2 = xmu * xmu
+
+    # Use hypotenuse
+    omega = np.sqrt(xmu2 + delta*delta)
+    aw = alpha * omega
+    aow = alpha / omega
+
+    z = xmu2 * aow
+    z2 = z*z
+    awz = aw * z
+    awz2 = awz * z
+    awt5 = aw * 5
+    awt2 = aw * 2
+    zt4 = z * 4
+    zt2 = z * 2
+
+    # Constant
+    C = delta * np.exp(delta * alpha) / np.pi * xmu * aow
+
+    # Series: compute first two partial sums
+    y0 = 0
+    y1 = special.kn(1, aw)
+    y2 = y1 + special.kn(2, aw) * z / 3
+
+    sp = y2
+    for k in range(maxiter):
+        # Improve numerical stability
+        # n = (3 + 2*k)
+        # num = -awz2 * y0 + z*(-12 -14*k -4*k*k + awz) * y1 + n * (awt5 + k*awt2 + zt4 + zt2*k) * y2
+        # den = n * (5 + 2 * k) * aw
+
+        # num = -awz2 * y0 + z* (-2 * (k+2)* (3 + 2*k) + awz) * y1 + (3 + 2*k) * ((5 + 2*k) * aw + 2*(2+k)*z) * y2
+        # den = (3 + 2*k) * (5 + 2*k) * aw
+        # s = num / den
+
+        n0 = -z2 / ((3 + 2*k) * (5 + 2*k)) * y0
+        # n1 = z* (-2 * (k+2)* (3 + 2*k) + awz) * y1 / ((3 + 2*k) * (5 + 2*k) * aw)
+
+        n11 = z* (-2 * (k+2)) / ((5 + 2*k) * aw)
+        n12 = z2 / ((3 + 2*k) * (5 + 2*k))
+        n1 = (n11 + n12) * y1
+
+        n2 = (1 + (2*(2+k)*z) / ((5 + 2*k) * aw)) * y2 
+
+        s = n0 + n1 + n2
+
+        if abs(1.0 - sp / s) < eps:
+            return 0.5 + C * s, k
+        else:
+            y0 = y1
+            y1 = y2
+            y2 = s
+            sp = s
 
     # No convergence
     return -1, maxiter
@@ -188,6 +258,9 @@ def asymptotic_alpha_b0(
     kh = special.kv(h, 2 * xi)
     khp2 = special.kv(h + 2, 2 * xi)
 
+    # print(kh)
+    # print(khp2)
+
     q0 = 2 * xi ** h * kh
     q1 = 0
     q2 = 2 * xi ** (h + 2) * (khp2 - kh)
@@ -196,11 +269,19 @@ def asymptotic_alpha_b0(
     ovz = 1 / z
     num = ovz
 
+    print(1, s)
+    # print(0, c0)
+    # print(1, c1)
+
     sp = s
     for k in range(2, maxiter):
         # Phi recursion
         n = k - 2
         ck = ((n + 1) * c1 * (2*a**2 - 4*b*n - 3*b) - (2*n**2 + n) * c0) / (2*b**2 * (n+1) * (n+2))
+
+        # ck2 = ((k - 1) * c1 * (xmu**2 - 4*b*(k - 2) - 3*b) - (2*(k - 2)**2 + k - 2) * c0) / (2*b**2 * (k - 1) * (k))
+        # ck2 = (xmu**2 - 4*b*(k-2) - 3*b) / (2 * b**2 * k) * c1 - (2*(k - 2)**2 + k - 2) * c0 / (2*b**2 * (k - 1) * (k))
+        # print(abs(ck))
 
         # Bessel recursion
         if k >= 3:
@@ -212,6 +293,7 @@ def asymptotic_alpha_b0(
         # New term
         num *= ovz
         s += num * ck * qk
+        # print(k, ck * qk * num)
         print(k, abs(num * ck * qk))
 
         if abs(1.0 - sp / s) < eps or k == maxiter - 1:
