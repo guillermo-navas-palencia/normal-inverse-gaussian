@@ -195,32 +195,14 @@ Use binomial theorem, and compute coefficients recursively (binomial sum of Bess
 
 \section{Methods of computation}
 In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases. Subsequently, we discuss several approaches for computing the inverse of the CDF.
+\subsection{Expansions: case $\beta = 0$}
 
-\subsection{Expansions: case $x = \mu$}
-First consider the case $x = \mu$ and $\beta = 0$. Then, the distribution is symmetric and centered at $x = \mu$, and it follows that
-\begin{equation}
-F(\mu; \alpha, 0, \mu, \delta) = \frac{1}{2}.
+\subsubsection{Expansions $|x-\mu| \to 0$}
+Consider the integral representation
+\begin{equation}\label{integral_phi2}
+F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\sqrt{2\pi}} \int_0^{\infty} \Phi\left(\frac{x - \mu}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
 \end{equation}
-
-For the case $\beta \neq 0$, the integral representation of this special case is given by simple substitution in \eqref{integral_k1}
-\begin{equation}\label{integral_k1_x=mu}
-F(\mu; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{0} \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} e^{\beta t} \mathop{dt}.
-\end{equation}
-
-Using series expansion of the exponential function and interchanging the order of integration and summation in \eqref{integral_k1_x=mu} gives that
-\begin{equation*}
-F(\mu; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty}\frac{\beta^k}{k!}\int_{0}^{\infty} t^k \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} \mathop{dt}.
-\end{equation*}
-The integral is expressible in closed form using \cite[\S 6.596]{gradshteyn2007}
-\begin{equation*}
-\int_0^{\infty} t^k \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} \mathop{dt} = \frac{2^{\frac{k-1}{2}} \Gamma\left(\frac{k+1}{2}\right)}{\alpha^{\frac{k+1}{2}} \delta^{\frac{-k+1}{2}}}K_{\frac{k-1}{2}}(\alpha\delta),
-\end{equation*}
-and rearranging terms and using the connection formula $2^{k/2}  \Gamma\left(\frac{k+1}{2}\right)/ k! = \sqrt{\pi} 2^{-k/2} / \Gamma\left(\frac{k}{2} + 1\right)$ yields
-\begin{align}
-F(\mu; \alpha, \beta, \mu, \delta) &= 1 - \sqrt{\frac{\alpha \delta}{2\pi}}e^{\delta \gamma} \sum_{k=0}^{\infty}\frac{\beta^k}{2^{\frac{k}{2}}\Gamma\left(\frac{k}{2} + 1\right)} \left(\frac{\delta}{\alpha}\right)^{\frac{k}{2}} K_{\frac{k-1}{2}}(\alpha \delta)\\
-&=\sqrt{\frac{\alpha \delta}{2\pi}}e^{\delta \gamma} \sum_{k=0}^{\infty}\frac{(-\beta)^k}{2^{\frac{k}{2}}\Gamma\left(\frac{k}{2} + 1\right)} \left(\frac{\delta}{\alpha}\right)^{\frac{k}{2}} K_{\frac{k-1}{2}}(\alpha \delta).
-\end{align}
-The resulting expansions are convergent and the latter series expansion is preferred for $\beta < 0$ to avoid cancellation errors. A more rapidly convergent expansion for $\delta < \gamma$ or large values of $\delta$ and $\gamma$ can be obtained using the integral \eqref{integral_phi} and expanding the term $\Phi(-\beta\sqrt{t})$. We use two the absolutely convergent series expansions of $\Phi(x)$ \cite[\S 2]{Lebedev1972}
+To obtain series expansion for $|x-\mu| \to 0$, we can proceed expanding $\Phi\left(\frac{x-\mu}{\sqrt{t}}\right)$, using the two well-known absolutely convergent series expansions of $\Phi(x)$ \cite[\S 2]{Lebedev1972}
 \begin{equation}\label{phi_expansion_1}
 \Phi(x) = \frac{1}{2} + \frac{1}{\sqrt{2\pi}}\sum_{k=0}^{\infty} \frac{(-1)^k x^{2k + 1}}{2^k k! (2k+1)},
 \end{equation}
@@ -228,65 +210,55 @@ and
 \begin{equation}\label{phi_expansion_2}
 \Phi(x) = \frac{1}{2} + \frac{e^{-x^2 / 2}}{\sqrt{2\pi}}\sum_{k=0}^{\infty} \frac{x^{2k+1}}{(2k + 1)!!}.
 \end{equation}
-
-Replacing $\Phi(-\beta\sqrt{t})$ in the integral \eqref{integral_phi} with the expansion \eqref{phi_expansion_1} and interchanging the order of integration and summation, we obtain
-\begin{equation}\label{expansion_x=mu_pre}
-F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{2\pi}\sum_{k=0}^{\infty}\frac{(-1)^k (-\beta)^{2k+1}}{2^k k! (2k+1)} \int_0^{\infty} t^{k - 1} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+If we choose the expansion \eqref{phi_expansion_1} and interchange the order of integration and summation, the resulting integral has the form
+\begin{equation}\label{phi_expansion_integral_xmu_b0_alternating}
+F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\sqrt{2\pi}} \int_0^{\infty}\sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k + 1}}{2^k k! (2k + 1)}\int_0^{\infty} t^{-k-2} e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt},
 \end{equation}
-where we can express the integral in terms of the modified Bessel function
+which has a closed-form in terms of the modified Bessel function
 \begin{equation}\label{bessel_integral}
 \int_0^{\infty} t^{\lambda - 1}e^{-a/t - zt} \mathop{dt} = 2\left(\frac{\alpha}{z}\right)^{\lambda/2} K_{\lambda}(2\sqrt{\alpha z}).
 \end{equation}
-Plugging in \eqref{expansion_x=mu_pre}, now yields the alternating series
-\begin{equation}\label{series_x=mu_1}
-F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty} \frac{(-1)^k (-\beta)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\delta}{\gamma}\right)^k K_k(\gamma \delta).
-\end{equation}
-Similarly, using \eqref{phi_expansion_2} yields
-\begin{equation}\label{series_x=mu_2}
-F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!} \left(\frac{\delta}{\alpha}\right)^k K_k(\alpha \delta).
-\end{equation}
-The latter expansion being more convenient when $\gamma \to 0$, i.e., $\alpha \sim \beta$.
-
-\subsection{Expansions: case $\beta = 0$}
-
-\subsubsection{Expansions $|x-\mu| \to 0$}
-Proceeding as in the previous Section, we can expand $\Phi\left(\frac{x-\mu}{\sqrt{t}}\right)$ using \eqref{phi_expansion_1} and interchange the order of integration and summation. The resulting integral has the form \eqref{bessel_integral}. Thus, we obtain the alternating series
+Inserting \eqref{bessel_integral} in \eqref{phi_expansion_integral_xmu_b0_alternating} and rearranging terms, we obtain the the alternating series
 \begin{equation}\label{expansion_xmu_b0_alternating}
 F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi}\sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\alpha}{\delta}\right)^{k+1}K_{k+1}(\alpha \delta).
 \end{equation}
-To obtain a series with positive terms for $x - \mu > 0$, use alternative expansion of $\Phi(x)$ \eqref{phi_expansion_2}, obtaining
+To obtain a series with positive terms for $x - \mu > 0$, we choose the alternative expansion of $\Phi(x)$ in \eqref{phi_expansion_2}, obtaining
 \begin{equation}\label{expansion_xmu_b0_positive}
 F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
 \end{equation}
 
-Comment about absolute convergence.
-
-Tail bounds for the convergent series.
+The series expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} can be written as a truncated series with the corresponding remainder term. For example, truncating the series \eqref{expansion_xmu_b0_positive} at $N$, we can write
 \begin{equation}\label{expansion_xmu_b0_positive_error_term}
 \sum_{k=0}^{\infty} T_k = \sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty}T_k, \quad T_k = \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^k \frac{K_{k+1}(\alpha \omega)}{(2k +1)!!},
 \end{equation}
-and the error term is bounded by comparison with a geometric series
+and
+\begin{equation*}
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi}\frac{(x-\mu)\alpha}{\omega}\sum_{k=0}^{N-1}T_k + R_N.
+\end{equation*}
+
+The error term in \eqref{expansion_xmu_b0_positive_error_term} can be bounded by comparison with a geometric series
 \begin{equation}
 \left|\sum_{k=N}^{\infty} T_k \right| \le \frac{|T_N|}{1 - C}, \quad C = \left|\frac{T_{N+1}}{T_N}\right|
 \end{equation}
 iff $C < 1$, where $T_N$ is the first omitted term in the expansion.
 
-We will need the following Lemma
+The following lemma provides an upper bound for $K_{\nu+1}(x)$, required for deriving an upper bound for the term $T_N$.
 \begin{lemma}\label{lemma_1}
-For $x \ge 0$ and $\nu \ge -\frac{1}{2}$
+For $x \ge 0$ and $\nu \ge -\frac{1}{2}$ we have
 \begin{equation}
 K_{\nu + 1}(x) < \frac{\Gamma(\nu + 1)2^{\nu}}{x^{\nu + 1}}.
 \end{equation}
 \end{lemma}
 \begin{proof}
-Combine the uniform bound in \cite[Lemma 2.5]{Gaunt2016}
+The proof reduces to combining the uniform bound in \cite{Gaunt2016}
 \begin{equation}
 x K_{\nu + 1}(x) I_{\nu}(x) \le 1.
 \end{equation}
-and the lower bound \cite[Eq. (6.25)]{Luke1972}
+with the lower bound \cite{Luke1972}
 \begin{equation}
 \left(\frac{x}{2}\right)^{\nu}\frac{1}{\Gamma(\nu + 1)} < I_{\nu}(x)
 \end{equation}
+Hence,
 \begin{equation}
 K_{\nu + 1}(x) \le \frac{1}{x I_{\nu}(x)} < \frac{\Gamma(\nu + 1)2^{\nu}}{x^{\nu + 1}}.
 \end{equation}
@@ -303,41 +275,51 @@ T_N < \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{
 \end{equation}
 and
 \begin{equation}
-C \le \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{2N + 3}.
+C < \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{2N + 3}.
 \end{equation}
 \end{theorem}
 
 \begin{proof}
-Using Lemma \ref{lemma_1}
+The use of Lemma \ref{lemma_1} gives
 \begin{align*}
 T_N &= \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^N \frac{K_{N+1}(\alpha \omega)}{(2N +1)!!}\\
 &<  \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^N \frac{\Gamma(N + 1)2^N}{(\alpha\omega)^{N + 1}(2N +1)!!}\\
-&= \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \frac{(N! 2^N)^2}{(2N + 1)!} 
+&= \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \frac{(N! 2^N)^2}{(2N + 1)!}.
 \end{align*}
+An upper bound for the ratio of factorials in the previous inequality is given by
 \begin{equation*}
-\frac{(N! 2^N)^2}{(2N + 1)!} = \frac{\sqrt{\pi}}{2}\frac{\Gamma(N+1)}{\Gamma(N + 3/2)} \le \frac{1}{2}\sqrt{\frac{\pi}{N + 1/2}}
+\frac{(N! 2^N)^2}{(2N + 1)!} = \frac{\sqrt{\pi}}{2}\frac{\Gamma(N+1)}{\Gamma(N + 3/2)} \le \frac{1}{2}\sqrt{\frac{\pi}{N + 1/2}},
 \end{equation*}
-we use $\Gamma(N + 3/2) = (N + 1/2) \Gamma(N + 1/2)$ and the upper bound of the ratio of gamma \cite{Wendel1948}
+where we use the fact that $\Gamma(N + 3/2) = (N + 1/2) \Gamma(N + 1/2)$ and the upper bound of the ratio of gamma functions \cite{Wendel1948}
 \begin{equation}
 \frac{\Gamma(x + 1)}{\Gamma(x+s)} \le (x + s)^{1-s}, \quad s \in (0, 1).
 \end{equation}
-Thus, the last term $T_N$ is bounded
+
+Thus, the following bound for $T_N$ holds
 \begin{equation}
 T_N < \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{\pi}{N + 1/2}}.
 \end{equation}
 
+An explicit formula for $C$ in terms of the ratio of modified Bessel functions is
 \begin{equation}
 C = \frac{T_{N+1}}{T_N} = \frac{(x-\mu)^2 \alpha}{\omega (2N + 3)} \frac{K_{N+2}(\alpha\omega)}{K_{N+1}(\alpha\omega)}.
 \end{equation}
-Using \cite{Segura2023}
+To bound $C$, we use the sharp bound for the ratio of modified Bessel functions \cite{Segura2023}
 \begin{equation}
-\frac{K_{N+2}(\alpha\omega)}{K_{N+1}(\alpha\omega)} \le \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{\alpha \omega},
+\frac{K_{N+2}(\alpha\omega)}{K_{N+1}(\alpha\omega)} < \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{\alpha \omega},
 \end{equation}
-and
-\begin{equation}
-C \le \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{2N + 3}.
-\end{equation}
+and we obtain
+\begin{equation*}
+C < \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{2N + 3}.
+\end{equation*}
 \end{proof}
+
+\begin{itemize}
+\item Show bound for alternating sum
+\item Approximation of the number of terms solving $T_N$ in terms of Lambert.
+\item Tables with examples of bound accuracy.
+\item Decision about the region of usability for each expansion.
+\end{itemize}
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
 For $x - \mu < 0$
@@ -386,6 +368,46 @@ where the special case $K_{m+1/2}(x)$, $m \in \mathbb{N}$, is a terminating sum 
 F(x; \alpha, 0, \mu, \delta) = \frac{\alpha \delta e^{\delta \alpha}}{2 \sqrt{\pi}} \sum_{k=0}^{\infty} \frac{2^k c_k\left(\frac{\delta}{\alpha}\right) Q_k\left(\frac{\alpha \delta}{2}\right)}{\alpha^{2k}}, \quad \alpha \to \infty.
 \end{equation}
 The expansion \eqref{uniform_expansion_a_large} is a uniform expansion as $\alpha \to \infty$, uniformly with respect to $\delta / \alpha > 0$. Note that large values of $\delta$ improves the rate of convergence of the expansion, as observed taking well-know asymptotic estimates for large argument of the modified Bessel function. We remark that expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} are also adequate for large values of $\alpha$ and $\delta$, but unlike the present expansion, the number of terms increases significantly for $|x-\mu| \gg 0$.
+
+\subsection{Expansions: case $x = \mu$}
+First consider the case $x = \mu$ and $\beta = 0$. Then, the distribution is symmetric and centered at $x = \mu$, and it follows that
+\begin{equation}
+F(\mu; \alpha, 0, \mu, \delta) = \frac{1}{2}.
+\end{equation}
+
+For the case $\beta \neq 0$, the integral representation of this special case is given by simple substitution in \eqref{integral_k1}
+\begin{equation}\label{integral_k1_x=mu}
+F(\mu; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{0} \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} e^{\beta t} \mathop{dt}.
+\end{equation}
+
+Using series expansion of the exponential function and interchanging the order of integration and summation in \eqref{integral_k1_x=mu} gives that
+\begin{equation*}
+F(\mu; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty}\frac{\beta^k}{k!}\int_{0}^{\infty} t^k \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} \mathop{dt}.
+\end{equation*}
+The integral is expressible in closed form using \cite[\S 6.596]{gradshteyn2007}
+\begin{equation*}
+\int_0^{\infty} t^k \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} \mathop{dt} = \frac{2^{\frac{k-1}{2}} \Gamma\left(\frac{k+1}{2}\right)}{\alpha^{\frac{k+1}{2}} \delta^{\frac{-k+1}{2}}}K_{\frac{k-1}{2}}(\alpha\delta),
+\end{equation*}
+and rearranging terms and using the connection formula $2^{k/2}  \Gamma\left(\frac{k+1}{2}\right)/ k! = \sqrt{\pi} 2^{-k/2} / \Gamma\left(\frac{k}{2} + 1\right)$ yields
+\begin{align}
+F(\mu; \alpha, \beta, \mu, \delta) &= 1 - \sqrt{\frac{\alpha \delta}{2\pi}}e^{\delta \gamma} \sum_{k=0}^{\infty}\frac{\beta^k}{2^{\frac{k}{2}}\Gamma\left(\frac{k}{2} + 1\right)} \left(\frac{\delta}{\alpha}\right)^{\frac{k}{2}} K_{\frac{k-1}{2}}(\alpha \delta)\\
+&=\sqrt{\frac{\alpha \delta}{2\pi}}e^{\delta \gamma} \sum_{k=0}^{\infty}\frac{(-\beta)^k}{2^{\frac{k}{2}}\Gamma\left(\frac{k}{2} + 1\right)} \left(\frac{\delta}{\alpha}\right)^{\frac{k}{2}} K_{\frac{k-1}{2}}(\alpha \delta).
+\end{align}
+The resulting expansions are convergent and the latter series expansion is preferred for $\beta < 0$ to avoid cancellation errors. A more rapidly convergent expansion for $\delta < \gamma$ or large values of $\delta$ and $\gamma$ can be obtained using the integral \eqref{integral_phi} and expanding the term $\Phi(-\beta\sqrt{t})$. Replacing $\Phi(-\beta\sqrt{t})$ in the integral \eqref{integral_phi} with the expansion \eqref{phi_expansion_1} and interchanging the order of integration and summation, we obtain
+\begin{equation}\label{expansion_x=mu_pre}
+F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{2\pi}\sum_{k=0}^{\infty}\frac{(-1)^k (-\beta)^{2k+1}}{2^k k! (2k+1)} \int_0^{\infty} t^{k - 1} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+\end{equation}
+where we can express the integral in terms of the modified Bessel function \eqref{bessel_integral}. Plugging in \eqref{expansion_x=mu_pre}, now yields the alternating series
+\begin{equation}\label{series_x=mu_1}
+F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty} \frac{(-1)^k (-\beta)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\delta}{\gamma}\right)^k K_k(\gamma \delta).
+\end{equation}
+Similarly, using \eqref{phi_expansion_2} yields
+\begin{equation}\label{series_x=mu_2}
+F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!} \left(\frac{\delta}{\alpha}\right)^k K_k(\alpha \delta).
+\end{equation}
+The latter expansion being more convenient when $\gamma \to 0$, i.e., $\alpha \sim \beta$.
+
+
 
 \subsection{Expansions: general case}
 \subsubsection{Expansions $|x-\mu| \to 0$ (option 1)}
