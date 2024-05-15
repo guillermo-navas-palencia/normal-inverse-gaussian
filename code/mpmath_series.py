@@ -83,6 +83,10 @@ def series_x_mu_b0_pos(x, alpha, mu, delta, N, digits=50):
         # estimate1 = sqrt(pi / (2 * alpha * omega)) * (x-mu)**k * alpha ** 2 * exp(-alpha * omega) / fac2(2*k + 1)
         # estimate2 = sqrt(pi) / (2 * alpha * omega) * gamma(k + 1) / gamma(k + 3/2)
         # print(k, float(r * q), float(estimate1), float(estimate2))
+        # estimate = sqrt(pi / e) * (alpha * omega)**(-k - 1) / sqrt(4*k + 2) * ((2*k + 2) / (2*k + 1)) ** (k + 1/2)
+        # estimate1 = sqrt(pi / e) / sqrt(4*k + 2) * ((2*k + 2) / (2*k + 1)) ** (k + 1/2) * 1/(alpha * omega) * ((x-mu) / omega)**(2*k)
+        # estimate2 = estimate * z**k
+        # print(k, float(r*q), float(estimate1), float(estimate2), float(((x-mu) / omega)**(2*k)))
 
     s *= (x - mu) * alpha / omega
     C = delta * exp(delta * alpha) / pi

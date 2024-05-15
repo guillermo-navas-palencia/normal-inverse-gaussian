@@ -6,16 +6,16 @@
 \contentsline {section}{\numberline {3}Methods of computation}{3}
 \contentsline {subsection}{\numberline {3.1}Expansions: case $\beta = 0$}{4}
 \contentsline {subsubsection}{\numberline {3.1.1}Expansions $|x-\mu | \to 0$}{4}
-\contentsline {subsubsection}{\numberline {3.1.2}Expansion $|x-\mu | \to \infty $}{6}
-\contentsline {subsubsection}{\numberline {3.1.3}Uniform expansion $\alpha \to \infty $, $\alpha \sim \delta $ and $|x-\mu | \gg 0$}{6}
-\contentsline {subsection}{\numberline {3.2}Expansions: case $x = \mu $}{7}
+\contentsline {subsubsection}{\numberline {3.1.2}Expansion $|x-\mu | \to \infty $}{7}
+\contentsline {subsubsection}{\numberline {3.1.3}Uniform expansion $\alpha \to \infty $, $\alpha \sim \delta $ and $|x-\mu | \gg 0$}{7}
+\contentsline {subsection}{\numberline {3.2}Expansions: case $x = \mu $}{8}
 \contentsline {subsection}{\numberline {3.3}Expansions: general case}{8}
 \contentsline {subsubsection}{\numberline {3.3.1}Expansions $|x-\mu | \to 0$ (option 1)}{8}
 \contentsline {subsubsection}{\numberline {3.3.2}Expansions $|x-\mu | \to 0$ (option 2)}{8}
 \contentsline {subsubsection}{\numberline {3.3.3}Expansion $\alpha \to \infty , \delta \to \infty $}{9}
 \contentsline {subsubsection}{\numberline {3.3.4}Expansion $|x-\mu | \to \infty $}{9}
-\contentsline {subsection}{\numberline {3.4}Numerical integration}{9}
-\contentsline {subsection}{\numberline {3.5}Inversion methods}{10}
+\contentsline {subsection}{\numberline {3.4}Numerical integration}{10}
+\contentsline {subsection}{\numberline {3.5}Inversion methods}{11}
 \contentsline {section}{\numberline {4}Algorithmic details and implementation}{11}
 \contentsline {subsection}{\numberline {4.1}Handling large parameters}{11}
 \contentsline {subsection}{\numberline {4.2}Evaluation of Bessel-type expansions}{11}
@@ -25,7 +25,7 @@
 \contentsline {section}{\numberline {5}Numerical experiments}{11}
 \contentsline {section}{\numberline {6}Conclusions}{11}
 \contentsline {section}{\numberline {A}The function $\Phi \left (\frac {a}{\sqrt {t}} + b\sqrt {t}\right )$}{11}
-\contentsline {subsubsection}{\numberline {A.0.1}Expansion $t \to 0$}{11}
-\contentsline {subsubsection}{\numberline {A.0.2}Expansion $t \to \infty $}{12}
+\contentsline {subsubsection}{\numberline {A.0.1}Expansion $t \to 0$}{12}
+\contentsline {subsubsection}{\numberline {A.0.2}Expansion $t \to \infty $}{13}
 \contentsline {subsubsection}{\numberline {A.0.3}Expansion $t \to u$}{13}
 \contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{14}
