@@ -202,7 +202,7 @@ Consider the integral representation
 \begin{equation}\label{integral_phi2}
 F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\sqrt{2\pi}} \int_0^{\infty} \Phi\left(\frac{x - \mu}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
 \end{equation}
-To obtain series expansion for $|x-\mu| \to 0$, we can proceed expanding $\Phi\left(\frac{x-\mu}{\sqrt{t}}\right)$, using the two well-known absolutely convergent series expansions of $\Phi(x)$ \cite[\S 2]{Lebedev1972}
+To obtain a series expansion for $|x-\mu| \to 0$, we can proceed expanding $\Phi\left(\frac{x-\mu}{\sqrt{t}}\right)$, using the two well-known absolutely convergent series expansions of $\Phi(x)$ \cite[\S 2]{Lebedev1972}
 \begin{equation}\label{phi_expansion_1}
 \Phi(x) = \frac{1}{2} + \frac{1}{\sqrt{2\pi}}\sum_{k=0}^{\infty} \frac{(-1)^k x^{2k + 1}}{2^k k! (2k+1)},
 \end{equation}
@@ -220,11 +220,11 @@ which has a closed-form in terms of the modified Bessel function
 \end{equation}
 Inserting \eqref{bessel_integral} in \eqref{phi_expansion_integral_xmu_b0_alternating} and rearranging terms, we obtain the the alternating series
 \begin{equation}\label{expansion_xmu_b0_alternating}
-F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi}\sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\alpha}{\delta}\right)^{k+1}K_{k+1}(\alpha \delta).
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi}\sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\alpha}{\delta}\right)^{k+1}K_{k+1}(\alpha \delta).
 \end{equation}
 To obtain a series with positive terms for $x - \mu > 0$, we choose the alternative expansion of $\Phi(x)$ in \eqref{phi_expansion_2}, obtaining
 \begin{equation}\label{expansion_xmu_b0_positive}
-F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
 \end{equation}
 
 The series expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} can be written as a truncated series with the corresponding remainder term. For example, truncating the series \eqref{expansion_xmu_b0_positive} at $N$, we can write
@@ -233,7 +233,7 @@ The series expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_
 \end{equation}
 and
 \begin{equation*}
-F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi}\frac{(x-\mu)\alpha}{\omega}\sum_{k=0}^{N-1}T_k + R_N.
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi}\frac{(x-\mu)\alpha}{\omega}\sum_{k=0}^{N-1}T_k + R_N.
 \end{equation*}
 
 The error term in \eqref{expansion_xmu_b0_positive_error_term} can be bounded by comparison with a geometric series
@@ -256,7 +256,7 @@ x K_{\nu + 1}(x) I_{\nu}(x) \le 1.
 \end{equation}
 with the lower bound \cite{Luke1972}
 \begin{equation}
-\left(\frac{x}{2}\right)^{\nu}\frac{1}{\Gamma(\nu + 1)} < I_{\nu}(x)
+\left(\frac{x}{2}\right)^{\nu}\frac{1}{\Gamma(\nu + 1)} < I_{\nu}(x).
 \end{equation}
 Hence,
 \begin{equation}
@@ -270,7 +270,7 @@ Given $\alpha > 0$ and $\omega > 0$, $x-\mu \in \mathbb{R}$ and $N \in \mathbb{N
 \left|\sum_{k=N}^{\infty} T_k \right| \le \frac{|T_N|}{1 - C},
 \end{equation}
 where
-\begin{equation}
+\begin{equation}\label{bound_TN_xmu_b0_positive}
 T_N < \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{\pi}{N + 1/2}}.
 \end{equation}
 and
@@ -314,11 +314,39 @@ C < \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\al
 \end{equation*}
 \end{proof}
 
+To study the regime of applicability for the expansion, we can estimate the required number of terms $N$ equating the bound of $T_N$ in \eqref{bound_TN_xmu_b0_positive} times the normalizing factor with the requested absolute error $\epsilon$ and solving for $N$, which gives
+\begin{equation}
+N \approx -\frac{\Re(W_{-1}(D))}{4 \log(A)} + \frac{1}{2}, \quad A = \frac{x-\mu}{\omega}, \quad B = \frac{A\delta e^{\delta \alpha}}{2\omega\pi}, \quad C = \frac{\epsilon^2}{B^2 \pi}, \quad D = -\frac{4 \log(A)}{C A^2}
+\end{equation}
+where $W_k(x)$ denotes the Lambert $W$ function \cite[\S 4.13]{NIST:DLMF}. The branch $k=-1$ is used to obtain the maximum real $N$. Note that since $A < 1$ by definition, $D > 0$. When $C A^2$ is tiny, $W_{-1}(D)$ can be approximated as $\Re(W_{-1}(D)) \sim \log(D) - \log(\log(D))$ using the first two terms of the asymptotic expansion in \cite[\S 4.13.10]{NIST:DLMF}.
+
+The previous analysis performed for the expansion \eqref{expansion_xmu_b0_positive} is repeated for the alternating expansion \eqref{expansion_xmu_b0_alternating}. The main results are summarized below for the purpose of brevity. The expansion \eqref{expansion_xmu_b0_alternating} rewritten including the remainder term follows
+\begin{equation}
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha e^{\delta \alpha}}{\pi} \left( \sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty}T_k\right),  \quad T_k = \left(-\frac{(x-\mu)^2 \alpha}{\delta}\right)^k \frac{K_{k+1}(\alpha \delta)}{2^k k! (2k + 1)}.
+\end{equation}
+The last omitted term $T_N$ satisfies
+\begin{equation}
+|T_N| < \frac{1}{\alpha \delta} \left(\frac{x-\mu}{\delta}\right)^{2N} \frac{1}{2N + 1},
+\end{equation} 
+and the number of terms $N$ can be determined employing the Lambert $W$ function for a given error $\epsilon$
+\begin{equation}
+N \approx \frac{\Re(W_{-1}(D)) + \log(A)}{2 \log(A)}, \quad A = \frac{x-\mu}{\delta}, \quad B = \frac{A e^{\delta \alpha}}{\pi}, \quad C = \frac{\epsilon}{B}, \quad D = -\frac{\log(A)}{CA}.
+\end{equation}
+
+Now we are in position to compare both series and their corresponding domains of usability. A first important observation is that the alternating series \eqref{expansion_xmu_b0_alternating} does not converge when $|x - \mu| > \delta$, and the number of terms $N$ increases rapidly when $|x - \mu| \sim \delta$. In contrast, the series \eqref{expansion_xmu_b0_positive} is absolutely convergent, although $N$ also grows considerably when $\alpha\omega \to 0$. The convergence the latter can be reliably assessed using the fact that $|x-\mu|/\omega < 1$, then from \eqref{expansion_xmu_b0_positive_error_term} we have
+\begin{equation*}
+T_k = \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^k \frac{K_{k+1}(\alpha \omega)}{(2k +1)!!} < (|x-\mu|\alpha)^k \frac{K_{k+1}(\alpha \omega)}{(2k +1)!!},
+\end{equation*}
+and taking the asymptotic estimates of $K_{k+1}(\alpha\omega)$ for $\alpha \omega \to \infty$ and $\alpha \omega \to 0$ [References to Appendix]:
+\begin{align*}
+T_k &\sim \sqrt{\frac{\pi}{2\alpha \omega}} \frac{|x-\mu|^k \alpha^k e^{-\alpha \omega}}{(2k + 1)!!}, &\alpha\omega \to \infty\\
+T_k &\sim \frac{\pi}{2 \alpha \omega} \frac{\Gamma(k + 1)}{\Gamma(k + 3/2)}, & \alpha\omega \to 0.
+\end{align*}
+From the previous asymptotic estimates of $T_k$, we observe that the series expansion \eqref{expansion_xmu_b0_positive} is slowly convergent for $\alpha\omega \to 0$. Conversely, only a few terms are required for $\alpha\omega \to \infty$ when using machine precision. It is worth noticing that performing a naive computation of the terms $T_k$ in double-precision arithmetic for large $N$ poses underflow and overflow problems since the numerator (denominator) rapidly goes to infinity (zero) as $N$ increases. In Section \ref{subsection_evaluation_bessel_expansions}, we discuss alternative summation methods to avoid cancellation issues and precision loss, and the usage of convergence acceleration methods for the case $\alpha\omega \to 0$.
+
+
 \begin{itemize}
-\item Show bound for alternating sum
-\item Approximation of the number of terms solving $T_N$ in terms of Lambert.
 \item Tables with examples of bound accuracy.
-\item Decision about the region of usability for each expansion.
 \end{itemize}
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
@@ -573,7 +601,7 @@ Ideas:
 \section{Algorithmic details and implementation}
 \subsection{Handling large parameters}
 Exponent overflow issues in $\exp(\alpha \delta)$. Logarithmic transformation. Use scaled Bessel function.
-\subsection{Evaluation of Bessel-type expansions}
+\subsection{Evaluation of Bessel-type expansions}\label{subsection_evaluation_bessel_expansions}
 
 \subsubsection{Partial sums recurrence}
 As an example, series \eqref{expansion_xmu_b0_positive}.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.5.26)  14 MAY 2024 00:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.5.26)  15 MAY 2024 01:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1028,23 +1028,23 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 150.
  [2] [3] [4] [5]
-[6] [7] [8] [9] [10]
+[6] [7] [8] [9] [10] [11]
 Missing character: There is no Â in font cmr9!
 Missing character: There is no ² in font cmr9!
 
-Overfull \hbox (8.33536pt too wide) in paragraph at lines 663--665
+Overfull \hbox (8.33536pt too wide) in paragraph at lines 691--693
 \OT1/cmr/m/n/9 The ex-pan-sion is con-ver-gent for $\OML/cmm/m/it/9 t < \OT1/cm
 r/m/n/9 1$. The con-ver-gence fol-lows from the asymp-totic es-ti-mate of $(\OM
 L/cmm/m/it/9 b=a\OT1/cmr/m/n/9 )[]\OML/cmm/m/it/9 K[]\OT1/cmr/m/n/9 (\OML/cmm/m
 /it/9 ab\OT1/cmr/m/n/9 ) \OMS/cmsy/m/n/9 ^^X
  []
 
-[11] [12] (./nig.bbl) [13] (./nig.aux) ) 
+[12] (./nig.bbl [13]) [14] (./nig.aux) ) 
 Here is how much of TeX's memory you used:
- 26232 strings out of 492982
- 505766 string characters out of 6134896
- 545075 words of memory out of 5000000
- 29366 multiletter control sequences out of 15000+600000
+ 26234 strings out of 492982
+ 505833 string characters out of 6134896
+ 546100 words of memory out of 5000000
+ 29368 multiletter control sequences out of 15000+600000
  548575 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,12n,54p,10380b,288s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1072,10 +1072,10 @@ live/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on nig.pdf (13 pages, 333536 bytes).
+Output written on nig.pdf (14 pages, 339488 bytes).
 PDF statistics:
- 159 PDF objects out of 1000 (max. 8388607)
- 109 compressed objects within 2 object streams
+ 162 PDF objects out of 1000 (max. 8388607)
+ 111 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  53 words of extra memory for PDF output out of 10000 (max. 10000000)
 
