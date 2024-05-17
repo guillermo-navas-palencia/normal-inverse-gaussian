@@ -47,6 +47,29 @@ def estimate_N_series_x_mu_b0_pos(x, alpha, mu, delta, epsilon=1e-16):
     return mp.re(lambertw(-1, D)) / 4 / log(A) + 1/2
 
 
+def estimate_N_series_x_mu_b0_pos_fast(x, alpha, mu, delta, epsilon=1e-16):
+    omega = sqrt(delta**2 + (x-mu)**2)
+
+    A = exp(1/2 - alpha * omega) * sqrt(pi / (2 * alpha * omega)) / sqrt(2)
+    A *= (x - mu) * alpha / omega * delta * exp(delta * alpha) / pi
+    A = epsilon / A
+
+    B = (x - mu)**2 * alpha / omega
+
+    return -log(A) / lambertw(-2 * log(A) / B / sqrt(e))
+
+
+def estimate_Tk_series_x_mu_b0_pos_fast(x, alpha, mu, delta, N):
+    omega = sqrt(delta**2 + (x-mu)**2)
+
+    A = exp(- alpha * omega) * sqrt(pi / (2 * alpha * omega))
+    A *= (x - mu) * alpha / omega * delta * exp(delta * alpha) / pi
+    B = (x - mu)**2 * alpha / omega
+
+    return A * B**N * exp(N + 1/2) / sqrt(2) / (2*N)**(N)
+    # return -log(A) / lambertw(-2 * log(A) / B / sqrt(e))
+
+
 def bound_series_x_mu_b0_pos(x, alpha, mu, delta, N):
     x, alpha, mu, delta = arg_mpmathify(x, alpha, mu, delta)
     omega = sqrt(delta**2 + (x-mu)**2)

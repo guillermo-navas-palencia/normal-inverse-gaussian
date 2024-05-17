@@ -345,7 +345,9 @@ T_k \sim \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2k}\sqrt{\frac
 where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial.
 It is worth noticing that performing a naive computation of the terms $T_k$ in double-precision arithmetic for large $N$ poses underflow and overflow problems since the numerator (denominator) rapidly goes to infinity (zero) as $N$ increases. In Section \ref{subsection_evaluation_bessel_expansions}, we discuss alternative summation methods to avoid cancellation issues and precision loss, and the usage of convergence acceleration methods for large $N$.
 
-It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} for small values $\alpha\omega$, but it is conservative for larger values, where the rate of convergence improves. Nevertheless, in practice, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should selected as the method of computation given a certain parameter region. For a detailed discussion, we refer to Section \ref{subsection_implementation}.
+It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} for small values $\alpha\omega$, but it is conservative for larger values, where the rate of convergence improves. 
+TODO: As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced... use 
+
 \begin{table}[H]
 	\centering
 	\scalebox{0.85}{
@@ -361,11 +363,11 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
     10 & 1/10 & 1/5 & 10 & 1 & 53 & $3.8\cdot 10^{-18}$ & $3.9\cdot 10^{-18}$\\
 	\hline\\
 	\end{tabular}}
-	\caption{Absolute error and bound \eqref{bound_remainder_xmu_b0_positive} estimating $N$ using \eqref{N_expansion_xmu_b0_positive} for the series expansion  \eqref{expansion_xmu_b0_positive}.}
+	\caption{Absolute error and bound \eqref{bound_remainder_xmu_b0_positive} estimating $N$ using \eqref{N_expansion_xmu_b0_positive} for the series expansion  \eqref{expansion_xmu_b0_positive} with machine-precision absolute error.}
 	\label{table_bound_remainder_xmu_b0_positive}
 \end{table}
 
-As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced...
+TODO: Nevertheless, in practice, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should selected as the method of computation given a certain parameter region. For a detailed discussion, we refer to Section \ref{subsection_implementation}.
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
 For $x - \mu < 0$
