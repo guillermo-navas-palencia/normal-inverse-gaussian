@@ -369,6 +369,56 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
 
 TODO: Nevertheless, in practice, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should selected as the method of computation given a certain parameter region. For a detailed discussion, we refer to Section \ref{subsection_implementation}.
 
+\subsubsection{Convergence acceleration of the expansion $|x-\mu| \to 0$}
+\begin{equation}
+F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi} \frac{(x-\mu)\alpha}{\omega} \left(\sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty} T_k\right),
+\end{equation}
+where
+\begin{equation}
+T_k = \frac{K_{k+1}(\alpha\omega)}{(2k + 1)!!} z^k, \quad z = \frac{(x-\mu)^2 \alpha}{\omega}.
+\end{equation}
+Remainder $R_N = \sum_{k=N}^{\infty} T_k$.
+
+Basset's integral \cite[\S 10.32.11]{NIST:DLMF}
+\begin{equation}
+K_{k+1}(\alpha\omega) = \frac{\Gamma(k + 3/2)}{\sqrt{\pi}}\left(\frac{2\alpha}{\omega}\right)^{k+1} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{k + 3/2}} \mathop{dt}
+\end{equation}
+
+\begin{align}
+R_N &= \frac{1}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right) \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{3/2}} \left[\sum_{k=N}^{\infty} \left(\frac{2z\alpha}{\omega (t^2 + \alpha^2)}\right)^k \frac{\Gamma(k + 3/2)}{(2k + 1)!!}\right] \mathop{dt}\\
+&= C \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}.
+\end{align}
+To simplify, we used
+\begin{equation}
+m = \frac{2z\alpha}{\omega} = 2\left(\frac{(x-\mu)\alpha}{\omega}\right)^2,  \quad C = \frac{2}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right)\frac{\Gamma(N + 3/2)}{(2N + 1)!!} m^N
+\end{equation}
+
+Expand $\cos(\omega t)$
+\begin{equation}
+R_N = C \sum_{k=0}^{\infty} \frac{(-1)^k \omega^{2k}}{(2k)!} \int_0^{\infty} \frac{t^{2k}}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}.
+\end{equation}
+Comment about convergence of the integral ($k \le N$).
+\begin{equation}
+\int_0^{\infty} \frac{t^{2k}}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt} = P_k + Q_k,
+\end{equation}
+\begin{align}
+P_k &= \frac{2^{N-2}\alpha^{2(k - N - 1)} \Gamma(N + 1 - k) \Gamma(k - 1/2)}{\sqrt{\pi} (2N + 1)!!} \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right)\\
+Q_k &= \frac{2^{N-1-k}(2\alpha^2 - m)^{k - 1/2} \pi \sec(k\pi)}{m^{N + 1/2}}
+\end{align}
+
+\begin{equation}
+S_P = \frac{(2m)^N }{\alpha^{2n + 1} \omega\pi} \frac{\Gamma(N + 3/2)}{(2N + 1)!! (2N - 1)!!} \sum_{k=0}^{N} \frac{(-1)^k (\alpha\omega)^{2k}}{(2k)!} \Gamma(N + 1 - k) \Gamma(k - 1/2) \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right)
+\end{equation}
+
+\begin{align}
+S_Q &= C \frac{2^{N-1}}{m^{N + 1/2}\sqrt{2\alpha^2 - m}} \pi \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!} \left(\frac{\omega^2(2\alpha^2 - m)}{2}\right)^k \sec(k\pi)\nonumber\\
+&= \frac{\Gamma(N + 3/2) 2^{N+1}}{(2N + 1)!!} \frac{\alpha}{\omega}\sqrt{\frac{\pi}{m(2\alpha^2 - m)}}\cosh\left(\sqrt{\frac{\omega^2 (2\alpha^2 - m)}{2}}\right)
+\end{align}
+
+\begin{equation}
+R_N = S_P + S_Q.
+\end{equation}
+
 \subsubsection{Expansion $|x-\mu| \to \infty$}
 For $x - \mu < 0$
 
