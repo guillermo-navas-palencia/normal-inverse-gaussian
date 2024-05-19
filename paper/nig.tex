@@ -198,11 +198,11 @@ In this Section, we describe the methods used for efficient computation of the C
 \subsection{Expansions: case $\beta = 0$}
 
 \subsubsection{Expansions $|x-\mu| \to 0$}
-Consider the integral representation
+For developing a series expansion for the case $|x-\mu| \to 0$, we start from a integral representation in \eqref{integral_phi} after expanding the exponent term of the integrand,
 \begin{equation}\label{integral_phi2}
 F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\sqrt{2\pi}} \int_0^{\infty} \Phi\left(\frac{x - \mu}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
 \end{equation}
-To obtain a series expansion for $|x-\mu| \to 0$, we can proceed expanding $\Phi\left(\frac{x-\mu}{\sqrt{t}}\right)$, using the two well-known absolutely convergent series expansions of $\Phi(x)$ \cite[\S 2]{Lebedev1972}
+We proceed expanding the term $\Phi\left(\frac{x-\mu}{\sqrt{t}}\right)$, by using the two well-known absolutely convergent series expansions of $\Phi(x)$ \cite[\S 2]{Lebedev1972}
 \begin{equation}\label{phi_expansion_1}
 \Phi(x) = \frac{1}{2} + \frac{1}{\sqrt{2\pi}}\sum_{k=0}^{\infty} \frac{(-1)^k x^{2k + 1}}{2^k k! (2k+1)},
 \end{equation}
@@ -212,9 +212,9 @@ and
 \end{equation}
 If we choose the expansion \eqref{phi_expansion_1} and interchange the order of integration and summation, the resulting integral has the form
 \begin{equation}\label{phi_expansion_integral_xmu_b0_alternating}
-F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\sqrt{2\pi}} \int_0^{\infty}\sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k + 1}}{2^k k! (2k + 1)}\int_0^{\infty} t^{-k-2} e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt},
+F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\sqrt{2\pi}} \sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k + 1}}{2^k k! (2k + 1)}\int_0^{\infty} t^{-k-2} e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt},
 \end{equation}
-which has a closed-form in terms of the modified Bessel function
+where the integral has a closed-form in terms of the modified Bessel function
 \begin{equation}\label{bessel_integral}
 \int_0^{\infty} t^{\lambda - 1}e^{-a/t - zt} \mathop{dt} = 2\left(\frac{\alpha}{z}\right)^{\lambda/2} K_{\lambda}(2\sqrt{\alpha z}).
 \end{equation}
@@ -222,27 +222,25 @@ Inserting \eqref{bessel_integral} in \eqref{phi_expansion_integral_xmu_b0_altern
 \begin{equation}\label{expansion_xmu_b0_alternating}
 F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi}\sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k+1}}{2^k k! (2k + 1)} \left(\frac{\alpha}{\delta}\right)^{k+1}K_{k+1}(\alpha \delta).
 \end{equation}
-To obtain a series with positive terms for $x - \mu > 0$, we choose the alternative expansion of $\Phi(x)$ in \eqref{phi_expansion_2}, obtaining
+Moreover, to obtain a similar series with positive terms for $x - \mu > 0$, we choose the alternative expansion of $\Phi(x)$ in \eqref{phi_expansion_2}, yielding
 \begin{equation}\label{expansion_xmu_b0_positive}
 F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
 \end{equation}
 
-The series expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} can be written as a truncated series with the corresponding remainder term. For example, truncating the series \eqref{expansion_xmu_b0_positive} at $N$, we can write
+Note that the series expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} can be written as a truncated series with the corresponding remainder term. For example, truncating the series \eqref{expansion_xmu_b0_positive} at $N$, we can write
 \begin{equation}\label{expansion_xmu_b0_positive_error_term}
-\sum_{k=0}^{\infty} T_k = \sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty}T_k, \quad T_k = \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^k \frac{K_{k+1}(\alpha \omega)}{(2k +1)!!},
+\sum_{k=0}^{\infty} T_k = \sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty}T_k, \quad T_k = \left(\frac{(x-\mu)^2 \alpha}{\omega}\right)^k \frac{K_{k+1}(\alpha \omega)}{(2k +1)!!}.
 \end{equation}
-and
-\begin{equation*}
-F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi}\frac{(x-\mu)\alpha}{\omega}\sum_{k=0}^{N-1}T_k + R_N.
-\end{equation*}
+Thus, one has the series with remainder term $R_N = \sum_{k=N}^{\infty}T_k$
+\begin{equation}\label{expansion_xmu_b0_positive_with_remainder}
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi}\frac{(x-\mu)\alpha}{\omega}\left(\sum_{k=0}^{N-1}T_k + R_N\right).
+\end{equation}
 
-The error term in \eqref{expansion_xmu_b0_positive_error_term} can be bounded by comparison with a geometric series
+For a rigorous evaluation of error bounds given a number of terms $N$, it is convenient to calculate an upper bound for $R_N$ in \eqref{expansion_xmu_b0_positive_error_term}. We can, for example, bound $R_N$ by comparison with a geometric series
 \begin{equation}
-\left|\sum_{k=N}^{\infty} T_k \right| \le \frac{|T_N|}{1 - C}, \quad C = \left|\frac{T_{N+1}}{T_N}\right|
+\left|R_N \right| \le \frac{|T_N|}{1 - C}, \quad C = \left|\frac{T_{N+1}}{T_N}\right|
 \end{equation}
-iff $C < 1$, where $T_N$ is the first omitted term in the expansion.
-
-The following lemma provides an upper bound for $K_{\nu+1}(x)$, required for deriving an upper bound for the term $T_N$.
+iff $C < 1$, where $T_N$ is the first omitted term in the expansion. The following lemma provides an upper bound for $K_{\nu+1}(x)$, required for a posterior derivation of an upper bound for the term $T_N$.
 \begin{lemma}\label{lemma_1}
 For $x \ge 0$ and $\nu \ge -\frac{1}{2}$ we have
 \begin{equation}
@@ -258,16 +256,16 @@ with the lower bound \cite{Luke1972}
 \begin{equation}
 \left(\frac{x}{2}\right)^{\nu}\frac{1}{\Gamma(\nu + 1)} < I_{\nu}(x).
 \end{equation}
-Hence,
+Then, it follows that
 \begin{equation}
 K_{\nu + 1}(x) \le \frac{1}{x I_{\nu}(x)} < \frac{\Gamma(\nu + 1)2^{\nu}}{x^{\nu + 1}}.
 \end{equation}
 \end{proof}
 
-\begin{theorem}
-Given $\alpha > 0$ and $\omega > 0$, $x-\mu \in \mathbb{R}$ and $N \in \mathbb{N}$, the error term in \eqref{expansion_xmu_b0_positive_error_term} satisfies
+\begin{theorem}\label{theorem_expansion_xmu_b0_postivie_remainder}
+Given $\alpha > 0$, $\omega > 0$, $x-\mu \in \mathbb{R}$ and $N \in \mathbb{N}$, the remainder term in \eqref{expansion_xmu_b0_positive_with_remainder} satisfies
 \begin{equation}\label{bound_remainder_xmu_b0_positive}
-\left|\sum_{k=N}^{\infty} T_k \right| \le \frac{|T_N|}{1 - C},
+R_N \le \frac{|T_N|}{1 - C},
 \end{equation}
 where
 \begin{equation}\label{bound_TN_xmu_b0_positive}
@@ -294,21 +292,20 @@ where we use the fact that $\Gamma(N + 3/2) = (N + 1/2) \Gamma(N + 1/2)$ and the
 \begin{equation}
 \frac{\Gamma(x + 1)}{\Gamma(x+s)} \le (x + s)^{1-s}, \quad s \in (0, 1).
 \end{equation}
-
 Thus, the following bound for $T_N$ holds
 \begin{equation}
 T_N < \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{\pi}{N + 1/2}}.
 \end{equation}
 
-An explicit formula for $C$ in terms of the ratio of modified Bessel functions is
+For the ratio $C$, an explicit formula in terms of the ratio of modified Bessel functions is
 \begin{equation}
 C = \frac{T_{N+1}}{T_N} = \frac{(x-\mu)^2 \alpha}{\omega (2N + 3)} \frac{K_{N+2}(\alpha\omega)}{K_{N+1}(\alpha\omega)}.
 \end{equation}
-To bound $C$, we use the sharp bound for the ratio of modified Bessel functions \cite{Segura2023}
+The ratio can be bounded using a sharp bound for the ratio of modified Bessel functions \cite{Segura2023}, yielding
 \begin{equation}
-\frac{K_{N+2}(\alpha\omega)}{K_{N+1}(\alpha\omega)} < \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{\alpha \omega},
+\frac{K_{N+2}(\alpha\omega)}{K_{N+1}(\alpha\omega)} < \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{\alpha \omega}.
 \end{equation}
-and we obtain
+Then, we have
 \begin{equation*}
 C < \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\alpha\omega)^2}}{2N + 3}.
 \end{equation*}
@@ -322,9 +319,9 @@ where $W_k(x)$ denotes the Lambert $W$ function \cite[\S 4.13]{NIST:DLMF}. The b
 
 The previous analysis performed for the expansion \eqref{expansion_xmu_b0_positive} is repeated for the alternating expansion \eqref{expansion_xmu_b0_alternating}. The main results are summarized below for the purpose of brevity. The expansion \eqref{expansion_xmu_b0_alternating} rewritten including the remainder term follows
 \begin{equation}
-F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha e^{\delta \alpha}}{\pi} \left( \sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty}T_k\right),  \quad T_k = \left(-\frac{(x-\mu)^2 \alpha}{\delta}\right)^k \frac{K_{k+1}(\alpha \delta)}{2^k k! (2k + 1)}.
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha e^{\delta \alpha}}{\pi} \left( \sum_{k=0}^{N-1} T_k + R_N\right),  \quad T_k = \left(-\frac{(x-\mu)^2 \alpha}{\delta}\right)^k \frac{K_{k+1}(\alpha \delta)}{2^k k! (2k + 1)}.
 \end{equation}
-The last omitted term $T_N$ satisfies
+The last omitted term $T_N$ satisfies\footnote{The corresponding upper bound for $C$ can be computed straightforwardly following the procedure described in Theorem \ref{theorem_expansion_xmu_b0_postivie_remainder}.}
 \begin{equation}
 |T_N| < \frac{1}{\alpha \delta} \left(\frac{x-\mu}{\delta}\right)^{2N} \frac{1}{2N + 1},
 \end{equation} 
@@ -333,43 +330,42 @@ and the number of terms $N$ can be determined employing the Lambert $W$ function
 N \approx \frac{\Re(W_{-1}(D)) + \log(A)}{2 \log(A)}, \quad A = \frac{x-\mu}{\delta}, \quad B = \frac{A e^{\delta \alpha}}{\pi}, \quad C = \frac{\epsilon}{B}, \quad D = -\frac{\log(A)}{CA}.
 \end{equation}
 
-Now we are in position to compare both series and their corresponding domains of applicability. A first important observation is that the alternating series \eqref{expansion_xmu_b0_alternating} does not converge when $|x - \mu| > \delta$, and the number of terms $N$ increases rapidly when $|x - \mu| \sim \delta$. In contrast, the series \eqref{expansion_xmu_b0_positive} is absolutely convergent, although $N$ also grows considerably when $\alpha\omega \to 0$. The convergence of the latter can be reliably assessed applying to $T_k$ in \eqref{expansion_xmu_b0_positive_error_term} the asymptotic estimates of $K_{k+1}(\alpha\omega)$ for $\alpha \omega \to 0$ and $\alpha \omega \to \infty$, \eqref{besselk_x_to_0} and \eqref{besselk_x_to_inf}, respectively:
+Now we are in position to compare both series and their respective domains of applicability. A first important observation is that the alternating series \eqref{expansion_xmu_b0_alternating} does not converge when $|x - \mu| > \delta$, and the number of terms $N$ increases rapidly when $|x - \mu| \sim \delta$. In contrast, the series \eqref{expansion_xmu_b0_positive} is absolutely convergent. The convergence of the latter can be reliably assessed applying to $T_k$ in \eqref{expansion_xmu_b0_positive_error_term} the asymptotic estimates of $K_{k+1}(\alpha\omega)$ for $\alpha \omega \to 0$ and $\alpha \omega \to \infty$, \eqref{besselk_x_to_0} and \eqref{besselk_x_to_inf}, respectively:
 \begin{align*}
 T_k &\sim \frac{\sqrt{\pi}}{2\alpha\omega} \left(\frac{x-\mu}{\omega}\right)^{2k}\frac{\Gamma(k + 1)}{\Gamma(k + 3/2)}, & \alpha\omega \to 0,\\
 T_k &\sim \sqrt{\frac{\pi}{2\alpha \omega}} \left(\frac{(x-\mu)^2\alpha}{\omega}\right)^k \frac{e^{-\alpha \omega}}{(2k + 1)!!}, &\alpha\omega \to \infty.
 \end{align*}
-These asymptotic estimates of $T_k$ show that the series expansion \eqref{expansion_xmu_b0_positive} is slowly convergent for $\alpha\omega \to 0$, and the ratio of convergence improves when $\alpha\omega \to \infty$, requiring only a few terms when performing computations using machine precision. For $k \to \infty$, occurring for large values of $|x-\mu|$ or when $\alpha\omega$ is small, $T_k$ follows the asymptotic behaviour
+The asymptotic estimates of $T_k$ show that the series expansion \eqref{expansion_xmu_b0_positive} is slowly convergent when
+\begin{equation*}
+\left(\frac{x-\mu}{\omega}\right)^2 \to 1 \Longleftrightarrow \delta \to 0,
+\end{equation*}
+and the ratio of convergence improves when $\delta \to \infty$, then it can be viewed as an asymptotic expansion. For $k \to \infty$, $T_k$ follows the asymptotic behaviour
 \begin{equation*}
 T_k \sim \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2k}\sqrt{\frac{\pi}{e}}\frac{1}{\sqrt{4k + 2}}\left(\frac{2k + 2}{2k + 1}\right)^{k + \frac{1}{2}}, \quad k \to \infty,
 \end{equation*}
-where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial.
-It is worth noticing that performing a naive computation of the terms $T_k$ in double-precision arithmetic for large $N$ poses underflow and overflow problems since the numerator (denominator) rapidly goes to infinity (zero) as $N$ increases. In Section \ref{subsection_evaluation_bessel_expansions}, we discuss alternative summation methods to avoid cancellation issues and precision loss, and the usage of convergence acceleration methods for large $N$.
-
-It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} for small values $\alpha\omega$, but it is conservative for larger values, where the rate of convergence improves. 
-TODO: As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced... use 
+where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial. It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} after estimating $N$ to achieve machine-precision absolute error using \eqref{N_expansion_xmu_b0_positive}. For small values of $\alpha\omega$, but it is conservative for larger values, where the rate of convergence improves. As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced by selecting $N$ using the asymptotic estimate for $\alpha\omega \to \infty$ via binary search. Although, the bound might overestimate $N$ for some parameters, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should be selected as the method of computation given a certain parameter region. Table \ref{table_bound_remainder_xmu_b0_positive} also shows that for small $\delta$ and $\alpha\omega$, the required number of terms makes the series expansion impractical. In the next section, we present a convergence acceleration method to obtain a rapidly convergent series for theses cases.
 
 \begin{table}[H]
 	\centering
-	\scalebox{0.85}{
+	\scalebox{0.9}{
 \begin{tabular}{cccccccc}
 \hline
 $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_b0_positive} &  $R_N$ & Bound \eqref{bound_remainder_xmu_b0_positive}\\
 \hline
 	1 & 5 & 1/4 & 1 & 6.25 & 42 & $8.8\cdot 10^{-19}$ & $1.1\cdot 10^{-18}$\\
 	1/2 & 1/3 & 1/4 & 1/10 & 0.09 & 236 & $2.9\cdot 10^{-17}$ & $2.9\cdot 10^{-17}$\\
-    1/3 & 10 & 1/5 & 1/50 & 1.35 & 1494 & $2.1\cdot 10^{-16}$ & $2.2\cdot 10^{-16}$\\
+    1/3 & 10 & 1/5 & 1/50 & 1.35 & 1,494 & $2.1\cdot 10^{-16}$ & $2.2\cdot 10^{-16}$\\
     1 & 10 & 1/5 & 5 & 50.64 &  25 & $1.9\cdot 10^{-29}$ & $4.0\cdot 10^{-21}$\\
     3 & 10 & 1/5 & 10 & 103.85 & 53 & $2.4\cdot 10^{-36}$ & $1.4\cdot 10^{-19}$\\
     10 & 1/10 & 1/5 & 10 & 1 & 53 & $3.8\cdot 10^{-18}$ & $3.9\cdot 10^{-18}$\\
 	\hline\\
 	\end{tabular}}
-	\caption{Absolute error and bound \eqref{bound_remainder_xmu_b0_positive} estimating $N$ using \eqref{N_expansion_xmu_b0_positive} for the series expansion  \eqref{expansion_xmu_b0_positive} with machine-precision absolute error.}
+	\caption{The remainder of the series expansion  \eqref{expansion_xmu_b0_positive} and bound \eqref{bound_remainder_xmu_b0_positive}, estimating $N$ using \eqref{N_expansion_xmu_b0_positive} to achieve machine precision.}
 	\label{table_bound_remainder_xmu_b0_positive}
 \end{table}
 
-TODO: Nevertheless, in practice, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should selected as the method of computation given a certain parameter region. For a detailed discussion, we refer to Section \ref{subsection_implementation}.
-
 \subsubsection{Convergence acceleration of the expansion $|x-\mu| \to 0$}
+
 \begin{equation}
 F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi} \frac{(x-\mu)\alpha}{\omega} \left(\sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty} T_k\right),
 \end{equation}
@@ -408,7 +404,7 @@ Q_k &= \frac{2^{N-1-k}(2\alpha^2 - m)^{k - 1/2} \pi \sec(k\pi)}{m^{N + 1/2}}
 
 Terminating series
 \begin{equation}
-S_P = \frac{(2m)^N }{\alpha^{2n + 1} \omega\pi} \frac{\Gamma(N + 3/2)}{(2N + 1)!! (2N - 1)!!} \sum_{k=0}^{N} \frac{(-1)^k (\alpha\omega)^{2k}}{(2k)!} \Gamma(N + 1 - k) \Gamma(k - 1/2) \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right)
+S_P = \frac{(2m)^N }{\alpha^{2N + 1} \omega\pi} \frac{\Gamma(N + 3/2)}{(2N + 1)!! (2N - 1)!!} \sum_{k=0}^{N} \frac{(-1)^k (\alpha\omega)^{2k}}{(2k)!} \Gamma(N + 1 - k) \Gamma(k - 1/2) \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right)
 \end{equation}
 
 \begin{align}
@@ -428,18 +424,39 @@ The terms in $S_P$ and decreasing, being $j=N$ the smallest term. The last term 
 \begin{equation}
 \frac{(-1)^N (\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) \, _2F_1\left(1, 1; \frac{3}{2} -N, 1 - \frac{m}{2\alpha^2}\right)
 \end{equation}
-Using $\lim_{x \to 0}\, _2F_1\left(1, 1, \frac{3}{2}-k, z\right) = 1$, we have to solve for $N$
+Using $\lim_{x \to 0}\, _2F_1\left(1, 1, \frac{3}{2}-k, x\right) = 1$, we have to solve for $N$
 \begin{equation}
-\frac{(\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) = \epsilon
+\frac{(\sqrt{2m} \omega)^{2N}}{\alpha\omega \pi} \frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} = \epsilon
 \end{equation}
 
-\begin{align}
-\frac{\Gamma(N - 1/2)}{(2N)!} &\sim \sqrt{2} \sqrt{\frac{2N + 1}{2N - 1}} \frac{(N - 1/2)^{N - 1/2}}{(2N + 1)^{2N + 1}} e^{N + 3/2}, \quad N \to \infty\\
-&\le 2^{-2N - 1/2} \left(\frac{e}{N}\right)^N
-\end{align}
 \begin{equation}
-(\alpha\omega)^{2N} 2^{-2N - 1/2} \left(\frac{e}{N}\right)^N = \epsilon, \quad N \approx - \frac{\log(\epsilon\sqrt{2})}{W\left(-\frac{\log(\epsilon\sqrt{2})}{e^{\alpha\omega/2}} \right)}
+\frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} \sim \frac{\sqrt{\pi}}{4} \left(\frac{e}{N}\right)^{2N} 2^{-4N}, \quad N \to \infty
 \end{equation}
+\begin{equation}
+(\sqrt{2m} \omega)^{2N} \left(\frac{e}{N}\right)^{2N} 2^{-4N} = 4\sqrt{\pi}\alpha\omega\epsilon.
+\end{equation}
+\begin{equation}\label{N_expansion_xmu_acc}
+N \approx - \frac{\log(A)}{W\left(-\frac{\log(A)}{2 e \sqrt{2m} \omega} \right)}, \quad A = 4\sqrt{\pi}\alpha\omega\epsilon.
+\end{equation}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{cccccccccc}
+\hline
+$x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_b0_positive} & $N_{acc}$ \eqref{N_expansion_xmu_acc} & error & $N^*$ & error\\
+\hline
+	1 & 50 & 1/5 & 1/3 & 43.33 & 324 & 69 & $2.9\cdot 10^{-13}$ & 73 & $1.1\cdot 10^{-17}$\\
+    2 & 5 & 1/5 & 1/10 & 9.01 & 10,242 & 25 & $4.6\cdot 10^{-21}$ & 22 & $1.1 \cdot 10^{-16}$\\
+	1 & 1/10 & 1/5 & 1/100 & 0.08 & 179,715 & 5 & $1.3 \cdot 10^{-21}$ & 4 & $2.4 \cdot 10^{-17}$\\
+	5 & 1 & 1/5 & 1/100 & 4.8 & 5,645,686 & 18 & $1.1 \cdot 10^{-22}$ & 15 & $1.5 \cdot 10^{-17}$\\
+	20 & 1/100 & 1/5 & 1/100 & 0.198 & 84,914,922 & 6 & $1.1 \cdot 10^{-22}$ & 5 & $4.5 \cdot 10^{-19}$\\
+	\hline\\
+	\end{tabular}}
+	\caption{Absolute error and bound \eqref{bound_remainder_xmu_b0_positive} estimating $N$ using \eqref{N_expansion_xmu_b0_positive} for the series expansion  \eqref{expansion_xmu_b0_positive} with machine-precision absolute error.}
+	\label{table_bound_remainder_xmu_b0_positive_large_N}
+\end{table}
+
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
 For $x - \mu < 0$
@@ -696,7 +713,7 @@ Exponent overflow issues in $\exp(\alpha \delta)$. Logarithmic transformation. U
 \subsection{Evaluation of Bessel-type expansions}\label{subsection_evaluation_bessel_expansions}
 
 \subsubsection{Partial sums recurrence}
-As an example, series \eqref{expansion_xmu_b0_positive}.
+As an example, series \eqref{expansion_xmu_b0_positive}. It is worth noticing that performing a naive computation of the terms $T_k$ in double-precision arithmetic for large $N$ poses underflow and overflow problems since the numerator (denominator) rapidly goes to infinity (zero) as $N$ increases. In Section \ref{subsection_evaluation_bessel_expansions}, we discuss alternative summation methods to avoid cancellation issues and precision loss for large $N$.
 
 \begin{equation}
 F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi}\frac{(x-\mu) \alpha}{\omega}S_K,
