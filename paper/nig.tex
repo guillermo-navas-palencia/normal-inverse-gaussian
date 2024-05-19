@@ -406,6 +406,7 @@ P_k &= \frac{2^{N-2}\alpha^{2(k - N - 1)} \Gamma(N + 1 - k) \Gamma(k - 1/2)}{\sq
 Q_k &= \frac{2^{N-1-k}(2\alpha^2 - m)^{k - 1/2} \pi \sec(k\pi)}{m^{N + 1/2}}
 \end{align}
 
+Terminating series
 \begin{equation}
 S_P = \frac{(2m)^N }{\alpha^{2n + 1} \omega\pi} \frac{\Gamma(N + 3/2)}{(2N + 1)!! (2N - 1)!!} \sum_{k=0}^{N} \frac{(-1)^k (\alpha\omega)^{2k}}{(2k)!} \Gamma(N + 1 - k) \Gamma(k - 1/2) \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right)
 \end{equation}
@@ -417,6 +418,27 @@ S_Q &= C \frac{2^{N-1}}{m^{N + 1/2}\sqrt{2\alpha^2 - m}} \pi \sum_{k=0}^{\infty}
 
 \begin{equation}
 R_N = S_P + S_Q.
+\end{equation}
+
+Determine $N$: $\alpha \omega \to 0$ and
+\begin{equation}
+1 - \frac{m}{2\alpha^2} = 1 - \left(\frac{x-\mu}{\omega}\right)^2 < 1.
+\end{equation}
+The terms in $S_P$ and decreasing, being $j=N$ the smallest term. The last term is
+\begin{equation}
+\frac{(-1)^N (\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) \, _2F_1\left(1, 1; \frac{3}{2} -N, 1 - \frac{m}{2\alpha^2}\right)
+\end{equation}
+Using $\lim_{x \to 0}\, _2F_1\left(1, 1, \frac{3}{2}-k, z\right) = 1$, we have to solve for $N$
+\begin{equation}
+\frac{(\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) = \epsilon
+\end{equation}
+
+\begin{align}
+\frac{\Gamma(N - 1/2)}{(2N)!} &\sim \sqrt{2} \sqrt{\frac{2N + 1}{2N - 1}} \frac{(N - 1/2)^{N - 1/2}}{(2N + 1)^{2N + 1}} e^{N + 3/2}, \quad N \to \infty\\
+&\le 2^{-2N - 1/2} \left(\frac{e}{N}\right)^N
+\end{align}
+\begin{equation}
+(\alpha\omega)^{2N} 2^{-2N - 1/2} \left(\frac{e}{N}\right)^N = \epsilon, \quad N \approx - \frac{\log(\epsilon\sqrt{2})}{W\left(-\frac{\log(\epsilon\sqrt{2})}{e^{\alpha\omega/2}} \right)}
 \end{equation}
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}

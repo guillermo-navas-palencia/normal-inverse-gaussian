@@ -7,15 +7,15 @@
 \contentsline {subsection}{\numberline {3.1}Expansions: case $\beta = 0$}{4}
 \contentsline {subsubsection}{\numberline {3.1.1}Expansions $|x-\mu | \to 0$}{4}
 \contentsline {subsubsection}{\numberline {3.1.2}Convergence acceleration of the expansion $|x-\mu | \to 0$}{7}
-\contentsline {subsubsection}{\numberline {3.1.3}Expansion $|x-\mu | \to \infty $}{7}
+\contentsline {subsubsection}{\numberline {3.1.3}Expansion $|x-\mu | \to \infty $}{8}
 \contentsline {subsubsection}{\numberline {3.1.4}Uniform expansion $\alpha \to \infty $, $\alpha \sim \delta $ and $|x-\mu | \gg 0$}{8}
-\contentsline {subsection}{\numberline {3.2}Expansions: case $x = \mu $}{8}
+\contentsline {subsection}{\numberline {3.2}Expansions: case $x = \mu $}{9}
 \contentsline {subsection}{\numberline {3.3}Expansions: general case}{9}
 \contentsline {subsubsection}{\numberline {3.3.1}Expansions $|x-\mu | \to 0$ (option 1)}{9}
 \contentsline {subsubsection}{\numberline {3.3.2}Expansions $|x-\mu | \to 0$ (option 2)}{9}
 \contentsline {subsubsection}{\numberline {3.3.3}Expansion $\alpha \to \infty , \delta \to \infty $}{10}
 \contentsline {subsubsection}{\numberline {3.3.4}Expansion $|x-\mu | \to \infty $}{10}
-\contentsline {subsection}{\numberline {3.4}Numerical integration}{10}
+\contentsline {subsection}{\numberline {3.4}Numerical integration}{11}
 \contentsline {subsection}{\numberline {3.5}Inversion methods}{12}
 \contentsline {section}{\numberline {4}Algorithmic details and implementation}{12}
 \contentsline {subsection}{\numberline {4.1}Handling large parameters}{12}
