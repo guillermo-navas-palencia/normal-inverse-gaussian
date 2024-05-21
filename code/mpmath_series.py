@@ -88,6 +88,22 @@ def bound_series_x_mu_b0_pos(x, alpha, mu, delta, N):
     return float(bound)
 
 
+def bound_series_x_mu_b0_pos_alt(x, alpha, mu, delta, N):
+    x, alpha, mu, delta = arg_mpmathify(x, alpha, mu, delta)
+    omega = sqrt(delta**2 + (x-mu)**2)
+
+    TN = 1/(2 * alpha * omega) * ((x - mu) / omega) ** (2 * N)
+    TN *= sqrt(pi / (N + 1/2))
+
+    C = 1 / (1 - ((x-mu) / omega)**2)
+    bound = TN * C
+
+    # Multiply normalizing factor
+    bound *= (x - mu) * alpha / omega * delta * exp(delta * alpha) / pi
+
+    return float(bound)
+
+
 def series_x_mu_b0_pos(x, alpha, mu, delta, N, digits=50):
     prec = mp.dps
     mp.dps = digits

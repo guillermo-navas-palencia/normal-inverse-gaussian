@@ -343,7 +343,7 @@ and the ratio of convergence improves when $\delta \to \infty$, then it can be v
 \begin{equation*}
 T_k \sim \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2k}\sqrt{\frac{\pi}{e}}\frac{1}{\sqrt{4k + 2}}\left(\frac{2k + 2}{2k + 1}\right)^{k + \frac{1}{2}}, \quad k \to \infty,
 \end{equation*}
-where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial. It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} after estimating $N$ to achieve machine-precision absolute error using \eqref{N_expansion_xmu_b0_positive}. For small values of $\alpha\omega$, but it is conservative for larger values, where the rate of convergence improves. As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced by selecting $N$ using the asymptotic estimate for $\alpha\omega \to \infty$ via binary search. Although, the bound might overestimate $N$ for some parameters, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should be selected as the method of computation given a certain parameter region. Table \ref{table_bound_remainder_xmu_b0_positive} also shows that for small $\delta$ and $\alpha\omega$, the required number of terms makes the series expansion impractical. In the next section, we present a convergence acceleration method to obtain a rapidly convergent series for theses cases.
+where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial. It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} after estimating $N$ to achieve machine-precision absolute error using \eqref{N_expansion_xmu_b0_positive}. For small values of $\alpha\omega$ the bound is accurate, but it is conservative for larger values, precisely where the rate of convergence improves. As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced by selecting $N$ using the asymptotic estimate for $\alpha\omega \to \infty$ via binary search. Although, the bound might overestimate $N$ for some parameters, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should be selected as the method of computation given a certain parameter region. Table \ref{table_bound_remainder_xmu_b0_positive} also shows that for small $\delta$ and $\alpha\omega$, the required number of terms makes the series expansion impractical. In the next section, we present a convergence acceleration method to obtain a rapidly convergent series for theses cases.
 
 \begin{table}[H]
 	\centering
@@ -388,6 +388,22 @@ To simplify, we used
 \begin{equation}
 m = \frac{2z\alpha}{\omega} = 2\left(\frac{(x-\mu)\alpha}{\omega}\right)^2,  \quad C = \frac{2}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right)\frac{\Gamma(N + 3/2)}{(2N + 1)!!} m^N
 \end{equation}
+
+\begin{remark}
+Simpler bound $R_N$
+
+\begin{align*}
+R_N &= C \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}\\
+&\le \frac{C}{\left(2 - \frac{m}{\alpha^2}\right)} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \mathop{dt}\\
+&= \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} T_N
+\end{align*}
+
+using the upper bound for $T_N$ in \eqref{bound_TN_xmu_b0_positive}
+\begin{equation}
+R_N < \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{\pi}{N + 1/2}}.
+\end{equation}
+
+\end{remark}
 
 Expand $\cos(\omega t)$
 \begin{equation}

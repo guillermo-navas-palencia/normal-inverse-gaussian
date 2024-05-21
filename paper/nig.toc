@@ -17,10 +17,10 @@
 \contentsline {subsubsection}{\numberline {3.3.4}Expansion $|x-\mu | \to \infty $}{11}
 \contentsline {subsection}{\numberline {3.4}Numerical integration}{11}
 \contentsline {subsection}{\numberline {3.5}Inversion methods}{12}
-\contentsline {section}{\numberline {4}Algorithmic details and implementation}{12}
-\contentsline {subsection}{\numberline {4.1}Handling large parameters}{12}
-\contentsline {subsection}{\numberline {4.2}Evaluation of Bessel-type expansions}{12}
-\contentsline {subsubsection}{\numberline {4.2.1}Partial sums recurrence}{12}
+\contentsline {section}{\numberline {4}Algorithmic details and implementation}{13}
+\contentsline {subsection}{\numberline {4.1}Handling large parameters}{13}
+\contentsline {subsection}{\numberline {4.2}Evaluation of Bessel-type expansions}{13}
+\contentsline {subsubsection}{\numberline {4.2.1}Partial sums recurrence}{13}
 \contentsline {subsection}{\numberline {4.3}Evaluation of asymptotic expansions}{13}
 \contentsline {subsection}{\numberline {4.4}Implementation}{13}
 \contentsline {section}{\numberline {5}Numerical experiments}{13}
@@ -29,4 +29,4 @@
 \contentsline {subsubsection}{\numberline {A.0.1}Expansion $t \to 0$}{13}
 \contentsline {subsubsection}{\numberline {A.0.2}Expansion $t \to \infty $}{14}
 \contentsline {subsubsection}{\numberline {A.0.3}Expansion $t \to u$}{15}
-\contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{15}
+\contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{16}
