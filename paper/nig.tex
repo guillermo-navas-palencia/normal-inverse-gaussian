@@ -196,9 +196,10 @@ Use binomial theorem, and compute coefficients recursively (binomial sum of Bess
 \section{Methods of computation}
 In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases. Subsequently, we discuss several approaches for computing the inverse of the CDF.
 \subsection{Expansions: case $\beta = 0$}
+Most of the techniques and numerical methods introduced in this section shall be used for the expansions of other special cases and the general case.
 
 \subsubsection{Expansions $|x-\mu| \to 0$}
-For developing a series expansion for the case $|x-\mu| \to 0$, we start from a integral representation in \eqref{integral_phi} after expanding the exponent term of the integrand,
+For developing a series expansion for the case $|x-\mu| \to 0$, we start from the integral representation in \eqref{integral_phi} after expanding the exponent term of the integrand,
 \begin{equation}\label{integral_phi2}
 F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\sqrt{2\pi}} \int_0^{\infty} \Phi\left(\frac{x - \mu}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
 \end{equation}
@@ -317,7 +318,7 @@ N \approx -\frac{\Re(W_{-1}(D))}{4 \log(A)} + \frac{1}{2}, \quad A = \frac{x-\mu
 \end{equation}
 where $W_k(x)$ denotes the Lambert $W$ function \cite[\S 4.13]{NIST:DLMF}. The branch $k=-1$ is used to obtain the maximum real $N$. Note that since $A < 1$ by definition, $D > 0$. When $C A^2$ is tiny, $W_{-1}(D)$ can be approximated as $\Re(W_{-1}(D)) \sim \log(D) - \log(\log(D))$ using the first two terms of the asymptotic expansion in \cite[\S 4.13.10]{NIST:DLMF}.
 
-The previous analysis performed for the expansion \eqref{expansion_xmu_b0_positive} is repeated for the alternating expansion \eqref{expansion_xmu_b0_alternating}. The main results are summarized below for the purpose of brevity. The expansion \eqref{expansion_xmu_b0_alternating} rewritten including the remainder term follows
+The previous analysis performed on the expansion \eqref{expansion_xmu_b0_positive} is repeated for the alternating expansion \eqref{expansion_xmu_b0_alternating}. The main results are summarized below for the purpose of brevity. The expansion \eqref{expansion_xmu_b0_alternating} rewritten including the remainder term follows
 \begin{equation}
 F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha e^{\delta \alpha}}{\pi} \left( \sum_{k=0}^{N-1} T_k + R_N\right),  \quad T_k = \left(-\frac{(x-\mu)^2 \alpha}{\delta}\right)^k \frac{K_{k+1}(\alpha \delta)}{2^k k! (2k + 1)}.
 \end{equation}
@@ -339,7 +340,7 @@ The asymptotic estimates of $T_k$ show that the series expansion \eqref{expansio
 \begin{equation*}
 \left(\frac{x-\mu}{\omega}\right)^2 \to 1 \Longleftrightarrow \delta \to 0,
 \end{equation*}
-and the ratio of convergence improves when $\delta \to \infty$, then it can be viewed as an asymptotic expansion. For $k \to \infty$, $T_k$ follows the asymptotic behaviour
+and the ratio of convergence improves when $\delta \to \infty$, then it can be viewed as an asymptotic expansion for large $\delta$. For $k \to \infty$, $T_k$ follows the asymptotic behaviour
 \begin{equation*}
 T_k \sim \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2k}\sqrt{\frac{\pi}{e}}\frac{1}{\sqrt{4k + 2}}\left(\frac{2k + 2}{2k + 1}\right)^{k + \frac{1}{2}}, \quad k \to \infty,
 \end{equation*}
@@ -365,7 +366,12 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
 \end{table}
 
 \subsubsection{Convergence acceleration of the expansion $|x-\mu| \to 0$}
+Table \ref{table_bound_remainder_xmu_b0_positive} showed that for small values of $\delta$ and $\alpha \omega$ the required number of terms grows considerably, thereby, resorting to numerical integral (see Section \ref{section_numerical_integration}) might be a more efficient approach. Alternatively, a common technique to reduce the number of terms of slowly convergent series is to use series acceleration methods (Shank's transformation and Levin-type transformations among others). 
+Attempts to use Shank's transformation were unsuccessful; we did not observe a significant reduction in $N$ while achieving only around ten correct digits systematically for all cases. In addition, a major drawback is that Shank's acceleration requires higher-precision arithmetic to compensate for cancellation effects, discarding them for any implementation in double-precision arithmetic. 
 
+In the following, we consider the use of exponentially improved asymptotic expansions. When the information about the remainder is available, this technique consists of re-expanding the remainder, obtaining an expansion exhibiting faster convergence. For further details, we refer to \cite[\S 14]{Olver1997}.
+
+Again, consider the convergent series expansion in \eqref{expansion_xmu_b0_positive_error_term}
 \begin{equation}
 F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi} \frac{(x-\mu)\alpha}{\omega} \left(\sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty} T_k\right),
 \end{equation}
@@ -373,87 +379,77 @@ where
 \begin{equation}
 T_k = \frac{K_{k+1}(\alpha\omega)}{(2k + 1)!!} z^k, \quad z = \frac{(x-\mu)^2 \alpha}{\omega}.
 \end{equation}
-Remainder $R_N = \sum_{k=N}^{\infty} T_k$.
-
-Basset's integral \cite[\S 10.32.11]{NIST:DLMF}
-\begin{equation}
-K_{k+1}(\alpha\omega) = \frac{\Gamma(k + 3/2)}{\sqrt{\pi}}\left(\frac{2\alpha}{\omega}\right)^{k+1} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{k + 3/2}} \mathop{dt}
+and remainder $R_N = \sum_{k=N}^{\infty} T_k$. An integral representation of $R_N$ can be obtained using Basset's integral \cite[\S 10.32.11]{NIST:DLMF} representation of the modified Bessel function
+\begin{equation}\label{basset_integral}
+K_{k+1}(\alpha\omega) = \frac{\Gamma(k + 3/2)}{\sqrt{\pi}}\left(\frac{2\alpha}{\omega}\right)^{k+1} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{k + 3/2}} \mathop{dt}.
 \end{equation}
-
-\begin{align}
-R_N &= \frac{1}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right) \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{3/2}} \left[\sum_{k=N}^{\infty} \left(\frac{2z\alpha}{\omega (t^2 + \alpha^2)}\right)^k \frac{\Gamma(k + 3/2)}{(2k + 1)!!}\right] \mathop{dt}\\
+Basset's integral is chosen to split the problematic term $\alpha\omega$. Thus, it follows that inserting \eqref{basset_integral} into the remainder in \eqref{expansion_xmu_b0_positive_error_term}, we obtain an integral representation of $R_N$
+\begin{align}\label{convergent_remainder_integral}
+R_N &= \frac{1}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right) \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{3/2}} \left[\sum_{k=N}^{\infty} \left(\frac{2z\alpha}{\omega (t^2 + \alpha^2)}\right)^k \frac{\Gamma(k + 3/2)}{(2k + 1)!!}\right] \mathop{dt}\nonumber\\
 &= C \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}.
 \end{align}
-To simplify, we used
+where, for the purpose of brevity, we use
 \begin{equation}
-m = \frac{2z\alpha}{\omega} = 2\left(\frac{(x-\mu)\alpha}{\omega}\right)^2,  \quad C = \frac{2}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right)\frac{\Gamma(N + 3/2)}{(2N + 1)!!} m^N
+m = \frac{2z\alpha}{\omega} = 2\left(\frac{(x-\mu)\alpha}{\omega}\right)^2,  \quad C = \frac{2}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right)\frac{\Gamma(N + 3/2)}{(2N + 1)!!} m^N.
 \end{equation}
 
-\begin{remark}
-Simpler bound $R_N$
-
-\begin{align*}
-R_N &= C \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}\\
-&\le \frac{C}{\left(2 - \frac{m}{\alpha^2}\right)} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \mathop{dt}\\
-&= \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} T_N
-\end{align*}
-
-using the upper bound for $T_N$ in \eqref{bound_TN_xmu_b0_positive}
-\begin{equation}
-R_N < \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{\pi}{N + 1/2}}.
+Now, we expand the term $\cos(\omega t)$, recall that $\omega = \sqrt{\delta^2 + (x-\mu)^2}$, yielding
+\begin{equation}\label{convergent_remainder_series_integral}
+R_N = C \sum_{k=0}^{\infty} \frac{(-1)^k \omega^{2k}}{(2k)!} \int_0^{\infty} \frac{t^{2k}}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt},
 \end{equation}
-
-\end{remark}
-
-Expand $\cos(\omega t)$
-\begin{equation}
-R_N = C \sum_{k=0}^{\infty} \frac{(-1)^k \omega^{2k}}{(2k)!} \int_0^{\infty} \frac{t^{2k}}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}.
-\end{equation}
-Comment about convergence of the integral ($k \le N$).
-\begin{equation}
+and note that the integrals above converge for $k \le N$. Using Mathematica \cite{Mathematica}, we obtain a closed-form expression for the previous integral in terms of the Gauss hypergeometric function $_2F_1(a, b; c; z)$
+\begin{equation}\label{convergent_remainder_inner_integral}
 \int_0^{\infty} \frac{t^{2k}}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt} = P_k + Q_k,
 \end{equation}
+with
 \begin{align}
-P_k &= \frac{2^{N-2}\alpha^{2(k - N - 1)} \Gamma(N + 1 - k) \Gamma(k - 1/2)}{\sqrt{\pi} (2N + 1)!!} \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right)\\
-Q_k &= \frac{2^{N-1-k}(2\alpha^2 - m)^{k - 1/2} \pi \sec(k\pi)}{m^{N + 1/2}}
+P_k &= \frac{2^{N-2}\alpha^{2(k - N - 1)} \Gamma(N + 1 - k) \Gamma(k - 1/2)}{\sqrt{\pi} (2N + 1)!!} \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right),\\
+Q_k &= \frac{2^{N-1-k}(2\alpha^2 - m)^{k - 1/2} \pi \sec(k\pi)}{m^{N + 1/2}}.
 \end{align}
 
-Terminating series
-\begin{equation}
+The Gauss hypergeometric function is defined
+\begin{equation*}
+_2F_1(a, b; c; z) = \sum_{k=0}^{\infty} \frac{(a)_k (b)_k}{(c)_k k!} z^k,
+\end{equation*}
+where $(a)_k = \Gamma(a+k) / \Gamma(a)$ is the Pochhammer symbol or rising factorial. The series is defined on the disk $|z| < 1$, and by analytic continuation with respect to $z$ elsewhere. Substituting \eqref{convergent_remainder_inner_integral} in \eqref{convergent_remainder_series_integral}, we write $R_N$ as the sum of two series $R_N  = S_P + S_Q$ given by
+\begin{equation}\label{convergent_remainder_series_P}
 S_P = \frac{(2m)^N }{\alpha^{2N + 1} \omega\pi} \frac{\Gamma(N + 3/2)}{(2N + 1)!! (2N - 1)!!} \sum_{k=0}^{N} \frac{(-1)^k (\alpha\omega)^{2k}}{(2k)!} \Gamma(N + 1 - k) \Gamma(k - 1/2) \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right)
 \end{equation}
-
+and 
 \begin{align}
 S_Q &= C \frac{2^{N-1}}{m^{N + 1/2}\sqrt{2\alpha^2 - m}} \pi \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!} \left(\frac{\omega^2(2\alpha^2 - m)}{2}\right)^k \sec(k\pi)\nonumber\\
-&= \frac{\Gamma(N + 3/2) 2^{N+1}}{(2N + 1)!!} \frac{\alpha}{\omega}\sqrt{\frac{\pi}{m(2\alpha^2 - m)}}\cosh\left(\sqrt{\frac{\omega^2 (2\alpha^2 - m)}{2}}\right)
+&= \frac{\Gamma(N + 3/2) 2^{N+1}}{(2N + 1)!!} \frac{\alpha}{\omega}\sqrt{\frac{\pi}{m(2\alpha^2 - m)}}\cosh\left(\sqrt{\frac{\omega^2 (2\alpha^2 - m)}{2}}\right).
 \end{align}
-
-\begin{equation}
-R_N = S_P + S_Q.
+The sum $S_P$ is terminating at $k=N$ due to the term $\Gamma(N + 1 - k)$ in the series. Thus, the resulting series to compute $F(x; \alpha, 0, \mu, \delta)$ is
+\begin{equation}\label{convergent_accelerated_series_xmu_b0_positive}
+F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi} \frac{(x-\mu)\alpha}{\omega} \left(\sum_{k=0}^{N-1} T_k + S_P + S_Q\right).
 \end{equation}
-
-Determine $N$: $\alpha \omega \to 0$ and
+Subsequently, we focus on the determination of the optimal $N$ for a desired precision $\epsilon$. The smallest term in $S_P$ occurs when $k=N$
 \begin{equation}
-1 - \frac{m}{2\alpha^2} = 1 - \left(\frac{x-\mu}{\omega}\right)^2 < 1.
+\frac{(-1)^N (\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) \, _2F_1\left(1, 1; \frac{3}{2} -N, 1 - \frac{m}{2\alpha^2}\right).
 \end{equation}
-The terms in $S_P$ and decreasing, being $j=N$ the smallest term. The last term is
+Moreover, taking the argument of $_2F_1$ in \eqref{convergent_remainder_series_P}
 \begin{equation}
-\frac{(-1)^N (\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) \, _2F_1\left(1, 1; \frac{3}{2} -N, 1 - \frac{m}{2\alpha^2}\right)
+1 - \frac{m}{2\alpha^2} = 1 - \left(\frac{x-\mu}{\omega}\right)^2 < 1,
 \end{equation}
-Using $\lim_{x \to 0}\, _2F_1\left(1, 1, \frac{3}{2}-k, x\right) = 1$, we have to solve for $N$
+we see that for $\alpha \omega \to 0$, $\delta \to 0$, the argument is close to 1. Therefore, the last term can be effectively approximated taking the limit $\lim_{x \to 0}\, _2F_1\left(1, 1, \frac{3}{2}-k, x\right) = 1$. Then, it remains to solve the following equation for $N$ 
 \begin{equation}
-\frac{(\sqrt{2m} \omega)^{2N}}{\alpha\omega \pi} \frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} = \epsilon
+\frac{(\sqrt{2m} \omega)^{2N}}{\alpha\omega \pi} \frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} = \epsilon.
 \end{equation}
-
+For large $N$, we use Stirling approximation of the ratio of gamma functions and double factorials
 \begin{equation}
-\frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} \sim \frac{\sqrt{\pi}}{4} \left(\frac{e}{N}\right)^{2N} 2^{-4N}, \quad N \to \infty
+\frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} \sim \frac{\sqrt{\pi}}{4} \left(\frac{e}{N}\right)^{2N} 2^{-4N}, \quad N \to \infty.
 \end{equation}
+obtaining a simplified equation
 \begin{equation}
 (\sqrt{2m} \omega)^{2N} \left(\frac{e}{N}\right)^{2N} 2^{-4N} = 4\sqrt{\pi}\alpha\omega\epsilon.
 \end{equation}
+The solution of the last equation permits a closed-form in terms of principal branch of the Lambert $W$-function
 \begin{equation}\label{N_expansion_xmu_acc}
 N \approx - \frac{\log(A)}{W\left(-\frac{\log(A)}{2 e \sqrt{2m} \omega} \right)}, \quad A = 4\sqrt{\pi}\alpha\omega\epsilon.
 \end{equation}
+
+Table \ref{table_bound_remainder_xmu_b0_positive_large_N} shows the estimated number of terms of the accelerated convergent series \eqref{convergent_accelerated_series_xmu_b0_positive}, $N_{acc}$, and the actual number of terms $N^*$ to achieve machine-precision for small values of $\alpha\omega$ and $\delta$. The first and more notable observation is the reduction in the number of terms compared with convergent series \eqref{N_expansion_xmu_b0_positive}, especially for $\alpha \le 1$. The second observation is the accuracy of the estimate in $N_{acc}$ in \eqref{N_expansion_xmu_b0_positive}, which only seems to slightly underestimate $N$ for large $\alpha\omega$.
 
 \begin{table}[H]
 	\centering
@@ -473,6 +469,24 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
 	\label{table_bound_remainder_xmu_b0_positive_large_N}
 \end{table}
 
+\begin{itemize}
+\item Computation of 2F1, use partial sums recursion with Mathematica.
+\end{itemize}
+
+
+\begin{remark}
+Simpler bound $R_N$. Review FF expansion.
+\begin{align*}
+R_N &= C \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}\\
+&\le \frac{C}{\left(2 - \frac{m}{\alpha^2}\right)} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \mathop{dt}\\
+&= \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} T_N
+\end{align*}
+
+using the upper bound for $T_N$ in \eqref{bound_TN_xmu_b0_positive}
+\begin{equation}
+R_N < \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} \frac{1}{2\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2N} \sqrt{\frac{\pi}{N + 1/2}}.
+\end{equation}
+\end{remark}
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
 For $x - \mu < 0$
@@ -632,7 +646,7 @@ F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{2\be
 \end{equation}
 
 
-\subsection{Numerical integration}
+\subsection{Numerical integration}\label{section_numerical_integration}
 For cases do not covered by the described expansions, we need to resort to numerical integration. The Laplace-type integral \eqref{integral_phi}, whose integrand includes the complementary error function, should be faster to evaluate than the Bessel integral in \eqref{integral_k1}.
 
 To use numerical integration methods requiring a finite interval, we truncate the integral \eqref{integral_phi} at some point $N$, such that

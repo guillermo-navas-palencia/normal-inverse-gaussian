@@ -33,6 +33,12 @@ Y.~L. Luke.
 \newblock Inequalities for generalized hypergeometric functions.
 \newblock {\em Journal of Approximation Theory}, 5(1):41--65, 1972.
 
+\bibitem{Olver1997}
+F.~W.~J. Olver.
+\newblock {\em Asymptotics and Special Functions}.
+\newblock A. K. Peters, Wellesley, MA, 1997.
+\newblock Reprint, with corrections, of original Academic Press edition, 1974.
+
 \bibitem{Segura2023}
 J.~Segura.
 \newblock {Simple bounds with best possible accuracy for ratios of modified
@@ -61,5 +67,9 @@ N.~M. Temme.
 J.~G. Wendel.
 \newblock {Note on the Gamma Function}.
 \newblock {\em American Mathematical Monthly}, 55:563, 1948.
+
+\bibitem{Mathematica}
+{Wolfram Research, Inc.}
+\newblock Mathematica 10.
 
 \end{thebibliography}
