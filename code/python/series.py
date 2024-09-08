@@ -214,7 +214,7 @@ def asymtotic_x_mu_b0_neg(
         # New term
         num *= -woa * oxmu2 * (2 * k - 1)
         s += num * knn
-        print(k, s)
+        # print(k, s)
 
         # Check convergence
         if abs(1.0 - sp / s) < eps:
