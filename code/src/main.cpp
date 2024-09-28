@@ -10,7 +10,7 @@ void test_case_x_eq_mu()
   double beta = 0.004;
   double delta = 50.001;
 
-  double nig_cdf = nig_series_x_eq_mu(alpha, beta, delta);
+  double nig_cdf = nig_x_eq_mu(alpha, beta, delta);
 
   std::cout << std::setprecision(16) << nig_cdf << std::endl;
 }
@@ -32,7 +32,10 @@ void test_case_beta_zero()
 int main()
 {
   // main_normal_distribution();
-  test_case_beta_zero();
+  // test_case_beta_zero();
+
+  double x = 700.5;
+  std::cout << std::setprecision(17) << bessel_k1_scaled(x) << std::endl;
 
   return 0;
 }

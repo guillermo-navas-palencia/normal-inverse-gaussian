@@ -97,10 +97,10 @@ double series_x_mu_pos(
   for (int k = 2; k < maxiter; k++)
   {
     // Bessel recursion
-    double knn = kn + 2.0 * k / aw * knp1;
+    double knn = kn + 2 * k / aw * knp1;
 
     // New term
-    num *= xmu2 * aow / (2.0 * k + 1.0);
+    num *= xmu2 * aow / (2 * k + 1);
     s += num * knn;
 
     // Check convergence
@@ -217,10 +217,10 @@ double asymptotic_x_mu_neg(
   for (int k = 2; k < maxiter; k++)
   {
     // Bessel recursion
-    double knn = kn + 2.0 * (k - 1.0) / aw * knp1;
+    double knn = kn + 2 * (k - 1) / aw * knp1;
 
     // New term
-    num *= aux * (2.0 * k - 1.0);
+    num *= aux * (2 * k - 1);
     s += num * knn;
 
     // Check convergence
