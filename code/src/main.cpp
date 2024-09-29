@@ -34,8 +34,18 @@ int main()
   // main_normal_distribution();
   // test_case_beta_zero();
 
-  double x = 700.5;
-  std::cout << std::setprecision(17) << bessel_k1_scaled(x) << std::endl;
+  double alpha = 10.005;
+  double beta = 0.0025;
+  double mu = 0.25;
+  double delta = 0.1;
+  double x = -0.5;
+  // double eps = 5e-16;
+
+  // std::cout << truncation(alpha, beta, mu, delta, eps) << std::endl;
+  // double tau = 1e-32;
+  // std::cout << estimate_h(tau, 1e-10, 10) << std::endl;
+  double nig_cdf = nig_integration(x, alpha, beta, mu, delta, 1e-15, 10);
+  std::cout << std::setprecision(16) << nig_cdf << std::endl;
 
   return 0;
 }

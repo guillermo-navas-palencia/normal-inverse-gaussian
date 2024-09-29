@@ -29,7 +29,7 @@ double bessel_series(
   if (scaled)
     C = std::log(caux) + delta * (gamma - alpha);
   else
-    C = -caux * std::exp(delta * gamma);
+    C = -caux * std::exp(dg);
 
   // Series: compute the ratio of Bessel K_0 / K_1 for recursion
   if (scaled) {
