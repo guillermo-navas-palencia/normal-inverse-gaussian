@@ -78,10 +78,10 @@ double nig_x_eq_mu(const double alpha, const double beta, const double delta)
   if (beta == 0.0)
     return 0.5;
 
-  // if ((beta / alpha) < 0.83) -> estimated iterations ~ 150
-  //   series
-  // else
-  //   integration
+  double rba = beta / alpha;
 
-  return bessel_series(alpha, beta, delta);
+  if ((alpha <= 10.0) & (delta <= 10.0) & (beta <= 1.5) & (rba <= 0.9))
+    return bessel_series(alpha, beta, delta);
+  else
+    return nig_integration(0.0, alpha, beta, 0.0, delta, 1e-15, 10);
 }

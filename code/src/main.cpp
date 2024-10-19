@@ -36,16 +36,17 @@ int main()
 
   double alpha = 10.005;
   double beta = 0.0025;
-  double mu = 0.25;
+  double mu = 0.5;
   double delta = 0.1;
-  double x = -0.5;
+  double x = 0.5;
   // double eps = 5e-16;
 
   // std::cout << truncation(alpha, beta, mu, delta, eps) << std::endl;
   // double tau = 1e-32;
   // std::cout << estimate_h(tau, 1e-10, 10) << std::endl;
-  double nig_cdf = nig_integration(x, alpha, beta, mu, delta, 1e-15, 10);
-  std::cout << std::setprecision(16) << nig_cdf << std::endl;
+  // double result = nig_integration(x, alpha, beta, mu, delta, 1e-15, 10);
+  double result = nig_cdf(x, alpha, beta, mu, delta);
+  std::cout << std::setprecision(16) << result << std::endl;
 
   return 0;
 }
