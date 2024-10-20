@@ -12,7 +12,7 @@ double nig_cdf(
   if (x == mu)
     return nig_x_eq_mu(alpha, beta, delta);
   else if (beta == 0.0)
-    return nig_series_beta_zero(x, alpha, mu, delta);
+    return nig_beta_eq_zero(x, alpha, mu, delta);
   
   return nig_integration(x, alpha, beta, mu, delta, 1e-15, 10);
 }
