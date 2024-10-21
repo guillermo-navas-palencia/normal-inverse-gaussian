@@ -2,6 +2,8 @@
 
 #include <nig.hpp>
 #include <constants.hpp>
+
+#include <string>
 #include <iostream>
 #include <iomanip>
 
@@ -129,7 +131,8 @@ double asymptotic_alpha(
   {
     int n = k - 2;
     int np1 = n + 1;
-    double ck = (np1 * c1 * (t1 - 4.0 * b * n - t2) - (2 * n * n + n) * c0) / (t3 * np1 * (n + 2));
+    double ck = (np1 * c1 * (t1 - 4.0 * b * n - t2) -
+                 (2 * n * n + n) * c0) / (t3 * np1 * (n + 2));
 
     if (k >= 3) {
       qk = (n + t5) * q2 + xi * (2 * n + 0.5) * q1 + n * t4 * q0;
@@ -142,7 +145,7 @@ double asymptotic_alpha(
     s += num * ck * qk;
 
     if (std::fabs(1.0 - sp / s) < eps) {
-      std::cout << k << std::endl;
+      // std::cout << k << std::endl;
       return C * s;
     } else {
       c0 = c1;
@@ -162,6 +165,66 @@ double asymptotic_alpha(
 }
 
 
+double asymptotic_xmu(
+  double x,
+  double alpha,
+  double mu,
+  double delta,
+  int maxiter = 200,
+  double eps = 5e-13
+)
+{
+  // Parameters
+  const double xmu = x - mu;
+  const double xmu2 = xmu * xmu;
+  const double omega = std::hypot(xmu, delta);
+  const double aw = alpha * omega;
+  const double da = delta * alpha;
+  const double woa = omega / alpha;
+  const double z = woa / xmu2;
+
+  // Check if scaled version is required
+  double C, k0, k1;
+  const bool scaled = da > 705.342;
+
+  if (scaled) {
+    C = -delta * std::exp(da - aw) / constants::pi / xmu;
+    k0 = bessel_k0_scaled(aw);
+    k1 = bessel_k1_scaled(aw);    
+  } else {
+    k0 = std::cyl_bessel_k(0, aw);
+    k1 = std::cyl_bessel_k(1, aw);
+    C = -delta * std::exp(da) / constants::pi / xmu;
+  }
+  
+  double t = C * k0;
+
+  double rp = k0 / k1;
+  double s = t;
+
+  // Start recursion
+  double sp = s;
+  for (int k = 1; k < maxiter; k++)
+  {
+    // Ratio Bessel recursion
+    double r = 1.0 / rp + 2 * (k - 1) / aw;
+
+    // New term
+    t *= -z * (2 * k - 1) * r;
+    s += t;
+
+    // Check convergence
+    if (std::fabs(1.0 - sp / s) < eps){
+      return s;
+    } else {
+      rp = r;
+      sp = s;
+    }
+  }
+
+  return -1.0;
+}
+
 
 double nig_beta_eq_zero(
   const double x,
@@ -177,19 +240,29 @@ double nig_beta_eq_zero(
   const double aw = alpha * omega;
   const double aow = alpha / omega;
 
-  const bool use_series_c1 = (std::fabs(xmu) <= 20) & (aow <= 0.25);
+  const bool use_series_c1 = (std::fabs(xmu) <= 10) & (aow <= 0.25);
   const bool use_series_c2 = (xmu2 <= 1.25) & (aw <= 750.0);
 
-  const bool use_asymp = (xmu2 <= 2.5) & (da >= 150.0) & (alpha >= 5.0);
+  const bool use_asymp_a = (xmu2 <= 2.5) & (da >= 150.0) & (alpha >= 5.0);
+  const bool use_asymp_xmu = (xmu2 >= 70) & (aow >= 1.0);
 
   if (use_series_c1 | use_series_c2) {
-    if (xmu > 0)
+    std::cout << "bessel_series" << std::endl;
+    if (xmu > 0.0)
       return bessel_series(x, alpha, mu, delta);
     else
       return 1.0 - bessel_series(-x, alpha, -mu, delta);
-  } else if (use_asymp){
+  } else if (use_asymp_a){
+    std::cout << "asymptotic_alpha" << std::endl;
     return asymptotic_alpha(x, alpha, mu, delta);
+  } else if (use_asymp_xmu) {
+    std::cout << "asymptotic_xmu" << std::endl;
+    if (xmu < 0.0)
+      return asymptotic_xmu(x, alpha, mu, delta);
+    else
+      return 1.0 - asymptotic_xmu(-x, alpha, -mu, delta);    
   } else {
+    std::cout << "integration" << std::endl;
     return nig_integration(x, alpha, 0.0, mu, delta, 1e-15, 10);
   }
 }

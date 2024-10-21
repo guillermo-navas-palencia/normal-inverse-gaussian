@@ -45,10 +45,10 @@ int main()
   // double mu = -0.6779473810531575;
   // double delta = 46.86837947038307;
 
-  double x = -0.766735510274243;
-  double alpha = 23.32048394767756;
-  double mu = 2.758345101290121;
-  double delta = 17.745632228385443;
+  double x = 0.1;
+  double alpha = 22.05;
+  double mu = 20.04;
+  double delta = 40.05;
   // double eps = 5e-16;
 
   // std::cout << truncation(alpha, beta, mu, delta, eps) << std::endl;

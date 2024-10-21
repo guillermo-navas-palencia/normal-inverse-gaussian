@@ -42,7 +42,7 @@ double bessel_series(
     t = C * k0;
   }
 
-  double rp = k0 / k1;  
+  double rp = k0 / k1;
   double s = t;
 
   // Start recursion
