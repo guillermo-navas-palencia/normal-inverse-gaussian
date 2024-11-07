@@ -14,5 +14,5 @@ double nig_cdf(
   else if (beta == 0.0)
     return nig_beta_eq_zero(x, alpha, mu, delta);
   
-  return nig_integration(x, alpha, beta, mu, delta, 1e-15, 10);
+  return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
 }

@@ -260,9 +260,9 @@ double nig_beta_eq_zero(
     if (xmu < 0.0)
       return asymptotic_xmu(x, alpha, mu, delta);
     else
-      return 1.0 - asymptotic_xmu(-x, alpha, -mu, delta);    
+      return 1.0 - asymptotic_xmu(-x, alpha, -mu, delta);
   } else {
     std::cout << "integration" << std::endl;
-    return nig_integration(x, alpha, 0.0, mu, delta, 1e-15, 10);
+    return nig_integration(x, alpha, 0.0, mu, delta, 1e-13, 14);
   }
 }

@@ -7,6 +7,113 @@
 #include <iomanip>
 
 
+double normal_cdf(const double x)
+{
+  return 0.5 * std::erfc(-x / constants::sqrt2);
+}
+
+
+double normal_pdf(const double x)
+{
+  return std::exp(-x*x * 0.5) * constants::oneosqrttwopi;
+}
+
+
+void integrand(
+  double t,
+  const double beta,
+  const double xmu,
+  const double gamma2,
+  const double delta2,
+  double &f,
+  double &fp
+)
+{
+  double sqrtt = std::sqrt(t);
+  double t2 = t * t;
+  double t32 = t * sqrtt;
+  double betat = beta * t;
+  double z1aux = xmu - betat;
+  double z2aux = xmu + betat;
+
+  double z = z1aux / sqrtt;
+
+  // exp integrand at t
+  double A = z2aux / t32;
+  double B = normal_pdf(z) / normal_cdf(z);
+
+  f = 0.5 * (delta2 / t2 - gamma2 - 3.0 / t - A * B);
+
+  // derivative exp integrand at t
+  double d1 = -0.5 * (beta / t32 - 1.5 * z2aux / t / t32) * B;
+  double d2 = -z * A * A * B;
+  double d3 = -B * B * A * A;
+
+  fp = -delta2 / t / t2 + 1.5 / t2 + d1 + d2 + d3;
+}
+
+
+double estimate_magnitude(
+  const double x,
+  const double alpha,
+  const double beta,
+  const double mu,
+  const double delta,
+  const double gamma,
+  const double C,
+  const double tol = 1e-4,
+  const int maxiter = 10
+)
+{
+  // Estimate magnitude to accurately calculate N to achieve eps rel error
+
+  // Constants
+  const double alpha2 = alpha * alpha;
+  const double beta2 = beta * beta;
+  const double delta2 = delta * delta;
+  const double gamma2 = gamma * gamma;
+  const double xmu = x - mu;
+  const double xmu2 = xmu * xmu;
+
+  // Use asymptotic or small initial quadratic guess x0
+  bool use_asymp1 = (alpha / beta < 0.5) and (delta > 2.0);
+  bool use_asymp2 = alpha2 - 2.0 * beta2;
+  bool use_asymp3 = xmu2 > 1.0;
+
+  double a, c;
+  if (use_asymp1 | use_asymp2 | use_asymp3)
+  {
+    a = alpha2;
+    c = delta2 + xmu2;
+  } else {
+    a = alpha2 - 2.0 * beta2 + xmu2;
+    c = delta2;
+  }
+
+  double x0 = (-1.5 + std::sqrt(2.25 + a * c)) / a;
+
+  // Newton's iteration
+  double f, fp;
+  for (int k = 0; k < maxiter; k++)
+  {
+    integrand(x0, beta, xmu, gamma2, delta2, f, fp);
+    x0 -= f / fp;
+
+    if (std::abs(f) < tol)
+      break;
+  }
+
+  // Maximum integrand contribution
+  double z0 = xmu / std::sqrt(x0) - beta * std::sqrt(x0);
+  double g1 = -0.5 * (delta2 / x0 + gamma2 * x0);
+  double g2 = -1.5 * std::log(x0);
+  double g3 = std::log(normal_cdf(z0));
+  double gx0 = g1 + g2 + g3 + delta * gamma;
+  
+  return C * std::exp(gx0);
+}
+
+
 int truncation(
   const double alpha,
   const double beta,
@@ -99,12 +206,6 @@ double lambertwm1(const double x)
 }
 
 
-double normal_cdf(const double x)
-{
-  return 0.5 * std::erfc(-x / constants::sqrt2);
-}
-
-
 double nig_integration(
   const double x,
   const double alpha,
@@ -122,8 +223,16 @@ double nig_integration(
   const double xmu = x - mu;
   const double C = delta * constants::oneosqrttwopi;
 
+  // Estimate integrand magnitude to achieve eps relative error
+  double magnitude = estimate_magnitude(x, alpha, beta, mu, delta, gamma, C);
+  std::cout << magnitude << std::endl;
+
   // Estimate the truncation point N
   int N = truncation(alpha, beta, mu, delta, gamma, eps);
+  int Nm = truncation(alpha, beta, mu, delta, gamma, eps * magnitude);
+  
+  std::cout << N << " " << Nm << std::endl;
+  N = std::max(N, std::max(Nm, 5));
 
   // Estimate initial step size h
   const double eps2 = eps * eps;
@@ -143,7 +252,7 @@ double nig_integration(
 
     double japprox = std::log(-2.0 / constants::pi * lambertwm1(-eps2 / h / 2.0)) / h;
     int j = (int) std::ceil(japprox);
-    // std::cout << "level " << level << " j = " << j << std::endl;
+    std::cout << "level " << level << " j = " << j << std::endl;
     // std::cout << "lambert " << lambertwm1(-eps2 / h / 2.0) << std::endl;
 
     if (level == 0.0)
@@ -219,5 +328,14 @@ double nig_integration(
     }
   }
 
-  return C * estimate;
+  double integral = C * estimate;
+
+  // Check if order of magnitude of the computed integral is close to the
+  // estimate. If the magnitudes differ significantly, an error during the
+  // computation occurred. Then, return the estimated magnitude.
+  if (std::abs(std::log10(integral) - std::log(magnitude)) > 5)
+    return estimate;
+  else
+    return integral;
+
 }

@@ -45,17 +45,24 @@ int main()
   // double mu = -0.6779473810531575;
   // double delta = 46.86837947038307;
 
-  double x = 0.1;
-  double alpha = 22.05;
-  double mu = 20.04;
-  double delta = 40.05;
+  // double x = -1200;
+  // double alpha = 1;
+  // double beta = -1./2;
+  // double mu = 1;
+  // double delta = 10;
+
+  double x = -1.9103180092440883;
+  double alpha = 22.41626678065764;
+  double beta = 0.0;
+  double mu = 2.9491781940248964;
+  double delta = 0.14817937115534;  
   // double eps = 5e-16;
 
   // std::cout << truncation(alpha, beta, mu, delta, eps) << std::endl;
   // double tau = 1e-32;
   // std::cout << estimate_h(tau, 1e-10, 10) << std::endl;
-  // double result = nig_integration(x, alpha, 0, mu, delta, 1e-15, 10);
-  double result = nig_cdf(x, alpha, 0, mu, delta);
+  double result = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+  // double result = nig_cdf(x, alpha, 0, mu, delta);
   std::cout << std::setprecision(16) << result << std::endl;
 
   return 0;

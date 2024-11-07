@@ -16,15 +16,16 @@ def normcdf(x):
 
 
 def fun_phi(t, x, alpha, beta, mu, delta):
-    gamma = sqrt(alpha ** mp.mpf('2') - beta ** mp.mpf('2'))
-    C = delta / sqrt(2 * pi)
-    return C * normcdf((x - (mu + beta * t)) / sqrt(t)) * t ** mp.mpf('-3/2') * exp(-(delta - gamma * t) ** 2 / 2 / t)
+    two = mp.mpf('2')
+    gamma = sqrt(alpha ** two - beta ** two)
+    C = delta / sqrt(two * pi)
+    return C * normcdf((x - (mu + beta * t)) / sqrt(t)) * t ** mp.mpf('-3/2') * exp(-(delta - gamma * t) ** two / two / t)
 
 
 def quad_phi(x, alpha, beta, mu, delta, a=mp.zero, b=inf, digits=50):
     prec = mp.dps
     mp.dps = digits
-    
+
     x, alpha, beta, mu, delta = arg_mpmathify(x, alpha, beta, mu, delta)
 
     cdf = quad(lambda t: fun_phi(t, x, alpha, beta, mu, delta), [a, b])
