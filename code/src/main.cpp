@@ -41,6 +41,7 @@ int main()
   // double x = 1.1;
 
   // double x = -1.8816854798951448;
+  // double beta = 0.0;
   // double alpha = 23.184287219731825;
   // double mu = -0.6779473810531575;
   // double delta = 46.86837947038307;
@@ -51,12 +52,24 @@ int main()
   // double mu = 1;
   // double delta = 10;
 
-  double x = -1.9103180092440883;
-  double alpha = 22.41626678065764;
-  double beta = 0.0;
-  double mu = 2.9491781940248964;
-  double delta = 0.14817937115534;  
+  // double x = -1.9103180092440883;
+  // double alpha = 22.41626678065764;
+  // double beta = 20.0;
+  // double mu = 2.9491781940248964;
+  // double delta = 20.14817937115534;  
   // double eps = 5e-16;
+
+  // double x = -20;
+  // double alpha = 50;
+  // double beta = 12;
+  // double mu = 1;
+  // double delta = 45;
+
+  double x = 4.219899000274793;
+  double alpha = 28.04845308531407;
+  double beta = 10.0;
+  double mu = -0.3756820526459652;
+  double delta = 40.4430694917478499;
 
   // std::cout << truncation(alpha, beta, mu, delta, eps) << std::endl;
   // double tau = 1e-32;

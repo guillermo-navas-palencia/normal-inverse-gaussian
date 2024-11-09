@@ -3,10 +3,6 @@
 #include <nig.hpp>
 #include <constants.hpp>
 
-#include <string>
-#include <iostream>
-#include <iomanip>
-
 
 double bessel_series(
   const double x,
@@ -145,7 +141,6 @@ double asymptotic_alpha(
     s += num * ck * qk;
 
     if (std::fabs(1.0 - sp / s) < eps) {
-      // std::cout << k << std::endl;
       return C * s;
     } else {
       c0 = c1;
@@ -247,22 +242,22 @@ double nig_beta_eq_zero(
   const bool use_asymp_xmu = (xmu2 >= 70) & (aow >= 1.0);
 
   if (use_series_c1 | use_series_c2) {
-    std::cout << "bessel_series" << std::endl;
+    // std::cout << "bessel_series" << std::endl;
     if (xmu > 0.0)
       return bessel_series(x, alpha, mu, delta);
     else
       return 1.0 - bessel_series(-x, alpha, -mu, delta);
   } else if (use_asymp_a){
-    std::cout << "asymptotic_alpha" << std::endl;
+    // std::cout << "asymptotic_alpha" << std::endl;
     return asymptotic_alpha(x, alpha, mu, delta);
   } else if (use_asymp_xmu) {
-    std::cout << "asymptotic_xmu" << std::endl;
+    // std::cout << "asymptotic_xmu" << std::endl;
     if (xmu < 0.0)
       return asymptotic_xmu(x, alpha, mu, delta);
     else
       return 1.0 - asymptotic_xmu(-x, alpha, -mu, delta);
   } else {
-    std::cout << "integration" << std::endl;
+    // std::cout << "integration" << std::endl;
     return nig_integration(x, alpha, 0.0, mu, delta, 1e-13, 14);
   }
 }

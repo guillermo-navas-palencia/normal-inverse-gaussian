@@ -128,8 +128,6 @@ int truncation(
   const double logy =  1./3 * loggamma2 - 2./3 * (std::log(eps) - logC) - 0.636514168294813;
   const double lambertwy = std::pow(logy, logy / (1.0 + logy));
 
-  std::cout << logy << std::endl;
-
   return (int) std::ceil(3.0 / gamma2 * lambertwy);
 }
 
