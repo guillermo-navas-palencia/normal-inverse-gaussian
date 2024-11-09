@@ -3,9 +3,6 @@
 #include <nig.hpp>
 #include <constants.hpp>
 
-#include <iostream>
-#include <iomanip>
-
 
 double normal_cdf(const double x)
 {
@@ -19,7 +16,7 @@ double normal_pdf(const double x)
 }
 
 
-void integrand(
+void integrand_and_deriv(
   double t,
   const double beta,
   const double xmu,
@@ -69,24 +66,18 @@ double estimate_magnitude(
 
   // Constants
   const double alpha2 = alpha * alpha;
-  const double beta2 = beta * beta;
   const double delta2 = delta * delta;
   const double gamma2 = gamma * gamma;
   const double xmu = x - mu;
   const double xmu2 = xmu * xmu;
 
-  // Use asymptotic or small initial quadratic guess x0
-  bool use_asymp1 = (alpha / beta < 0.5) and (delta > 2.0);
-  bool use_asymp2 = alpha2 - 2.0 * beta2;
-  bool use_asymp3 = xmu2 > 1.0;
-
   double a, c;
-  if (use_asymp1 | use_asymp2 | use_asymp3)
+  if (x - mu < 0.0)
   {
     a = alpha2;
     c = delta2 + xmu2;
   } else {
-    a = alpha2 - 2.0 * beta2 + xmu2;
+    a = gamma2;
     c = delta2;
   }
 
@@ -96,7 +87,7 @@ double estimate_magnitude(
   double f, fp;
   for (int k = 0; k < maxiter; k++)
   {
-    integrand(x0, beta, xmu, gamma2, delta2, f, fp);
+    integrand_and_deriv(x0, beta, xmu, gamma2, delta2, f, fp);
     x0 -= f / fp;
 
     if (std::abs(f) < tol)
@@ -115,46 +106,29 @@ double estimate_magnitude(
 
 
 int truncation(
-  const double alpha,
-  const double beta,
-  const double mu,
   const double delta,
   const double gamma,
   const double eps = 5e-16
 )
 {
+  // Solve: 2 e^{-gamma^2 / 2 N} / N^(3/2) / gamma^2 = eps / C
+  // N = 3/gamma^2 W0(gamma^2/(3u)), u = (gamma^2 eps / 2 / C) ^(2/3)
+
+  // Use upper bound of the W0(x): W0(x) < log(x)^(log(x) / (1 + log(x)))
+  // To avoid overflow/underflow perform computation using logarithms
+
   // Constants
   const double gamma2 = gamma * gamma;
-  const double dg = delta * gamma;
+  const double loggamma2 = std::log(gamma2);
 
-  // Check if scaled / logarithm calculation is required
-  const bool scaled = dg > 705.342;
+  // log C = log(delta) + delta * gamma - 1/2 * log(2 pi)
+  const double logC = std::log(delta) + delta * gamma - 0.9189385332046727;
 
-  double y;
-
-  if (scaled) {
-    const double logg = std::log(gamma);
-
-    const double t1 = 2.0 * logg;
-    double t2 = t1 + std::log(eps);
-    t2 -= constants::log_2 + std::log(delta * constants::oneosqrttwopi) + dg;
-    t2 = (std::log(3.0) + constants::twothird * t2);
-
-    if ((t1 - t2) > 705.342)
-      return 1;
-    else
-      y = std::exp(t1 - t2);
-
-  } else {
-    const double C = delta * std::exp(dg) / constants::oneosqrttwopi;
-    const double u = std::pow(gamma2 * eps / (2.0 * C), constants::twothird);
-    y = gamma2 / (3.0 * u);
-  }
-
-  // Approximation Lambert W0(x) with the upper bound:
-  // W0(x) < log(x)^(log(x) / (1 + log(x)))
-  const double logy = std::log(y);
+  // log y = log(gamma^2) - log(3) - 2/3 (log(gamma^2) + log(eps) - log(2) - logC)
+  const double logy =  1./3 * loggamma2 - 2./3 * (std::log(eps) - logC) - 0.636514168294813;
   const double lambertwy = std::pow(logy, logy / (1.0 + logy));
+
+  std::cout << logy << std::endl;
 
   return (int) std::ceil(3.0 / gamma2 * lambertwy);
 }
@@ -173,7 +147,6 @@ double estimate_h(
   double x = std::log(2.0 / constants::pi * std::log(piotau));
 
   // Newton's iteration
-
   double aux = constants::pihalf * std::exp(x);
   double fx = aux - x - std::log(x * piotau);
 
@@ -225,20 +198,13 @@ double nig_integration(
 
   // Estimate integrand magnitude to achieve eps relative error
   double magnitude = estimate_magnitude(x, alpha, beta, mu, delta, gamma, C);
-  std::cout << magnitude << std::endl;
 
   // Estimate the truncation point N
-  int N = truncation(alpha, beta, mu, delta, gamma, eps);
-  int Nm = truncation(alpha, beta, mu, delta, gamma, eps * magnitude);
-  
-  std::cout << N << " " << Nm << std::endl;
-  N = std::max(N, std::max(Nm, 5));
+  int N = truncation(delta, gamma, eps * std::min(magnitude, 1.0));
 
   // Estimate initial step size h
   const double eps2 = eps * eps;
   double h = estimate_h(eps2);
-
-  // std::cout << std::setprecision(16) << h << std::endl;
 
   // Start integration
   const double alpha2 = N / 2.0;
@@ -252,17 +218,12 @@ double nig_integration(
 
     double japprox = std::log(-2.0 / constants::pi * lambertwm1(-eps2 / h / 2.0)) / h;
     int j = (int) std::ceil(japprox);
-    std::cout << "level " << level << " j = " << j << std::endl;
-    // std::cout << "lambert " << lambertwm1(-eps2 / h / 2.0) << std::endl;
 
     if (level == 0.0)
     {
       y0 = alpha2;
       y1 = -alpha2 * constants::pihalf;
       weight = -h * y1;
-
-      // std::cout << "y0 " << y0 << " y1 " << y1 << std::endl;
-      // std::cout << "weight " << weight << std::endl;
 
       // Eval f(y0) and f(N - y0)
       xl = y0;
@@ -275,11 +236,8 @@ double nig_integration(
       phir = normal_cdf((xmu - beta * xr) / std::sqrt(xr));
       fr = phir * std::exp(-rr*rr / xr / 2.0) * std::pow(xr, -1.5);
 
-      // std::cout << "fl " << fl << " fr " << fr << std::endl;
-
       estimate = fl * weight;
       h /= 2.0;
-      // std::cout << "estimate " << estimate << std::endl;
     }
     else
     {
@@ -316,8 +274,6 @@ double nig_integration(
 
       f = suml + sumr + estimate / 2.0;
 
-      // std::cout << "f " << f << std::endl;
-
       if (std::abs(1.0 - estimate / f) < eps)
       {
         return C * f;
@@ -337,5 +293,4 @@ double nig_integration(
     return estimate;
   else
     return integral;
-
 }
