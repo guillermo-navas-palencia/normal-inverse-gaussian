@@ -65,17 +65,28 @@ int main()
   // double mu = 1;
   // double delta = 45;
 
-  double x = 4.219899000274793;
-  double alpha = 28.04845308531407;
-  double beta = 10.0;
-  double mu = -0.3756820526459652;
-  double delta = 40.4430694917478499;
+  // double x = 4.219899000274793;
+  // double alpha = 28.04845308531407;
+  // double beta = 10.0;
+  // double mu = -0.3756820526459652;
+  // double delta = 40.4430694917478499;
 
   // std::cout << truncation(alpha, beta, mu, delta, eps) << std::endl;
   // double tau = 1e-32;
   // std::cout << estimate_h(tau, 1e-10, 10) << std::endl;
-  double result = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+  // double result = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   // double result = nig_cdf(x, alpha, 0, mu, delta);
+
+  double x = -10./8;
+  double alpha = 9.0;
+  double beta = -4.0;
+  double mu = 1.0;
+  double delta = 14.0;
+
+  double result = nig_general(x, alpha, beta, mu, delta);
+  std::cout << std::setprecision(16) << result << std::endl;
+
+  result = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   std::cout << std::setprecision(16) << result << std::endl;
 
   return 0;

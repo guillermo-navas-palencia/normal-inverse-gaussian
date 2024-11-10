@@ -77,12 +77,12 @@ double bessel_series(
 
 
 double asymptotic_alpha(
-  double x,
-  double alpha,
-  double mu,
-  double delta,
-  int maxiter = 200,
-  double eps = 5e-13
+  const double x,
+  const double alpha,
+  const double mu,
+  const double delta,
+  const int maxiter = 200,
+  const double eps = 5e-13
 )
 {
   // Parameters
@@ -161,12 +161,12 @@ double asymptotic_alpha(
 
 
 double asymptotic_xmu(
-  double x,
-  double alpha,
-  double mu,
-  double delta,
-  int maxiter = 200,
-  double eps = 5e-13
+  const double x,
+  const double alpha,
+  const double mu,
+  const double delta,
+  const int maxiter = 200,
+  const double eps = 5e-13
 )
 {
   // Parameters

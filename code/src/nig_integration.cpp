@@ -17,7 +17,7 @@ double normal_pdf(const double x)
 
 
 void integrand_and_deriv(
-  double t,
+  const double t,
   const double beta,
   const double xmu,
   const double gamma2,
