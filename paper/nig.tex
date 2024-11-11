@@ -642,8 +642,26 @@ F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{b}{2
 \end{equation}
 where $\omega = \sqrt{\delta^2 + (x-\mu)^2}$. Rearranging terms
 \begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{2\beta}{(\mu-x)\pi^3}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{\beta \omega}{\alpha(\mu-x)}\right)^k K_{k + \frac{1}{2}}((\mu-x)\beta) K_k(\omega \alpha) 
+F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{2\beta}{(\mu-x)\pi^3}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{\beta \omega}{\alpha(\mu-x)}\right)^k K_{k + \frac{1}{2}}((\mu-x)\beta) K_k(\omega \alpha)
 \end{equation}
+
+
+\subsubsection{Expansion $\delta \to \infty$}
+Starting from the integral representation in \eqref{integral_phi} and replacing the $\Phi\left(\frac{x-(\mu + \beta t)}{\sqrt{t}}\right)$ by the asymptotic expansion for $t\to \infty$ in \eqref{phi_expansion_at_inf} in terms of the incomplete gamma function. Taking $a = x -\mu$ and $b = -\beta$, we obtain
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty}\frac{(-1)^{k+1}}{2^k k!} \frac{\Gamma(2k+1, -(x-\mu)\beta)}{(-\beta)^{2k+1}} \int_0^{\infty} t^{-k-2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2 + \beta^2}{2}t} \mathop{dt}.
+\end{equation}
+The integral is expressible in terms of modified Bessel function
+\begin{equation}
+\int_0^{\infty} t^{-k-2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2 + \beta^2}{2}t} \mathop{dt} = 2 \left(\frac{\alpha}{\delta}\right)^{k + 1} K_{k+1}(\alpha \delta),
+\end{equation}
+where we use the fact that $\gamma^2+ \beta^2 = \alpha^2$. After rearranging terms, we have for $\beta > 0$
+\begin{align}
+F(x; \alpha, \beta, \mu, \delta) &= \frac{\alpha e^{\delta \gamma}}{\pi \beta}\sum_{k=0}^{\infty} \frac{(-1)^k}{k!} \Gamma(2k + 1, -(x-\mu)\beta)\left(\frac{\alpha}{2\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)\\
+ &=\frac{\alpha e^{\delta \gamma}}{\pi \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta)\frac{\Gamma(2k+1)}{\Gamma(k+1)}\left(-\frac{\alpha}{2\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)\\
+ &=\frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta) \Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta),
+\end{align}
+and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x)$, see appendix \ref{appendix_incomplete_gamma}. The evaluation of the asymptotic series using the regularized incomplete gamma is more numerically stable, as described in Section \ref{algorithmic_asymptotic_expansions}.
 
 
 \subsection{Numerical integration}\label{section_numerical_integration}
@@ -766,7 +784,7 @@ Stopping criterion is
 \end{equation}
 
 
-\subsection{Evaluation of asymptotic expansions}
+\subsection{Evaluation of asymptotic expansions}\label{algorithmic_asymptotic_expansions}
 
 \subsection{Implementation}\label{subsection_implementation}
 
@@ -869,7 +887,7 @@ The coefficients $c_k$ are expressible in terms of the incomplete gamma function
 c_k = \sum_{j=0}^{2k}\frac{(2k)!}{j!}(ab)^j = e^{ab}\Gamma(2k+1, ab).
 \end{equation*}
 Rearranging terms, we get
-\begin{equation}
+\begin{equation}\label{phi_expansion_at_inf}
 F(t; a, b) = 1 + \frac{e^{- \frac{b^2}{2}t}}{\sqrt{2\pi}}\sum_{k=0}^{\infty}\frac{(-1)^{k+1}}{2^k k!}\frac{\Gamma(2k+1, ab)}{b^{2k+1}}\left(\frac{1}{t}\right)^{k+\frac{1}{2}}.
 \end{equation}
 
@@ -918,6 +936,29 @@ Asymptotic behaviour with respect to the order
 \begin{equation}\label{besselk_order_to_inf}
 K_{\nu}(x) \sim \sqrt{\frac{\pi}{2\nu}}\left(\frac{ex}{2\nu}\right)^{-\nu}, \quad \nu \to \infty, \quad x \neq 0.
 \end{equation}
+
+\section{The incomplete gamma functions}\label{appendix_incomplete_gamma}
+
+\begin{equation}
+Q(a, x) = \frac{\Gamma(a, x)}{\Gamma(a)}
+\end{equation}
+
+\begin{equation}
+P(a, x) = \frac{\gamma(a, x)}{\Gamma(a)}
+\end{equation}
+
+\begin{equation}
+\Gamma(a, x) + \gamma(a, x) = \Gamma(a)
+\end{equation}
+
+\begin{equation}
+P(a, x) + Q(a, x) = 1
+\end{equation}
+
+\begin{itemize}
+\item Series for integer $a$
+\item Recursions
+\end{itemize}
 
 \bibliographystyle{plain}
 \bibliography{bib}

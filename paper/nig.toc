@@ -15,18 +15,20 @@
 \contentsline {subsubsection}{\numberline {3.3.2}Expansions $|x-\mu | \to 0$ (option 2)}{11}
 \contentsline {subsubsection}{\numberline {3.3.3}Expansion $\alpha \to \infty , \delta \to \infty $}{12}
 \contentsline {subsubsection}{\numberline {3.3.4}Expansion $|x-\mu | \to \infty $}{12}
+\contentsline {subsubsection}{\numberline {3.3.5}Expansion $\delta \to \infty $}{12}
 \contentsline {subsection}{\numberline {3.4}Numerical integration}{12}
-\contentsline {subsection}{\numberline {3.5}Inversion methods}{13}
-\contentsline {section}{\numberline {4}Algorithmic details and implementation}{13}
-\contentsline {subsection}{\numberline {4.1}Handling large parameters}{13}
-\contentsline {subsection}{\numberline {4.2}Evaluation of Bessel-type expansions}{13}
-\contentsline {subsubsection}{\numberline {4.2.1}Partial sums recurrence}{13}
+\contentsline {subsection}{\numberline {3.5}Inversion methods}{14}
+\contentsline {section}{\numberline {4}Algorithmic details and implementation}{14}
+\contentsline {subsection}{\numberline {4.1}Handling large parameters}{14}
+\contentsline {subsection}{\numberline {4.2}Evaluation of Bessel-type expansions}{14}
+\contentsline {subsubsection}{\numberline {4.2.1}Partial sums recurrence}{14}
 \contentsline {subsection}{\numberline {4.3}Evaluation of asymptotic expansions}{14}
 \contentsline {subsection}{\numberline {4.4}Implementation}{14}
 \contentsline {section}{\numberline {5}Numerical experiments}{14}
 \contentsline {section}{\numberline {6}Conclusions}{14}
 \contentsline {section}{\numberline {A}The function $\Phi \left (\frac {a}{\sqrt {t}} + b\sqrt {t}\right )$}{14}
-\contentsline {subsubsection}{\numberline {A.0.1}Expansion $t \to 0$}{14}
-\contentsline {subsubsection}{\numberline {A.0.2}Expansion $t \to \infty $}{15}
+\contentsline {subsubsection}{\numberline {A.0.1}Expansion $t \to 0$}{15}
+\contentsline {subsubsection}{\numberline {A.0.2}Expansion $t \to \infty $}{16}
 \contentsline {subsubsection}{\numberline {A.0.3}Expansion $t \to u$}{16}
-\contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{16}
+\contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{17}
+\contentsline {section}{\numberline {C}The incomplete gamma functions}{17}
