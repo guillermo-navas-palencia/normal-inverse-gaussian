@@ -1,10 +1,29 @@
 \begin{thebibliography}{10}
 
+\bibitem{Barndorff1997}
+O.~E. Barndorff-Nielsen.
+\newblock {Normal Inverse Gaussian Distributions and Stochastic Volatility
+  Modelling}.
+\newblock {\em Scandinavian Journal of Statistics}, 24(1):1--13, 1997.
+
+\bibitem{Barry2004}
+D.~A. Barry, L.~Li, and D.-S. Jeng.
+\newblock {Comments on ``numerical evaluation of the Lambert W function and
+  application to generation of generalized Gaussian noise with exponent 1/2"}.
+\newblock {\em IEEE Transactions on Signal Processing}, 52(5):1456--1457, 2004.
+
 \bibitem{Bateman1954}
 H.~Bateman and Bateman~Manuscript Project.
 \newblock {\em Tables of Integral Transforms}.
 \newblock McGraw-Hill Book Company, 1954.
 \newblock Funding by Office of Naval Research.
+
+\bibitem{Benth2004}
+F.~E. Benth and J.~\v{S}altyte Benth.
+\newblock {The Normal Inverse Gaussian distribution and spot price modelling in
+  energy markets}.
+\newblock {\em International Journal of Theoretical and Applied Finance},
+  07(02):177--192, 2004.
 
 \bibitem{NIST:DLMF}
 {\it NIST Digital Library of Mathematical Functions}.
@@ -23,6 +42,17 @@ I.~S. Gradshteyn and I.~M. Ryzhik.
 \newblock {\em Table of integrals, series, and products}.
 \newblock Elsevier/Academic Press, Amsterdam, seventh edition, 2007.
 
+\bibitem{Hoorfar2008}
+A.~Hoorfar and M.~Hassani.
+\newblock {Inequalities on the Lambert function and hyperpower function}.
+\newblock {\em JIPAM. Journal of Inequalities in Pure \& Applied Mathematics},
+  9(2), 2008.
+
+\bibitem{Kalemanova2007}
+A.~Kalemanova, B.~Schmid, and R.~Werner.
+\newblock {The Normal Inverse Gaussian Distribution for Synthetic CDO Pricing}.
+\newblock {\em The Journal of Derivatives}, 14(3):80--94, 2007.
+
 \bibitem{Lebedev1972}
 N.~N. Lebedev.
 \newblock {\em Special Functions and Their Applications}.
@@ -33,11 +63,22 @@ Y.~L. Luke.
 \newblock Inequalities for generalized hypergeometric functions.
 \newblock {\em Journal of Approximation Theory}, 5(1):41--65, 1972.
 
+\bibitem{Madan1990}
+D.~B. Madan and E.~Seneta.
+\newblock {The Variance Gamma (V.G.) Model for Share Market Returns}.
+\newblock {\em The Journal of Business}, 63(4):511--524, 1990.
+
 \bibitem{Olver1997}
 F.~W.~J. Olver.
 \newblock {\em Asymptotics and Special Functions}.
 \newblock A. K. Peters, Wellesley, MA, 1997.
 \newblock Reprint, with corrections, of original Academic Press edition, 1974.
+
+\bibitem{Prause1999}
+K.~Prause.
+\newblock {\em {The Generalized Hyperbolic Model: Estiamtion, Financial
+  Derivatives, and Risk Measures}}.
+\newblock PhD thesis, University of Freiburg, 1999.
 
 \bibitem{Segura2023}
 J.~Segura.
