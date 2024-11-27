@@ -4,6 +4,7 @@
 
 double nig_x_eq_mu(double alpha, double beta, double delta);
 double nig_beta_eq_zero(double x, double alpha, double mu, double delta);
+double nig_general(double x, double alpha, double beta, double mu, double delta);
 double nig_cdf(double x, double alpha, double beta, double mu, double delta);
 
 double bessel_k0_scaled(const double x);

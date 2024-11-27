@@ -66,7 +66,7 @@
 
 \numberwithin{equation}{section}
 
-\title{On the computation and inversion of the Normal Inverse Gaussian cumulative distribution function}
+\title{On the computation of the Normal Inverse Gaussian distribution}
 \author{
  \normalsize  Guillermo Navas-Palencia\\
   \texttt{\normalsize  g.navas.palencia@gmail.com}
@@ -582,7 +582,7 @@ Similarly, using \eqref{phi_expansion_2} yields
 \begin{equation}\label{series_x=mu_2}
 F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!} \left(\frac{\delta}{\alpha}\right)^k K_k(\alpha \delta).
 \end{equation}
-The latter expansion being more convenient since $\alpha > \gamma$.
+The latter expansion being more convenient since $\alpha \ge \gamma$.
 
 
 
@@ -707,18 +707,17 @@ and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymp
 
 
 \subsection{Numerical integration}\label{section_numerical_integration}
-For cases do not covered by the described expansions, we need to resort to numerical integration. The Laplace-type integral \eqref{integral_phi}, whose integrand includes the complementary error function, should be faster to evaluate than the Bessel integral in \eqref{integral_k1}.
+For cases do not covered by the described expansions, we need to resort to numerical integration. First, we focus on the Laplace-type integral \eqref{integral_phi}, whose integrand involves the complementary error function, since its evaluation is faster than the Bessel integral in \eqref{integral_k1}.
 
-To use numerical integration methods requiring a finite interval, we truncate the integral \eqref{integral_phi} at some point $N$, such that
+As a preliminary step, we truncate the improper integral \eqref{integral_phi} at some point $N > 0$, such that
 \begin{equation*}
 I = \int_0^N \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} + \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
 \end{equation*}
 and $F(x; \alpha, \beta, \mu, \delta) = C I$, where $C = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}}$. The truncation error can be bounded by
-\begin{equation*}
+\begin{equation}
 \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{e^{-\frac{\delta^2}{2N}}}{N^{3/2}}\int_N^{\infty} e^{- \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2}.
-\end{equation*}
-
-We can select $N$ for a desired absolute tolerance $\epsilon$ via a bisection procedure or by solving using root-finding methods the equation
+\end{equation}
+We can select $N$ for a desired absolute tolerance $\epsilon$ solving numerically the equation
 \begin{equation}
 \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2} = \frac{\epsilon}{C}.
 \end{equation}
@@ -726,44 +725,53 @@ Moreover, a slightly lesser sharper bound allows a closed-form solution of the a
 \begin{equation}\label{N_equation}
 \frac{2 e^{- \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2} = \frac{\epsilon}{C} \longrightarrow N = \frac{3}{\gamma^2}W_0\left(\frac{\gamma^2}{3u}\right), \quad u = \left(\frac{\gamma^2 \epsilon}{2 C}\right)^{2/3}.
 \end{equation}
+To reduce the cost of evaluating $N$, we can accurately approximate $W_0(z)$ for $z > 1$ using the upper bound derived in \cite{Hoorfar2008}
+\begin{equation}\label{lambertW0_upper_bound}
+W_0(z) \le \log(z)^{\tfrac{\log(z)}{1 + \log(z)}},
+\end{equation}
+implying that we can safely use this approximation when the following inequality is satisfied (which should occur for reasonable parameters)
+\begin{equation}
+\delta \gamma e^{\delta\gamma} > \sqrt{\frac{27 \pi}{2}} \epsilon.
+\end{equation}
+Note that, from a computational perspective, the use of the upper bound \eqref{lambertW0_upper_bound} is beneficial to avoid overflow/underflow issues for large parameters.
 
-To accurately estimate $N$ to achieve a relative tolerance, we need an estimate of the order of magnitude of $I$. First, we rewrite the integrand as $e^{g(t)}$, where
-\begin{equation*}
+To accurately estimate $N$ to achieve a relative tolerance, we need an estimate of the order of magnitude of $I$. The integrand can be written as $e^{g(t)}$, where
+\begin{equation}
 g(t) = -\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t - \frac{3}{2}\log(t) + \log\left(\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)\right),
-\end{equation*}
+\end{equation}
 and
-\begin{equation*}
-g'(t) = \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t} -\varphi(x; \beta, \mu),  \quad \varphi(x; \beta, \mu) = \frac{1}{2}\left(\frac{x-\mu}{t^{3/2}} + \frac{\beta}{\sqrt{t}} \right)\frac{\phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)}{\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)}
-\end{equation*}
+\begin{equation}\label{saddle_point_equation}
+g'(t) = \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t} -\frac{1}{2}\left(\frac{x-\mu}{t^{3/2}} + \frac{\beta}{\sqrt{t}} \right)\frac{\phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)}{\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)}.
+\end{equation}
 The saddle point $t_0$ and maximum contribution $e^{g(t_0)}$ of the integrand is obtained as the solution of the equation $g'(t) = 0$. Thus, $N$ for relative tolerance can be estimated after replacing $\epsilon$ with $\epsilon e^{g(t_0)}$ in \eqref{N_equation}. For the case where $\gamma$ and $\delta$ are both large and $\beta$ and $x-\mu$ are fixed, the last term in $g'(t)$ can be neglected, obtaining the quadratic equation
-\begin{equation}\label{saddle_1}
+\begin{equation}\label{saddle_point_1}
 g'(t) \approx \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t}, \quad t_0 = \frac{-\frac{3}{2} + \sqrt{\frac{9}{4} + (\gamma \delta)^2}}{\gamma^2},
 \end{equation}
-taking the positive internal saddle point $t_0$. The case where $\gamma$ and $\delta$ are small requires further analysis. If $x-\mu > 0$, as $x-\mu$ increases the contribution of $\varphi(x; \beta, \mu)$ vanishes and \eqref{saddle_1} is valid. Contrarily, if $x -\mu < 0$ and $\beta \to 0$ (since $|\beta| < \gamma < \alpha$), $\varphi(x; \beta, \mu)$ can be approximated as follows
+taking the positive internal saddle point $t_0$. The case where $\gamma$ and $\delta$ are small requires further analysis. If $x-\mu > 0$, $t_0$ in \eqref{saddle_point_1} is still valid. Contrarily, if $x -\mu < 0$, the ratio of the cumulative distribution function and the density function can be approximated via
 \begin{equation*}
-\frac{\phi\left(\frac{x - \mu}{\sqrt{t}}\right)}{\Phi\left(\frac{x - \mu}{\sqrt{t}}\right)} \approx -\frac{x - \mu}{\sqrt{t}}, \quad \varphi(x; \beta, \mu) \approx -\frac{(x-\mu)^2}{2t^2},
+\frac{\phi\left(\frac{x - (\mu+ \beta t)}{\sqrt{t}}\right)}{\Phi\left(\frac{x - (\mu + \beta t)}{\sqrt{t}}\right)} \approx -\frac{x - (\mu + \beta t)}{\sqrt{t}},
 \end{equation*}
-then, we have another quadratic equation
-\begin{equation*}
-g'(t) \approx \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t} + \frac{(x-\mu)^2}{2t^2}, \quad t_0 = \frac{-\frac{3}{2} + \sqrt{\frac{9}{4} + \gamma^2 \left((x-\mu)^2 + \delta^2\right)}}{\gamma^2}.
-\end{equation*}
-If $\beta < 0$, a better approximation is
-\begin{equation*}
-g'(t) \approx \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t} + \frac{(x-\mu)^2}{2t^2} + \frac{\beta(x-\mu)}{2t}, \quad t_0 = \frac{h + \sqrt{h^2 + \gamma^2 \left((x-\mu)^2 + \delta^2\right)}}{\gamma^2}, \quad h = \frac{\beta (x-\mu) - 3}{2}.
-\end{equation*}
-The saddle point estimates $t_0$ can also be used as a starting point for root-finding, however, for the purpose of approximating the order of magnitude of $I$, the approximations are sufficient.
-
-\subsection{Double-exponential quadrature}
-Upper bound $W_0(x)$, for $x > 1$ given in \cite{Hoorfar2008}.
-\begin{equation}
-W_0(x) \le \log(x)^{\tfrac{\log(x)}{1 + \log(x)}}.
+then, replacing in \eqref{saddle_point_equation}, we have another quadratic equation
+\begin{equation}\label{saddle_point_2}
+g'(t) \approx \frac{\delta^2 + (x-\mu)^2}{2t^2} -\frac{\alpha^2}{2} -\frac{3}{2t}, \quad t_0 = \frac{-\frac{3}{2} + \sqrt{\frac{9}{4} + \alpha^2 \left((x-\mu)^2 + \delta^2\right)}}{\alpha^2}.
 \end{equation}
+%If $\beta < 0$, a better approximation is
+%\begin{equation*}
+%g'(t) \approx \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t} + \frac{(x-\mu)^2}{2t^2} + \frac{\beta(x-\mu)}{2t}, \quad t_0 = \frac{h + \sqrt{h^2 + \gamma^2 \left((x-\mu)^2 + \delta^2\right)}}{\gamma^2}, \quad h = \frac{\beta (x-\mu) - 3}{2}.
+%\end{equation*}
+The saddle point estimates $t_0$ computed by \eqref{saddle_point_1} or \eqref{saddle_point_2} is used as a starting point for the root-finding method. In particular, we find that the Newton's method setting an absolute error $10^{-4}$ only requires a few iterations (typically less than 5) to refine the initial estimate.
 
+\subsubsection{Double-exponential quadrature}
 Approximation $W_{-1}(z)$ with maximum relative error of $3.5e{-3}$ presented in \cite{Barry2004}
 \begin{equation}
 W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + \log(-z)}{2}}\right)^{-1}\right), \quad	a = 0.3205.
 \end{equation}
 
+
+\begin{itemize}
+\item Estimate $h$
+\item Estimate number of iteration by level. Using $W_{-1}(x)$.
+\end{itemize}
 
 TODO: describe algorithm and reference. Use of approximation for Lambert W function and references.
 

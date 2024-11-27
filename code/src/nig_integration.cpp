@@ -3,6 +3,9 @@
 #include <nig.hpp>
 #include <constants.hpp>
 
+#include <iostream>
+#include <iomanip>
+
 
 double normal_cdf(const double x)
 {
@@ -50,14 +53,13 @@ void integrand_and_deriv(
 }
 
 
-double estimate_magnitude(
+double saddle_point(
   const double x,
   const double alpha,
   const double beta,
   const double mu,
   const double delta,
   const double gamma,
-  const double C,
   const double tol = 1e-4,
   const int maxiter = 10
 )
@@ -93,6 +95,26 @@ double estimate_magnitude(
     if (std::abs(f) < tol)
       break;
   }
+
+  return x0;
+}
+
+
+double estimate_magnitude(
+  const double x0,
+  const double x,
+  const double alpha,
+  const double beta,
+  const double mu,
+  const double delta,
+  const double gamma,  
+  const double C
+)
+{
+  // Constants
+  const double delta2 = delta * delta;
+  const double gamma2 = gamma * gamma;
+  const double xmu = x - mu;
 
   // Maximum integrand contribution
   double z0 = xmu / std::sqrt(x0) - beta * std::sqrt(x0);
@@ -194,11 +216,18 @@ double nig_integration(
   const double xmu = x - mu;
   const double C = delta * constants::oneosqrttwopi;
 
+  // Estimate integrand saddle point
+  double x0 = saddle_point(x, alpha, beta, mu, delta, gamma);
+
   // Estimate integrand magnitude to achieve eps relative error
-  double magnitude = estimate_magnitude(x, alpha, beta, mu, delta, gamma, C);
+  double magnitude = estimate_magnitude(x0, x, alpha, beta, mu, delta, gamma, C);
 
   // Estimate the truncation point N
   int N = truncation(delta, gamma, eps * std::min(magnitude, 1.0));
+
+  std::cout << "saddle point " << std::setprecision(16) << x0 << std::endl;
+  std::cout << "magnitude " << magnitude << std::endl;
+  std::cout << "N " << N << std::endl;
 
   // Estimate initial step size h
   const double eps2 = eps * eps;
@@ -216,6 +245,8 @@ double nig_integration(
 
     double japprox = std::log(-2.0 / constants::pi * lambertwm1(-eps2 / h / 2.0)) / h;
     int j = (int) std::ceil(japprox);
+
+    std::cout << "level = " << level << " j = " << j << std::endl;
 
     if (level == 0.0)
     {

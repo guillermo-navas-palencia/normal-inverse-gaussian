@@ -242,6 +242,7 @@ double nig_beta_eq_zero(
   const bool use_asymp_xmu = (xmu2 >= 70) & (aow >= 1.0);
 
   if (use_series_c1 | use_series_c2) {
+    // TODO: REWRITE THIS TO AVOID THE TWO CASES. Simply multiply (x-mu)
     // std::cout << "bessel_series" << std::endl;
     if (xmu > 0.0)
       return bessel_series(x, alpha, mu, delta);

@@ -77,16 +77,22 @@ int main()
   // double result = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   // double result = nig_cdf(x, alpha, 0, mu, delta);
 
-  double x = -10./8;
-  double alpha = 9.0;
-  double beta = -4.0;
-  double mu = 1.0;
-  double delta = 14.0;
+  // double x = -10./8;
+  // double alpha = 9.0;
+  // double beta = -5.0;
+  // double mu = 1.0;
+  // double delta = 24.0;
 
-  double result = nig_general(x, alpha, beta, mu, delta);
-  std::cout << std::setprecision(16) << result << std::endl;
+  double x = -0.4519899000274793;
+  double alpha = 0.54845308531407;
+  double beta = 0.3;
+  double mu = 0.3756820526459652;
+  double delta = 0.4430694917478499;
 
-  result = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+  // double result = nig_general(x, alpha, beta, mu, delta);
+  // std::cout << std::setprecision(16) << result << std::endl;
+
+  double result = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   std::cout << std::setprecision(16) << result << std::endl;
 
   return 0;
