@@ -1,0 +1,89 @@
+\documentclass[10pt,a4paper,oneside]{article}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{bigints}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[noblocks]{authblk}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{float}
+\usepackage{framed}
+\usepackage{multirow}
+%\usepackage{hyperref}
+\usepackage{url}  % This makes \url work
+\usepackage{multicol}
+\usepackage{subcaption}
+\setlength{\columnsep}{1cm}
+\usepackage{pifont}
+\usepackage{colortbl}
+\usepackage{framed}
+\usepackage{listings}
+\usepackage{bm}
+\usepackage{eurosym}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{suffix}
+\usepackage{tikz}
+\usepackage{bbm}
+\usetikzlibrary{matrix}
+\usepackage[customcolors]{hf-tikz}
+
+\usepackage[toc,page]{appendix}
+
+\newcommand{\cmark}{\ding{51}}%
+\floatname{algorithm}{Procedure}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+%%enviroments for Theorems, propositions
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{problem}{Open Problem}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+\newtheorem{example}[theorem]{Example}
+\newenvironment{proof}{\noindent{\bf Proof:}}{\hfill$\square$}
+
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\DeclareMathOperator{\erfc}{erfc}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\numberwithin{equation}{section}
+
+\title{On the computation and inversion of the Normal Inverse Gaussian cumulative distribution function}
+\author{
+ \normalsize  Guillermo Navas-Palencia\\
+  \texttt{\normalsize  g.navas.palencia@gmail.com}
+}
+
+\date{\small \today}
+
+\begin{document}
+
+\begin{equation*}
+\Phi_{k+3}(z) = A \Phi_{k-1}(z) + B \Phi_{k}(z) + C \Phi_{k+1}(z) + D \Phi_{k+2}(z)
+\end{equation*}
+\begin{align*}
+A &= (k + 1) k z^2 t_+^2\\
+B &= (k + 1) z \left(z \beta^2 + (\lambda + 1 + 2k) t_+\right)\\
+C &= (k + 1) (\lambda + 1 + k) - z^2 (t_+^2 - \beta^2) + z t_+ (\lambda + 1)\\
+D &= \lambda + 1 - 2zt_+
+\end{align*}
+
+\end{document}
