@@ -109,7 +109,7 @@ f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alp
 
 Parameterization: Standard case $\mu = 0$ and $\delta = 1$. The parameters have the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. Where $\mu$ is the location of the density, $\beta$ is the skewness parameter, $\alpha$ measures the heaviness of the tails.
 
-\subsection{Cumulative distribution function}
+\subsection{Cumulative distribution function}\label{properties_cdf}
 The cumulative distribution function is given by
 \begin{equation}\label{integral_k1}
 F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{x} \frac{K_1\left(\alpha\sqrt{\delta^2 + (t-\mu)^2}\right)}{\sqrt{\delta^2 + (t-\mu)^2}} e^{\beta(t-\mu)} \mathop{dt}
@@ -145,50 +145,6 @@ The observation that the inner integral can be represented in terms of the modif
 \int_{0}^{\infty} t^{-1} e^{-\frac{\left((x-\mu)^2 + \delta^2\right)}{2t} - \left(\frac{\gamma^2}{2} + u^2\right)t} \mathop{dt} = 2 K_0\left(2\sqrt{\frac{(x-\mu)^2 + \delta^2}{2}} \sqrt{\frac{\gamma^2}{2} + t^2}\right).
 \end{equation*}
 \end{proof}
-
-
-\begin{proposition}
-The Fourier sine transform of the cumulative distribution function in terms of elementary functions is given by
-\begin{equation}\label{sine_transform}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}, \quad x-\mu > 0,
-\end{equation}
-and apply \eqref{cdf_mirror} for $x-\mu < 0$.
-\end{proposition}
-\begin{proof}
-Consider the integral representation \eqref{integral_k1}. We use the sine transform \cite[\S 2.4]{Bateman1954}
-\begin{equation*}
-\frac{K_1(\alpha \sqrt{t^2 + \delta^2}}{\sqrt{t^2 + \delta^2}} = \frac{1}{\alpha\delta}\int_0^{\infty} \frac{z e^{-t\sqrt{z^2 + \alpha^2}}}{\sqrt{z^2 + \alpha^2}} \sin(\delta z) \mathop{dz},
-\end{equation*}
-valid for $t \ge 0$. Replacing in \eqref{integral_k1} and interchanging the order of integration, we have
-\begin{align*}
-F(x; \alpha, \beta, \mu, \delta) &= 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\frac{1}{\alpha\delta}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \int_{x-\mu}^{\infty} e^{-t\sqrt{z^2 + \alpha^2} + \beta t} \mathop{dt} \mathop{dz}\\
-&= 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \frac{e^{-(x-\mu)\left(\sqrt{z^2 + \alpha^2} - \beta\right)}}{\sqrt{z^2 + \alpha^2} - \beta} \mathop{dz}
-\end{align*}
-where the inner integral converges for $t\in [x-\mu, \infty)$.
-\end{proof}
-
-In a similar manner, we can obtain a Fourier cosine transform in terms of the exponential integral.
-\begin{proposition}
-The Fourier cosine transform integral representation in terms of the exponential integral $E_1(x)$ is given by
-\begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_0^{\infty} E_1\left((x-\mu)(\sqrt{t^2 + \alpha^2} - \beta)\right) \cos(\delta t) \mathop{dt}, \quad x-\mu > 0.
-\end{equation}
-\end{proposition}
-\begin{proof}
-This result can be derived from the sine transform in \eqref{sine_transform} using integration by parts. Alternatively, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
-\begin{equation*}
-\frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} = \frac{1}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz}.
-\end{equation*}
-Thus,
-\begin{equation*}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\int_{x-\mu}^{\infty} \frac{e^{\beta t}}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz} \mathop{dt},
-\end{equation*}
-where the inner integral is expressible in closed form in terms of the exponential integral $E_1(x)$
-\begin{equation*}
-\int_{x-\mu}^{\infty}\frac{1}{t}e^{-(\sqrt{z^2 + \alpha^2} - \beta)t} \mathop{dt} = E_1\left((x-\mu)(\sqrt{z^2 + \alpha^2} - \beta)\right).
-\end{equation*}
-\end{proof}
-
 
 \subsection{Moments and cumulants}
 
@@ -710,9 +666,9 @@ and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymp
 For cases do not covered by the described expansions, we need to resort to numerical integration. First, we focus on the Laplace-type integral \eqref{integral_phi}, whose integrand involves the complementary error function, since its evaluation is faster than the Bessel integral in \eqref{integral_k1}.
 
 As a preliminary step, we truncate the improper integral \eqref{integral_phi} at some point $N > 0$, such that
-\begin{equation*}
+\begin{equation}\label{truncated_integral}
 I = \int_0^N \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} + \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
-\end{equation*}
+\end{equation}
 and $F(x; \alpha, \beta, \mu, \delta) = C I$, where $C = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}}$. The truncation error can be bounded by
 \begin{equation}
 \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{e^{-\frac{\delta^2}{2N}}}{N^{3/2}}\int_N^{\infty} e^{- \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2}.
@@ -761,19 +717,68 @@ g'(t) \approx \frac{\delta^2 + (x-\mu)^2}{2t^2} -\frac{\alpha^2}{2} -\frac{3}{2t
 %\end{equation*}
 The saddle point estimates $t_0$ computed by \eqref{saddle_point_1} or \eqref{saddle_point_2} is used as a starting point for the root-finding method. In particular, we find that the Newton's method setting an absolute error $10^{-4}$ only requires a few iterations (typically less than 5) to refine the initial estimate.
 
-\subsubsection{Double-exponential quadrature}
-Approximation $W_{-1}(z)$ with maximum relative error of $3.5e{-3}$ presented in \cite{Barry2004}
-\begin{equation}
-W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + \log(-z)}{2}}\right)^{-1}\right), \quad	a = 0.3205.
+The truncated integral \eqref{truncated_integral} can be computed using double exponential (tanh-sinh) quadrature or Gaussian quadrature (Gauss-Legendre). Technical details are discussed in Section \ref{algorithmic_numerical_integration}.
+
+
+\subsubsection{Integral representation in terms of elementary functions}
+The common integral representations presented in Section \ref{properties_cdf} involve special functions in their integrands (e.g., $K_1(x)$ or $\erfc(x)$), which necessarily increases the computation cost of their evaluation. Hence, from a computational perspective, an integral representation in terms of elementary functions is preferred. In the following, we derive an integral representation using the sine transform of the modified Bessel function.
+
+\begin{proposition}
+An integral representation of the cumulative distribution function in terms of elementary functions is given by
+\begin{equation}\label{sine_transform}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}, \quad x-\mu > 0,
+\end{equation}
+and the reflection formula \eqref{cdf_mirror} is used for $x-\mu < 0$.
+\end{proposition}
+\begin{proof}
+Consider the integral representation \eqref{integral_k1}. We use the sine transform \cite[\S 2.4]{Bateman1954}
+\begin{equation*}
+\frac{K_1(\alpha \sqrt{t^2 + \delta^2})}{\sqrt{t^2 + \delta^2}} = \frac{1}{\alpha\delta}\int_0^{\infty} \frac{z e^{-t\sqrt{z^2 + \alpha^2}}}{\sqrt{z^2 + \alpha^2}} \sin(\delta z) \mathop{dz},
+\end{equation*}
+valid for $t \ge 0$. Replacing in \eqref{integral_k1} and interchanging the order of integration, we have
+\begin{align*}
+F(x; \alpha, \beta, \mu, \delta) &= 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\frac{1}{\alpha\delta}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \int_{x-\mu}^{\infty} e^{-t\sqrt{z^2 + \alpha^2} + \beta t} \mathop{dt} \mathop{dz}\\
+&= 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \frac{e^{-(x-\mu)\left(\sqrt{z^2 + \alpha^2} - \beta\right)}}{\sqrt{z^2 + \alpha^2} - \beta} \mathop{dz}
+\end{align*}
+where the inner integral converges for $t\in [x-\mu, \infty)$.
+\end{proof}
+
+\begin{itemize}
+\item Truncate integral and bound tail.
+\item Estimate $N$ solving equation.
+\item Complex integration. Saddle-point method for large $\delta$.
+\end{itemize}
+
+The sine integral can be written in complex form
+\begin{equation}\label{sine_transform_complex_integral}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\Im\left(\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right) + \delta t i}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\mathop{dt}\right), \quad x-\mu > 0,
 \end{equation}
 
 
-\begin{itemize}
-\item Estimate $h$
-\item Estimate number of iteration by level. Using $W_{-1}(x)$.
-\end{itemize}
+\subsubsection{Alternative integral representations}
+In a similar manner, we can obtain an integral representation in terms of the exponential integral using the cosine transform of the modified Bessel function.
 
-TODO: describe algorithm and reference. Use of approximation for Lambert W function and references.
+\begin{proposition}
+The Fourier cosine transform integral representation in terms of the exponential integral $E_1(x)$ is given by
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_0^{\infty} E_1\left((x-\mu)(\sqrt{t^2 + \alpha^2} - \beta)\right) \cos(\delta t) \mathop{dt}, \quad x-\mu > 0.
+\end{equation}
+\end{proposition}
+\begin{proof}
+This result can be derived from the sine transform in \eqref{sine_transform} using integration by parts. Alternatively, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
+\begin{equation*}
+\frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} = \frac{1}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz}.
+\end{equation*}
+Thus,
+\begin{equation*}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\int_{x-\mu}^{\infty} \frac{e^{\beta t}}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz} \mathop{dt},
+\end{equation*}
+where the inner integral is expressible in closed form in terms of the exponential integral $E_1(x)$
+\begin{equation*}
+\int_{x-\mu}^{\infty}\frac{1}{t}e^{-(\sqrt{z^2 + \alpha^2} - \beta)t} \mathop{dt} = E_1\left((x-\mu)(\sqrt{z^2 + \alpha^2} - \beta)\right).
+\end{equation*}
+\end{proof}
+
 
 A double-exponential integration arises as follows. Because $|\beta| < \alpha$, we can write $\beta = \alpha \tanh(\theta)$. Substituting in \eqref{integral_k1} $x-\mu = \delta \sinh(\theta + u)$ we obtain
 \begin{equation}
@@ -783,15 +788,6 @@ where
 \begin{equation}
 \tau = \arcsinh\left(\frac{x - \mu}{\delta}\right) - \theta.
 \end{equation}
-
-\subsubsection{Gaussian quadrature and double-exponential quadrature}
-\begin{itemize}
-\item Gauss-Legendre
-\item Double-exponential tanh-sinh numerical integration
-\end{itemize}
-
-Mention the numerical integration method implemented in other libraries where the NIG distribution is available.
-
 
 %A similar expansion can be obtained from the integral representation \eqref{integral_k0}, expanding $e^{\sqrt{2}(x-\mu)t}$
 %\begin{equation*}
@@ -857,6 +853,24 @@ Stopping criterion is
 \end{itemize}
 
 \subsection{Evaluation of asymptotic expansions}\label{algorithmic_asymptotic_expansions}
+
+\subsection{Numerical integration}\label{algorithmic_numerical_integration}
+
+Approximation $W_{-1}(z)$ with maximum relative error of $3.5e{-3}$ presented in \cite{Barry2004}
+\begin{equation}
+W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + \log(-z)}{2}}\right)^{-1}\right), \quad	a = 0.3205.
+\end{equation}
+
+
+\begin{itemize}
+\item Estimate $h$
+\item Estimate number of iteration by level. Using $W_{-1}(x)$.
+\end{itemize}
+
+TODO: describe algorithm and reference. Use of approximation for Lambert W function and references.
+
+
+Mention the numerical integration method implemented in other libraries where the NIG distribution is available.
 
 \subsection{Implementation}\label{subsection_implementation}
 
