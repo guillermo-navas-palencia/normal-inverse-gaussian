@@ -42,6 +42,7 @@
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 
 \usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[font=small]{caption}
 
 %%enviroments for Theorems, propositions
 \newtheorem{theorem}{Theorem}[section]
@@ -119,24 +120,26 @@ F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \
 F(x; \alpha, \beta, \mu, \delta) = \frac{\delta}{\sqrt{2\pi}}\int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{(\delta - \gamma t)^2}{2t}} \mathop{dt}
 \end{equation}
 
-Also denote
+Also denote the reflection formula
 \begin{equation}\label{cdf_mirror}
-\tilde{F}(x; \alpha, \beta, \mu, \delta) = 1- F(-x; \alpha, -\beta, -\mu, \delta).
+\tilde{F}(x; \alpha, \beta, \mu, \delta) = 1- F(-x; \alpha, -\beta, -\mu, \delta),
 \end{equation}
-Follows from the reversion formula of $\Phi(x)$.
+which follows from the reflection formula of $\Phi(x) = 1 - \Phi(-x)$.
 
-\begin{proposition} For $x - \mu < 0$, an incomplete Laplace-type integral representation in terms of modified Bessel function $K_0(x)$ is given by
+\subsubsection{Alternative integral representations}
+We obtain the following alternative integral representations in terms other special functions. More interestingly, we derive an integral representation in terms of elementary functions. Although these representations have restrictions on the sign of $x-\mu$, the use of the reflection formula \eqref{cdf_mirror} permits the computation on the whole domain.
+
+\begin{proposition} An incomplete Laplace-type integral representation in terms of modified Bessel function $K_0(x)$ is given by
 \begin{equation}\label{integral_k0}
-F(x; \alpha, \beta, \mu, \delta) = \frac{\sqrt{2}\delta e^{\delta \gamma}}{\pi}\int_{\beta / \sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu)t} K_0\left(\sqrt{2\left( (x-\mu)^2 + \delta^2\right)} \sqrt{\frac{\gamma^2}{2} + t^2}\right) \mathop{dt},
+F(x; \alpha, \beta, \mu, \delta) = \frac{\sqrt{2}\delta e^{\delta \gamma}}{\pi}\int_{\beta / \sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu)t} K_0\left(\sqrt{2\left( (x-\mu)^2 + \delta^2\right)} \sqrt{\frac{\gamma^2}{2} + t^2}\right) \mathop{dt}, \quad x - \mu < 0.
 \end{equation}
-and \eqref{cdf_mirror}, otherwise.
 \end{proposition}
 \begin{proof}
 Consider the integral representation of the function $\Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right)$
 \begin{equation*}
 \Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right) = \sqrt{\frac{t}{\pi}} e^{-\frac{(x-\mu)^2}{2t}}\int_{\beta/\sqrt{2}}^{\infty} e^{-(tu^2 - \sqrt{2}(x-\mu) u)} \mathop{du}.
 \end{equation*}
-Replacing in \eqref{integral_phi} and interchanging the order of integration we obtain
+Replacing in \eqref{integral_phi} and interchanging the order of integration, we obtain
 \begin{equation*}
 F(x; \alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2}\pi} \int_{\beta/\sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu) u} \int_{0}^{\infty} t^{-1} e^{-\frac{\left((x-\mu)^2 + \delta^2\right)}{2t} - \left(\frac{\gamma^2}{2} + u^2\right)t} \mathop{dt} \mathop{du}.
 \end{equation*}
@@ -145,6 +148,58 @@ The observation that the inner integral can be represented in terms of the modif
 \int_{0}^{\infty} t^{-1} e^{-\frac{\left((x-\mu)^2 + \delta^2\right)}{2t} - \left(\frac{\gamma^2}{2} + u^2\right)t} \mathop{dt} = 2 K_0\left(2\sqrt{\frac{(x-\mu)^2 + \delta^2}{2}} \sqrt{\frac{\gamma^2}{2} + t^2}\right).
 \end{equation*}
 \end{proof}
+
+\begin{proposition}
+An integral representation of the cumulative distribution function in terms of elementary functions is given by
+\begin{equation}\label{integral_sine_transform}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}, \quad x-\mu > 0.
+\end{equation}
+\end{proposition}
+\begin{proof}
+Consider the integral representation \eqref{integral_k1}. Then, we replace the term involving $K_1(x)$ by its sine transform \cite[\S 2.4]{Bateman1954}
+\begin{equation*}
+\frac{K_1(\alpha \sqrt{t^2 + \delta^2})}{\sqrt{t^2 + \delta^2}} = \frac{1}{\alpha\delta}\int_0^{\infty} \frac{z e^{-t\sqrt{z^2 + \alpha^2}}}{\sqrt{z^2 + \alpha^2}} \sin(\delta z) \mathop{dz},
+\end{equation*}
+valid for $t \ge 0$. Replacing in \eqref{integral_k1} and interchanging the order of integration, we have
+\begin{align*}
+F(x; \alpha, \beta, \mu, \delta) &= 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\frac{1}{\alpha\delta}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \int_{x-\mu}^{\infty} e^{-t\sqrt{z^2 + \alpha^2} + \beta t} \mathop{dt} \mathop{dz}\\
+&= 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \frac{e^{-(x-\mu)\left(\sqrt{z^2 + \alpha^2} - \beta\right)}}{\sqrt{z^2 + \alpha^2} - \beta} \mathop{dz}
+\end{align*}
+where the inner integral converges for $x-\mu > 0$.
+\end{proof}
+
+Analogously, we obtain an integral representation in terms of the exponential integral $E_1(x)$ using the cosine transform of the modified Bessel function.
+\begin{proposition}
+An integral representation of the cumulative distribution function in terms of the exponential integral $E_1(x)$ is given by
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_0^{\infty} E_1\left((x-\mu)(\sqrt{t^2 + \alpha^2} - \beta)\right) \cos(\delta t) \mathop{dt}, \quad x-\mu > 0.
+\end{equation}
+\end{proposition}
+\begin{proof}
+This result can be derived from the sine transform in \eqref{integral_sine_transform} using integration by parts. As another option, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
+\begin{equation*}
+\frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} = \frac{1}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz}.
+\end{equation*}
+Thus,
+\begin{equation*}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\int_{x-\mu}^{\infty} \frac{e^{\beta t}}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz} \mathop{dt},
+\end{equation*}
+where the inner integral is expressible in closed form in terms of the exponential integral $E_1(x)$
+\begin{equation*}
+\int_{x-\mu}^{\infty}\frac{1}{t}e^{-(\sqrt{z^2 + \alpha^2} - \beta)t} \mathop{dt} = E_1\left((x-\mu)(\sqrt{z^2 + \alpha^2} - \beta)\right).
+\end{equation*}
+\end{proof}
+
+Moreover, an integral representation whose integrand decays double-exponentially is obtained using the transformation described in \cite[\S 42.4]{Temme2015}. First, we write $\beta = \alpha \tanh(\theta)$, valid since $|\beta| < \alpha$. Substituting in \eqref{integral_k1} the term $x-\mu = \delta \sinh(\theta + u)$, we obtain
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{\tau} K_1 \left(\alpha \delta \cosh(\theta + u)\right) e^{\beta \delta \sinh(\theta + u)} \mathop{du},
+\end{equation}
+where
+\begin{equation}
+\tau = \arcsinh\left(\frac{x - \mu}{\delta}\right) - \theta.
+\end{equation}
+
+To conclude, a discussion on the numerical integration methods for effective computation of the previous integrals is presented in Section \ref{section_numerical_integration}.
 
 \subsection{Moments and cumulants}
 
@@ -159,7 +214,7 @@ Use binomial theorem, and compute coefficients recursively (binomial sum of Bess
 
 \section{Methods of computation}
 In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases. Subsequently, we discuss several approaches for computing the inverse of the CDF.
-\subsection{Expansions: case $\beta = 0$}
+\subsection{Special case $\beta = 0$}
 The case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution has been widely used in financial modelling, for example for pricing collateralized default obligations (CDO) \cite{Kalemanova2007}.
 
 We emphasize that many of the techniques and numerical methods introduced in this Section shall also be used to develop expansions of other special cases and the general case in Section \ref{section_general_case}.
@@ -455,7 +510,7 @@ We use the expansion derived in \eqref{phi_expansion_incgamma_t_small} as a star
 F(x; \alpha, 0, \mu, \delta) &= \frac{\delta e^{\delta \alpha}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^{k+1}}{k!} \frac{\Gamma(2k + 1)}{2^k (x-\mu)^{2k + 1}} \int_0^{\infty} t^{k-1} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt} \nonumber \\
 &= -\frac{\delta e^{\delta \alpha}}{\pi (x-\mu)} \sum_{k=0}^{\infty}\frac{(-1)^k\Gamma(2k + 1)}{k!} \left(\frac{\omega}{2(x-\mu)^2\alpha}\right)^k K_k(\alpha \omega),
 \end{align}
-where $\omega = \sqrt{(x-\mu)^2 + \delta^2}$. Note that the remainder is bounded in magnitude by the first neglected term. Moreover, the convergence of the expansion improves for large $\alpha$ and $\alpha / \omega > 1$. Finally, for $x - \mu > 0$ we use the reflection formula \eqref{cdf_mirror}.
+where $\omega = \sqrt{(x-\mu)^2 + \delta^2}$. Note that the remainder is bounded in magnitude by the first neglected term. Moreover, the convergence of the expansion improves for large $\alpha$ and $\alpha / \omega > 1$. Finally, for the case $x - \mu > 0$ we use the reflection formula \eqref{cdf_mirror}.
 
 \subsubsection{Uniform expansion $\alpha \to \infty$, $\alpha \sim \delta$ and $|x-\mu| \gg 0$}\label{uniform_expansion_alpha_large}
 For large $\alpha$, we consider the uniform asymptotic expansion in terms of modified Bessel functions described in \cite{Temme1990c} and \cite[\S 27]{Temme2015}. We write the Laplace-type integral \eqref{integral_phi} in the standard form
@@ -493,16 +548,17 @@ Q_0(\zeta) = \frac{2}{\sqrt{\zeta}} K_{\frac{1}{2}}(2 \zeta), \quad Q_1(\zeta) =
 \end{equation}
 where the special case $K_{n+1/2}(z)$, $n \in \mathbb{N}$, is a terminating sum of elementary functions requiring $n$ terms, see \eqref{besselk_half}. In particular the cases $n=0$ and $n=1$ are
 \begin{equation*}
-K_{\frac{1}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z}}{z}, \quad K_{\frac{3}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z} (z+1)}{z^{3/2}}.
+K_{\frac{1}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z}}{z}, \quad K_{\frac{3}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z} (z+1)}{z^{3/2}},
 \end{equation*}
+and subsequent terms can be computed via recursion.
 
 Thus, rearranging terms we have
 \begin{equation}\label{uniform_expansion_a_large}
 F(x; \alpha, 0, \mu, \delta) = \frac{\alpha \delta e^{\delta \alpha}}{2 \sqrt{\pi}} \sum_{k=0}^{\infty} \frac{2^k c_k\left(\frac{\delta}{\alpha}\right) Q_k\left(\frac{\alpha \delta}{2}\right)}{\alpha^{2k}}, \quad \alpha \to \infty.
 \end{equation}
-The expansion \eqref{uniform_expansion_a_large} is a uniform expansion as $\alpha \to \infty$, uniformly with respect to $\delta / \alpha > 0$. Note that large values of $\delta$ improves the rate of convergence of the expansion, as observed taking well-know asymptotic estimates for large argument of the modified Bessel function. We remark that expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} are also adequate for large values of $\alpha$ and $\delta$, but unlike the present expansion, the number of terms increases significantly for $|x-\mu| \gg 0$.
+The expansion \eqref{uniform_expansion_a_large} is a uniform expansion as $\alpha \to \infty$, uniformly with respect to $\delta / \alpha > 0$. Note that large values of $\delta$ improves the rate of convergence of the expansion, as observed taking well-know asymptotic estimates for large argument of the modified Bessel function. We remark that expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} are also adequate for large values of $\alpha$ and $\delta$, but unlike the present expansion, the number of terms increases significantly when $|x-\mu| \gg 0$.
 
-\subsection{Expansions: case $x = \mu$}
+\subsection{Special case $x = \mu$}
 First consider the case $x = \mu$ and $\beta = 0$. Then, the distribution is symmetric and centered at $x = \mu$, and it follows that
 \begin{equation}
 F(\mu; \alpha, 0, \mu, \delta) = \frac{1}{2}.
@@ -542,7 +598,7 @@ The latter expansion being more convenient since $\alpha \ge \gamma$.
 
 
 
-\subsection{Expansions: general case}\label{section_general_case}
+\subsection{General case}\label{section_general_case}
 \subsubsection{Expansions $|x-\mu| \to 0$ (option 1)}
 \begin{equation*}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
@@ -667,9 +723,9 @@ For cases do not covered by the described expansions, we need to resort to numer
 
 As a preliminary step, we truncate the improper integral \eqref{integral_phi} at some point $N > 0$, such that
 \begin{equation}\label{truncated_integral}
-I = \int_0^N \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} + \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+I_N = \int_0^N \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} + \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
 \end{equation}
-and $F(x; \alpha, \beta, \mu, \delta) = C I$, where $C = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}}$. The truncation error can be bounded by
+and $F(x; \alpha, \beta, \mu, \delta) = C I_N$, where $C = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}}$. The truncation error can be bounded by
 \begin{equation}
 \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{e^{-\frac{\delta^2}{2N}}}{N^{3/2}}\int_N^{\infty} e^{- \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2}.
 \end{equation}
@@ -689,7 +745,7 @@ implying that we can safely use this approximation when the following inequality
 \begin{equation}
 \delta \gamma e^{\delta\gamma} > \sqrt{\frac{27 \pi}{2}} \epsilon.
 \end{equation}
-Note that, from a computational perspective, the use of the upper bound \eqref{lambertW0_upper_bound} is beneficial to avoid overflow/underflow issues for large parameters.
+Note that, from the implementation perspective, the use of the upper bound  \eqref{lambertW0_upper_bound} to estimate $N$ avoids overflow/underflow issues for large parameters due to direct use of logarithms.
 
 To accurately estimate $N$ to achieve a relative tolerance, we need an estimate of the order of magnitude of $I$. The integrand can be written as $e^{g(t)}$, where
 \begin{equation}
@@ -720,32 +776,37 @@ The saddle point estimates $t_0$ computed by \eqref{saddle_point_1} or \eqref{sa
 The truncated integral \eqref{truncated_integral} can be computed using double exponential (tanh-sinh) quadrature or Gaussian quadrature (Gauss-Legendre). Technical details are discussed in Section \ref{algorithmic_numerical_integration}.
 
 
-\subsubsection{Integral representation in terms of elementary functions}
-The common integral representations presented in Section \ref{properties_cdf} involve special functions in their integrands (e.g., $K_1(x)$ or $\erfc(x)$), which necessarily increases the computation cost of their evaluation. Hence, from a computational perspective, an integral representation in terms of elementary functions is preferred. In the following, we derive an integral representation using the sine transform of the modified Bessel function.
-
-\begin{proposition}
-An integral representation of the cumulative distribution function in terms of elementary functions is given by
-\begin{equation}\label{sine_transform}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}, \quad x-\mu > 0,
+\subsubsection{Integrand in terms of elementary functions}
+The common integral representations presented in Section \ref{properties_cdf} involve special functions in their integrands (e.g., $K_1(x)$ or $\erfc(x)$), which necessarily increases the computation cost of their evaluation. Hence, an integral representation in terms of elementary functions is more suitable.  The integral representation given in \eqref{integral_sine_transform} is approximated by the truncated integral 
+\begin{equation}
+I_N = \int_0^N \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt} + \int_N^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt},
 \end{equation}
-and the reflection formula \eqref{cdf_mirror} is used for $x-\mu < 0$.
-\end{proposition}
-\begin{proof}
-Consider the integral representation \eqref{integral_k1}. We use the sine transform \cite[\S 2.4]{Bateman1954}
-\begin{equation*}
-\frac{K_1(\alpha \sqrt{t^2 + \delta^2})}{\sqrt{t^2 + \delta^2}} = \frac{1}{\alpha\delta}\int_0^{\infty} \frac{z e^{-t\sqrt{z^2 + \alpha^2}}}{\sqrt{z^2 + \alpha^2}} \sin(\delta z) \mathop{dz},
-\end{equation*}
-valid for $t \ge 0$. Replacing in \eqref{integral_k1} and interchanging the order of integration, we have
+and $F(x; \alpha, \beta, \mu, \delta) = 1 - C I_N$, $C = \frac{e^{\delta \gamma}}{\pi}$. Consider the tail given by
+\begin{equation}
+T_N = \int_N^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}.
+\end{equation}
+An upper bound for the tail holds:
 \begin{align*}
-F(x; \alpha, \beta, \mu, \delta) &= 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\frac{1}{\alpha\delta}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \int_{x-\mu}^{\infty} e^{-t\sqrt{z^2 + \alpha^2} + \beta t} \mathop{dt} \mathop{dz}\\
-&= 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \frac{e^{-(x-\mu)\left(\sqrt{z^2 + \alpha^2} - \beta\right)}}{\sqrt{z^2 + \alpha^2} - \beta} \mathop{dz}
+|T_N| &\le \int_N^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\mathop{dt}\\
+&\le \frac{e^{(x-\mu)\beta}}{\sqrt{N^2 + \alpha^2} - \beta}\int_N^{\infty} e^{-(x-\mu)\sqrt{t^2 + \alpha^2}} \mathop{dt}\\
+&\le \frac{e^{(x-\mu)\beta}}{\sqrt{N^2 + \alpha^2} - \beta} \sqrt{N^2 + \alpha^2} K_1((x-\mu)\sqrt{N^2 + \alpha^2}),
 \end{align*}
-where the inner integral converges for $t\in [x-\mu, \infty)$.
-\end{proof}
+where we use the fact that $|\sin(\delta t)| \le 1$, and that a bound for the latter integral can be expressed in closed form using \cite[\S 3.461]{gradshteyn2007}
+\begin{equation*}
+\int_N^{\infty} e^{-(x-\mu)\sqrt{t^2 + \alpha^2}} \mathop{dt} \le \int_0^{\infty} e^{-(x-\mu)\sqrt{t^2 + N^2 + \alpha^2}} \mathop{dt} = \sqrt{N^2 + \alpha^2} K_1((x-\mu)\sqrt{N^2 + \alpha^2}).
+\end{equation*}
+
+To select $N$, we take the latter bound and equate to a prescribed accuracy $\epsilon$. The solution admits a closed-form solution in terms of $W_0(z)$. Thus, we solve
+\begin{equation}
+\frac{e^{-(x-\mu)\left(\sqrt{N^2 + \alpha^2} - \beta\right)}}{\sqrt{N^2 + \alpha^2} - \beta} = \frac{\epsilon}{C}
+\end{equation}
+obtaining
+\begin{equation}
+N = \frac{1}{x-\mu}\sqrt{(x-\mu)^2(\beta^2 - \alpha^2) + 2\beta(x-\mu) W_0\left(\frac{(x-\mu) C}{\epsilon}\right) + W_0\left(\frac{(x-\mu) C}{\epsilon}\right)^2}
+\end{equation}
+
 
 \begin{itemize}
-\item Truncate integral and bound tail.
-\item Estimate $N$ solving equation.
 \item Complex integration. Saddle-point method for large $\delta$.
 \end{itemize}
 
@@ -754,40 +815,6 @@ The sine integral can be written in complex form
 F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\Im\left(\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right) + \delta t i}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\mathop{dt}\right), \quad x-\mu > 0,
 \end{equation}
 
-
-\subsubsection{Alternative integral representations}
-In a similar manner, we can obtain an integral representation in terms of the exponential integral using the cosine transform of the modified Bessel function.
-
-\begin{proposition}
-The Fourier cosine transform integral representation in terms of the exponential integral $E_1(x)$ is given by
-\begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_0^{\infty} E_1\left((x-\mu)(\sqrt{t^2 + \alpha^2} - \beta)\right) \cos(\delta t) \mathop{dt}, \quad x-\mu > 0.
-\end{equation}
-\end{proposition}
-\begin{proof}
-This result can be derived from the sine transform in \eqref{sine_transform} using integration by parts. Alternatively, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
-\begin{equation*}
-\frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} = \frac{1}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz}.
-\end{equation*}
-Thus,
-\begin{equation*}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\int_{x-\mu}^{\infty} \frac{e^{\beta t}}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz} \mathop{dt},
-\end{equation*}
-where the inner integral is expressible in closed form in terms of the exponential integral $E_1(x)$
-\begin{equation*}
-\int_{x-\mu}^{\infty}\frac{1}{t}e^{-(\sqrt{z^2 + \alpha^2} - \beta)t} \mathop{dt} = E_1\left((x-\mu)(\sqrt{z^2 + \alpha^2} - \beta)\right).
-\end{equation*}
-\end{proof}
-
-
-A double-exponential integration arises as follows. Because $|\beta| < \alpha$, we can write $\beta = \alpha \tanh(\theta)$. Substituting in \eqref{integral_k1} $x-\mu = \delta \sinh(\theta + u)$ we obtain
-\begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{\tau} K_1 \left(\alpha \delta \cosh(\theta + u)\right) e^{\beta \delta \sinh(\theta + u)} \mathop{du},
-\end{equation}
-where
-\begin{equation}
-\tau = \arcsinh\left(\frac{x - \mu}{\delta}\right) - \theta.
-\end{equation}
 
 %A similar expansion can be obtained from the integral representation \eqref{integral_k0}, expanding $e^{\sqrt{2}(x-\mu)t}$
 %\begin{equation*}
