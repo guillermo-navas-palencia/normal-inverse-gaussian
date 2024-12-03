@@ -719,6 +719,8 @@ and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymp
 
 
 \subsection{Numerical integration}\label{section_numerical_integration}
+\subsubsection{Integrand in terms of the error function}
+
 For cases do not covered by the described expansions, we need to resort to numerical integration. First, we focus on the Laplace-type integral \eqref{integral_phi}, whose integrand involves the complementary error function, since its evaluation is faster than the Bessel integral in \eqref{integral_k1}.
 
 As a preliminary step, we truncate the improper integral \eqref{integral_phi} at some point $N > 0$, such that
@@ -733,7 +735,7 @@ We can select $N$ for a desired absolute tolerance $\epsilon$ solving numericall
 \begin{equation}
 \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2} = \frac{\epsilon}{C}.
 \end{equation}
-Moreover, a slightly lesser sharper bound allows a closed-form solution of the above equation in terms of the principal branch of the Lambert $W$ function \cite[\S 4.13]{NIST:DLMF}
+Moreover, a slightly lesser sharper bound allows a closed-form solution of the above equation in terms of the principal branch of the Lambert $W$ function
 \begin{equation}\label{N_equation}
 \frac{2 e^{- \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2} = \frac{\epsilon}{C} \longrightarrow N = \frac{3}{\gamma^2}W_0\left(\frac{\gamma^2}{3u}\right), \quad u = \left(\frac{\gamma^2 \epsilon}{2 C}\right)^{2/3}.
 \end{equation}
@@ -741,11 +743,11 @@ To reduce the cost of evaluating $N$, we can accurately approximate $W_0(z)$ for
 \begin{equation}\label{lambertW0_upper_bound}
 W_0(z) \le \log(z)^{\tfrac{\log(z)}{1 + \log(z)}},
 \end{equation}
-implying that we can safely use this approximation when the following inequality is satisfied (which should occur for reasonable parameters)
+implying that we can safely use this approximation when the following inequality is satisfied (which should occur for any reasonable set of parameters)
 \begin{equation}
 \delta \gamma e^{\delta\gamma} > \sqrt{\frac{27 \pi}{2}} \epsilon.
 \end{equation}
-Note that, from the implementation perspective, the use of the upper bound  \eqref{lambertW0_upper_bound} to estimate $N$ avoids overflow/underflow issues for large parameters due to direct use of logarithms.
+Note that, from an implementation perspective, the use of the upper bound  \eqref{lambertW0_upper_bound} to estimate $N$ avoids overflow/underflow issues for large parameters due to the use of logarithmic properties.
 
 To accurately estimate $N$ to achieve a relative tolerance, we need an estimate of the order of magnitude of $I$. The integrand can be written as $e^{g(t)}$, where
 \begin{equation}
@@ -778,7 +780,7 @@ The truncated integral \eqref{truncated_integral} can be computed using double e
 
 \subsubsection{Integrand in terms of elementary functions}
 The common integral representations presented in Section \ref{properties_cdf} involve special functions in their integrands (e.g., $K_1(x)$ or $\erfc(x)$), which necessarily increases the computation cost of their evaluation. Hence, an integral representation in terms of elementary functions is more suitable.  The integral representation given in \eqref{integral_sine_transform} is approximated by the truncated integral 
-\begin{equation}
+\begin{equation}\label{truncated_integral_sine_transform}
 I_N = \int_0^N \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt} + \int_N^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt},
 \end{equation}
 and $F(x; \alpha, \beta, \mu, \delta) = 1 - C I_N$, $C = \frac{e^{\delta \gamma}}{\pi}$. Consider the tail given by
@@ -791,30 +793,42 @@ An upper bound for the tail holds:
 &\le \frac{e^{(x-\mu)\beta}}{\sqrt{N^2 + \alpha^2} - \beta}\int_N^{\infty} e^{-(x-\mu)\sqrt{t^2 + \alpha^2}} \mathop{dt}\\
 &\le \frac{e^{(x-\mu)\beta}}{\sqrt{N^2 + \alpha^2} - \beta} \sqrt{N^2 + \alpha^2} K_1((x-\mu)\sqrt{N^2 + \alpha^2}),
 \end{align*}
-where we use the fact that $|\sin(\delta t)| \le 1$, and that a bound for the latter integral can be expressed in closed form using \cite[\S 3.461]{gradshteyn2007}
+where we use the fact that $|\sin(\delta t)| \le 1$, and a bound for the latter integral expressible in closed form using \cite[\S 3.461]{gradshteyn2007}
 \begin{equation*}
 \int_N^{\infty} e^{-(x-\mu)\sqrt{t^2 + \alpha^2}} \mathop{dt} \le \int_0^{\infty} e^{-(x-\mu)\sqrt{t^2 + N^2 + \alpha^2}} \mathop{dt} = \sqrt{N^2 + \alpha^2} K_1((x-\mu)\sqrt{N^2 + \alpha^2}).
 \end{equation*}
 
-To select $N$, we take the latter bound and equate to a prescribed accuracy $\epsilon$. The solution admits a closed-form solution in terms of $W_0(z)$. Thus, we solve
+\begin{remark}The previous bound involving the modified Bessel function $K_1(x)$ can be simplified at the expense of obtaining a slightly less sharper bound. Using the monotonicity properties of $K_{\nu}(x)$ for $x > 0$, we have that $K_1(x) < K_{3/2}(x)$, with $K_{3/2}(x)$ being expressible via elementary functions
+\begin{equation*}
+\quad K_{\frac{3}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z} (z+1)}{z^{3/2}}.
+\end{equation*}
+Hence, one can obtain
 \begin{equation}
-\frac{e^{-(x-\mu)\left(\sqrt{N^2 + \alpha^2} - \beta\right)}}{\sqrt{N^2 + \alpha^2} - \beta} = \frac{\epsilon}{C}
+|T_N| \le \sqrt{\frac{\pi}{2}} \frac{\sqrt{N^2 + \alpha^2}(\sqrt{N^2 + \alpha^2} + 1)}{(\sqrt{N^2 + \alpha^2} - \beta)\left(N^2 + \alpha^2\right)^{3/4}} e^{-(x-\mu)\left(\sqrt{N^2 + \alpha^2} - \beta\right)}.
 \end{equation}
-obtaining
+\end{remark}
+Although the previous bounds are accurate their inversion for $N$ is not trivial. A practical bound, improving as $N$ increases $(N \gg \alpha > |\beta|)$ is given by
 \begin{equation}
-N = \frac{1}{x-\mu}\sqrt{(x-\mu)^2(\beta^2 - \alpha^2) + 2\beta(x-\mu) W_0\left(\frac{(x-\mu) C}{\epsilon}\right) + W_0\left(\frac{(x-\mu) C}{\epsilon}\right)^2}
+|T_N| \le \frac{e^{-(x-\mu)(N - \beta)}}{N - \beta} \approx \frac{e^{-(x-\mu)(N-\beta)}}{N},
+\end{equation}
+where $\beta$ is neglected from the denominator. To select $N$, we take the latter bound and equate to a prescribed accuracy $\epsilon$. The solution admits a closed-form in terms of $W_0(z)$
+\begin{equation}
+\frac{e^{-(x-\mu)(N-\beta)}}{N} = \frac{\epsilon}{C} \longrightarrow N = \frac{1}{x-\mu}W_0\left(\frac{C e^{(x-\mu)\beta}}{\epsilon}\right).
 \end{equation}
 
-
-\begin{itemize}
-\item Complex integration. Saddle-point method for large $\delta$.
-\end{itemize}
-
-The sine integral can be written in complex form
+Note that the integrand in \eqref{truncated_integral_sine_transform} becomes highly oscillatory for large $\delta$. Therefore, the direct computation in the presence of high oscillations leads to catastrophic cancellation, requiring a prohibited number of quadrature points for convergence. The literally on numerical quadrature methods for highly oscillatory integrals is extensive and we do not aim to cover it in detail. However, we show the application of the steepest descent method and its suitability in this case. We transform the integral with sine kernel into the complex form
 \begin{equation}\label{sine_transform_complex_integral}
 F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\Im\left(\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right) + \delta t i}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\mathop{dt}\right), \quad x-\mu > 0,
 \end{equation}
-
+and apply the change of variable $t = i q / \delta$ which yields
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = 1 + \frac{e^{\delta \gamma + (x-\mu) \beta}}{\pi \delta^2} \Im\left(\int_{0}^{\infty} \frac{q e^{-(x-\mu)\sqrt{\alpha^2 - q^2/\delta^2} - q}}{\sqrt{\alpha^2 - q^2/\delta^2}\left(\sqrt{\alpha^2 - q^2/\delta^2} -\beta\right)} \mathop{dq}\right).
+\end{equation}
+Consider the case $\beta < 0$; use \eqref{cdf_mirror} otherwise. The integrand has two poles located at $q = \delta \alpha$ and $q = \delta\sqrt{\alpha^2 - \beta^2} = \delta \gamma$, but observe that the imaginary part of the integral only differs from zero when $q > \delta \alpha$. Thus, the interval of integration can be shifted to $(\delta \alpha, \infty)$ removing the pole ($\delta \alpha \ge \delta \gamma$) obtaining
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = 1 + \frac{e^{\delta \gamma + (x-\mu) \beta}}{\pi \delta^2} \Im\left(\int_{\delta\alpha}^{\infty} \frac{q e^{-(x-\mu)i\sqrt{q^2/\delta^2 - \alpha^2} - q}}{i\sqrt{q^2/\delta^2 - \alpha^2}\left(i\sqrt{q^2/\delta^2 - \alpha^2} -\beta\right)} \mathop{dq}\right),
+\end{equation}
+where the resulting integrand prevents the evaluation of complex square roots. TODO: comment about Gauss-Laguerre with $\alpha = 1$.
 
 %A similar expansion can be obtained from the integral representation \eqref{integral_k0}, expanding $e^{\sqrt{2}(x-\mu)t}$
 %\begin{equation*}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.11.27)  1 DEC 2024 19:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.11.27)  3 DEC 2024 21:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -978,35 +978,35 @@ it/9 k \OMS/cmsy/m/n/9 ^^@ \OT1/cmr/m/n/9 1\OML/cmm/m/it/9 =\OT1/cmr/m/n/9 2) [
 ]\OML/cmm/m/it/9 F[] []
  []
 
-[7] [8] [9] [10] [11] [12] [13] [14] [15]
+[7] [8] [9] [10] [11] [12] [13] [14] [15] [16]
 
-LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 945.
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 959.
 
 
 
-LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 945.
+LaTeX Warning: Command \texttwosuperior invalid in math mode on input line 959.
 
 
 Missing character: There is no ² in font cmr9!
-[16]
-Overfull \hbox (8.33536pt too wide) in paragraph at lines 967--969
+
+Overfull \hbox (8.33536pt too wide) in paragraph at lines 981--983
 \OT1/cmr/m/n/9 The ex-pan-sion is con-ver-gent for $\OML/cmm/m/it/9 t < \OT1/cm
 r/m/n/9 1$. The con-ver-gence fol-lows from the asymp-totic es-ti-mate of $(\OM
 L/cmm/m/it/9 b=a\OT1/cmr/m/n/9 )[]\OML/cmm/m/it/9 K[]\OT1/cmr/m/n/9 (\OML/cmm/m
 /it/9 ab\OT1/cmr/m/n/9 ) \OMS/cmsy/m/n/9 ^^X
  []
 
-[17] [18] (nig.bbl) [19] (nig.aux)
+[17] [18] (nig.bbl [19]) [20] (nig.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 20524 strings out of 474486
- 397050 string characters out of 5741866
+ 20525 strings out of 474486
+ 397085 string characters out of 5741866
  1955542 words of memory out of 5000000
- 42389 multiletter control sequences out of 15000+600000
+ 42390 multiletter control sequences out of 15000+600000
  576709 words of font info for 104 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,12n,93p,1461b,451s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1047,9 +1047,9 @@ X/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/guillermo/AppData/Local/P
 rograms/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/guiller
 mo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 >
-Output written on nig.pdf (19 pages, 477129 bytes).
+Output written on nig.pdf (20 pages, 481697 bytes).
 PDF statistics:
- 223 PDF objects out of 1000 (max. 8388607)
+ 226 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
