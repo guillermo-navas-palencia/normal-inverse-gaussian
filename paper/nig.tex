@@ -599,7 +599,7 @@ The latter expansion being more convenient since $\alpha \ge \gamma$.
 
 
 \subsection{General case}\label{section_general_case}
-\subsubsection{Expansions $|x-\mu| \to 0$ (option 1)}
+\subsubsection{Expansions $|x-\mu| \to 0$ in terms of modified Bessel functions}
 \begin{equation*}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
 \end{equation*}
@@ -609,18 +609,41 @@ Using expansion \eqref{phi_expansion_2}
 F(x;\alpha, \beta, \mu, \delta) &= \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{1}{(2k + 1)!!}\int_0^{\infty} \left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)^{2k+1} t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} e^{- \frac{(x-(\mu + \beta t)^2}{2t}} \mathop{dt} \nonumber\\
 &=\frac{1}{2} + \frac{\delta e^{\delta \gamma + (x -\mu)\beta}}{2\pi}\sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!}\int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}
 \end{align}
-Denote the integral $I_k$ as
+
+\begin{align}
+I_k &= \int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}\\
+&= 2 \left(\frac{-(x-\mu)}{\beta}\right)^{2k+1} \left(\frac{\alpha}{\omega}\right)^{k+1} \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega).
+\end{align}
+
 \begin{equation}
-I_k = \int_0^{\infty} (t- t_+)^{2k+1} t^{-k-2} e^{-z(t + \beta^2/t)} \mathop{dt},
-\end{equation}
-with $t_+ = \frac{x-\mu}{\beta}$, $z = \alpha^2 / 2$ and $\beta^2 = \omega^2 /  \alpha^2$. The integral $I_k$ can be expressed in terms of the modified Bessel expansion after applying the binomial expansion
-\begin{equation}
-I_k = 2\sum_{j=0}^{2k + 1}\binom{2k+1}{j} (-t_+)^{2k+1-j} \beta^{j-k-1} K_{k+1-j}(2z\beta).
+F(x;\alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha\delta e^{\delta \gamma + (x -\mu)\beta}}{\pi \omega}\sum_{k=0}^{\infty} \frac{A_k}{(2k+1)!!}\left(\frac{(x-\mu)^2\alpha}{\omega}\right)^k
 \end{equation}
 
-Show the first two terms $I_1$ and $I_2$. Theorem with recursion.
+\begin{equation}
+A_k = \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega)
+\end{equation}
 
-\subsubsection{Expansions $|x-\mu| \to 0$ (option 2)}
+The first three coefficients $A_k$ are
+\begin{align*}
+A_0 &= -u K_0(z) + K_1(z)\\
+A_1 &= 3u^2 K_0(z) - u(3 + u^2) K_1(z) + K_2(z)\\
+A_2 &= -10u^3 K_0(z) + 5u^2(2 + u^2) K_1(z) - u(5 + u^4) K_2(z) + K_3(z)
+\end{align*}
+where we use to simplify the $A_k$ expressions
+\begin{equation}
+u = \frac{\omega \beta}{\alpha (x-\mu)}, \quad z = \alpha \omega.
+\end{equation}
+
+%Denote the integral $I_k$ as
+%\begin{equation}
+%I_k = \int_0^{\infty} (t- t_+)^{2k+1} t^{-k-2} e^{-z(t + \beta^2/t)} \mathop{dt},
+%\end{equation}
+%with $t_+ = \frac{x-\mu}{\beta}$, $z = \alpha^2 / 2$ and $\beta^2 = \omega^2 /  \alpha^2$. The integral $I_k$ can be expressed in terms of the modified Bessel expansion after applying the binomial expansion
+%\begin{equation}
+%I_k = 2\sum_{j=0}^{2k + 1}\binom{2k+1}{j} \left(-\frac{x-\mu}{\beta}\right)^{2k+1-j} \beta^{j-k-1} K_{k+1-j}(2z\beta).
+%\end{equation}
+
+\subsubsection{Expansion $|x-\mu| \to 0$ in terms of modified Bessel and incomplete gamma functions}
 The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
 \begin{equation*}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
@@ -659,7 +682,7 @@ F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\pi \sqrt{2}} 
 
 If $\beta < 0$ then $F(x;\alpha, \beta, \mu, \delta) = 1 - F(-x;\alpha, -\beta, -\mu, \delta)$. The expansion is convergent for small $x-\mu$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters.
 
-\subsubsection{Expansions $|x-\mu| \to 0$ (option 3)}
+\subsubsection{Expansion $|x-\mu| \to 0$ in terms of Hermite polynomials}
 
 \subsubsection{Expansion $\beta \to 0$}
 
