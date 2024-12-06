@@ -102,6 +102,8 @@ where $\gamma = \sqrt{\alpha^2 - \beta^2}$. The domain of the parameters is
 0 \le |\beta| < \alpha, \quad \mu \in \mathbb{R}, \quad \delta  > 0.
 \end{equation}
 
+Define $\omega = \sqrt{(x-\mu)^2 + \delta^2}$.
+
 \subsection{Density function}
 The density function is given as
 \begin{equation}
@@ -246,7 +248,7 @@ F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi
 \end{equation}
 Moreover, to obtain a similar series with positive terms, we choose the expansion of $\Phi(x)$ in \eqref{phi_expansion_2}, yielding
 \begin{equation}\label{expansion_xmu_b0_positive}
-F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega).
 \end{equation}
 
 Note that the series expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} can be written as a truncated series with the corresponding remainder term. For example, truncating the series \eqref{expansion_xmu_b0_positive} at $N$, we can write
@@ -508,9 +510,9 @@ R_N < \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} \frac{1}{2\alpha\omega}\
 We use the expansion derived in \eqref{phi_expansion_incgamma_t_small} as a starting point, taking $a = x-\mu$ and $b = 0$. Similar to the derivation of the expansion in \eqref{expansion_xmu_b0_alternating}, we interchange summation and integration, and the resulting integral is expressible in closed-form as a modified Bessel function, see Equation \eqref{bessel_integral}. Thus, for $x - \mu < 0$ we have the alternating asymptotic expansion
 \begin{align}
 F(x; \alpha, 0, \mu, \delta) &= \frac{\delta e^{\delta \alpha}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^{k+1}}{k!} \frac{\Gamma(2k + 1)}{2^k (x-\mu)^{2k + 1}} \int_0^{\infty} t^{k-1} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt} \nonumber \\
-&= -\frac{\delta e^{\delta \alpha}}{\pi (x-\mu)} \sum_{k=0}^{\infty}\frac{(-1)^k\Gamma(2k + 1)}{k!} \left(\frac{\omega}{2(x-\mu)^2\alpha}\right)^k K_k(\alpha \omega),
+&= -\frac{\delta e^{\delta \alpha}}{\pi (x-\mu)} \sum_{k=0}^{\infty}\frac{(-1)^k\Gamma(2k + 1)}{k!} \left(\frac{\omega}{2(x-\mu)^2\alpha}\right)^k K_k(\alpha \omega).
 \end{align}
-where $\omega = \sqrt{(x-\mu)^2 + \delta^2}$. Note that the remainder is bounded in magnitude by the first neglected term. Moreover, the convergence of the expansion improves for large $\alpha$ and $\alpha / \omega > 1$. Finally, for the case $x - \mu > 0$ we use the reflection formula \eqref{cdf_mirror}.
+Note that the remainder is bounded in magnitude by the first neglected term. Moreover, the convergence of the expansion improves for large $\alpha$ and $\alpha / \omega > 1$. Finally, for the case $x - \mu > 0$ we use the reflection formula \eqref{cdf_mirror}.
 
 \subsubsection{Uniform expansion $\alpha \to \infty$, $\alpha \sim \delta$ and $|x-\mu| \gg 0$}\label{uniform_expansion_alpha_large}
 For large $\alpha$, we consider the uniform asymptotic expansion in terms of modified Bessel functions described in \cite{Temme1990c} and \cite[\S 27]{Temme2015}. We write the Laplace-type integral \eqref{integral_phi} in the standard form
@@ -600,38 +602,54 @@ The latter expansion being more convenient since $\alpha \ge \gamma$.
 
 \subsection{General case}\label{section_general_case}
 \subsubsection{Expansions $|x-\mu| \to 0$ in terms of modified Bessel functions}
-\begin{equation*}
-F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
-\end{equation*}
-
-Using expansion \eqref{phi_expansion_2}
+We proceed to derive a series expansion for small $|x-\mu|$ following similar steps to those proposed for the special case $\beta = 0$. We use the expansion of $\Phi(x)$ in  \eqref{phi_expansion_2} to obtain
+%\begin{equation*}
+%F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+%\end{equation*}
 \begin{align}
 F(x;\alpha, \beta, \mu, \delta) &= \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{1}{(2k + 1)!!}\int_0^{\infty} \left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)^{2k+1} t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} e^{- \frac{(x-(\mu + \beta t)^2}{2t}} \mathop{dt} \nonumber\\
-&=\frac{1}{2} + \frac{\delta e^{\delta \gamma + (x -\mu)\beta}}{2\pi}\sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!}\int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}
+&=\frac{1}{2} + \frac{\delta e^{\delta \gamma + (x -\mu)\beta}}{2\pi}\sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!}\int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}\label{general_series_xmu_zero_integral}
 \end{align}
-
-\begin{align}
-I_k &= \int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}\\
-&= 2 \left(\frac{-(x-\mu)}{\beta}\right)^{2k+1} \left(\frac{\alpha}{\omega}\right)^{k+1} \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega).
-\end{align}
-
+Denote $I_k$ the integral in the above series
+\begin{equation}
+I_k = \int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
+\end{equation}
+The integral $I_k$ is expressible in terms of modified Bessel functions after applying the binomial expansion
+\begin{equation}
+I_k = 2 \left(\frac{-(x-\mu)}{\beta}\right)^{2k+1} \left(\frac{\alpha}{\omega}\right)^{k+1} \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega).
+\end{equation}
+Then, we have the series expansion
 \begin{equation}
 F(x;\alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha\delta e^{\delta \gamma + (x -\mu)\beta}}{\pi \omega}\sum_{k=0}^{\infty} \frac{A_k}{(2k+1)!!}\left(\frac{(x-\mu)^2\alpha}{\omega}\right)^k
 \end{equation}
-
 \begin{equation}
 A_k = \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega)
 \end{equation}
-
-The first three coefficients $A_k$ are
+Observe that the convergence of the series improves for large values of $\alpha$ and $\delta$, hence it can be considered as a uniform asymptotic expansion with respect to these parameters. The first three coefficients $A_k$ are
 \begin{align*}
 A_0 &= -u K_0(z) + K_1(z)\\
 A_1 &= 3u^2 K_0(z) - u(3 + u^2) K_1(z) + K_2(z)\\
 A_2 &= -10u^3 K_0(z) + 5u^2(2 + u^2) K_1(z) - u(5 + u^4) K_2(z) + K_3(z)
 \end{align*}
-where we use to simplify the $A_k$ expressions
+where to compact notation we use $u$ and $z$ defined as
 \begin{equation}
 u = \frac{\omega \beta}{\alpha (x-\mu)}, \quad z = \alpha \omega.
+\end{equation}
+
+The series expansion can be written as a truncated series with remainder. Using the representation in \eqref{general_series_xmu_zero_integral} we have a series in the form
+\begin{equation}
+\sum_{k=0}^{\infty} T_k = \sum_{k=0}^{N-1}T_k + \sum_{k=N}^{\infty} T_k, \quad T_k = \frac{(-\beta)^{2k+1}}{(2k+1)!!} I_k.
+\end{equation}
+The remainder, $R_N = \sum_{k=N}^{\infty} T_k$, integral representation is obtained as
+\begin{align}
+R_N &= \int_0^{\infty} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \left[ \sum_{k=N}^{\infty}\frac{(-\beta)^{2k+1}}{(2k+1)!!} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2}\right] \mathop{dt}\\
+&= \frac{(-1)^{2N + 1} 2^{N - 1/2} (2N + 1)}{(2N + 1)!!} e^{-\beta(x-\mu)} \int_0^{\infty} t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \gamma\left(N + 1/2 , \frac{(\beta t - (x-\mu))^2}{2t}\right) \mathop{dt},
+\end{align}
+where $\gamma(a, z)$ is the lower incomplete gamma function.
+
+From \cite[\S 7.3]{Temme2015}
+\begin{equation}
+\gamma(a, z) \sim \frac{z^a e^{-z}}{a}, \quad a \to \infty.
 \end{equation}
 
 %Denote the integral $I_k$ as
