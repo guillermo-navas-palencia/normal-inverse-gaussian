@@ -652,18 +652,36 @@ R_N &= \int_0^{\infty} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \left[ \su
 &= \frac{(-1)^{2N + 1} 2^{N - 1/2} (2N + 1)}{(2N + 1)!!} e^{-\beta(x-\mu)} \int_0^{\infty} t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \gamma\left(N + 1/2 , \frac{(\beta t - (x-\mu))^2}{2t}\right) \mathop{dt},
 \end{align}
 where $\gamma(a, z)$ is the lower incomplete gamma function. It remains to bound the remainder $R_N$. A simple but weak bound, since the dependence on $N$ disappears, is obtained by using the regularized incomplete gamma function $P(a,z) \Gamma(a) = \gamma(a, z)$ and the bound $P(a, z) \le 1$ for $z \ge 0$ (recall the asymptotic estimate $P(a,z) \to 1$ as $z \to \infty$). A sharper bound for $\gamma(a, z)$ derived from the asymptotic expansion for $a > z$ in \cite[\S 7.3]{Temme2015}, $\gamma(a, z) \sim \frac{z^a e^{-z}}{a}$ as $a \to \infty$, is given by
-\begin{equation}
-\gamma(a, z) \le \frac{z^a e^{-z}}{a - z - 1}, \quad a > z + 1.
+\begin{equation}\label{lower_incomplete_gamma_bound}
+\gamma(a, z) \le \frac{z^a e^{-z}}{a - z - 1}, \quad a > z + 1, \quad z > 0.
 \end{equation}
 Since the use of this bound introduces a term involving $t$ in the denominator, complicating subsequent calculations, we use the asymptotic estimate instead. Thus, $|R_N|$ is approximated as
 \begin{align}
-|R_N| &\approx \frac{e^{-\beta(x-\mu)}}{(2N + 1)!!} I_N\\
-&\approx \frac{2 \beta^{2N + 1}}{(2N + 1)!!}\left(\frac{\omega}{\alpha}\right)^N K_N(\alpha \omega) \quad (|x-\mu| \to 0),
+|R_N| &\approx \frac{e^{-\beta(x-\mu)}}{(2N + 1)!!} I_N \label{remainder_approx1}\\
+&\approx \frac{2 \beta^{2N + 1}}{(2N + 1)!!}\left(\frac{\omega}{\alpha}\right)^N K_N(\alpha \omega) \quad (|x-\mu| \to 0) \label{remainder_approx2},
 \end{align}
 and the latter approximation of $|R_N|$ can be simplified further by considering the asymptotic approximation in \eqref{besselk_order_to_inf}, which gives us
 \begin{equation}
 |R_N| \approx \sqrt{\frac{2\pi}{N}} \left(\frac{e\alpha^2}{2N}\right)^{-N} \frac{\beta^{2N + 1}}{(2N + 1)!!}.
 \end{equation}
+Observe that the approximation is only valid for small $\delta$ since its contribution is removed as a result of applying the asymptotic estimate. Table \ref{table_bound_remainder_xmu_general}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{cccccccccc}
+\hline
+$x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & $N$ & $R_N$ & Bound \eqref{lower_incomplete_gamma_bound} & \eqref{remainder_approx1} & \eqref{remainder_approx2}\\
+\hline
+	1/2 & 2 & 1 & 1/4 & 3 & 10 & $4.7\cdot 10^{-9}$ & $5.6\cdot 10^{-9}$ & $3.6\cdot 10^{-9}$ & $9.9\cdot 10^{-9}$\\
+	1/3 & 5 & -1 & 1/4 & 1 & 50 & $2.5\cdot 10^{-72}$ & $2.6\cdot 10^{-72}$ & $2.4\cdot 10^{-73}$ & $2.8\cdot 10^{-73}$\\
+	4 & 15 & -6 & 7/2 &  10 & 20 & $2.7\cdot 10^{-60}$ & $5.6\cdot 10^{-60}$ & $6.5\cdot 10^{-61}$ & $8.6\cdot 10^{-63}$\\
+2/10 & 1 & 1/2 & 1/10 & 1/ 2 & 50 &  $1.1\cdot 10^{-33}$ & $1.1\cdot 10^{-33}$ & $7.9\cdot 10^{-34}$ & $9.8\cdot 10^{-34}$\\
+	\hline\\
+	\end{tabular}}
+	\caption{The remainder}
+	\label{table_bound_remainder_xmu_general}
+\end{table}
 
 %Denote the integral $I_k$ as
 %\begin{equation}
