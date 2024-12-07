@@ -647,7 +647,7 @@ Furthermore, the series expansion can be written as a truncated series with rema
 \sum_{k=0}^{\infty} T_k = \sum_{k=0}^{N-1}T_k + \sum_{k=N}^{\infty} T_k, \quad T_k = \frac{(-\beta)^{2k+1}}{(2k+1)!!} I_k.
 \end{equation}
 The remainder, $R_N = \sum_{k=N}^{\infty} T_k$, integral representation is obtained as
-\begin{align}
+\begin{align}\label{general_xmu_remainder_integral}
 R_N &= \int_0^{\infty} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \left[ \sum_{k=N}^{\infty}\frac{(-\beta)^{2k+1}}{(2k+1)!!} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2}\right] \mathop{dt}\\
 &= \frac{(-1)^{2N + 1} 2^{N - 1/2} (2N + 1)}{(2N + 1)!!} e^{-\beta(x-\mu)} \int_0^{\infty} t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \gamma\left(N + 1/2 , \frac{(\beta t - (x-\mu))^2}{2t}\right) \mathop{dt},
 \end{align}
@@ -664,7 +664,7 @@ and the latter approximation of $|R_N|$ can be simplified further by considering
 \begin{equation}
 |R_N| \approx \sqrt{\frac{2\pi}{N}} \left(\frac{e\alpha^2}{2N}\right)^{-N} \frac{\beta^{2N + 1}}{(2N + 1)!!}.
 \end{equation}
-Observe that the approximation is only valid for small $\delta$ since its contribution is removed as a result of applying the asymptotic estimate. Table \ref{table_bound_remainder_xmu_general}
+Observe that the approximation is only adequate for the case $\delta \to 0$ since its contribution is removed as a result of applying the specified asymptotic estimate. Table \ref{table_bound_remainder_xmu_general} compares the absolute value of remainder in expression \eqref{general_xmu_remainder_integral}, $|R_N|$, with the upper bound using \eqref{lower_incomplete_gamma_bound} and the approximations in \eqref{remainder_approx1} and \eqref{remainder_approx2} for different parameters with small $|x-\mu|$. We can see that the bound is sharp for all cases considered, but requires the evaluation of the an integral in terms of elementary functions. On the other hand, both approximations are close, only an order of magnitude off in most of the cases, and the approximation in terms of the modified Bessel function \eqref{remainder_approx2} might be seen as a suitable and fast approximation at least for small $\delta$.
 
 \begin{table}[H]
 	\centering
@@ -679,7 +679,7 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & $N$ & $R_N$ & Bound \eqref{lower_i
 2/10 & 1 & 1/2 & 1/10 & 1/ 2 & 50 &  $1.1\cdot 10^{-33}$ & $1.1\cdot 10^{-33}$ & $7.9\cdot 10^{-34}$ & $9.8\cdot 10^{-34}$\\
 	\hline\\
 	\end{tabular}}
-	\caption{The remainder}
+	\caption{Comparison of various approximations (\eqref{remainder_approx1} and \eqref{remainder_approx2}) and the upper bound \eqref{lower_incomplete_gamma_bound} for the estimation of the remainder \eqref{general_xmu_remainder_integral}.}
 	\label{table_bound_remainder_xmu_general}
 \end{table}
 
