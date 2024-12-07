@@ -693,29 +693,29 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & $N$ & $R_N$ & Bound \eqref{lower_i
 %\end{equation}
 
 \subsubsection{Expansion $|x-\mu| \to 0$ in terms of modified Bessel and incomplete gamma functions}
-The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
+We present an alternative derivation of a series expansion for small $|x-\mu|$ where the series coefficients are easier to compute. The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
 \begin{equation*}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
 \end{equation*}
-and replacing $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ by the expansion in \eqref{phi_expansion_incgamma}
-\begin{equation*}
+and replacing the term $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ by the expansion in \eqref{phi_expansion_incgamma} in terms of upper incomplete gamma function $\Gamma(a, z)$. The resulting series is
+\begin{equation}\label{general_xmu_incgamma_integral}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\int_0^{\infty}\Gamma\left(\frac{k+1}{2}, \frac{\beta^2}{2}t\right) t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
-\end{equation*}
-where $\omega = \sqrt{\delta^2 + (x-\mu)^2}$. Consider the ascending series of the incomplete gamma function given by \cite[\S 8.7]{NIST:DLMF}
-\begin{equation}
-\Gamma(a, x) = \Gamma(a) - \sum_{j=0}^{\infty} \frac{(-1)^j x^{a+j}}{j! (a+ j)}.
 \end{equation}
-We proceed splitting the inner integral into two terms
+Consider the ascending series of the incomplete gamma function given by \cite[\S 8.7]{NIST:DLMF}
+\begin{equation}
+\Gamma(a, z) = \Gamma(a) - \gamma(a, z) = \Gamma(a) - \sum_{j=0}^{\infty} \frac{(-1)^j z^{a+j}}{j! (a+ j)},
+\end{equation}
+and insert it into \eqref{general_xmu_incgamma_integral}, splitting the inner integral into two terms
 \begin{align}
-T_1 &= \Gamma\left(\frac{k+1}{2}\right)\int_0^{\infty}t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}\\
-T_2 &= \sum_{j=0}^{\infty} \frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)}\int_0^{\infty} t^{j-1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+T_1 &= \Gamma\left(\frac{k+1}{2}\right)\int_0^{\infty}t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},\\
+T_2 &= \sum_{j=0}^{\infty} \frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)}\int_0^{\infty} t^{j-1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
 \end{align}
-and observe that both integrals are expressible in terms of modified Bessel function, resulting in the sums $S_1$ and $S_2$, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$, defined as follows
+Both integrals are expressible in terms of modified Bessel function, resulting in the sums $S_1$ and $S_2$, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$. These series are defined as follows
 \begin{align}
-S_1 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right)2 K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\\
+S_1 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right)2 K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}},\\
 S_2 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\sum_{j=0}^{\infty}\frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)} 2 K_j(\omega \gamma) \left(\frac{\omega}{\gamma}\right)^j.
 \end{align}
-Interchanging the order of summation in $S_2$, we observe that the sum in $k$ is convergent an expressible in terms of the lower incomplete gamma function $\gamma(a, x)$. Assuming $\beta > 0$
+Interchanging the order of summation in $S_2$, we observe that the sum in $k$ is convergent an expressible in terms of the lower incomplete gamma function $\gamma(a, x)$. Assuming $\beta > 0$ (otherwise, use \eqref{cdf_mirror}), we have
 \begin{equation}
 \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k! (\frac{k+1}{2}+ j)} \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}} = -\frac{\sqrt{2}}{(x-\mu)^{2j+1}\beta^{2j}} \gamma \left(2j + 1, -(x-\mu)\beta\right).
 \end{equation}
@@ -728,8 +728,7 @@ Rearranging terms
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\pi \sqrt{2}} \bigg[& \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right) K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\nonumber\\
 & + \sqrt{2}\sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\frac{\gamma \left(2k + 1, -(x-\mu)\beta\right)}{(x-\mu)^{2k+ 1}}  K_k(\omega \gamma) \left(\frac{\omega}{2\gamma}\right)^k \bigg]
 \end{align}
-
-If $\beta < 0$ then $F(x;\alpha, \beta, \mu, \delta) = 1 - F(-x;\alpha, -\beta, -\mu, \delta)$. The expansion is convergent for small $x-\mu$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters.
+The expansion is convergent for small $|x-\mu|$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters.
 
 \subsubsection{Expansion $|x-\mu| \to 0$ in terms of Hermite polynomials}
 
@@ -1004,6 +1003,8 @@ The function $F(t; a, b) = \Phi\left(\frac{a}{\sqrt{t}} + b\sqrt{t}\right)$ is p
 F(t; a, b) = \frac{1}{2}\erfc\left(-\frac{\frac{a}{\sqrt{t}} + b\sqrt{t}}{\sqrt{2}}\right)  = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \int_{-b/\sqrt{2}}^{\infty} e^{-(tu^2 - \sqrt{2}au)} \mathop{du}
 \end{equation}
 
+\subsection{Expansions $t$}
+
 \subsubsection{Expansion $t \to 0$}
 
 Let us consider the case $a < 0$, since we can use the mirror property $\Phi(z) = 1 - \Phi(-z)$ otherwise. To obtain an expansion for $t \to 0$, we expand $e^{-tu^2}$ and interchange summation and integration obtaining
@@ -1125,6 +1126,27 @@ f_2(k) &= (2 + k)(5a + 2ka +a^2b - 8bu - 6kbu +2ab^2u -3b^3u^2)\\
 f_3(k) &= -(3 + k)(a^3 - 11au -4kau - a^2bu + 13bu^2 + 6kbu^2 -ab^2u^2 + b^3 u^3)\\
 f_4(k) &= 2 (3 + k) (4 + k) u^2 (-a + bu)
 \end{align*}
+
+\subsection{Expansion $a \to 0$}
+We also consider expansions for small values of the parameters. If we expand $F(t; a, b)$ at $a = 0$, we obtain the series
+\begin{equation}
+F(t; a, b) = \Phi\left(b\sqrt{t}\right) + \frac{e^{-\frac{b^2 t}{2}}}{\sqrt{2\pi t}}\sum_{k=1}^{\infty} (-1)^{k+1} \frac{a^k P_{k-1}(t; b)}{k!}.
+\end{equation}
+The first coefficients $P_k(t; b)$ are
+\begin{align*}
+P_0(t; b) &= 1\\
+P_1(t; b) &= b\\
+P_2(t; b) &= \frac{b^2 t - 1}{t}\\
+P_3(t; b) &= \frac{b^3 t - 3b}{t}\\
+P_4(t; b) &= \frac{b^4 t^2 - 6b^2t + 3}{t^2}\\
+P_5(t; b) &= \frac{b^5 t^2 - 10b^3 t + 15 b}{t^2}
+\end{align*}
+Looking at the first coefficients, it is not hard to observe that coefficients $P_k(t;b)$ are expressible in terms of probabilist Hermite polynomials. Thus, after using the connection formula between probabilist and classical Hermite polynomials, we obtain the following convergent series expansion
+\begin{equation}\label{phi_expansion_a_small}
+F(t; a, b) = \Phi\left(b\sqrt{t}\right) + \frac{e^{-\frac{b^2 t}{2}}}{\sqrt{2\pi t}} + \sum_{k=0}^{\infty} \frac{(-1)^k a^{k+1}}{(k+1)!}\frac{1}{(2t)^{k/2}} H_k\left(k, b\sqrt{\frac{t}{2}}\right)
+\end{equation}
+
+\subsection{Expansion $b \to 0$}
 
 \section{The modified Bessel function of the second kind}
 Asymptotic behaviour with respect to the argument
