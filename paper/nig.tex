@@ -601,6 +601,8 @@ The latter expansion being more convenient since $\alpha \ge \gamma$.
 
 
 \subsection{General case}\label{section_general_case}
+Comment: me make use of the expansion for the two special cases detailed in previous sections.
+
 \subsubsection{Expansions $|x-\mu| \to 0$ in terms of modified Bessel functions}
 We proceed to derive a series expansion for small $|x-\mu|$ following similar steps to those proposed for the special case $\beta = 0$. We use the expansion of $\Phi(x)$ in  \eqref{phi_expansion_2} to obtain
 %\begin{equation*}
@@ -728,9 +730,14 @@ Rearranging terms
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\pi \sqrt{2}} \bigg[& \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right) K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\nonumber\\
 & + \sqrt{2}\sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\frac{\gamma \left(2k + 1, -(x-\mu)\beta\right)}{(x-\mu)^{2k+ 1}}  K_k(\omega \gamma) \left(\frac{\omega}{2\gamma}\right)^k \bigg]
 \end{align}
-The expansion is convergent for small $|x-\mu|$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters.
+The expansion is convergent for small $|x-\mu|$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters. REFERENCE instability of the incomplete gamma recursion forward.
 
 \subsubsection{Expansion $|x-\mu| \to 0$ in terms of Hermite polynomials}
+Expand using \eqref{phi_expansion_a_small}
+
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = F(\mu; \alpha, \beta, \mu, \delta) + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty}\frac{(-1)^k (x-\mu)^{k+1}}{(k + 1)! 2^{k/2}}\int_0^{\infty} t^{-k/2 - 2} H_k\left(k, b\sqrt{\frac{t}{2}}\right) e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
+\end{equation}
 
 \subsubsection{Expansion $\beta \to 0$}
 
@@ -786,7 +793,7 @@ F(x; \alpha, \beta, \mu, \delta) &= \frac{\alpha e^{\delta \gamma}}{\pi \beta}\s
  &=\frac{\alpha e^{\delta \gamma}}{\pi \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta)\frac{\Gamma(2k+1)}{\Gamma(k+1)}\left(-\frac{\alpha}{2\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)\\
  &=\frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta) \Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta),
 \end{align}
-and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x)$, see appendix \ref{appendix_incomplete_gamma}. The evaluation of the asymptotic series using the regularized incomplete gamma is more numerically stable, as described in Section \ref{algorithmic_asymptotic_expansions}.
+and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x)$, see appendix \ref{appendix_incomplete_gamma}. The evaluation of the asymptotic series using the regularized incomplete gamma is more numerically stable, as described in Section \ref{algorithmic_asymptotic_expansions}. REFERENCE to stable recurrence Temme book.
 
 
 \subsection{Numerical integration}\label{section_numerical_integration}
