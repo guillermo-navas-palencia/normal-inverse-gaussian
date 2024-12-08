@@ -225,9 +225,9 @@ double nig_integration(
   // Estimate the truncation point N
   int N = truncation(delta, gamma, eps * std::min(magnitude, 1.0));
 
-  std::cout << "saddle point " << std::setprecision(16) << x0 << std::endl;
-  std::cout << "magnitude " << magnitude << std::endl;
-  std::cout << "N " << N << std::endl;
+  // std::cout << "saddle point " << std::setprecision(16) << x0 << std::endl;
+  // std::cout << "magnitude " << magnitude << std::endl;
+  // std::cout << "N " << N << std::endl;
 
   // Estimate initial step size h
   const double eps2 = eps * eps;
@@ -246,7 +246,7 @@ double nig_integration(
     double japprox = std::log(-2.0 / constants::pi * lambertwm1(-eps2 / h / 2.0)) / h;
     int j = (int) std::ceil(japprox);
 
-    std::cout << "level = " << level << " j = " << j << std::endl;
+    // std::cout << "level = " << level << " j = " << j << std::endl;
 
     if (level == 0.0)
     {

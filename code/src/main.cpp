@@ -1,6 +1,8 @@
 #include <iostream>
 #include <iomanip>
 
+#include <chrono>
+
 #include <nig.hpp>
 
 
@@ -89,11 +91,21 @@ int main()
   double mu = 0.3756820526459652;
   double delta = 0.4430694917478499;
 
-  // double result = nig_general(x, alpha, beta, mu, delta);
-  // std::cout << std::setprecision(16) << result << std::endl;
-
   double result = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   std::cout << std::setprecision(16) << result << std::endl;
+
+  // double result;
+  int N = 1000;
+  auto start_time = std::chrono::high_resolution_clock::now();
+  for(int count = 0; count < N; count++)
+  {
+    nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+  }
+
+  // Record end time
+  auto finish_time = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish_time - start_time;
+  std::cout << "Elapsed time for gcc erfc " << elapsed.count() * 1000000 / N << " microseconds\n";
 
   return 0;
 }
