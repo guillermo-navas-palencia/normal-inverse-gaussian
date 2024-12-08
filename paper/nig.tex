@@ -42,6 +42,7 @@
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 
 \usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[font=small]{caption}
 
 %%enviroments for Theorems, propositions
 \newtheorem{theorem}{Theorem}[section]
@@ -101,6 +102,8 @@ where $\gamma = \sqrt{\alpha^2 - \beta^2}$. The domain of the parameters is
 0 \le |\beta| < \alpha, \quad \mu \in \mathbb{R}, \quad \delta  > 0.
 \end{equation}
 
+Define $\omega = \sqrt{(x-\mu)^2 + \delta^2}$.
+
 \subsection{Density function}
 The density function is given as
 \begin{equation}
@@ -109,7 +112,7 @@ f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alp
 
 Parameterization: Standard case $\mu = 0$ and $\delta = 1$. The parameters have the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. Where $\mu$ is the location of the density, $\beta$ is the skewness parameter, $\alpha$ measures the heaviness of the tails.
 
-\subsection{Cumulative distribution function}
+\subsection{Cumulative distribution function}\label{properties_cdf}
 The cumulative distribution function is given by
 \begin{equation}\label{integral_k1}
 F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{x} \frac{K_1\left(\alpha\sqrt{\delta^2 + (t-\mu)^2}\right)}{\sqrt{\delta^2 + (t-\mu)^2}} e^{\beta(t-\mu)} \mathop{dt}
@@ -119,24 +122,26 @@ F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \
 F(x; \alpha, \beta, \mu, \delta) = \frac{\delta}{\sqrt{2\pi}}\int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{(\delta - \gamma t)^2}{2t}} \mathop{dt}
 \end{equation}
 
-Also denote
+Also denote the reflection formula
 \begin{equation}\label{cdf_mirror}
-\tilde{F}(x; \alpha, \beta, \mu, \delta) = 1- F(-x; \alpha, -\beta, -\mu, \delta).
+\tilde{F}(x; \alpha, \beta, \mu, \delta) = 1- F(-x; \alpha, -\beta, -\mu, \delta),
 \end{equation}
-Follows from the reversion formula of $\Phi(x)$.
+which follows from the reflection formula of $\Phi(x) = 1 - \Phi(-x)$.
 
-\begin{proposition} For $x - \mu < 0$, an incomplete Laplace-type integral representation in terms of modified Bessel function $K_0(x)$ is given by
+\subsubsection{Alternative integral representations}
+We obtain the following alternative integral representations in terms other special functions. More interestingly, we derive an integral representation in terms of elementary functions. Although these representations have restrictions on the sign of $x-\mu$, the use of the reflection formula \eqref{cdf_mirror} permits the computation on the whole domain.
+
+\begin{proposition} An incomplete Laplace-type integral representation in terms of modified Bessel function $K_0(x)$ is given by
 \begin{equation}\label{integral_k0}
-F(x; \alpha, \beta, \mu, \delta) = \frac{\sqrt{2}\delta e^{\delta \gamma}}{\pi}\int_{\beta / \sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu)t} K_0\left(\sqrt{2\left( (x-\mu)^2 + \delta^2\right)} \sqrt{\frac{\gamma^2}{2} + t^2}\right) \mathop{dt},
+F(x; \alpha, \beta, \mu, \delta) = \frac{\sqrt{2}\delta e^{\delta \gamma}}{\pi}\int_{\beta / \sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu)t} K_0\left(\sqrt{2\left( (x-\mu)^2 + \delta^2\right)} \sqrt{\frac{\gamma^2}{2} + t^2}\right) \mathop{dt}, \quad x - \mu < 0.
 \end{equation}
-and \eqref{cdf_mirror}, otherwise.
 \end{proposition}
 \begin{proof}
 Consider the integral representation of the function $\Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right)$
 \begin{equation*}
 \Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right) = \sqrt{\frac{t}{\pi}} e^{-\frac{(x-\mu)^2}{2t}}\int_{\beta/\sqrt{2}}^{\infty} e^{-(tu^2 - \sqrt{2}(x-\mu) u)} \mathop{du}.
 \end{equation*}
-Replacing in \eqref{integral_phi} and interchanging the order of integration we obtain
+Replacing in \eqref{integral_phi} and interchanging the order of integration, we obtain
 \begin{equation*}
 F(x; \alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2}\pi} \int_{\beta/\sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu) u} \int_{0}^{\infty} t^{-1} e^{-\frac{\left((x-\mu)^2 + \delta^2\right)}{2t} - \left(\frac{\gamma^2}{2} + u^2\right)t} \mathop{dt} \mathop{du}.
 \end{equation*}
@@ -146,36 +151,34 @@ The observation that the inner integral can be represented in terms of the modif
 \end{equation*}
 \end{proof}
 
-
 \begin{proposition}
-The Fourier sine transform of the cumulative distribution function in terms of elementary functions is given by
-\begin{equation}\label{sine_transform}
-F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}, \quad x-\mu > 0,
+An integral representation of the cumulative distribution function in terms of elementary functions is given by
+\begin{equation}\label{integral_sine_transform}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}, \quad x-\mu > 0.
 \end{equation}
-and apply \eqref{cdf_mirror} for $x-\mu < 0$.
 \end{proposition}
 \begin{proof}
-Consider the integral representation \eqref{integral_k1}. We use the sine transform \cite[\S 2.4]{Bateman1954}
+Consider the integral representation \eqref{integral_k1}. Then, we replace the term involving $K_1(x)$ by its sine transform \cite[\S 2.4]{Bateman1954}
 \begin{equation*}
-\frac{K_1(\alpha \sqrt{t^2 + \delta^2}}{\sqrt{t^2 + \delta^2}} = \frac{1}{\alpha\delta}\int_0^{\infty} \frac{z e^{-t\sqrt{z^2 + \alpha^2}}}{\sqrt{z^2 + \alpha^2}} \sin(\delta z) \mathop{dz},
+\frac{K_1(\alpha \sqrt{t^2 + \delta^2})}{\sqrt{t^2 + \delta^2}} = \frac{1}{\alpha\delta}\int_0^{\infty} \frac{z e^{-t\sqrt{z^2 + \alpha^2}}}{\sqrt{z^2 + \alpha^2}} \sin(\delta z) \mathop{dz},
 \end{equation*}
 valid for $t \ge 0$. Replacing in \eqref{integral_k1} and interchanging the order of integration, we have
 \begin{align*}
 F(x; \alpha, \beta, \mu, \delta) &= 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi}\frac{1}{\alpha\delta}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \int_{x-\mu}^{\infty} e^{-t\sqrt{z^2 + \alpha^2} + \beta t} \mathop{dt} \mathop{dz}\\
 &= 1 - \frac{e^{\delta \gamma}}{\pi}\int_0^{\infty} \frac{z \sin(\delta z)}{\sqrt{z^2 + \alpha^2}}  \frac{e^{-(x-\mu)\left(\sqrt{z^2 + \alpha^2} - \beta\right)}}{\sqrt{z^2 + \alpha^2} - \beta} \mathop{dz}
 \end{align*}
-where the inner integral converges for $t\in [x-\mu, \infty)$.
+where the inner integral converges for $x-\mu > 0$.
 \end{proof}
 
-In a similar manner, we can obtain a Fourier cosine transform in terms of the exponential integral.
+Analogously, we obtain an integral representation in terms of the exponential integral $E_1(x)$ using the cosine transform of the modified Bessel function.
 \begin{proposition}
-The Fourier cosine transform integral representation in terms of the exponential integral $E_1(x)$ is given by
+An integral representation of the cumulative distribution function in terms of the exponential integral $E_1(x)$ is given by
 \begin{equation}
 F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_0^{\infty} E_1\left((x-\mu)(\sqrt{t^2 + \alpha^2} - \beta)\right) \cos(\delta t) \mathop{dt}, \quad x-\mu > 0.
 \end{equation}
 \end{proposition}
 \begin{proof}
-This result can be derived from the sine transform in \eqref{sine_transform} using integration by parts. Alternatively, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
+This result can be derived from the sine transform in \eqref{integral_sine_transform} using integration by parts. As another option, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
 \begin{equation*}
 \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} = \frac{1}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz}.
 \end{equation*}
@@ -189,6 +192,16 @@ where the inner integral is expressible in closed form in terms of the exponenti
 \end{equation*}
 \end{proof}
 
+Moreover, an integral representation whose integrand decays double-exponentially is obtained using the transformation described in \cite[\S 42.4]{Temme2015}. First, we write $\beta = \alpha \tanh(\theta)$, valid since $|\beta| < \alpha$. Substituting in \eqref{integral_k1} the term $x-\mu = \delta \sinh(\theta + u)$, we obtain
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{\tau} K_1 \left(\alpha \delta \cosh(\theta + u)\right) e^{\beta \delta \sinh(\theta + u)} \mathop{du},
+\end{equation}
+where
+\begin{equation}
+\tau = \arcsinh\left(\frac{x - \mu}{\delta}\right) - \theta.
+\end{equation}
+
+To conclude, a discussion on the numerical integration methods for effective computation of the previous integrals is presented in Section \ref{section_numerical_integration}.
 
 \subsection{Moments and cumulants}
 
@@ -203,7 +216,7 @@ Use binomial theorem, and compute coefficients recursively (binomial sum of Bess
 
 \section{Methods of computation}
 In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases. Subsequently, we discuss several approaches for computing the inverse of the CDF.
-\subsection{Expansions: case $\beta = 0$}
+\subsection{Special case $\beta = 0$}
 The case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution has been widely used in financial modelling, for example for pricing collateralized default obligations (CDO) \cite{Kalemanova2007}.
 
 We emphasize that many of the techniques and numerical methods introduced in this Section shall also be used to develop expansions of other special cases and the general case in Section \ref{section_general_case}.
@@ -235,7 +248,7 @@ F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi
 \end{equation}
 Moreover, to obtain a similar series with positive terms, we choose the expansion of $\Phi(x)$ in \eqref{phi_expansion_2}, yielding
 \begin{equation}\label{expansion_xmu_b0_positive}
-F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega), \quad \omega = \sqrt{\delta^2 + (x-\mu)^2}.
+F(x; \alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}} {\pi}\sum_{k=0}^{\infty} \frac{(x-\mu)^{2k+1}}{(2k +1)!!} \left(\frac{\alpha}{\omega}\right)^{k+1}K_{k+1}(\alpha \omega).
 \end{equation}
 
 Note that the series expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} can be written as a truncated series with the corresponding remainder term. For example, truncating the series \eqref{expansion_xmu_b0_positive} at $N$, we can write
@@ -454,9 +467,9 @@ obtaining a simplified equation
 \begin{equation}
 (\sqrt{2m} \omega)^{2N} \left(\frac{e}{N}\right)^{2N} 2^{-4N} = 4\sqrt{\pi}\alpha\omega\epsilon.
 \end{equation}
-The solution of the last equation permits a closed-form in terms of principal branch of the Lambert $W$-function
+The solution of the last equation permits a closed-form in terms of principal branch of the Lambert $W$ function
 \begin{equation}\label{N_expansion_xmu_acc}
-N \approx - \frac{\log(A)}{W\left(-\frac{\log(A)}{2 e \sqrt{2m} \omega} \right)}, \quad A = 4\sqrt{\pi}\alpha\omega\epsilon.
+N \approx - \frac{\log(A)}{W_0\left(-\frac{\log(A)}{2 e \sqrt{2m} \omega} \right)}, \quad A = 4\sqrt{\pi}\alpha\omega\epsilon.
 \end{equation}
 
 Table \ref{table_bound_remainder_xmu_b0_positive_large_N} shows the estimated number of terms of the accelerated convergent series \eqref{convergent_accelerated_series_xmu_b0_positive}, $N_{acc}$, and the actual number of terms $N^*$ to achieve machine-precision for small values of $\alpha\omega$ and $\delta$. The first and more notable observation is the reduction in the number of terms compared with convergent series \eqref{N_expansion_xmu_b0_positive}, especially for $\alpha \le 1$. The second observation is the accuracy of the estimate in $N_{acc}$ in \eqref{N_expansion_xmu_b0_positive}, which only seems to slightly underestimate $N$ for large $\alpha\omega$.
@@ -497,9 +510,9 @@ R_N < \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} \frac{1}{2\alpha\omega}\
 We use the expansion derived in \eqref{phi_expansion_incgamma_t_small} as a starting point, taking $a = x-\mu$ and $b = 0$. Similar to the derivation of the expansion in \eqref{expansion_xmu_b0_alternating}, we interchange summation and integration, and the resulting integral is expressible in closed-form as a modified Bessel function, see Equation \eqref{bessel_integral}. Thus, for $x - \mu < 0$ we have the alternating asymptotic expansion
 \begin{align}
 F(x; \alpha, 0, \mu, \delta) &= \frac{\delta e^{\delta \alpha}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^{k+1}}{k!} \frac{\Gamma(2k + 1)}{2^k (x-\mu)^{2k + 1}} \int_0^{\infty} t^{k-1} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt} \nonumber \\
-&= -\frac{\delta e^{\delta \alpha}}{\pi (x-\mu)} \sum_{k=0}^{\infty}\frac{(-1)^k\Gamma(2k + 1)}{k!} \left(\frac{\omega}{2(x-\mu)^2\alpha}\right)^k K_k(\alpha \omega),
+&= -\frac{\delta e^{\delta \alpha}}{\pi (x-\mu)} \sum_{k=0}^{\infty}\frac{(-1)^k\Gamma(2k + 1)}{k!} \left(\frac{\omega}{2(x-\mu)^2\alpha}\right)^k K_k(\alpha \omega).
 \end{align}
-where $\omega = \sqrt{(x-\mu)^2 + \delta^2}$. Note that the remainder is bounded in magnitude by the first neglected term. Moreover, the convergence of the expansion improves for large $\alpha$ and $\alpha / \omega > 1$. Finally, for $x - \mu > 0$ we use the reflection formula \eqref{cdf_mirror}.
+Note that the remainder is bounded in magnitude by the first neglected term. Moreover, the convergence of the expansion improves for large $\alpha$ and $\alpha / \omega > 1$. Finally, for the case $x - \mu > 0$ we use the reflection formula \eqref{cdf_mirror}.
 
 \subsubsection{Uniform expansion $\alpha \to \infty$, $\alpha \sim \delta$ and $|x-\mu| \gg 0$}\label{uniform_expansion_alpha_large}
 For large $\alpha$, we consider the uniform asymptotic expansion in terms of modified Bessel functions described in \cite{Temme1990c} and \cite[\S 27]{Temme2015}. We write the Laplace-type integral \eqref{integral_phi} in the standard form
@@ -537,16 +550,17 @@ Q_0(\zeta) = \frac{2}{\sqrt{\zeta}} K_{\frac{1}{2}}(2 \zeta), \quad Q_1(\zeta) =
 \end{equation}
 where the special case $K_{n+1/2}(z)$, $n \in \mathbb{N}$, is a terminating sum of elementary functions requiring $n$ terms, see \eqref{besselk_half}. In particular the cases $n=0$ and $n=1$ are
 \begin{equation*}
-K_{\frac{1}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z}}{z}, \quad K_{\frac{3}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z} (z+1)}{z^{3/2}}.
+K_{\frac{1}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z}}{z}, \quad K_{\frac{3}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z} (z+1)}{z^{3/2}},
 \end{equation*}
+and subsequent terms can be computed via recursion.
 
 Thus, rearranging terms we have
 \begin{equation}\label{uniform_expansion_a_large}
 F(x; \alpha, 0, \mu, \delta) = \frac{\alpha \delta e^{\delta \alpha}}{2 \sqrt{\pi}} \sum_{k=0}^{\infty} \frac{2^k c_k\left(\frac{\delta}{\alpha}\right) Q_k\left(\frac{\alpha \delta}{2}\right)}{\alpha^{2k}}, \quad \alpha \to \infty.
 \end{equation}
-The expansion \eqref{uniform_expansion_a_large} is a uniform expansion as $\alpha \to \infty$, uniformly with respect to $\delta / \alpha > 0$. Note that large values of $\delta$ improves the rate of convergence of the expansion, as observed taking well-know asymptotic estimates for large argument of the modified Bessel function. We remark that expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} are also adequate for large values of $\alpha$ and $\delta$, but unlike the present expansion, the number of terms increases significantly for $|x-\mu| \gg 0$.
+The expansion \eqref{uniform_expansion_a_large} is a uniform expansion as $\alpha \to \infty$, uniformly with respect to $\delta / \alpha > 0$. Note that large values of $\delta$ improves the rate of convergence of the expansion, as observed taking well-know asymptotic estimates for large argument of the modified Bessel function. We remark that expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} are also adequate for large values of $\alpha$ and $\delta$, but unlike the present expansion, the number of terms increases significantly when $|x-\mu| \gg 0$.
 
-\subsection{Expansions: case $x = \mu$}
+\subsection{Special case $x = \mu$}
 First consider the case $x = \mu$ and $\beta = 0$. Then, the distribution is symmetric and centered at $x = \mu$, and it follows that
 \begin{equation}
 F(\mu; \alpha, 0, \mu, \delta) = \frac{1}{2}.
@@ -586,52 +600,124 @@ The latter expansion being more convenient since $\alpha \ge \gamma$.
 
 
 
-\subsection{Expansions: general case}\label{section_general_case}
-\subsubsection{Expansions $|x-\mu| \to 0$ (option 1)}
-\begin{equation*}
-F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
-\end{equation*}
+\subsection{General case}\label{section_general_case}
+Comment: me make use of the expansion for the two special cases detailed in previous sections.
 
-Using expansion \eqref{phi_expansion_2}
-\begin{align}
-F(x;\alpha, \beta, \mu, \delta) &= \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{1}{(2k + 1)!!}\int_0^{\infty} \left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)^{2k+1} t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} e^{- \frac{(x-(\mu + \beta t)^2}{2t}} \mathop{dt} \nonumber\\
-&=\frac{1}{2} + \frac{\delta e^{\delta \gamma + (x -\mu)\beta}}{2\pi}\sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!}\int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}
+\subsubsection{Expansions $|x-\mu| \to 0$ in terms of modified Bessel functions}
+We proceed to derive a series expansion for small $|x-\mu|$ following similar steps to those proposed for the special case $\beta = 0$. We use the expansion of $\Phi(x)$ in  \eqref{phi_expansion_2} to obtain
+%\begin{equation*}
+%F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+%\end{equation*}
+\begin{equation}\label{general_series_xmu_zero_integral}
+F(x;\alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{1}{(2k + 1)!!}I_k,
+\end{equation}
+\begin{equation}\label{general_xmu_zero_integral}
+I_k = \int_0^{\infty} \left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)^{2k+1} t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} e^{- \frac{(x-(\mu + \beta t)^2}{2t}} \mathop{dt}.
+\end{equation}
+The series expansion written in a more standard form is given by
+\begin{equation}\label{general_series_xmu_zero_integral_2}
+F(x;\alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma + (x -\mu)\beta}}{2\pi}\sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!}\int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt},
+\end{equation}
+where we denote $J_k$ the integral just introduced
+\begin{equation}
+J_k = \int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
+\end{equation}
+The integral $J_k$ is expressible in terms of modified Bessel functions after applying the binomial expansion
+\begin{equation}
+J_k = 2 \left(\frac{-(x-\mu)}{\beta}\right)^{2k+1} \left(\frac{\alpha}{\omega}\right)^{k+1} \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega).
+\end{equation}
+Then, we have the series expansion
+\begin{equation}
+F(x;\alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha\delta e^{\delta \gamma + (x -\mu)\beta}}{\pi \omega}\sum_{k=0}^{\infty} \frac{A_k}{(2k+1)!!}\left(\frac{(x-\mu)^2\alpha}{\omega}\right)^k
+\end{equation}
+\begin{equation}
+A_k = \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega)
+\end{equation}
+Observe that the convergence of the series improves for large values of $\alpha$ and $\delta$, hence it can be considered as a uniform asymptotic expansion with respect to these parameters. The first three coefficients $A_k$ are
+\begin{align*}
+A_0 &= -u K_0(z) + K_1(z)\\
+A_1 &= 3u^2 K_0(z) - u(3 + u^2) K_1(z) + K_2(z)\\
+A_2 &= -10u^3 K_0(z) + 5u^2(2 + u^2) K_1(z) - u(5 + u^4) K_2(z) + K_3(z)
+\end{align*}
+where to compact notation we use $u$ and $z$ defined as
+\begin{equation}
+u = \frac{\omega \beta}{\alpha (x-\mu)}, \quad z = \alpha \omega.
+\end{equation}
+
+Furthermore, the series expansion can be written as a truncated series with remainder. Using the representation in \eqref{general_series_xmu_zero_integral_2} we have a series in the form
+\begin{equation}
+\sum_{k=0}^{\infty} T_k = \sum_{k=0}^{N-1}T_k + \sum_{k=N}^{\infty} T_k, \quad T_k = \frac{(-\beta)^{2k+1}}{(2k+1)!!} I_k.
+\end{equation}
+The remainder, $R_N = \sum_{k=N}^{\infty} T_k$, integral representation is obtained as
+\begin{align}\label{general_xmu_remainder_integral}
+R_N &= \int_0^{\infty} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \left[ \sum_{k=N}^{\infty}\frac{(-\beta)^{2k+1}}{(2k+1)!!} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2}\right] \mathop{dt}\\
+&= \frac{(-1)^{2N + 1} 2^{N - 1/2} (2N + 1)}{(2N + 1)!!} e^{-\beta(x-\mu)} \int_0^{\infty} t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \gamma\left(N + 1/2 , \frac{(\beta t - (x-\mu))^2}{2t}\right) \mathop{dt},
 \end{align}
-Denote the integral $I_k$ as
-\begin{equation}
-I_k = \int_0^{\infty} (t- t_+)^{2k+1} t^{-k-2} e^{-z(t + \beta^2/t)} \mathop{dt},
+where $\gamma(a, z)$ is the lower incomplete gamma function. It remains to bound the remainder $R_N$. A simple but weak bound, since the dependence on $N$ disappears, is obtained by using the regularized incomplete gamma function $P(a,z) \Gamma(a) = \gamma(a, z)$ and the bound $P(a, z) \le 1$ for $z \ge 0$ (recall the asymptotic estimate $P(a,z) \to 1$ as $z \to \infty$). A sharper bound for $\gamma(a, z)$ derived from the asymptotic expansion for $a > z$ in \cite[\S 7.3]{Temme2015}, $\gamma(a, z) \sim \frac{z^a e^{-z}}{a}$ as $a \to \infty$, is given by
+\begin{equation}\label{lower_incomplete_gamma_bound}
+\gamma(a, z) \le \frac{z^a e^{-z}}{a - z - 1}, \quad a > z + 1, \quad z > 0.
 \end{equation}
-with $t_+ = \frac{x-\mu}{\beta}$, $z = \alpha^2 / 2$ and $\beta^2 = \omega^2 /  \alpha^2$. The integral $I_k$ can be expressed in terms of the modified Bessel expansion after applying the binomial expansion
+Since the use of this bound introduces a term involving $t$ in the denominator, complicating subsequent calculations, we use the asymptotic estimate instead. Thus, $|R_N|$ is approximated as
+\begin{align}
+|R_N| &\approx \frac{e^{-\beta(x-\mu)}}{(2N + 1)!!} I_N \label{remainder_approx1}\\
+&\approx \frac{2 \beta^{2N + 1}}{(2N + 1)!!}\left(\frac{\omega}{\alpha}\right)^N K_N(\alpha \omega) \quad (|x-\mu| \to 0) \label{remainder_approx2},
+\end{align}
+and the latter approximation of $|R_N|$ can be simplified further by considering the asymptotic approximation in \eqref{besselk_order_to_inf}, which gives us
 \begin{equation}
-I_k = 2\sum_{j=0}^{2k + 1}\binom{2k+1}{j} (-t_+)^{2k+1-j} \beta^{j-k-1} K_{k+1-j}(2z\beta).
+|R_N| \approx \sqrt{\frac{2\pi}{N}} \left(\frac{e\alpha^2}{2N}\right)^{-N} \frac{\beta^{2N + 1}}{(2N + 1)!!}.
 \end{equation}
+Observe that the approximation is only adequate for the case $\delta \to 0$ since its contribution is removed as a result of applying the specified asymptotic estimate. Table \ref{table_bound_remainder_xmu_general} compares the absolute value of remainder in expression \eqref{general_xmu_remainder_integral}, $|R_N|$, with the upper bound using \eqref{lower_incomplete_gamma_bound} and the approximations in \eqref{remainder_approx1} and \eqref{remainder_approx2} for different parameters with small $|x-\mu|$. We can see that the bound is sharp for all cases considered, but requires the evaluation of the an integral in terms of elementary functions. On the other hand, both approximations are close, only an order of magnitude off in most of the cases, and the approximation in terms of the modified Bessel function \eqref{remainder_approx2} might be seen as a suitable and fast approximation at least for small $\delta$.
 
-Show the first two terms $I_1$ and $I_2$. Theorem with recursion.
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{cccccccccc}
+\hline
+$x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & $N$ & $R_N$ & Bound \eqref{lower_incomplete_gamma_bound} & \eqref{remainder_approx1} & \eqref{remainder_approx2}\\
+\hline
+	1/2 & 2 & 1 & 1/4 & 3 & 10 & $4.7\cdot 10^{-9}$ & $5.6\cdot 10^{-9}$ & $3.6\cdot 10^{-9}$ & $9.9\cdot 10^{-9}$\\
+	1/3 & 5 & -1 & 1/4 & 1 & 50 & $2.5\cdot 10^{-72}$ & $2.6\cdot 10^{-72}$ & $2.4\cdot 10^{-73}$ & $2.8\cdot 10^{-73}$\\
+	4 & 15 & -6 & 7/2 &  10 & 20 & $2.7\cdot 10^{-60}$ & $5.6\cdot 10^{-60}$ & $6.5\cdot 10^{-61}$ & $8.6\cdot 10^{-63}$\\
+2/10 & 1 & 1/2 & 1/10 & 1/ 2 & 50 &  $1.1\cdot 10^{-33}$ & $1.1\cdot 10^{-33}$ & $7.9\cdot 10^{-34}$ & $9.8\cdot 10^{-34}$\\
+	\hline\\
+	\end{tabular}}
+	\caption{Comparison of various approximations (\eqref{remainder_approx1} and \eqref{remainder_approx2}) and the upper bound \eqref{lower_incomplete_gamma_bound} for the estimation of the remainder \eqref{general_xmu_remainder_integral}.}
+	\label{table_bound_remainder_xmu_general}
+\end{table}
 
-\subsubsection{Expansions $|x-\mu| \to 0$ (option 2)}
-The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
+%Denote the integral $I_k$ as
+%\begin{equation}
+%I_k = \int_0^{\infty} (t- t_+)^{2k+1} t^{-k-2} e^{-z(t + \beta^2/t)} \mathop{dt},
+%\end{equation}
+%with $t_+ = \frac{x-\mu}{\beta}$, $z = \alpha^2 / 2$ and $\beta^2 = \omega^2 /  \alpha^2$. The integral $I_k$ can be expressed in terms of the modified Bessel expansion after applying the binomial expansion
+%\begin{equation}
+%I_k = 2\sum_{j=0}^{2k + 1}\binom{2k+1}{j} \left(-\frac{x-\mu}{\beta}\right)^{2k+1-j} \beta^{j-k-1} K_{k+1-j}(2z\beta).
+%\end{equation}
+
+\subsubsection{Expansion $|x-\mu| \to 0$ in terms of modified Bessel and incomplete gamma functions}
+We present an alternative derivation of a series expansion for small $|x-\mu|$ where the series coefficients are easier to compute. The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
 \begin{equation*}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
 \end{equation*}
-and replacing $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ by the expansion in \eqref{phi_expansion_incgamma}
-\begin{equation*}
+and replacing the term $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ by the expansion in \eqref{phi_expansion_incgamma} in terms of upper incomplete gamma function $\Gamma(a, z)$. The resulting series is
+\begin{equation}\label{general_xmu_incgamma_integral}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\int_0^{\infty}\Gamma\left(\frac{k+1}{2}, \frac{\beta^2}{2}t\right) t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
-\end{equation*}
-where $\omega = \sqrt{\delta^2 + (x-\mu)^2}$. Consider the ascending series of the incomplete gamma function given by \cite[\S 8.7]{NIST:DLMF}
-\begin{equation}
-\Gamma(a, x) = \Gamma(a) - \sum_{j=0}^{\infty} \frac{(-1)^j x^{a+j}}{j! (a+ j)}.
 \end{equation}
-We proceed splitting the inner integral into two terms
+Consider the ascending series of the incomplete gamma function given by \cite[\S 8.7]{NIST:DLMF}
+\begin{equation}
+\Gamma(a, z) = \Gamma(a) - \gamma(a, z) = \Gamma(a) - \sum_{j=0}^{\infty} \frac{(-1)^j z^{a+j}}{j! (a+ j)},
+\end{equation}
+and insert it into \eqref{general_xmu_incgamma_integral}, splitting the inner integral into two terms
 \begin{align}
-T_1 &= \Gamma\left(\frac{k+1}{2}\right)\int_0^{\infty}t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}\\
-T_2 &= \sum_{j=0}^{\infty} \frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)}\int_0^{\infty} t^{j-1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+T_1 &= \Gamma\left(\frac{k+1}{2}\right)\int_0^{\infty}t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},\\
+T_2 &= \sum_{j=0}^{\infty} \frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)}\int_0^{\infty} t^{j-1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
 \end{align}
-and observe that both integrals are expressible in terms of modified Bessel function, resulting in the sums $S_1$ and $S_2$, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$, defined as follows
+Both integrals are expressible in terms of modified Bessel function, resulting in the sums $S_1$ and $S_2$, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$. These series are defined as follows
 \begin{align}
-S_1 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right)2 K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\\
+S_1 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right)2 K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}},\\
 S_2 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\sum_{j=0}^{\infty}\frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)} 2 K_j(\omega \gamma) \left(\frac{\omega}{\gamma}\right)^j.
 \end{align}
-Interchanging the order of summation in $S_2$, we observe that the sum in $k$ is convergent an expressible in terms of the lower incomplete gamma function $\gamma(a, x)$. Assuming $\beta > 0$
+Interchanging the order of summation in $S_2$, we observe that the sum in $k$ is convergent an expressible in terms of the lower incomplete gamma function $\gamma(a, x)$. Assuming $\beta > 0$ (otherwise, use \eqref{cdf_mirror}), we have
 \begin{equation}
 \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k! (\frac{k+1}{2}+ j)} \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}} = -\frac{\sqrt{2}}{(x-\mu)^{2j+1}\beta^{2j}} \gamma \left(2j + 1, -(x-\mu)\beta\right).
 \end{equation}
@@ -644,10 +730,14 @@ Rearranging terms
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\pi \sqrt{2}} \bigg[& \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right) K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\nonumber\\
 & + \sqrt{2}\sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\frac{\gamma \left(2k + 1, -(x-\mu)\beta\right)}{(x-\mu)^{2k+ 1}}  K_k(\omega \gamma) \left(\frac{\omega}{2\gamma}\right)^k \bigg]
 \end{align}
+The expansion is convergent for small $|x-\mu|$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters. REFERENCE instability of the incomplete gamma recursion forward.
 
-If $\beta < 0$ then $F(x;\alpha, \beta, \mu, \delta) = 1 - F(-x;\alpha, -\beta, -\mu, \delta)$. The expansion is convergent for small $x-\mu$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters.
+\subsubsection{Expansion $|x-\mu| \to 0$ in terms of Hermite polynomials}
+Expand using \eqref{phi_expansion_a_small}
 
-\subsubsection{Expansions $|x-\mu| \to 0$ (option 3)}
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = F(\mu; \alpha, \beta, \mu, \delta) + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty}\frac{(-1)^k (x-\mu)^{k+1}}{(k + 1)! 2^{k/2}}\int_0^{\infty} t^{-k/2 - 2} H_k\left(k, b\sqrt{\frac{t}{2}}\right) e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
+\end{equation}
 
 \subsubsection{Expansion $\beta \to 0$}
 
@@ -703,17 +793,19 @@ F(x; \alpha, \beta, \mu, \delta) &= \frac{\alpha e^{\delta \gamma}}{\pi \beta}\s
  &=\frac{\alpha e^{\delta \gamma}}{\pi \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta)\frac{\Gamma(2k+1)}{\Gamma(k+1)}\left(-\frac{\alpha}{2\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)\\
  &=\frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta) \Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta),
 \end{align}
-and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x)$, see appendix \ref{appendix_incomplete_gamma}. The evaluation of the asymptotic series using the regularized incomplete gamma is more numerically stable, as described in Section \ref{algorithmic_asymptotic_expansions}.
+and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x)$, see appendix \ref{appendix_incomplete_gamma}. The evaluation of the asymptotic series using the regularized incomplete gamma is more numerically stable, as described in Section \ref{algorithmic_asymptotic_expansions}. REFERENCE to stable recurrence Temme book.
 
 
 \subsection{Numerical integration}\label{section_numerical_integration}
+\subsubsection{Integrand in terms of the error function}
+
 For cases do not covered by the described expansions, we need to resort to numerical integration. First, we focus on the Laplace-type integral \eqref{integral_phi}, whose integrand involves the complementary error function, since its evaluation is faster than the Bessel integral in \eqref{integral_k1}.
 
 As a preliminary step, we truncate the improper integral \eqref{integral_phi} at some point $N > 0$, such that
-\begin{equation*}
-I = \int_0^N \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} + \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
-\end{equation*}
-and $F(x; \alpha, \beta, \mu, \delta) = C I$, where $C = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}}$. The truncation error can be bounded by
+\begin{equation}\label{truncated_integral}
+I_N = \int_0^N \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} + \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+\end{equation}
+and $F(x; \alpha, \beta, \mu, \delta) = C I_N$, where $C = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}}$. The truncation error can be bounded by
 \begin{equation}
 \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{e^{-\frac{\delta^2}{2N}}}{N^{3/2}}\int_N^{\infty} e^{- \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2}.
 \end{equation}
@@ -721,7 +813,7 @@ We can select $N$ for a desired absolute tolerance $\epsilon$ solving numericall
 \begin{equation}
 \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2} = \frac{\epsilon}{C}.
 \end{equation}
-Moreover, a slightly lesser sharper bound allows a closed-form solution of the above equation in terms of the principal branch of the Lambert $W$ function \cite[\S 4.13]{NIST:DLMF}
+Moreover, a slightly lesser sharper bound allows a closed-form solution of the above equation in terms of the principal branch of the Lambert $W$ function, $W_0(z)$
 \begin{equation}\label{N_equation}
 \frac{2 e^{- \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2} = \frac{\epsilon}{C} \longrightarrow N = \frac{3}{\gamma^2}W_0\left(\frac{\gamma^2}{3u}\right), \quad u = \left(\frac{\gamma^2 \epsilon}{2 C}\right)^{2/3}.
 \end{equation}
@@ -729,12 +821,11 @@ To reduce the cost of evaluating $N$, we can accurately approximate $W_0(z)$ for
 \begin{equation}\label{lambertW0_upper_bound}
 W_0(z) \le \log(z)^{\tfrac{\log(z)}{1 + \log(z)}},
 \end{equation}
-implying that we can safely use this approximation when the following inequality is satisfied (which should occur for reasonable parameters)
+implying that we can safely use this approximation when the following inequality is satisfied (which should occur for any reasonable set of parameters)
 \begin{equation}
 \delta \gamma e^{\delta\gamma} > \sqrt{\frac{27 \pi}{2}} \epsilon.
 \end{equation}
-Note that, from a computational perspective, the use of the upper bound \eqref{lambertW0_upper_bound} is beneficial to avoid overflow/underflow issues for large parameters.
-
+Note that, from an implementation perspective, the use of the upper bound  \eqref{lambertW0_upper_bound} to estimate $N$ avoids overflow/underflow issues for large parameters by directly using logarithmic properties. 
 To accurately estimate $N$ to achieve a relative tolerance, we need an estimate of the order of magnitude of $I$. The integrand can be written as $e^{g(t)}$, where
 \begin{equation}
 g(t) = -\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t - \frac{3}{2}\log(t) + \log\left(\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)\right),
@@ -759,39 +850,60 @@ g'(t) \approx \frac{\delta^2 + (x-\mu)^2}{2t^2} -\frac{\alpha^2}{2} -\frac{3}{2t
 %\begin{equation*}
 %g'(t) \approx \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t} + \frac{(x-\mu)^2}{2t^2} + \frac{\beta(x-\mu)}{2t}, \quad t_0 = \frac{h + \sqrt{h^2 + \gamma^2 \left((x-\mu)^2 + \delta^2\right)}}{\gamma^2}, \quad h = \frac{\beta (x-\mu) - 3}{2}.
 %\end{equation*}
-The saddle point estimates $t_0$ computed by \eqref{saddle_point_1} or \eqref{saddle_point_2} is used as a starting point for the root-finding method. In particular, we find that the Newton's method setting an absolute error $10^{-4}$ only requires a few iterations (typically less than 5) to refine the initial estimate.
+The saddle point estimates $t_0$ computed by \eqref{saddle_point_1} or \eqref{saddle_point_2} is used as a starting point for the root-finding method. In particular, we find that the Newton's method setting an absolute error $10^{-4}$ only requires a few iterations (typically less than 5) to refine the initial estimate. After estimating $N$ using the estimated magnitude with the saddle point $t_0$, $\epsilon e^{g(t_0)}$, the truncated integral \eqref{truncated_integral} can be computed using standard numerical integration methods such as double exponential (tanh-sinh) quadrature or Gaussian quadrature (Gauss-Legendre). Technical details are discussed in Section \ref{algorithmic_numerical_integration}.
 
-\subsubsection{Double-exponential quadrature}
-Approximation $W_{-1}(z)$ with maximum relative error of $3.5e{-3}$ presented in \cite{Barry2004}
+
+\subsubsection{Integrand in terms of elementary functions}
+Most of the integral representations presented in Section \ref{properties_cdf} involve special functions in their integrands (e.g., $K_1(x)$ or $\erfc(x)$), which necessarily increases the computation cost of their evaluation. Therefore, for computational efficiency, it is generally preferred to evaluate integrals representable in terms of elementary functions. A suitable integral representation satisfying this requirement was given in \eqref{integral_sine_transform}. As previously described, the integral \eqref{integral_sine_transform} can be approximated by the truncated integral 
+\begin{equation}\label{truncated_integral_sine_transform}
+I_N = \int_0^N \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt} + \int_N^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt},
+\end{equation}
+and $F(x; \alpha, \beta, \mu, \delta) = 1 - C I_N$, where $C = \frac{e^{\delta \gamma}}{\pi}$. Consider the tail given by
 \begin{equation}
-W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + \log(-z)}{2}}\right)^{-1}\right), \quad	a = 0.3205.
+T_N = \int_N^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt}.
+\end{equation}
+An upper bound for the tail holds:
+\begin{align*}
+|T_N| &\le \int_N^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\mathop{dt}\\
+&\le \frac{e^{(x-\mu)\beta}}{\sqrt{N^2 + \alpha^2} - \beta}\int_N^{\infty} e^{-(x-\mu)\sqrt{t^2 + \alpha^2}} \mathop{dt}\\
+&\le \frac{e^{(x-\mu)\beta}}{\sqrt{N^2 + \alpha^2} - \beta} \sqrt{N^2 + \alpha^2} K_1((x-\mu)\sqrt{N^2 + \alpha^2}),
+\end{align*}
+where we use the fact that $|\sin(\delta t)| \le 1$, and a bound for the latter integral expressible in closed form using \cite[\S 3.461]{gradshteyn2007}
+\begin{equation*}
+\int_N^{\infty} e^{-(x-\mu)\sqrt{t^2 + \alpha^2}} \mathop{dt} \le \int_0^{\infty} e^{-(x-\mu)\sqrt{t^2 + N^2 + \alpha^2}} \mathop{dt} = \sqrt{N^2 + \alpha^2} K_1((x-\mu)\sqrt{N^2 + \alpha^2}).
+\end{equation*}
+
+\begin{remark}The previous bound involving the modified Bessel function $K_1(x)$ can be simplified at the expense of obtaining a slightly less sharper bound. Using the monotonicity properties of $K_{\nu}(x)$ for $x > 0$, we have that $K_1(x) < K_{3/2}(x)$, with $K_{3/2}(x)$ being expressible via elementary functions
+\begin{equation*}
+\quad K_{\frac{3}{2}}(z) = \sqrt{\frac{\pi}{2}}\frac{e^{-z} (z+1)}{z^{3/2}}.
+\end{equation*}
+Hence, one can obtain
+\begin{equation}
+|T_N| \le \sqrt{\frac{\pi}{2}} \frac{\sqrt{N^2 + \alpha^2}(\sqrt{N^2 + \alpha^2} + 1)}{(\sqrt{N^2 + \alpha^2} - \beta)\left(N^2 + \alpha^2\right)^{3/4}} e^{-(x-\mu)\left(\sqrt{N^2 + \alpha^2} - \beta\right)}.
+\end{equation}
+\end{remark}
+Although the derived bounds are accurate, the inversion to obtain $N$ is far from trivial. In contrast, a practical bound, improving as $N$ increases $(N \gg \alpha > |\beta|)$ is given by
+\begin{equation}
+|T_N| \le \frac{e^{-(x-\mu)(N - \beta)}}{N - \beta} \approx \frac{e^{-(x-\mu)(N-\beta)}}{N},
+\end{equation}
+where $\beta$ is neglected from the denominator. To select $N$, we take the simplified bound and equate to a prescribed accuracy $\epsilon$. The solution admits a closed-form in terms of $W_0(z)$
+\begin{equation}
+\frac{e^{-(x-\mu)(N-\beta)}}{N} = \frac{\epsilon}{C} \longrightarrow N = \frac{1}{x-\mu}W_0\left(\frac{C e^{(x-\mu)\beta}}{\epsilon}\right).
 \end{equation}
 
-
-\begin{itemize}
-\item Estimate $h$
-\item Estimate number of iteration by level. Using $W_{-1}(x)$.
-\end{itemize}
-
-TODO: describe algorithm and reference. Use of approximation for Lambert W function and references.
-
-A double-exponential integration arises as follows. Because $|\beta| < \alpha$, we can write $\beta = \alpha \tanh(\theta)$. Substituting in \eqref{integral_k1} $x-\mu = \delta \sinh(\theta + u)$ we obtain
-\begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{\tau} K_1 \left(\alpha \delta \cosh(\theta + u)\right) e^{\beta \delta \sinh(\theta + u)} \mathop{du},
+It is important to note that the integrand in \eqref{truncated_integral_sine_transform} becomes highly oscillatory for large $\delta$. Therefore, the direct computation in the presence of high oscillations leads to catastrophic cancellation, requiring a prohibited number of quadrature points for convergence. The literally on numerical quadrature methods for highly oscillatory integrals is extensive and we do not aim to cover it in detail. However, as an example, we show the application of the steepest descent method and its adequacy in this case. We transform the integral with sine kernel into the complex form
+\begin{equation}\label{sine_transform_complex_integral}
+F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\Im\left(\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right) + \delta t i}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\mathop{dt}\right), \quad x-\mu > 0,
 \end{equation}
-where
+and apply the change of variable $t = i q / \delta$ which yields
 \begin{equation}
-\tau = \arcsinh\left(\frac{x - \mu}{\delta}\right) - \theta.
+F(x; \alpha, \beta, \mu, \delta) = 1 + \frac{e^{\delta \gamma + (x-\mu) \beta}}{\pi \delta^2} \Im\left(\int_{0}^{\infty} \frac{q e^{-(x-\mu)\sqrt{\alpha^2 - q^2/\delta^2} - q}}{\sqrt{\alpha^2 - q^2/\delta^2}\left(\sqrt{\alpha^2 - q^2/\delta^2} -\beta\right)} \mathop{dq}\right).
 \end{equation}
-
-\subsubsection{Gaussian quadrature and double-exponential quadrature}
-\begin{itemize}
-\item Gauss-Legendre
-\item Double-exponential tanh-sinh numerical integration
-\end{itemize}
-
-Mention the numerical integration method implemented in other libraries where the NIG distribution is available.
-
+The integrand has two poles located at $q = \delta \alpha$ and $q = \delta\sqrt{\alpha^2 - \beta^2} = \delta \gamma$, but observe that the imaginary part of the integral only differs from zero when $q > \delta \alpha$. Consequently, the interval of integration can be shifted to $(\delta \alpha, \infty)$ removing the pole ($\delta \alpha \ge \delta \gamma$) which gives
+\begin{equation}\label{sine_transform_complex_integral_non_oscillatory}
+F(x; \alpha, \beta, \mu, \delta) = 1 + \frac{e^{\delta \gamma + (x-\mu) \beta}}{\pi \delta^2} \Im\left(\int_{\delta\alpha}^{\infty} \frac{q e^{-(x-\mu)i\sqrt{q^2/\delta^2 - \alpha^2} - q}}{i\sqrt{q^2/\delta^2 - \alpha^2}\left(i\sqrt{q^2/\delta^2 - \alpha^2} -\beta\right)} \mathop{dq}\right),
+\end{equation}
+where the resulting integrand prevents the evaluation of complex square roots. The previously mentioned numerical integration methods are applicable to the non-oscillatory integral \eqref{sine_transform_complex_integral_non_oscillatory}, but also Gauss-Laguerre quadrature with weight function $q^r e^{-q}$, $r \in \{0, 1\}$.
 
 %A similar expansion can be obtained from the integral representation \eqref{integral_k0}, expanding $e^{\sqrt{2}(x-\mu)t}$
 %\begin{equation*}
@@ -858,6 +970,26 @@ Stopping criterion is
 
 \subsection{Evaluation of asymptotic expansions}\label{algorithmic_asymptotic_expansions}
 
+\subsection{Numerical integration}\label{algorithmic_numerical_integration}
+
+Approximation $W_{-1}(z)$ with maximum relative error of $3.5e{-3}$ presented in \cite{Barry2004}
+\begin{equation}
+W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + \log(-z)}{2}}\right)^{-1}\right), \quad	a = 0.3205.
+\end{equation}
+
+
+\begin{itemize}
+\item Estimate $h$
+\item Estimate number of iteration by level. Using $W_{-1}(x)$.
+\end{itemize}
+
+TODO: describe algorithm and reference. Use of approximation for Lambert W function and references.
+
+Mention the numerical integration method implemented in other libraries where the NIG distribution is available.
+
+\subsubsection{Comparison complementary error function algorithms}
+
+
 \subsection{Implementation}\label{subsection_implementation}
 
 \subsubsection{Case $\beta = 0$}
@@ -877,6 +1009,8 @@ The function $F(t; a, b) = \Phi\left(\frac{a}{\sqrt{t}} + b\sqrt{t}\right)$ is p
 \begin{equation}\label{integral_erfc_ab}
 F(t; a, b) = \frac{1}{2}\erfc\left(-\frac{\frac{a}{\sqrt{t}} + b\sqrt{t}}{\sqrt{2}}\right)  = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \int_{-b/\sqrt{2}}^{\infty} e^{-(tu^2 - \sqrt{2}au)} \mathop{du}
 \end{equation}
+
+\subsection{Expansions $t$}
 
 \subsubsection{Expansion $t \to 0$}
 
@@ -999,6 +1133,27 @@ f_2(k) &= (2 + k)(5a + 2ka +a^2b - 8bu - 6kbu +2ab^2u -3b^3u^2)\\
 f_3(k) &= -(3 + k)(a^3 - 11au -4kau - a^2bu + 13bu^2 + 6kbu^2 -ab^2u^2 + b^3 u^3)\\
 f_4(k) &= 2 (3 + k) (4 + k) u^2 (-a + bu)
 \end{align*}
+
+\subsection{Expansion $a \to 0$}
+We also consider expansions for small values of the parameters. If we expand $F(t; a, b)$ at $a = 0$, we obtain the series
+\begin{equation}
+F(t; a, b) = \Phi\left(b\sqrt{t}\right) + \frac{e^{-\frac{b^2 t}{2}}}{\sqrt{2\pi t}}\sum_{k=1}^{\infty} (-1)^{k+1} \frac{a^k P_{k-1}(t; b)}{k!}.
+\end{equation}
+The first coefficients $P_k(t; b)$ are
+\begin{align*}
+P_0(t; b) &= 1\\
+P_1(t; b) &= b\\
+P_2(t; b) &= \frac{b^2 t - 1}{t}\\
+P_3(t; b) &= \frac{b^3 t - 3b}{t}\\
+P_4(t; b) &= \frac{b^4 t^2 - 6b^2t + 3}{t^2}\\
+P_5(t; b) &= \frac{b^5 t^2 - 10b^3 t + 15 b}{t^2}
+\end{align*}
+Looking at the first coefficients, it is not hard to observe that coefficients $P_k(t;b)$ are expressible in terms of probabilist Hermite polynomials. Thus, after using the connection formula between probabilist and classical Hermite polynomials, we obtain the following convergent series expansion
+\begin{equation}\label{phi_expansion_a_small}
+F(t; a, b) = \Phi\left(b\sqrt{t}\right) + \frac{e^{-\frac{b^2 t}{2}}}{\sqrt{2\pi t}} + \sum_{k=0}^{\infty} \frac{(-1)^k a^{k+1}}{(k+1)!}\frac{1}{(2t)^{k/2}} H_k\left(k, b\sqrt{\frac{t}{2}}\right)
+\end{equation}
+
+\subsection{Expansion $b \to 0$}
 
 \section{The modified Bessel function of the second kind}
 Asymptotic behaviour with respect to the argument
