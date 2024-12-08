@@ -749,9 +749,8 @@ I_k  &= \int_0^{\infty} t^{-k/2 - 2} H_k\left(k, -\beta\sqrt{\frac{t}{2}}\right)
 \end{align}
 After rearranging terms, the series expansion reads as
 \begin{equation}\label{general_xmu_small_hermite_series}
-F(x; \alpha, \beta, \mu, \delta) = F(\mu; \alpha, \beta, \mu, \delta) + \frac{e^{\delta \gamma} (x-\mu) \alpha}{\pi} \sum_{k=0}^{\infty} \frac{(\beta(x-\mu))^k}{k+1}A_k
+F(x; \alpha, \beta, \mu, \delta) = F(\mu; \alpha, \beta, \mu, \delta) + \frac{e^{\delta \gamma} (x-\mu) \alpha}{\pi} \sum_{k=0}^{\infty} \frac{(\beta(x-\mu))^k}{k+1}A_k,
 \end{equation}
-
 \begin{equation}
 A_k = \sum_{j=0}^{\lfloor k/2 \rfloor} \frac{(-1)^j}{j!(k - 2j)!} \left(\frac{\alpha}{2\delta \beta^2}\right)^j K_{j+1}(\alpha \delta).
 \end{equation}
@@ -778,9 +777,16 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & \eqref{general_expansion_xmu_small
 \end{table}
 
 \subsubsection{Expansion $\beta \to 0$} 
-
+For the case $\beta \to 0$, we follow closely the derivation of the Hermite-type expansion for $|x-\mu| \to 0$, hence some steps are omitted. In this case, the expansion involves the special case $\beta = 0$. Replacing the Hermite-type expansion in \eqref{phi_expansion_b_small} in \eqref{integral_phi}, we obtain
 \begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = F(x; \gamma, 0, \mu, \delta) + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^k (-\beta)^{k+1}}{(k+1)! 2^{k/2}} \int_0^{\infty} H_k\left(\frac{x-\mu}{\sqrt{2t}}\right) t^{k/2 - 1} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
+F(x; \alpha, \beta, \mu, \delta) = F(x; \gamma, 0, \mu, \delta) + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^k (-\beta)^{k+1}}{(k+1)! 2^{k/2}} \int_0^{\infty} H_k\left(\frac{x-\mu}{\sqrt{2t}}\right) t^{k/2 - 1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
+\end{equation}
+We may apply some algebraic manipulations to obtain an expansion in the same form as \eqref{general_xmu_small_hermite_series}, obtaining
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = F(x; \gamma, 0, \mu, \delta) -\frac{\beta \delta e^{\delta \gamma}}{\pi}\sum_{k=0}^{\infty} \frac{(\beta(x-\mu))^k}{k+1}B_k,
+\end{equation}
+\begin{equation}
+B_k = \sum_{j=0}^{\lfloor k/2 \rfloor} \frac{(-1)^j}{j!(k - 2j)!} \left(\frac{\omega}{2\gamma (x-\mu)^2}\right)^j K_{j}(\gamma \omega).
 \end{equation}
 
 \subsubsection{Uniform asymptotic $\gamma \to \infty, \gamma \sim \delta$ and $|x-\mu| \gg 0$}
@@ -1188,10 +1194,14 @@ P_5(t; b) &= \frac{b^5 t^2 - 10b^3 t + 15 b}{t^2}
 \end{align*}
 Looking at the first coefficients, it is not hard to observe that coefficients $P_k(t;b)$ are expressible in terms of probabilist Hermite polynomials. Thus, after using the connection formula between probabilist and classical Hermite polynomials, we obtain the following convergent series expansion
 \begin{equation}\label{phi_expansion_a_small}
-F(t; a, b) = \Phi\left(b\sqrt{t}\right) + \frac{e^{-\frac{b^2 t}{2}}}{\sqrt{2\pi t}} + \sum_{k=0}^{\infty} \frac{(-1)^k a^{k+1}}{(k+1)!}\frac{1}{(2t)^{k/2}} H_k\left(k, b\sqrt{\frac{t}{2}}\right)
+F(t; a, b) = \Phi\left(b\sqrt{t}\right) + \frac{e^{-\frac{b^2 t}{2}}}{\sqrt{2\pi t}} \sum_{k=0}^{\infty} \frac{(-1)^k a^{k+1}}{(k+1)!}\frac{1}{(2t)^{k/2}} H_k\left(k, b\sqrt{\frac{t}{2}}\right)
 \end{equation}
 
 \subsection{Expansion $b \to 0$}
+The Hermite-type expansion for the case $b \to 0$ is obtained analogously after expanding $F(t; a, b)$ at $b=0$. Thus,
+\begin{equation}\label{phi_expansion_b_small}
+F(t; a, b) = \Phi\left(\frac{a}{\sqrt{t}}\right) + e^{-\frac{a^2 t}{2}}\sqrt{\frac{t}{2\pi}} \sum_{k=0}^{\infty}\frac{(-1)^k b^{k+1}}{(k + 1)!}\left(\frac{t}{2}\right)^{k/2} H_k\left(\frac{a}{\sqrt{2t}}\right).
+\end{equation}
 
 \section{The modified Bessel function of the second kind}
 Asymptotic behaviour with respect to the argument
