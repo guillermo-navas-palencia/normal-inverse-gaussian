@@ -216,7 +216,7 @@ Use binomial theorem, and compute coefficients recursively (binomial sum of Bess
 
 \section{Methods of computation}
 In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases. Subsequently, we discuss several approaches for computing the inverse of the CDF.
-\subsection{Special case $\beta = 0$}
+\subsection{Special case $\beta = 0$}\label{section_special_case_beta_0}
 The case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution has been widely used in financial modelling, for example for pricing collateralized default obligations (CDO) \cite{Kalemanova2007}.
 
 We emphasize that many of the techniques and numerical methods introduced in this Section shall also be used to develop expansions of other special cases and the general case in Section \ref{section_general_case}.
@@ -666,7 +666,7 @@ and the latter approximation of $|R_N|$ can be simplified further by considering
 \begin{equation}
 |R_N| \approx \sqrt{\frac{2\pi}{N}} \left(\frac{e\alpha^2}{2N}\right)^{-N} \frac{\beta^{2N + 1}}{(2N + 1)!!}.
 \end{equation}
-Observe that the approximation is only adequate for the case $\delta \to 0$ since its contribution is removed as a result of applying the specified asymptotic estimate. Table \ref{table_bound_remainder_xmu_general} compares the absolute value of remainder in expression \eqref{general_xmu_remainder_integral}, $|R_N|$, with the upper bound using \eqref{lower_incomplete_gamma_bound} and the approximations in \eqref{remainder_approx1} and \eqref{remainder_approx2} for different parameters with small $|x-\mu|$. We can see that the bound is sharp for all cases considered, but requires the evaluation of the an integral in terms of elementary functions. On the other hand, both approximations are close, only an order of magnitude off in most of the cases, and the approximation in terms of the modified Bessel function \eqref{remainder_approx2} might be seen as a suitable and fast approximation at least for small $\delta$.
+Observe that the approximation is only adequate for the case $\delta \to 0$ since its contribution is removed as a result of applying the specified asymptotic estimate. Table \ref{table_bound_remainder_xmu_general} compares the absolute value of the remainder in expression \eqref{general_xmu_remainder_integral}, $|R_N|$, with the upper bound using \eqref{lower_incomplete_gamma_bound} and the approximations in \eqref{remainder_approx1} and \eqref{remainder_approx2} for different parameters with small $|x-\mu|$. We can see that the bound is sharp for all cases considered, but requires the evaluation of an integral in terms of elementary functions. On the other hand, both approximations are close, only an order of magnitude off in most of the cases, and the approximation in terms of the modified Bessel function \eqref{remainder_approx2} might be seen as a suitable and fast approximation at least for small $\delta$.
 
 \begin{table}[H]
 	\centering
@@ -696,12 +696,12 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & $N$ & $R_N$ & Bound \eqref{lower_i
 
 \subsubsection{Expansion $|x-\mu| \to 0$ in terms of modified Bessel and incomplete gamma functions}
 We present an alternative derivation of a series expansion for small $|x-\mu|$ where the series coefficients are easier to compute via recurrence relations. The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
-\begin{equation*}
-F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
-\end{equation*}
+%\begin{equation*}
+%F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+%\end{equation*}
 and replacing the term $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ by the expansion in \eqref{phi_expansion_incgamma} in terms of upper incomplete gamma function $\Gamma(a, z)$. The resulting series is
 \begin{equation}\label{general_xmu_incgamma_integral}
-F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\int_0^{\infty}\Gamma\left(\frac{k+1}{2}, \frac{\beta^2}{2}t\right) t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
+F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\int_0^{\infty}\Gamma\left(\frac{k+1}{2}, \frac{\beta^2}{2}t\right) t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
 \end{equation}
 Consider the ascending series of the incomplete gamma function given by \cite[\S 8.7]{NIST:DLMF}
 \begin{equation}
@@ -712,7 +712,7 @@ and insert it into \eqref{general_xmu_incgamma_integral}, splitting the inner in
 T_1 &= \Gamma\left(\frac{k+1}{2}\right)\int_0^{\infty}t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},\\
 T_2 &= \sum_{j=0}^{\infty} \frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)}\int_0^{\infty} t^{j-1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
 \end{align}
-Both integrals are expressible in terms of modified Bessel function, resulting in the sums $S_1$ and $S_2$, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$. These series are defined as follows
+Both integrals are expressible in terms of modified Bessel functions, respectively, resulting in the sums $S_1$ and $S_2$, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$. These series are defined as follows
 \begin{align}
 S_1 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right)2 K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}},\\
 S_2 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\sum_{j=0}^{\infty}\frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)} 2 K_j(\omega \gamma) \left(\frac{\omega}{\gamma}\right)^j.
@@ -725,19 +725,19 @@ Thus,
 \begin{equation}
 S_2 = -2\sqrt{2} \sum_{j=0}^{\infty} \frac{(-1)^j}{j!}\frac{\gamma \left(2j + 1, -(x-\mu)\beta\right)}{(x-\mu)^{2j+1}\beta^{2j}} \left(\frac{\beta^2}{2}\right)^j  K_j(\omega \gamma) \left(\frac{\omega}{\gamma}\right)^j.
 \end{equation}
-Rearranging terms
+Rearranging terms, we obtain
 \begin{align}\label{general_xmu_two_series}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\pi \sqrt{2}} \bigg[& \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right) K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\nonumber\\
 & + \sqrt{2}\sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\frac{\gamma \left(2k + 1, -(x-\mu)\beta\right)}{(x-\mu)^{2k+ 1}}  K_k(\omega \gamma) \left(\frac{\omega}{2\gamma}\right)^k \bigg]
 \end{align}
-The expansion converges rapidly for small $|x-\mu|$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values for these two parameters. The numerical computation of the incomplete gamma functions in the second series $S_2$ can be performed using the recurrence relation
+The expansion converges rapidly for small $|x-\mu|$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid of large values for these two parameters. The computation of the lower incomplete gamma functions in the second series $S_2$ can be performed using the recurrence relation
 \begin{equation}
 \gamma(a +1, z) = a \gamma(a, z) - z^a e^{-z}.
 \end{equation}
 However, one must take into account that forward recurrence for positive parameters $a$ and $z$ is unstable; we refer to \cite[\S 13]{Temme1996} for details on how to deal with unstable recurrence relations.
 
 \subsubsection{Expansion $|x-\mu| \to 0$ in terms of Hermite polynomials}
-We obtain a series expansion in terms of Hermite polynomials and the special case $x=\mu$, $F(\mu; \alpha, \beta, \mu, \delta)$. As in previous derivations, our starting point is the substitution of the term $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ in \eqref{integral_phi}
+Furthermore, we obtain an additional series expansion in terms of Hermite polynomials and the special case $x=\mu$, $F(\mu; \alpha, \beta, \mu, \delta)$. As in previous derivations, our starting point is the substitution of the term $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ in \eqref{integral_phi}
 by the Hermite-type expansion derived in \eqref{phi_expansion_a_small}. After inserting the expansion we have
 \begin{equation}
 F(x; \alpha, \beta, \mu, \delta) = F(\mu; \alpha, \beta, \mu, \delta) + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty}\frac{(-1)^k (x-\mu)^{k+1}}{(k + 1)! 2^{k/2}}\int_0^{\infty} t^{-k/2 - 2} H_k\left(k, -\beta\sqrt{\frac{t}{2}}\right) e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
@@ -755,7 +755,7 @@ F(x; \alpha, \beta, \mu, \delta) = F(\mu; \alpha, \beta, \mu, \delta) + \frac{e^
 A_k = \sum_{j=0}^{\lfloor k/2 \rfloor} \frac{(-1)^j}{j!(k - 2j)!} \left(\frac{\alpha}{2\delta \beta^2}\right)^j K_{j+1}(\alpha \delta).
 \end{equation}
 
-Table \ref{table_xmu_general_n_terms} compares the number of terms of the three presented series expansion for the case $|x-\mu| \to 0$ for various sets of parameters to achieve a target accuracy of machine precision. As a first observation, we note that the Hermite-type expansion \eqref{general_xmu_small_hermite_series} appears to be the most efficient when $|x-\mu| \ll 1$. Also, in this regime, series expansions \eqref{general_xmu_two_series} and \eqref{general_expansion_xmu_small_bessel} require a similar number of terms $N$. On the other hand, if $|x-\mu| \ge 1$, the expansion \eqref{general_expansion_xmu_small_bessel} becomes the most efficient in the cases considered.
+Table \ref{table_xmu_general_n_terms} compares the number of terms of the three presented series expansion for the case $|x-\mu| \to 0$ for various sets of parameters to achieve a target accuracy of machine precision. As a first observation, we note that the Hermite-type expansion \eqref{general_xmu_small_hermite_series} appears to be the most efficient when $|x-\mu| \ll 1$. Also, in this regime, both series expansions \eqref{general_xmu_two_series} and \eqref{general_expansion_xmu_small_bessel} require a similar number of terms $N$. On the other hand, in the region $|x-\mu| \ge 1$, the expansion \eqref{general_expansion_xmu_small_bessel} becomes the most efficient in the cases considered.
 
 \begin{table}[H]
 	\centering
@@ -777,7 +777,7 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & \eqref{general_expansion_xmu_small
 \end{table}
 
 \subsubsection{Expansion $\beta \to 0$} 
-For the case $\beta \to 0$, we follow closely the derivation of the Hermite-type expansion for $|x-\mu| \to 0$, hence some steps are omitted. In this case, the expansion involves the special case $\beta = 0$. Replacing the Hermite-type expansion in \eqref{phi_expansion_b_small} in \eqref{integral_phi}, we obtain
+For the case $\beta \to 0$, we follow closely the derivation of the Hermite-type expansion for $|x-\mu| \to 0$ in \eqref{general_xmu_small_hermite_series}, hence some steps are omitted. In this case, the expansion involves the special case $\beta = 0$ studied in detail in Section \ref{section_special_case_beta_0}. Replacing the Hermite-type expansion defined in \eqref{phi_expansion_b_small} in integral \eqref{integral_phi}, we obtain
 \begin{equation}
 F(x; \alpha, \beta, \mu, \delta) = F(x; \gamma, 0, \mu, \delta) + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^k (-\beta)^{k+1}}{(k+1)! 2^{k/2}} \int_0^{\infty} H_k\left(\frac{x-\mu}{\sqrt{2t}}\right) t^{k/2 - 1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
 \end{equation}
@@ -786,41 +786,9 @@ We may apply some algebraic manipulations to obtain an expansion in the same for
 F(x; \alpha, \beta, \mu, \delta) = F(x; \gamma, 0, \mu, \delta) -\frac{\beta \delta e^{\delta \gamma}}{\pi}\sum_{k=0}^{\infty} \frac{(\beta(x-\mu))^k}{k+1}B_k,
 \end{equation}
 \begin{equation}
-B_k = \sum_{j=0}^{\lfloor k/2 \rfloor} \frac{(-1)^j}{j!(k - 2j)!} \left(\frac{\omega}{2\gamma (x-\mu)^2}\right)^j K_{j}(\gamma \omega).
+B_k = \sum_{j=0}^{\lfloor k/2 \rfloor} \frac{(-1)^j}{j!(k - 2j)!} \left(\frac{\omega}{2\gamma (x-\mu)^2}\right)^j K_{j}(\gamma \omega),
 \end{equation}
-
-\subsubsection{Uniform asymptotic $\gamma \to \infty, \gamma \sim \delta$ and $|x-\mu| \gg 0$}
-For large $\gamma$, we employ the uniform asymptotic described in Section \ref{uniform_expansion_alpha_large}. The only difference is the calculation of the coefficients $c_k(r)$ using the recurrence in \eqref{phi_expansion_at_u} with $a = x-\mu$ and $b = -\beta$. The resulting uniform asymptotic expansion reads
-\begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = \frac{\gamma \delta e^{\delta \gamma}}{2\sqrt{\pi}} \sum_{k=0}^{\infty} \frac{2^k c_k\left(\frac{\delta}{\gamma}\right) Q_k\left(\frac{\gamma\delta}{2}\right)}{\gamma^{2k}}, \quad \gamma \to \infty.
-\end{equation}
-
-
-\subsubsection{Expansion $|x-\mu| \to \infty$}
-
-The expansion of $\Phi\left(\frac{x-(\mu + \beta t)}{\sqrt{t}}\right)$ at $t\to 0$ is given in terms of the Bessel polynomial $y_k(x)$. To simplify notation, we take $a = x-\mu$ and $b=-\beta$. Then,
-
-\begin{equation}
-\Phi\left(\frac{a}{\sqrt{t}} + b\sqrt{t}\right) = 1 + \frac{e^{-a^2/(2t) -ab - b^2/2 t}}{a\sqrt{2\pi}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{b}{a}\right)^k y_k\left(\frac{1}{ab}\right) t^{\frac{1}{2} + k}
-\end{equation}
-
-Using the connection of the Bessel polynomials with the modified Bessel function of the second kind $K_n(x)$ given by
-\begin{equation}
-y_n(x) = \sqrt{\frac{2}{\pi x}}e^{1/x} K_{n + \frac{1}{2}}\left(\frac{1}{x}\right),
-\end{equation}
-we replace in the integral, we obtain
-\begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{b}{2a\pi^3}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{b}{a}\right)^k K_{k + \frac{1}{2}}(ab)\int_0^{\infty}t^{k-1} e^{-\frac{\delta^2 + a^2}{2t} -\frac{\gamma^2 + b^2}{2}t} \mathop{dt}
-\end{equation}
-
-\begin{equation}
-\int_0^{\infty}t^{k-1} e^{-\frac{\delta^2 + a^2}{2t} -\frac{\gamma^2 + b^2}{2}t} \mathop{dt} = 2 K_k(\omega \alpha) \left(\frac{\omega}{\alpha}\right)^k,
-\end{equation}
-where $\omega = \sqrt{\delta^2 + (x-\mu)^2}$. Rearranging terms
-\begin{equation}
-F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{2\beta}{(\mu-x)\pi^3}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{\beta \omega}{\alpha(\mu-x)}\right)^k K_{k + \frac{1}{2}}((\mu-x)\beta) K_k(\omega \alpha)
-\end{equation}
-
+where we can observe the similarity of the terms in both Hermite-type expansions.
 
 \subsubsection{Expansion $\delta \to \infty$}
 Starting from the integral representation in \eqref{integral_phi} and replacing the $\Phi\left(\frac{x-(\mu + \beta t)}{\sqrt{t}}\right)$ by the asymptotic expansion for $t\to \infty$ in \eqref{phi_expansion_at_inf} in terms of the incomplete gamma function. Taking $a = x -\mu$ and $b = -\beta$, we obtain
@@ -837,7 +805,37 @@ F(x; \alpha, \beta, \mu, \delta) &= \frac{\alpha e^{\delta \gamma}}{\pi \beta}\s
  &=\frac{\alpha e^{\delta \gamma}}{\pi \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta)\frac{\Gamma(2k+1)}{\Gamma(k+1)}\left(-\frac{\alpha}{2\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)\\
  &=\frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta) \Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta),
 \end{align}
-and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x)$, see appendix \ref{appendix_incomplete_gamma}. The evaluation of the asymptotic series using the regularized incomplete gamma is more numerically stable, as described in Section \ref{algorithmic_asymptotic_expansions}. REFERENCE to stable recurrence Temme book.
+and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We can rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x)$, see appendix \ref{appendix_incomplete_gamma}, to avoid ratios with large numerator and denominator. In addition, the evaluation of the upper incomplete gamma function , $\Gamma(a, z)$, and its regularized version via recurrence is numerically stable for positive parameters $a$ and $z$,
+\begin{equation}
+\Gamma(a + 1, z) = a \Gamma(a, z) + z^a e^{-z}.
+\end{equation}
+
+\subsubsection{Expansion $|x-\mu| \to \infty$}
+%In a similar manner, an asymptotic expansion for large $|x-\mu|$ can be derived replacing $\Phi(\cdot)$ term in the integral \eqref{integral_phi} by its expansion in terms of modified Bessel functions in \eqref{phi_expansion_besselk}. Then,
+%\begin{equation}
+%F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{b}{2a\pi^3}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{b}{a}\right)^k K_{k + \frac{1}{2}}(ab)\int_0^{\infty}t^{k-1} e^{-\frac{\delta^2 + a^2}{2t} -\frac{\gamma^2 + b^2}{2}t} \mathop{dt}.
+%\end{equation}
+%After setting $a = x-\mu$ and $b=-\beta$, we express the integral in the series in terms of the modified Bessel function,
+%\begin{equation}
+%\int_0^{\infty}t^{k-1} e^{-\frac{\delta^2 + a^2}{2t} -\frac{\gamma^2 + b^2}{2}t} \mathop{dt} = 2 K_k(\omega \alpha) \left(\frac{\omega}{\alpha}\right)^k.
+%\end{equation}
+%It simply remains to rearrange terms to obtain an asymptotic series involving the product of two Bessel functions,
+%\begin{equation}
+%F(x; \alpha, \beta, \mu, \delta) = 1 + \delta e^{\delta \gamma} \sqrt{\frac{2\beta}{(\mu-x)\pi^3}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{\beta \omega}{\alpha(\mu-x)}\right)^k K_{k + \frac{1}{2}}((\mu-x)\beta) K_k(\omega \alpha),
+%\end{equation}
+%where we assumed $\text{sign}((\mu-x)\beta) = 1$.
+
+In a similar manner, using instead the expansion in \eqref{phi_expansion_incgamma_t_small}, we obtain for $x-\mu < 0$ the asymptotic expansion
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = -\frac{\delta e^{\delta\gamma}}{\pi (x-\mu)}\sum_{k=0}^{\infty}\frac{(-1)^k}{k!}\Gamma(2k + 1, -(x-\mu)\beta) \left(\frac{\omega}{2\gamma (x-\mu)^2}\right) K_k(\gamma \omega),
+\end{equation}
+and use $1 + F(x; \alpha, \beta, \mu, \delta)$ for $x-\mu > 0$. The same comments about the computation of the series using the recurrence of the upper incomplete gamma and modified Bessel function apply.
+
+\subsubsection{Uniform asymptotic $\gamma \to \infty, \gamma \sim \delta$ and $|x-\mu| \gg 0$}
+For large $\gamma$, we employ the uniform asymptotic described in Section \ref{uniform_expansion_alpha_large}. The only difference is the calculation of the coefficients $c_k(r)$ using the recurrence in \eqref{phi_expansion_at_u} with $a = x-\mu$ and $b = -\beta$. The resulting uniform asymptotic expansion reads
+\begin{equation}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\gamma \delta e^{\delta \gamma}}{2\sqrt{\pi}} \sum_{k=0}^{\infty} \frac{2^k c_k\left(\frac{\delta}{\gamma}\right) Q_k\left(\frac{\gamma\delta}{2}\right)}{\gamma^{2k}}, \quad \gamma \to \infty.
+\end{equation}
 
 
 \subsection{Numerical integration}\label{section_numerical_integration}
@@ -1077,7 +1075,7 @@ F(t; a, b) = \sqrt{\frac{t}{\pi}} e^{-\frac{a^2}{2t}} \sum_{k=0}^{\infty} \frac{
 
 NOTE: same expansion as $\erfc(x), x \to \infty$.
 
-Moreover, another expansion valid for large values of $a > 0$ and $b$ can be obtained after expanding $F(t;a,b)$ at $t=0$. The first coefficients are
+Moreover, another expansion valid for large values of $a > 0$ and $b > 0$ can be obtained after expanding $F(t;a,b)$ at $t=0$. The first coefficients are
 \begin{equation}
 c_0 = \frac{1}{a}, \quad c_1 = \frac{ab + 1}{a^3}, \quad c_2 = \frac{a^2b² +3ab + 3}{a^5}, \quad c_3 = \frac{a^3b^3 + 6a^2b^3 + 15ab + 15}{a^7}
 \end{equation}
@@ -1099,7 +1097,7 @@ Using the connection of the Bessel polynomials with the modified Bessel function
 y_k(x) = \sqrt{\frac{2}{\pi x}}e^{1/x} K_{k + \frac{1}{2}}\left(\frac{1}{x}\right),
 \end{equation}
 the resulting expansion is represented as a Bessel-type expansion
-\begin{equation}
+\begin{equation}\label{phi_expansion_besselk}
 F(t; a, b) = 1 + \frac{e^{-\frac{a^2}{2t} - \frac{b^2}{2}t}}{\pi}\sqrt{\frac{b}{a}}\sum_{k=0}^{\infty} (-1)^{k+1} \left(\frac{b}{a}\right)^k K_{k + \frac{1}{2}}(ab)t^{k + \frac{1}{2}}.
 \end{equation}
 The expansion is convergent for $t < 1$. The convergence follows from the asymptotic estimate of $(b/a)^k K_k(ab) \sim (b/a)^k \sqrt{\frac{\pi}{2ab}}e^{-ab}$ as $|ab| \to \infty$. The expansion can be seen as an asymptotic expansion for large $a$, or as a uniform asymptotic expansion for $a \sim b$. The coefficients can be computed by using a recurrence relation for the modified Bessel function.
@@ -1244,6 +1242,17 @@ P(a, x) + Q(a, x) = 1
 \item Series for integer $a$
 \item Recursions
 \end{itemize}
+
+
+When $a$ is a positive integer the incomplete gamma functions are given by a terminating series of the exponential function $e_n(z)$ \cite[\S 11]{Temme1996}
+\begin{equation}
+e_n(z) = \sum_{j=0}^n \frac{z^j}{j!}.
+\end{equation}
+For $n =0,1,\ldots,$
+\begin{align}
+\gamma(n + 1, z) &= n! \left[1 - e^{-z} e_n(z)\right]\\
+\Gamma(n + 1, z) &= n! e^{-z} e_n(z)
+\end{align}
 
 \bibliographystyle{plain}
 \bibliography{bib}
