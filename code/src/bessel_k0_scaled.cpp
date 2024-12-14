@@ -1,9 +1,24 @@
+/*  The modified Bessel function K0(x) for real x.
+ *  
+ *  Implementation based on SPECFUN CALCK0: https://www.netlib.org/specfun/k0
+ *  
+ *  Authors: W. J. Cody and Laura Stoltz
+ *    Mathematics and Computer Science Division
+ *    Argonne National Laboratory
+ *    Argonne, IL 60439
+ * 
+ * 
+ *  Guillermo Navas-Palencia <g.navas.palencia@gmail.com>
+ *  Copyright (C) 2024
+ */
+
 #include <cmath>
 
 #include <constants.hpp>
+#include <specfun.hpp>
 
 
-double bessel_k0_scaled(const double x)
+double specfun::bessel_k0_scaled(const double x)
 {
   if (x < constants::epsilon)
     return 0.11593151565841245 - std::log(x);
@@ -28,7 +43,6 @@ double bessel_k0_scaled(const double x)
       2.9865713163054025489E+04) * t + -1.6128136304458193998E+06;
 
     const double logx = std::log(x);
-
     return std::exp(x) * (sp / sq - t * sf * logx / sg - logx);
 
   } else {

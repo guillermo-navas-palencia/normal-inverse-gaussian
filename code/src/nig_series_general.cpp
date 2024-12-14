@@ -2,6 +2,7 @@
 
 #include <nig.hpp>
 #include <constants.hpp>
+#include <specfun.hpp>
 
 #include <iostream>
 #include <iomanip>
@@ -31,8 +32,8 @@ double asymptotic_delta(
 
   // Ratio of scaled Bessel functions recursion
   const double C = alpha / beta / constants::pi * std::exp(delta * gamma - da);
-  const double k0 = bessel_k0_scaled(da);
-  const double k1 = bessel_k1_scaled(da);
+  const double k0 = specfun::bessel_k0_scaled(da);
+  const double k1 = specfun::bessel_k1_scaled(da);
   double rp = k1 / k0;
 
   // Incomplete gamma recursion

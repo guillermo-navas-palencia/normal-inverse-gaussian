@@ -2,6 +2,7 @@
 
 #include <nig.hpp>
 #include <constants.hpp>
+#include <specfun.hpp>
 
 
 double bessel_series(
@@ -33,8 +34,8 @@ double bessel_series(
 
   // Series: compute the ratio of Bessel K_0 / K_1 for recursion
   if (scaled) {
-    k0 = bessel_k0_scaled(ad);
-    k1 = bessel_k1_scaled(ad);
+    k0 = specfun::bessel_k0_scaled(ad);
+    k1 = specfun::bessel_k1_scaled(ad);
     t = k0;
   } else {
     k0 = std::cyl_bessel_k(0, ad);

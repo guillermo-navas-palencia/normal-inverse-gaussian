@@ -1,8 +1,6 @@
 #ifndef nig_hpp
 #define nig_hpp
 
-double bessel_k0_scaled(const double x);
-double bessel_k1_scaled(const double x);
 
 double nig_integration(
   const double x,

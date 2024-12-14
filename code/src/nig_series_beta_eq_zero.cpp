@@ -2,6 +2,7 @@
 
 #include <nig.hpp>
 #include <constants.hpp>
+#include <specfun.hpp>
 
 
 double bessel_series(
@@ -39,13 +40,13 @@ double bessel_series(
 
   // Series: compute the ratio of Bessel K_1 / K_2 for recursion
   if (scaled) {
-    k0 = bessel_k0_scaled(aw);
-    k1 = bessel_k1_scaled(aw);
+    k0 = specfun::bessel_k0_scaled(aw);
+    k1 = specfun::bessel_k1_scaled(aw);
     t = k1;
   } else {
     const double expaw = std::exp(-aw);
-    k0 = bessel_k0_scaled(aw) * expaw;
-    k1 = bessel_k1_scaled(aw) * expaw;
+    k0 = specfun::bessel_k0_scaled(aw) * expaw;
+    k1 = specfun::bessel_k1_scaled(aw) * expaw;
     t = C * k1;
   }
 
@@ -210,13 +211,13 @@ double asymptotic_xmu(
 
   if (scaled) {
     C = std::fma(alpha, delta - omega, std::log(caux));
-    k0 = bessel_k0_scaled(aw);
-    k1 = bessel_k1_scaled(aw);
+    k0 = specfun::bessel_k0_scaled(aw);
+    k1 = specfun::bessel_k1_scaled(aw);
     t = k0;
   } else {
     const double expaw = std::exp(-aw);
-    k0 = bessel_k0_scaled(aw) * expaw;
-    k1 = bessel_k1_scaled(aw) * expaw;
+    k0 = specfun::bessel_k0_scaled(aw) * expaw;
+    k1 = specfun::bessel_k1_scaled(aw) * expaw;
     C = caux * std::exp(da);
     t = C * k0;
   }

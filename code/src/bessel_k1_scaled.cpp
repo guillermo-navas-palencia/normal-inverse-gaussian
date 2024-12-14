@@ -1,9 +1,24 @@
+/*  The modified Bessel function K1(x) for real x.
+ *  
+ *  Implementation based on SPECFUN CALCK1: https://www.netlib.org/specfun/k1
+ *  
+ *  Authors: W. J. Cody and Laura Stoltz
+ *    Mathematics and Computer Science Division
+ *    Argonne National Laboratory
+ *    Argonne, IL 60439
+ * 
+ * 
+ *  Guillermo Navas-Palencia <g.navas.palencia@gmail.com>
+ *  Copyright (C) 2024
+ */
+
 #include <cmath>
 
 #include <constants.hpp>
+#include <specfun.hpp>
 
 
-double bessel_k1_scaled(const double x)
+double specfun::bessel_k1_scaled(const double x)
 {
   if (x < constants::epsilon)
     return 1.0 / x;
