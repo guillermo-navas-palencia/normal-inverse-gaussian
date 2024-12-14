@@ -35,6 +35,7 @@ namespace constants {
   const double twoexp13      = 1.2599210498948731648; // 2**(1/3)
   const double sqrt2         = 1.4142135623730950488; // sqrt(2)
   const double sqrt3         = 1.7320508075688772935; // sqrt(3)
+  const double osqrt2        = 0.7071067811865475244; // 1/sqrt(2)
   const double log_2         = 0.6931471805599453094; // log(2)
   const double log_10        = 2.3025850929940456840; // log(10)    
 }

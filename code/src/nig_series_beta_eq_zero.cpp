@@ -116,7 +116,7 @@ double asymptotic_alpha(
   const double b4 = 4.0 * b;
 
   // Compute the first two terms of Phi((x-mu) / sqrt(t)) at t=r
-  double c0 = std::erfc(-a * sqrtob) * 0.5;
+  double c0 = specfun::erfc(-a * sqrtob) * 0.5;
   double c1 = -a * 0.5 * std::exp(-a2 * ob) * constants::oneosqrtpi * sqrtob * ob;
 
   // Compute first elements of binomial sum of Bessel functions recursion

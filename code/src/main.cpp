@@ -35,41 +35,40 @@ void test_case_beta_zero()
 }
 
 
-void test_besselk_performance()
-{
-  double specfun_k0, gcc_k0;
-  int N = 100000;
+// void test_besselk_performance()
+// {
+//   int N = 100000;
 
-  std::vector<double> x(N);
-  for (int i = 0; i < N; i++)
-    x[i] = (i + 1) * 700. / N;
+//   std::vector<double> x(N);
+//   for (int i = 0; i < N; i++)
+//     x[i] = (i + 1) * 700. / N;
 
-  // double result;
+//   // double result;
   
-  auto start_time = std::chrono::high_resolution_clock::now();
-  for(int count = 0; count < N; count++)
-  {
-    specfun_k0 = specfun::bessel_k0_scaled(x[count]) * std::exp(-x[count]);
-  }
+//   auto start_time = std::chrono::high_resolution_clock::now();
+//   for(int count = 0; count < N; count++)
+//   {
+//     double specfun_k0 = specfun::bessel_k0_scaled(x[count]) * std::exp(-x[count]);
+//   }
 
-  // Record end time
-  auto finish_time = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double> elapsed = finish_time - start_time;
-  std::cout << "Elapsed time for specfun " << elapsed.count() * 1000000 / N << " microseconds\n";
-  std::cout << "Elapsed time for specfun " << elapsed.count() << " seconds\n";
+//   // Record end time
+//   auto finish_time = std::chrono::high_resolution_clock::now();
+//   std::chrono::duration<double> elapsed = finish_time - start_time;
+//   std::cout << "Elapsed time for specfun " << elapsed.count() * 1000000 / N << " microseconds\n";
+//   std::cout << "Elapsed time for specfun " << elapsed.count() << " seconds\n";
 
-  start_time = std::chrono::high_resolution_clock::now();
-  for(int count = 0; count < N; count++)
-  {
-    gcc_k0 = std::cyl_bessel_k(0, x[count]);
-  }
+//   start_time = std::chrono::high_resolution_clock::now();
+//   for(int count = 0; count < N; count++)
+//   {
+//     // gcc_k0 = std::cyl_bessel_k(0, x[count]);
+//   }
 
-  // Record end time
-  finish_time = std::chrono::high_resolution_clock::now();
-  elapsed = finish_time - start_time;
-  std::cout << "Elapsed time for gcc " << elapsed.count() * 1000000 / N << " microseconds\n";
-  std::cout << "Elapsed time for gcc " << elapsed.count() << " seconds\n";
-}
+//   // Record end time
+//   finish_time = std::chrono::high_resolution_clock::now();
+//   elapsed = finish_time - start_time;
+//   std::cout << "Elapsed time for gcc " << elapsed.count() * 1000000 / N << " microseconds\n";
+//   std::cout << "Elapsed time for gcc " << elapsed.count() << " seconds\n";
+// }
 
 
 void test_erfc_accuracy()
@@ -82,11 +81,11 @@ void test_erfc_accuracy()
   std::cout << std::setprecision(16) << result1 << std::endl;
   std::cout << std::setprecision(16) << result2 << std::endl;
 
-  int N = 1000000;
+  int N = 10000;
 
   std::vector<double> x(N);
   for (int i = 0; i < N; i++)
-    x[i] = (i + 1) * 20. / N;
+    x[i] = (i + 1) * 26. / N;
 
   // double result;
   
@@ -99,7 +98,7 @@ void test_erfc_accuracy()
   // Record end time
   auto finish_time = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = finish_time - start_time;
-  std::cout << "Elapsed time for specfun " << elapsed.count() * 1000000 / N << " microseconds\n";
+  // std::cout << "Elapsed time for specfun " << elapsed.count() * 1000000 / N << " microseconds\n";
   std::cout << "Elapsed time for specfun " << elapsed.count() << " seconds\n";
 
   start_time = std::chrono::high_resolution_clock::now();
@@ -111,18 +110,61 @@ void test_erfc_accuracy()
   // Record end time
   finish_time = std::chrono::high_resolution_clock::now();
   elapsed = finish_time - start_time;
-  std::cout << "Elapsed time for gcc " << elapsed.count() * 1000000 / N << " microseconds\n";
-  std::cout << "Elapsed time for gcc " << elapsed.count() << " seconds\n";  
+  // std::cout << "Elapsed time for gcc " << elapsed.count() * 1000000 / N << " microseconds\n";
+  std::cout << "Elapsed time for gcc     " << elapsed.count() << " seconds\n";  
 
 }
 
+
+void test_norm_cdf()
+{
+  double y = 1.5;
+
+  double result = specfun::norm_cdf(y);
+  double result_nag = specfun::norm_cdf_nag(y);
+  double result_std = specfun::norm_cdf_std(y);
+
+  std::cout << "specfun " << std::setprecision(16) << result << std::endl;
+  std::cout << "nag     " << std::setprecision(16) << result_nag << std::endl;
+  std::cout << "std     " << std::setprecision(16) << result_std << std::endl;
+
+  // Performance
+  int N = 10000;
+  std::vector<double> x(N);
+  for (int i = 0; i < N; i++)
+    x[i] = (i + 1) * 26. / N;
+
+  auto start_time = std::chrono::high_resolution_clock::now();
+  for (int i = 0; i < N; i++)
+    specfun::norm_cdf(x[i]);
+  auto finish_time = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish_time - start_time;
+  std::cout << "Elapsed time for specfun " << elapsed.count() << " seconds\n";
+
+  start_time = std::chrono::high_resolution_clock::now();
+  for (int i = 0; i < N; i++)
+    specfun::norm_cdf_nag(x[i]);
+  finish_time = std::chrono::high_resolution_clock::now();
+  elapsed = finish_time - start_time;
+  std::cout << "Elapsed time for nag " << elapsed.count() << " seconds\n";
+
+  start_time = std::chrono::high_resolution_clock::now();
+  for (int i = 0; i < N; i++)
+    specfun::norm_cdf_std(x[i]);
+  finish_time = std::chrono::high_resolution_clock::now();
+  elapsed = finish_time - start_time;
+  std::cout << "Elapsed time for std " << elapsed.count() << " seconds\n";  
+
+
+}
 
 
 int main()
 {
   // test_besselk_performance();
   // test_case_beta_zero();
-  test_erfc_accuracy();
+  // test_erfc_accuracy();
+  test_norm_cdf();
 
   return 0;
 }

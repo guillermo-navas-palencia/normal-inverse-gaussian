@@ -38,8 +38,9 @@ double bessel_series(
     k1 = specfun::bessel_k1_scaled(ad);
     t = k0;
   } else {
-    k0 = std::cyl_bessel_k(0, ad);
-    k1 = std::cyl_bessel_k(1, ad);
+    const double expad = std::exp(-ad);
+    k0 = specfun::bessel_k0_scaled(ad) * expad;
+    k1 = specfun::bessel_k1_scaled(ad) * expad;
     t = C * k0;
   }
 
