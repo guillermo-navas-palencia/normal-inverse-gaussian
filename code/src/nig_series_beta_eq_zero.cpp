@@ -9,7 +9,7 @@ double bessel_series(
   const double alpha,
   const double mu,
   const double delta,
-  const int maxiter = 10000,
+  const unsigned int maxiter = 10000,
   const double eps = 5e-15
 )
 {
@@ -54,7 +54,7 @@ double bessel_series(
 
   // Start recursion
   double sp = s;
-  for (int k = 1; k < maxiter; k++)
+  for (unsigned int k = 1; k < maxiter; k++)
   {
     // Ratio Bessel recursion: r = 1 / rp + 2k / aw
     double r = std::fma(2 * k, oaw, 1.0 / rp);
@@ -85,7 +85,7 @@ double asymptotic_alpha(
   const double alpha,
   const double mu,
   const double delta,
-  const int maxiter = 200,
+  const unsigned int maxiter = 200,
   const double eps = 5e-13
 )
 {
@@ -132,7 +132,10 @@ double asymptotic_alpha(
   double num = oz;
 
   // Compute term k = 2 -> n = 0 => np1 = n + 1 = 1
-  double ck = (c1 * (t1 - t2)) / (t3 * 2.0);
+  //      c1 * (t1 - t2)
+  // ck = --------------
+  //        t3 * 2
+  double ck = (c1 * t1mt2) * ot3 * 0.5;
   num *= oz;
   s = std::fma(num * ck, q2, s);
 
@@ -142,15 +145,15 @@ double asymptotic_alpha(
 
   // Start recursion
   double sp = s;
-  for (int k = 3; k < maxiter; k++)
+  for (unsigned int k = 3; k < maxiter; k++)
   {
     // Compute recursion for Phi() at t=r
-    int n = k - 2;
-    int np1 = n + 1;
+    unsigned int n = k - 2;
+    unsigned int np1 = n + 1;
 
     //      (n + 1) * c1 * (t1 - 4bn - t2) - (2n^2 + n) * c0)
     // ck = -------------------------------------------------
-    //                  (t3 * (n+1) * (n+2))
+    //                  t3 * (n+1) * (n+2)
     double ck0 = std::fma(n, -b4, t1mt2);
     double ck1 = std::fma(2 * n, n, n);
     double ck2 = std::fma(np1, c1 * ck0, -ck1 * c0);
@@ -161,7 +164,7 @@ double asymptotic_alpha(
     double qk1 = std::fma(n + t5, q2, xi * qk0 * q1);
     double qk = std::fma(n * t4, q0, qk1);
 
-    // New term: (1 / z)^k * ck * qk
+    // New term: 1 / z^k * ck * qk
     num *= oz;
     s = std::fma(num * ck, qk, s);
 
@@ -186,7 +189,7 @@ double asymptotic_xmu(
   const double alpha,
   const double mu,
   const double delta,
-  const int maxiter = 200,
+  const unsigned int maxiter = 200,
   const double eps = 5e-13
 )
 {
@@ -223,7 +226,7 @@ double asymptotic_xmu(
 
   // Start recursion
   double sp = s;
-  for (int k = 1; k < maxiter; k++)
+  for (unsigned int k = 1; k < maxiter; k++)
   {
     // Ratio Bessel recursion: r = 1 / rp + 2(k-1) / aw
     double r = std::fma(2 * (k - 1), oaw, 1.0 / rp);
@@ -266,12 +269,13 @@ double nig_beta_eq_zero(
   const bool use_series_c2 = (xmu2 <= 1.25) & (aow <= 1.0);
   const bool use_series_c3 = (delta >= 1.0);
 
-  const bool use_asymp_a = (xmu2 <= 2.5) & (da >= 200.0) & (alpha >= 5.0) & (delta >= 10.0);
+  const bool use_asymp_alpha_c1 = (xmu2 <= 2.5) & (da >= 200.0);
+  const bool use_asymp_alpha_c2 = (alpha >= 5.0) & (delta >= 10.0);
   const bool use_asymp_xmu = (xmu2 >= 70) & (aow >= 1.0);
 
   if ((use_series_c1 | use_series_c2) & use_series_c3) {
     return bessel_series(x, alpha, mu, delta);
-  } else if (use_asymp_a){
+  } else if (use_asymp_alpha_c1 & use_asymp_alpha_c2) {
     return asymptotic_alpha(x, alpha, mu, delta);
   } else if (use_asymp_xmu) {
     if (xmu < 0.0)

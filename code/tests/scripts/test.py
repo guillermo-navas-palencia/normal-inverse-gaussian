@@ -140,7 +140,8 @@ def run_test_set_with_benchmark(name: str) -> None:
 
 def rerun_test_set_mpmath_accurate(name: str, max_err: float = 5e-13) -> None:
     filename_accurate = f'../results/{name}_mpmath_accurate.csv'
-    
+    filename_data = f'../data/{name}_mpmath_accurate.csv'
+
     # Read csv file
     df = pd.read_csv(filepath_or_buffer=f'../results/{name}.csv')
     
@@ -163,6 +164,10 @@ def rerun_test_set_mpmath_accurate(name: str, max_err: float = 5e-13) -> None:
         header = 'x,alpha,beta,mu,delta,mpmath,scipy,gnp\n'
         f.write(header)    
     
+    with open(filename_data, 'w') as f:
+        header = 'x,alpha,beta,mu,delta,mpmath\n'
+        f.write(header)
+
     df_err = df[mask_err]
     n_samples = df_err.shape[0]
 
@@ -196,9 +201,13 @@ def rerun_test_set_mpmath_accurate(name: str, max_err: float = 5e-13) -> None:
             delta=delta)
         
         instance_results = f'{x},{alpha},{beta},{mu},{delta},{float(mp_result):.16E},{scipy_result:.16E},{gnp_result:.16E}\n'
+        instance_data = f'{x},{alpha},{beta},{mu},{delta},{float(mp_result):.16E}\n'
 
         with open(filename_accurate, 'a') as f:
             f.write(instance_results)
+
+        with open(filename_data, 'a') as f:
+            f.write(instance_data)
 
         if i % 20 == 0:
             print(f'{i} / {n_samples}')
@@ -335,8 +344,10 @@ def generate_accuracy_summary_beta_eq_zero(
     criteria_asymp_xmu = (df['xmu2'] >= 70) & (df['aow'] >= 1.0)
     df.loc[criteria_asymp_xmu, 'method'] = 'asymptotic_xmu'
 
-    criteria_asymp_a = (df['xmu2'] <= 2.5) & (df['da'] >= 150) & (df['alpha'] >= 5)
-    df.loc[criteria_asymp_a, 'method'] = 'asymptotic_alpha'
+    criteria_asymp_alpha_c1 = (df['xmu2'] <= 2.5) & (df['da'] >= 200)
+    criteria_asymp_alpha_c2 = (df['alpha'] >= 5) & (df['delta'] >= 10)
+    criteria_asymp_alpha = criteria_asymp_alpha_c1 & criteria_asymp_alpha_c2
+    df.loc[criteria_asymp_alpha, 'method'] = 'asymptotic_alpha'
 
     criteria1 = (df['xmu'].abs() <= 20) & (df['aow'] <= 0.25) & (df['delta'] >= 2.0 * df['xmu'].abs())
     criteria2 = (df['xmu2'] <= 1.25) & (df['aw'] <= 750)
@@ -383,16 +394,16 @@ def run_test_set_timing(name: str) -> None:
     print(f'cpp  : {elapsed_cpp:.4f}s')
 
 if __name__ == '__main__':
-    name = 'test_beta_eq_zero_small'
+    name = 'test_beta_eq_zero_large'
 
     # 1. Test accuracy comparing with mpmath and SciPy implementations
     # test_accuracy(name=name)
     # run_test_set_with_benchmark(name=name)
-    # rerun_test_set_mpmath_accurate(name=name)
+    rerun_test_set_mpmath_accurate(name=name)
 
     # 2. Generate test summary
     # generate_accuracy_summary_beta_eq_zero(name=name)
 
     # 3. Timing SciPy vs C++ via ctypes
-    run_test_set_timing(name=name)
+    # run_test_set_timing(name=name)
 
