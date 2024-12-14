@@ -13,6 +13,6 @@ double nig_cdf(
     return nig_x_eq_mu(alpha, beta, delta);
   else if (beta == 0.0)
     return nig_beta_eq_zero(x, alpha, mu, delta);
-  
-  return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+  else
+    return nig_general(x, alpha, beta, mu, delta);
 }

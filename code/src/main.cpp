@@ -1,8 +1,9 @@
+#include <cmath>
 #include <iostream>
 #include <iomanip>
 
 #include <chrono>
-
+#include <vector>
 #include <nig.hpp>
 
 
@@ -20,18 +21,65 @@ void test_case_x_eq_mu()
 
 void test_case_beta_zero()
 {
-  double alpha = 1.0;
-  double mu = 0.5;
-  double delta = 3.0;
-  double x = 1.1;
+  double x = -3.685105025063247;  
+  double alpha = 78.35431241428446;
+  double mu = -2.232886041609228;
+  double delta = 20.1593794345343955;
 
   double nig_cdf = nig_beta_eq_zero(x, alpha, mu, delta);
-
   std::cout << std::setprecision(16) << nig_cdf << std::endl;
+
+  double result = nig_integration(x, alpha, 0.0, mu, delta, 1e-13, 14);
+  std::cout << std::setprecision(16) << result << std::endl;  
+}
+
+
+void test_besselk_performance()
+{
+  double specfun_k0, gcc_k0;
+  int N = 100000;
+
+  std::vector<double> x(N);
+  for (int i = 0; i < N; i++)
+    x[i] = (i + 1) * 700. / N;
+
+  // double result;
+  
+  auto start_time = std::chrono::high_resolution_clock::now();
+  for(int count = 0; count < N; count++)
+  {
+    specfun_k0 = bessel_k0_scaled(x[count]) * std::exp(-x[count]);
+  }
+
+  // Record end time
+  auto finish_time = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish_time - start_time;
+  std::cout << "Elapsed time for specfun " << elapsed.count() * 1000000 / N << " microseconds\n";
+  std::cout << "Elapsed time for specfun " << elapsed.count() << " seconds\n";
+
+  start_time = std::chrono::high_resolution_clock::now();
+  for(int count = 0; count < N; count++)
+  {
+    gcc_k0 = std::cyl_bessel_k(0, x[count]);
+  }
+
+  // Record end time
+  finish_time = std::chrono::high_resolution_clock::now();
+  elapsed = finish_time - start_time;
+  std::cout << "Elapsed time for gcc " << elapsed.count() * 1000000 / N << " microseconds\n";
+  std::cout << "Elapsed time for gcc " << elapsed.count() << " seconds\n";
 }
 
 
 int main()
+{
+  // test_besselk_performance();
+  test_case_beta_zero();
+
+  return 0;
+}
+
+int main1()
 {
   // main_normal_distribution();
   // test_case_beta_zero();
@@ -85,9 +133,9 @@ int main()
   // double mu = 1.0;
   // double delta = 24.0;
 
-  double x = -0.4519899000274793;
-  double alpha = 0.54845308531407;
-  double beta = 0.3;
+  double x = 0.4519899000274793;
+  double alpha = 10.54845308531407;
+  double beta = 0.0;
   double mu = 0.3756820526459652;
   double delta = 0.4430694917478499;
 
@@ -99,7 +147,7 @@ int main()
   auto start_time = std::chrono::high_resolution_clock::now();
   for(int count = 0; count < N; count++)
   {
-    nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+    nig_cdf(x, alpha, beta, mu, delta);
   }
 
   // Record end time
