@@ -199,11 +199,11 @@ int main()
   // double delta = 20.14817937115534;  
   // double eps = 5e-16;
 
-  double x = -20;
-  double alpha = 50;
-  double beta = 12;
-  double mu = 1;
-  double delta = 45;
+  // double x = -20;
+  // double alpha = 50;
+  // double beta = 12;
+  // double mu = 1;
+  // double delta = 45;
 
   // double x = 4.219899000274793;
   // double alpha = 28.04845308531407;
@@ -223,11 +223,11 @@ int main()
   // double mu = 1.0;
   // double delta = 24.0;
 
-  // double x = 0.5;
-  // double alpha = 10.5;
-  // double beta = 0.0;
-  // double mu = 0.375;
-  // double delta = 0.44;
+  double x = 0.5;
+  double alpha = 8.5;
+  double beta = 1.0;
+  double mu = 0.5;
+  double delta = 0.44;
 
   double result1 = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   std::cout << std::setprecision(16) << result1 << std::endl;
@@ -237,11 +237,12 @@ int main()
 
 
   // double result;
-  int N = 1000;
+  int N = 10000;
   auto start_time = std::chrono::high_resolution_clock::now();
   for(int count = 0; count < N; count++)
   {
-    nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+    // nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+    nig_cdf(x, alpha, beta, mu, delta);
   }
 
   // Record end time

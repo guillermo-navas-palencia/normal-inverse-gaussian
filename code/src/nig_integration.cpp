@@ -1,8 +1,21 @@
+/*  Normal Inverse Gaussian cumulative distribution computed via tahn-sinh
+ *  quadrature.
+ *   
+ *  Includes functionalities to devise optimal truncation point and magnitude
+ *  estimation to obtain a robust implementation.
+ *  
+ *  The tanh-sinh quadrature code is based on the implementation in
+ *  https://github.com/sigma-py/tanh-sinh with multiple optimizations.
+ *  
+ *  Guillermo Navas-Palencia <g.navas.palencia@gmail.com>
+ *  Copyright (C) 2024
+ */
+
 #include <algorithm>
 #include <cmath>
 
-#include <nig.hpp>
 #include <constants.hpp>
+#include <nig.hpp>
 
 
 double norm_cdf(const double x)

@@ -359,6 +359,67 @@ def generate_accuracy_summary_beta_eq_zero(
     print(df.groupby('method')[['target', 'relerr_gnp']].describe().to_string())
 
 
+def generate_accuracy_summary_x_eq_mu(
+    name: str,
+    max_err: float = 5e-13
+) -> None:
+    # Read csv file
+    df = pd.read_csv(filepath_or_buffer=f'../results/{name}.csv')
+    n_samples = df.shape[0]
+
+    # Replace NaN str with NaN
+    df.loc[df['scipy'] == 'NAN', 'scipy'] = np.nan
+    df['scipy'] = df['scipy'].astype(float)
+
+    df.loc[df['gnp'] == 'NAN', 'gnp'] = np.nan
+    df['gnp'] = df['gnp'].astype(float)
+
+    # Compute relative errors wrt mpmath
+    df['relerr_gnp'] = np.absolute(df['gnp'] / df['mpmath'] - 1)
+    df['abs_gnp'] = np.absolute(df['gnp'] - df['mpmath'])
+
+    df['relerr_scipy'] = np.absolute(df['scipy'] / df['mpmath'] - 1)
+    df['abs_scipy'] = np.absolute(df['scipy'] - df['mpmath'])
+
+    # scipy error summary
+    mask_inf = df['relerr_scipy'] == np.inf
+    mask_nan = (df['relerr_scipy'].isna() & (df['mpmath'] != df['scipy']) & (df['mpmath'] != 0))
+    mask_err = (df['relerr_scipy'] > max_err) | mask_nan
+    
+    print('\nSUMMARY SciPy')
+    print('-------------')
+    print(f'Cases inf: {mask_inf.sum()}')
+    print(f'Cases NaN: {mask_nan.sum()}')
+
+    n_errors = np.count_nonzero(~mask_err)
+    print(f'Cases err < {max_err}: {n_errors} ({n_errors / n_samples:.2%})')
+
+    # gnp error summary
+    mask_inf = df['relerr_gnp'] == np.inf
+    mask_nan = (df['relerr_gnp'].isna() & (df['mpmath'] != df['gnp']) & (df['mpmath'] != 0))
+    mask_err = (df['relerr_gnp'] > max_err) | mask_nan
+
+    print('SUMMARY gnp')
+    print('-----------')
+    print(f'Cases inf: {mask_inf.sum()}')
+    print(f'Cases NaN: {mask_nan.sum()}')
+    
+    n_errors = np.count_nonzero(~mask_err)
+    print(f'Cases err < {max_err}: {n_errors} ({n_errors / n_samples:.2%})')
+
+    # Algorithmic choice
+    df['target'] = (~mask_err).astype(int)
+    df['rba'] = df['beta'] / df['alpha']
+    df['method'] = 'integration'
+
+    criteria1 = (df['alpha'] <= 10.0) & (df['delta'] <= 10.0)
+    criteria2 = (df['beta'] <= 1.5) & (df['rba'] <= 0.9)
+    df.loc[criteria1 & criteria2, 'method'] = 'series'
+
+    print(df['method'].value_counts())
+    print(df.groupby('method')[['target', 'relerr_gnp']].describe().to_string())
+
+
 def run_test_set_timing(name: str) -> None:
     filename_results = f'../results/{name}.csv'
     df = pd.read_csv(filepath_or_buffer=filename_results)
@@ -394,15 +455,16 @@ def run_test_set_timing(name: str) -> None:
     print(f'cpp  : {elapsed_cpp:.4f}s')
 
 if __name__ == '__main__':
-    name = 'test_beta_eq_zero_large'
+    name = 'test_x_eq_mu_large'
 
     # 1. Test accuracy comparing with mpmath and SciPy implementations
     # test_accuracy(name=name)
-    run_test_set_with_benchmark(name=name)
+    # run_test_set_with_benchmark(name=name)
     # rerun_test_set_mpmath_accurate(name=name)
 
     # 2. Generate test summary
-    generate_accuracy_summary_beta_eq_zero(name=name)
+    # generate_accuracy_summary_beta_eq_zero(name=name)
+    generate_accuracy_summary_x_eq_mu(name=name)
 
     # 3. Timing SciPy vs C++ via ctypes
     # run_test_set_timing(name=name)

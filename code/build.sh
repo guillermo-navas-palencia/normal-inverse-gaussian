@@ -7,7 +7,7 @@ SOURCE_DIR="$PROJECT_ROOT/src"
 INCLUDE_DIR="$PROJECT_ROOT/include"
 
 # compile
-clang -c -O3 -Wall -fpic -march=native -std=c++17 $SOURCE_DIR/*.cpp \
+clang -c -O3 -Wall -fpic -march=native -std=c++17 -mfma $SOURCE_DIR/*.cpp \
   -I $INCLUDE_DIR
 
 

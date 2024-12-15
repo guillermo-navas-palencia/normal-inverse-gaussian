@@ -1,7 +1,19 @@
+/*  Normal Inverse Gaussian cumulative distribution function for beta = 0.
+ *  
+ *  Implementation combines the following methods:
+ *    - bessel_series: series expansion for |x-mu| -> 0
+ *    - asymptotic_alpha: uniform asymptotic expansion for alphas -> inf
+ *    - asymptotic_mu: asymptotic expansion for |x-mu| -> inf
+ *    - nig_integration: numerical integration using tanh-sinh quadrature
+ * 
+ *  Guillermo Navas-Palencia <g.navas.palencia@gmail.com>
+ *  Copyright (C) 2024
+ */
+
 #include <cmath>
 
-#include <nig.hpp>
 #include <constants.hpp>
+#include <nig.hpp>
 #include <specfun.hpp>
 
 

@@ -9,7 +9,7 @@ double bessel_series(
   const double alpha,
   const double beta,
   const double delta,
-  const int maxiter = 10000,
+  const unsigned int maxiter = 10000,
   const double eps = 5e-16
 )
 {
@@ -21,6 +21,7 @@ double bessel_series(
   const double dg = delta * gamma;
   const double doa = delta / alpha;
   const double z = beta * beta * doa;
+  const double oad = 1.0 / ad;
 
   // Check if scaled version is required
   double C, k0, k1, t;
@@ -28,7 +29,7 @@ double bessel_series(
   const double caux = beta * delta / constants::pi;
 
   if (scaled)
-    C = std::log(caux) + delta * (gamma - alpha);
+    C = std::fma(delta, gamma - alpha, std::log(caux));
   else
     C = -caux * std::exp(dg);
 
@@ -49,10 +50,10 @@ double bessel_series(
 
   // Start recursion
   double sp = s;
-  for (int k = 1; k < maxiter; k++)
+  for (unsigned int k = 1; k < maxiter; k++)
   {
-    // Ratio Bessel recursion
-    double r = 1.0 / rp + 2 * (k - 1) / ad;
+    // Ratio Bessel recursion: r = 1.0 / rp + 2 * (k - 1) / ad
+    double r = std::fma(2 * (k - 1), oad, 1.0 / rp);
 
     // New term
     t *= z / (2 * k + 1) * r;
