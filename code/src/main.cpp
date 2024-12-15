@@ -159,7 +159,7 @@ void test_norm_cdf()
 }
 
 
-int main()
+int main1()
 {
   // test_besselk_performance();
   // test_case_beta_zero();
@@ -169,7 +169,7 @@ int main()
   return 0;
 }
 
-int main1()
+int main()
 {
   // main_normal_distribution();
   // test_case_beta_zero();
@@ -199,11 +199,11 @@ int main1()
   // double delta = 20.14817937115534;  
   // double eps = 5e-16;
 
-  // double x = -20;
-  // double alpha = 50;
-  // double beta = 12;
-  // double mu = 1;
-  // double delta = 45;
+  double x = -20;
+  double alpha = 50;
+  double beta = 12;
+  double mu = 1;
+  double delta = 45;
 
   // double x = 4.219899000274793;
   // double alpha = 28.04845308531407;
@@ -223,11 +223,11 @@ int main1()
   // double mu = 1.0;
   // double delta = 24.0;
 
-  double x = 0.5;
-  double alpha = 10.5;
-  double beta = 0.0;
-  double mu = 0.375;
-  double delta = 0.44;
+  // double x = 0.5;
+  // double alpha = 10.5;
+  // double beta = 0.0;
+  // double mu = 0.375;
+  // double delta = 0.44;
 
   double result1 = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   std::cout << std::setprecision(16) << result1 << std::endl;

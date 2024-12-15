@@ -1,19 +1,17 @@
+#include <algorithm>
 #include <cmath>
 
 #include <nig.hpp>
 #include <constants.hpp>
 
-#include <iostream>
-#include <iomanip>
 
-
-double normal_cdf(const double x)
+double norm_cdf(const double x)
 {
-  return 0.5 * std::erfc(-x / constants::sqrt2);
+  return 0.5 * std::erfc(-x * constants::osqrt2);
 }
 
 
-double normal_pdf(const double x)
+double norm_pdf(const double x)
 {
   return std::exp(-x*x * 0.5) * constants::oneosqrttwopi;
 }
@@ -32,6 +30,9 @@ void integrand_and_deriv(
   double sqrtt = std::sqrt(t);
   double t2 = t * t;
   double t32 = t * sqrtt;
+  double ot = 1.0 / t;
+  double ot2 = 1.0 / t2;
+  double ot32 = 1.0 / t32;
   double betat = beta * t;
   double z1aux = xmu - betat;
   double z2aux = xmu + betat;
@@ -39,17 +40,18 @@ void integrand_and_deriv(
   double z = z1aux / sqrtt;
 
   // exp integrand at t
-  double A = z2aux / t32;
-  double B = normal_pdf(z) / normal_cdf(z);
+  double A = z2aux * ot32;
+  double B = norm_pdf(z) / norm_cdf(z);
 
-  f = 0.5 * (delta2 / t2 - gamma2 - 3.0 / t - A * B);
+  f = 0.5 * (delta2 * ot2 - gamma2 - 3.0 * ot - A * B);
 
   // derivative exp integrand at t
-  double d1 = -0.5 * (beta / t32 - 1.5 * z2aux / t / t32) * B;
-  double d2 = -z * A * A * B;
-  double d3 = -B * B * A * A;
+  double d1 = -0.5 * (beta * ot32 - 1.5 * z2aux * ot * ot32) * B;
+  const double AB = A * B;
+  double d2 = -z * A * AB;
+  double d3 = -AB * AB;
 
-  fp = -delta2 / t / t2 + 1.5 / t2 + d1 + d2 + d3;
+  fp = -delta2 * ot * ot2 + 1.5 * ot2 + d1 + d2 + d3;
 }
 
 
@@ -117,10 +119,11 @@ double estimate_magnitude(
   const double xmu = x - mu;
 
   // Maximum integrand contribution
-  double z0 = xmu / std::sqrt(x0) - beta * std::sqrt(x0);
+  const double sqrt_x0 = std::sqrt(x0);
+  double z0 = xmu / sqrt_x0 - beta * sqrt_x0;
   double g1 = -0.5 * (delta2 / x0 + gamma2 * x0);
   double g2 = -1.5 * std::log(x0);
-  double g3 = std::log(normal_cdf(z0));
+  double g3 = std::log(norm_cdf(z0));
   double gx0 = g1 + g2 + g3 + delta * gamma;
   
   return C * std::exp(gx0);
@@ -164,7 +167,7 @@ double estimate_h(
 
   // Initial guess x0
   const double piotau = constants::pi / tau;
-  double x = std::log(2.0 / constants::pi * std::log(piotau));
+  double x = std::log(2.0 * constants::oneopi * std::log(piotau));
 
   // Newton's iteration
   double aux = constants::pihalf * std::exp(x);
@@ -225,91 +228,73 @@ double nig_integration(
   // Estimate the truncation point N
   int N = truncation(delta, gamma, eps * std::min(magnitude, 1.0));
 
-  // std::cout << "saddle point " << std::setprecision(16) << x0 << std::endl;
-  // std::cout << "magnitude " << magnitude << std::endl;
-  // std::cout << "N " << N << std::endl;
-
   // Estimate initial step size h
   const double eps2 = eps * eps;
   double h = estimate_h(eps2);
 
   // Start integration
-  const double alpha2 = N / 2.0;
+  const double alpha2 = N * 0.5;
 
-  double estimate = 0.0;
-  double f, y0, y1, weight, xl, rl, phil, fl, xr, rr, phir, fr;
+  // Level 0
+  double y = alpha2;
+  double weight = h * alpha2 * constants::pihalf;
 
-  for (int level = 0; level <= maxlevel; level++)
+  // Eval f(y0) and f(N - y0)
+  double xl = y;
+  double oxl = 1.0 / xl;
+  double sqrt_oxl = std::sqrt(oxl);
+  double rl = delta - gamma * xl;
+  double phil = norm_cdf((xmu - beta * xl) * sqrt_oxl);
+  double fl = phil * std::exp(-0.5 * rl*rl * oxl) * sqrt_oxl * oxl;
+
+  double estimate = fl * weight;
+  h *= 0.5;  
+
+  for (unsigned int level = 0; level <= maxlevel; level++)
   {
     // Estimate j using approximation W_{-1}(x)
+    double japprox = std::log(-2.0 / constants::pi * lambertwm1(-eps2 / h * 0.5)) / h;
+    unsigned int j = (int) std::ceil(japprox);
 
-    double japprox = std::log(-2.0 / constants::pi * lambertwm1(-eps2 / h / 2.0)) / h;
-    int j = (int) std::ceil(japprox);
+    double sum = 0.0;
 
-    // std::cout << "level = " << level << " j = " << j << std::endl;
-
-    if (level == 0.0)
+    for (unsigned int i = 1; i < j + 1; i += 2)
     {
-      y0 = alpha2;
-      y1 = -alpha2 * constants::pihalf;
-      weight = -h * y1;
+      double t = h * i;
+      double sinh_t = constants::pihalf * std::sinh(t);
+      double cosh_t = constants::pihalf * std::cosh(t);
+      double cosh_sinh_t = 1.0 / std::cosh(sinh_t);
+      double exp_sinh_t = std::exp(sinh_t);
+
+      double y = alpha2 / exp_sinh_t * cosh_sinh_t;
+      double weight = h * alpha2 * cosh_t * (cosh_sinh_t * cosh_sinh_t);
 
       // Eval f(y0) and f(N - y0)
-      xl = y0;
-      rl = delta - gamma * xl;
-      phil = normal_cdf((xmu - beta * xl) / std::sqrt(xl));
-      fl = phil * std::exp(-rl*rl / xl / 2.0) * std::pow(xl, -1.5);
+      double xl = y;
+      double rl = delta - gamma * xl;
+      double oxl = 1.0 / xl;
+      double sqrt_oxl = std::sqrt(oxl);      
+      double phil = norm_cdf((xmu - beta * xl) * sqrt_oxl);
+      double fl = phil * std::exp(-0.5 * rl*rl * oxl) * sqrt_oxl * oxl;
 
-      xr = N - xl;
-      rr = delta - gamma * xr;
-      phir = normal_cdf((xmu - beta * xr) / std::sqrt(xr));
-      fr = phir * std::exp(-rr*rr / xr / 2.0) * std::pow(xr, -1.5);
+      double xr = N - xl;
+      double oxr = 1.0 / xr;
+      double sqrt_oxr = std::sqrt(oxr);
+      double rr = delta - gamma * xr;
+      double phir = norm_cdf((xmu - beta * xr) * sqrt_oxr);
+      double fr = phir * std::exp(-0.5 * rr*rr * oxr) * sqrt_oxr * oxr;
 
-      estimate = fl * weight;
-      h /= 2.0;
+      sum += (fl + fr) * weight;
     }
-    else
+
+    double f = sum + estimate * 0.5;
+
+    if (std::abs(1.0 - estimate / f) < eps)
     {
-      double suml = 0.0;
-      double sumr = 0.0;
-      double t, sinh_t, cosh_t, cosh_sinh_t, exp_sinh_t;
-
-      for (int i = 1; i < j + 1; i += 2)
-      {
-        t = h * i;
-        sinh_t = constants::pihalf * std::sinh(t);
-        cosh_t = constants::pihalf * std::cosh(t);
-        cosh_sinh_t = std::cosh(sinh_t);
-        exp_sinh_t = std::exp(sinh_t);
-
-        y0 = alpha2 / exp_sinh_t / cosh_sinh_t;
-        y1 = -alpha2 * cosh_t / (cosh_sinh_t * cosh_sinh_t);
-        weight = -h * y1;
-
-        // Eval f(y0) and f(N - y0)
-        xl = y0;
-        rl = delta - gamma * xl;
-        phil = normal_cdf((xmu - beta * xl) / std::sqrt(xl));
-        fl = phil * std::exp(-rl*rl / xl / 2.0) * std::pow(xl, -1.5);
-
-        xr = N - xl;
-        rr = delta - gamma * xr;
-        phir = normal_cdf((xmu - beta * xr) / std::sqrt(xr));
-        fr = phir * std::exp(-rr*rr / xr / 2.0) * std::pow(xr, -1.5);
-
-        suml += fl * weight;
-        sumr += fr * weight;
-      }
-
-      f = suml + sumr + estimate / 2.0;
-
-      if (std::abs(1.0 - estimate / f) < eps)
-      {
-        return C * f;
-      } else {
-        estimate = f;
-        h /= 2.0;
-      }
+      return C * f;
+    } else {
+      estimate = f;
+      h *= 0.5;
     }
   }
 
