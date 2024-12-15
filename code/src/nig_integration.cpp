@@ -250,7 +250,7 @@ double nig_integration(
   double estimate = fl * weight;
   h *= 0.5;  
 
-  for (unsigned int level = 0; level <= maxlevel; level++)
+  for (int level = 1; level <= maxlevel; level++)
   {
     // Estimate j using approximation W_{-1}(x)
     double japprox = std::log(-2.0 / constants::pi * lambertwm1(-eps2 / h * 0.5)) / h;
