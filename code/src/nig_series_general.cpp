@@ -14,7 +14,7 @@ double asymptotic_delta(
   const double beta,
   const double mu,
   const double delta,
-  const int maxiter = 15,
+  const int maxiter = 100,
   const double eps = 5e-13
 )
 {
@@ -28,7 +28,7 @@ double asymptotic_delta(
   const double xmub2 = xmub * xmub;
   const double oxmub = 1.0 / xmub;
   const double expxmub = std::exp(xmub);
-  const double z = - 0.5 * alpha / (beta * beta * delta);
+  const double z = -0.5 * alpha / (beta * beta * delta);
 
   // Ratio of scaled Bessel functions recursion
   const double C = alpha / beta / constants::pi * std::exp(delta * gamma - da);

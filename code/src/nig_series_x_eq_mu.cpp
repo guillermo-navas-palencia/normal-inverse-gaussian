@@ -76,6 +76,16 @@ double bessel_series(
 }
 
 
+double asymptotic_delta(
+  const double alpha,
+  const double beta,
+  const double delta,
+  const int maxiter = 100,
+  const double eps = 5e-13  
+)
+
+
+
 double nig_x_eq_mu(const double alpha, const double beta, const double delta)
 {
   if (beta == 0.0)

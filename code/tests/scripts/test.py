@@ -172,7 +172,7 @@ def rerun_test_set_mpmath_accurate(name: str, max_err: float = 5e-13) -> None:
     n_samples = df_err.shape[0]
 
     cols = ['x', 'alpha', 'beta', 'mu', 'delta', 'mpmath']
-    for i, row in df_err.iterrows():
+    for it, (i, row) in enumerate(df_err.iterrows()):
         x, alpha, beta, mu, delta, mp_result = row[cols]
 
         # mpmath
@@ -209,8 +209,8 @@ def rerun_test_set_mpmath_accurate(name: str, max_err: float = 5e-13) -> None:
         with open(filename_data, 'a') as f:
             f.write(instance_data)
 
-        if i % 20 == 0:
-            print(f'{i} / {n_samples}')
+        if it % 20 == 0:
+            print(f'{it} / {n_samples}')
 
 
 def create_test_set(
@@ -460,11 +460,11 @@ if __name__ == '__main__':
     # 1. Test accuracy comparing with mpmath and SciPy implementations
     # test_accuracy(name=name)
     # run_test_set_with_benchmark(name=name)
-    # rerun_test_set_mpmath_accurate(name=name)
+    rerun_test_set_mpmath_accurate(name=name)
 
     # 2. Generate test summary
     # generate_accuracy_summary_beta_eq_zero(name=name)
-    generate_accuracy_summary_x_eq_mu(name=name)
+    # generate_accuracy_summary_x_eq_mu(name=name)
 
     # 3. Timing SciPy vs C++ via ctypes
     # run_test_set_timing(name=name)

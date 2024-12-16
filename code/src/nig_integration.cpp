@@ -17,6 +17,9 @@
 #include <constants.hpp>
 #include <nig.hpp>
 
+#include <iostream>
+#include <iomanip>
+
 
 double norm_cdf(const double x)
 {
@@ -54,7 +57,9 @@ void integrand_and_deriv(
 
   // exp integrand at t
   double A = z2aux * ot32;
-  double B = norm_pdf(z) / norm_cdf(z);
+
+  // Avoid nan (0/0) for z < -37. Use limit z->inf phi(-z) / Phi(-z) = inf
+  double B = (z >= -37.0) ? norm_pdf(z) / norm_cdf(z) : z;
 
   f = 0.5 * (delta2 * ot2 - gamma2 - 3.0 * ot - A * B);
 
@@ -237,6 +242,7 @@ double nig_integration(
 
   // Estimate integrand magnitude to achieve eps relative error
   double magnitude = estimate_magnitude(x0, x, alpha, beta, mu, delta, gamma, C);
+  magnitude = std::max(magnitude, constants::mindouble);
 
   // Estimate the truncation point N
   int N = truncation(delta, gamma, eps * std::min(magnitude, 1.0));
