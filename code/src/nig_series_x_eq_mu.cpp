@@ -1,11 +1,19 @@
+/*  Normal Inverse Gaussian cumulative distribution function for x = mu.
+ *  
+ *  Implementation combines the following methods:
+ *    - bessel_series: series expansion for |beta| -> 0 and small parameters
+ *    - asymptotic_mu: asymptotic expansion for delta -> inf
+ *    - nig_integration: numerical integration using tanh-sinh quadrature
+ * 
+ *  Guillermo Navas-Palencia <g.navas.palencia@gmail.com>
+ *  Copyright (C) 2024
+ */
+
 #include <cmath>
 
-#include <nig.hpp>
 #include <constants.hpp>
+#include <nig.hpp>
 #include <specfun.hpp>
-
-#include <iostream>
-#include <iomanip>
 
 
 double bessel_series(
@@ -53,7 +61,7 @@ double bessel_series(
 
   // Start recursion
   double sp = s;
-  for (unsigned int k = 1; k < maxiter; k++)
+  for (size_t k = 1; k < maxiter; k++)
   {
     // Ratio Bessel recursion: r = 1.0 / rp + 2 * (k - 1) / ad
     double r = std::fma(2 * (k - 1), oad, 1.0 / rp);
@@ -91,8 +99,12 @@ double asymptotic_delta(
   const double oda = 1.0 / da;
   const double z = -2.0 * alpha / (beta * beta * delta);
 
-  // Ratio of scaled Bessel functions recursion
+  // The maximum contribution is C ~ e^(delta * (gamma - alpha)). If alpha ~ beta
+  // the exponent is -delta * alpha then C -> 0 for large delta and alpha
   const double C = alpha / beta * constants::oneopi * std::exp(delta * gamma - da);
+  if (std::fabs(C) <= constants::mindouble) { return (beta > 0.0) ? 0.0 : 1.0; }
+
+  // Ratio of scaled Bessel functions recursion
   const double k0 = specfun::bessel_k0_scaled(da);
   const double k1 = specfun::bessel_k1_scaled(da);
   double rp = k1 / k0;
@@ -103,7 +115,7 @@ double asymptotic_delta(
 
   // Start recursion
   double sp = s;
-  for (unsigned k = 1; k < maxiter; k++)
+  for (size_t k = 1; k < maxiter; k++)
   {
     // Ratio Bessel recursion: r = 1.0 / rp + 2 * k / da
     double r = std::fma(2 * k, oda, 1.0 / rp);
@@ -122,7 +134,6 @@ double asymptotic_delta(
 
   return -1.0;  
 }
-
 
 
 double nig_x_eq_mu(const double alpha, const double beta, const double delta)
