@@ -230,16 +230,16 @@ int main()
   // double delta = 0.44;
 
   double x = 0.0;
-  double alpha = 8.226198816438592;
-  double beta = 7.973859107125071;
+  double alpha = 20;
+  double beta = 15;
   double mu = 0.0;
-  double delta = 46.87731401412904;
+  double delta = 15;
 
   double result1 = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   std::cout << std::setprecision(16) << result1 << std::endl;
 
-  // double result2 = nig_cdf(x, alpha, beta, mu, delta);
-  // std::cout << std::setprecision(16) << result2 << std::endl;
+  double result2 = nig_cdf(x, alpha, beta, mu, delta);
+  std::cout << std::setprecision(16) << result2 << std::endl;
 
 
   // // double result;

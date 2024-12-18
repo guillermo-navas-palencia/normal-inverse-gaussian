@@ -459,8 +459,8 @@ if __name__ == '__main__':
 
     # 1. Test accuracy comparing with mpmath and SciPy implementations
     # test_accuracy(name=name)
-    # run_test_set_with_benchmark(name=name)
-    rerun_test_set_mpmath_accurate(name=name)
+    run_test_set_with_benchmark(name=name)
+    # rerun_test_set_mpmath_accurate(name=name)
 
     # 2. Generate test summary
     # generate_accuracy_summary_beta_eq_zero(name=name)
