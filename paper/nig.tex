@@ -203,16 +203,16 @@ where
 
 To conclude, a discussion on the numerical integration methods for effective computation of the previous integrals is presented in Section \ref{section_numerical_integration}.
 
-\subsection{Moments and cumulants}
-
-\begin{equation}
-\mathbb{E}[X^m] = \frac{\alpha \delta}{\pi} \int_{-\infty}^{\infty} t^m\frac{K_1\left(\alpha\sqrt{\delta^2 + (t-\mu)^2}\right)}{\sqrt{\delta^2 + (t-\mu)^2}} e^{\delta \gamma + \beta(t-\mu)} \mathop{dt}.
-\end{equation}
-
-\begin{equation}
-\mathbb{E}[X^m] = \frac{\alpha \delta}{\pi} e^{\delta \gamma - \beta \mu} \sum_{k=0}^{\infty} \frac{\beta^k}{k!}\int_{-\infty}^{\infty} (t-\mu)^{m+k}\frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} \mathop{dt}.
-\end{equation}
-Use binomial theorem, and compute coefficients recursively (binomial sum of Bessel functions). Treat special case $\mu = 0$ and $\beta=0$.
+%\subsection{Moments and cumulants}
+%
+%\begin{equation}
+%\mathbb{E}[X^m] = \frac{\alpha \delta}{\pi} \int_{-\infty}^{\infty} t^m\frac{K_1\left(\alpha\sqrt{\delta^2 + (t-\mu)^2}\right)}{\sqrt{\delta^2 + (t-\mu)^2}} e^{\delta \gamma + \beta(t-\mu)} \mathop{dt}.
+%\end{equation}
+%
+%\begin{equation}
+%\mathbb{E}[X^m] = \frac{\alpha \delta}{\pi} e^{\delta \gamma - \beta \mu} \sum_{k=0}^{\infty} \frac{\beta^k}{k!}\int_{-\infty}^{\infty} (t-\mu)^{m+k}\frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} \mathop{dt}.
+%\end{equation}
+%Use binomial theorem, and compute coefficients recursively (binomial sum of Bessel functions). Treat special case $\mu = 0$ and $\beta=0$.
 
 \section{Methods of computation}
 In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases. Subsequently, we discuss several approaches for computing the inverse of the CDF.
@@ -810,7 +810,7 @@ and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We can rewrite the a
 \Gamma(a + 1, z) = a \Gamma(a, z) + z^a e^{-z}.
 \end{equation}
 
-TODO: comment case $x=\mu$
+Furthermore, the special case $x=\mu$ simplifies the asymptotic expansion considerably since $\Gamma(a, 0) = 1$ for $a > 0$, obtaining for $\beta > 0$
 \begin{equation}
 F(\mu; \alpha, \beta, \mu, \delta) = \frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty}\Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)
 \end{equation}
@@ -966,20 +966,20 @@ where the resulting integrand prevents the evaluation of complex square roots. T
 %\end{equation}
 
 
-\subsection{Inversion methods}
-Ideas:
-\begin{itemize}
-\item Central region
-\begin{enumerate}
-\item The moment generating function is simple. The computation of its central moments is easy.
-\item Use multiple central moments to estimate the quantile using a Cornish-Fisher expansion.
-\end{enumerate}
-\item Tails (asymptotic methods) \cite[\S 42]{Temme2015}
-\begin{enumerate}
-\item Direct application using the standard form integral representation \eqref{integral_k1}.
-\end{enumerate}
-\item Root-finding: Halley's or Schwarzian-Newton method.
-\end{itemize}
+%\subsection{Inversion methods}
+%Ideas:
+%\begin{itemize}
+%\item Central region
+%\begin{enumerate}
+%\item The moment generating function is simple. The computation of its central moments is easy.
+%\item Use multiple central moments to estimate the quantile using a Cornish-Fisher expansion.
+%\end{enumerate}
+%\item Tails (asymptotic methods) \cite[\S 42]{Temme2015}
+%\begin{enumerate}
+%\item Direct application using the standard form integral representation \eqref{integral_k1}.
+%\end{enumerate}
+%\item Root-finding: Halley's or Schwarzian-Newton method.
+%\end{itemize}
 
 \section{Algorithmic details and implementation}
 \subsection{Handling large parameters}
