@@ -2,11 +2,11 @@
 
 
 double nig_cdf(
-  double x,
-  double alpha,
-  double beta,
-  double mu,
-  double delta
+  const double x,
+  const double alpha,
+  const double beta,
+  const double mu,
+  const double delta
 )
 {
   if (x == mu)

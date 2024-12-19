@@ -229,11 +229,11 @@ int main()
   // double mu = 0.5;
   // double delta = 0.44;
 
-  double x = 0.0;
-  double alpha = 20;
-  double beta = 15;
+  double x = -10;
+  double alpha = 10;
+  double beta = 0.1;
   double mu = 0.0;
-  double delta = 15;
+  double delta = 0.5;
 
   double result1 = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   std::cout << std::setprecision(16) << result1 << std::endl;
@@ -242,20 +242,20 @@ int main()
   std::cout << std::setprecision(16) << result2 << std::endl;
 
 
-  // // double result;
-  // int N = 10000;
-  // auto start_time = std::chrono::high_resolution_clock::now();
-  // for(int count = 0; count < N; count++)
-  // {
-  //   // nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
-  //   nig_cdf(x, alpha, beta, mu, delta);
-  // }
+  // double result;
+  int N = 10000;
+  auto start_time = std::chrono::high_resolution_clock::now();
+  for(int count = 0; count < N; count++)
+  {
+    // nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+    nig_cdf(x, alpha, beta, mu, delta);
+  }
 
-  // // Record end time
-  // auto finish_time = std::chrono::high_resolution_clock::now();
-  // std::chrono::duration<double> elapsed = finish_time - start_time;
-  // std::cout << "Elapsed time for gcc erfc " << elapsed.count() << " seconds\n";
-  // std::cout << "Elapsed time for gcc erfc " << elapsed.count() * 1000000 / N << " microseconds\n";
+  // Record end time
+  auto finish_time = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = finish_time - start_time;
+  std::cout << "Elapsed time for gcc erfc " << elapsed.count() << " seconds\n";
+  std::cout << "Elapsed time for gcc erfc " << elapsed.count() * 1000000 / N << " microseconds\n";
 
-  // return 0;
+  return 0;
 }

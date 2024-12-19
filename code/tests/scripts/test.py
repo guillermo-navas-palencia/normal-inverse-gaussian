@@ -410,7 +410,11 @@ def generate_accuracy_summary_x_eq_mu(
     # Algorithmic choice
     df['target'] = (~mask_err).astype(int)
     df['rba'] = df['beta'] / df['alpha']
+    df['da'] = df['delta'] * df['alpha']
     df['method'] = 'integration'
+
+    criteria_asymp = (df['rba'] >= 0.75) & (df['da'] >= 300) & (df['delta'] >= 15)
+    df.loc[criteria_asymp, 'method'] = 'asymptotic_xmu'
 
     criteria1 = (df['alpha'] <= 10.0) & (df['delta'] <= 10.0)
     criteria2 = (df['beta'] <= 1.5) & (df['rba'] <= 0.9)
@@ -455,11 +459,11 @@ def run_test_set_timing(name: str) -> None:
     print(f'cpp  : {elapsed_cpp:.4f}s')
 
 if __name__ == '__main__':
-    name = 'test_x_eq_mu_large'
+    name = 'test_x_eq_mu_large_mpmath_accurate'
 
     # 1. Test accuracy comparing with mpmath and SciPy implementations
     # test_accuracy(name=name)
-    run_test_set_with_benchmark(name=name)
+    # run_test_set_with_benchmark(name=name)
     # rerun_test_set_mpmath_accurate(name=name)
 
     # 2. Generate test summary

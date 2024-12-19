@@ -81,7 +81,7 @@ double saddle_point(
   const double delta,
   const double gamma,
   const double tol = 1e-4,
-  const int maxiter = 10
+  const size_t maxiter = 10
 )
 {
   // Estimate magnitude to accurately calculate N to achieve eps rel error
@@ -107,7 +107,7 @@ double saddle_point(
 
   // Newton's iteration
   double f, fp;
-  for (int k = 0; k < maxiter; k++)
+  for (size_t k = 0; k < maxiter; k++)
   {
     integrand_and_deriv(x0, beta, xmu, gamma2, delta2, f, fp);
     x0 -= f / fp;
@@ -148,7 +148,7 @@ double estimate_magnitude(
 }
 
 
-int truncation(
+size_t truncation(
   const double delta,
   const double gamma,
   const double eps = 5e-16
@@ -171,14 +171,14 @@ int truncation(
   const double logy =  1./3 * loggamma2 - 2./3 * (std::log(eps) - logC) - 0.636514168294813;
   const double lambertwy = std::pow(logy, logy / (1.0 + logy));
 
-  return (int) std::ceil(3.0 / gamma2 * lambertwy);
+  return static_cast<size_t>(std::ceil(3.0 / gamma2 * lambertwy));
 }
 
 
 double estimate_h(
   const double tau,
   const double tol = 1e-10,
-  const int maxiter = 10
+  const size_t maxiter = 10
 )
 {
   // Solve log(pi / tau) = pi / 2 - exp(x) - x - log(x)
@@ -191,7 +191,7 @@ double estimate_h(
   double aux = constants::pihalf * std::exp(x);
   double fx = aux - x - std::log(x * piotau);
 
-  for (int k = 0; k < maxiter; k++)
+  for (size_t k = 0; k < maxiter; k++)
   {
     double fxp = aux - 1.0 - 1.0 / x;
     x -= fx / fxp;
@@ -227,7 +227,7 @@ double nig_integration(
   const double mu,
   const double delta,
   const double eps = 1e-15,
-  const int maxlevel = 10
+  const size_t maxlevel = 10
 )
 {
   // Parameters
@@ -269,15 +269,15 @@ double nig_integration(
   double estimate = fl * weight;
   h *= 0.5;  
 
-  for (int level = 1; level <= maxlevel; level++)
+  for (size_t level = 1; level <= maxlevel; level++)
   {
     // Estimate j using approximation W_{-1}(x)
     double japprox = std::log(-2.0 / constants::pi * lambertwm1(-eps2 / h * 0.5)) / h;
-    unsigned int j = (int) std::ceil(japprox);
+    size_t j = (int) std::ceil(japprox);
 
     double sum = 0.0;
 
-    for (unsigned int i = 1; i < j + 1; i += 2)
+    for (size_t i = 1; i < j + 1; i += 2)
     {
       double t = h * i;
       double sinh_t = constants::pihalf * std::sinh(t);
