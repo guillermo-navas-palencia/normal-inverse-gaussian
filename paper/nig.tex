@@ -67,7 +67,7 @@
 
 \numberwithin{equation}{section}
 
-\title{On the computation of the Normal Inverse Gaussian distribution}
+\title{On the computation of the cumulative distribution function of the Normal Inverse Gaussian distribution}
 \author{
  \normalsize  Guillermo Navas-Palencia\\
   \texttt{\normalsize  g.navas.palencia@gmail.com}
@@ -91,11 +91,14 @@ Applications:
 \item NIG in volatility modelling: \cite{Barndorff1997}
 \end{itemize}
 
+The use of the modified Bessel function of the second kind, here simply called modified Bessel function, will be omnipresent.
+
+
 \section{Distribution properties}
 
-Variance-mean mixture distribution
+REVIEW: \cite{Paolella2007}. A special type of mixture, called the variance-mean mixture of normals. It is defined as a mixture of normal distributions such that the mean and variance of the mixed distribution is in a special (affine-linear) relation. Consider $Z$ is a positive random variable following an incomplete Gaussian distribution, and $\mu$ and $\beta$ are constants. The variance-mean mixture distribution
 \begin{equation}
-Z \sim \mathcal{IG}(\delta \gamma, \gamma^2), \quad X \sim \mathcal{N}(\mu + \beta Z, Z),
+Z \sim \mathcal{IG}(\delta \gamma, \gamma^2), \quad X \,|\, Z \sim \mathcal{N}(\mu + \beta Z, Z),
 \end{equation}
 where $\gamma = \sqrt{\alpha^2 - \beta^2}$. The domain of the parameters is
 \begin{equation}
@@ -104,6 +107,16 @@ where $\gamma = \sqrt{\alpha^2 - \beta^2}$. The domain of the parameters is
 
 Define $\omega = \sqrt{(x-\mu)^2 + \delta^2}$.
 
+NOTES
+\begin{itemize}
+\item $\mu$: location parameter
+\item Scale-invariant parameterization
+\item Moment generating function
+\item First four moments and reference to the paper of generalized hyperbolic distribution moments.
+\item The family of generalized hyperbolic distributions is obtained by mixing normals using the generalized inverse Gaussian family of weights.
+\item Parameterization options. Use of the parameterization dominating the literature.
+\end{itemize}
+
 \subsection{Density function}
 The density function is given as
 \begin{equation}
@@ -111,6 +124,8 @@ f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alp
 \end{equation}
 
 Parameterization: Standard case $\mu = 0$ and $\delta = 1$. The parameters have the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. Where $\mu$ is the location of the density, $\beta$ is the skewness parameter, $\alpha$ measures the heaviness of the tails.
+
+If the parameter $\beta \neq 0$, then the distribution will usually be skewed.
 
 \subsection{Cumulative distribution function}\label{properties_cdf}
 The cumulative distribution function is given by
@@ -598,6 +613,7 @@ F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma
 \end{equation}
 The latter expansion being more convenient since $\alpha \ge \gamma$.
 
+Furthermore, the asymptotic expansion defined in Equation \eqref{expansion_x_eq_mu_large_delta} can be employed for large values of $\delta$ and large $\alpha$, and its convergence improves as $\beta \sim \alpha$.
 
 
 \subsection{General case}\label{section_general_case}
@@ -811,7 +827,7 @@ and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We can rewrite the a
 \end{equation}
 
 Furthermore, the special case $x=\mu$ simplifies the asymptotic expansion considerably since $\Gamma(a, 0) = 1$ for $a > 0$, obtaining for $\beta > 0$
-\begin{equation}
+\begin{equation}\label{expansion_x_eq_mu_large_delta}
 F(\mu; \alpha, \beta, \mu, \delta) = \frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty}\Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)
 \end{equation}
 
@@ -1207,11 +1223,12 @@ F(t; a, b) = \Phi\left(\frac{a}{\sqrt{t}}\right) + e^{-\frac{a^2 t}{2}}\sqrt{\fr
 \end{equation}
 
 \section{The modified Bessel function of the second kind}
-Asymptotic behaviour with respect to the argument
+For small values of $x$ we have
 \begin{equation}\label{besselk_x_to_0}
 K_{\nu}(x) \sim \frac{2^{|\nu| - 1} \Gamma(|\nu|)}{x^{|\nu|}}, \quad x \to 0, \quad \nu \neq 0.
 \end{equation}
 
+Asymptotic behaviour with respect to the argument
 \begin{equation}\label{besselk_x_to_inf}
 K_{\nu}(x) \sim \sqrt{\frac{\pi}{2x}} e^{-x}, \quad x \to \infty, \quad \nu \in \mathbb{R}.
 \end{equation}
@@ -1221,8 +1238,9 @@ Asymptotic behaviour with respect to the order
 K_{\nu}(x) \sim \sqrt{\frac{\pi}{2\nu}}\left(\frac{ex}{2\nu}\right)^{-\nu}, \quad \nu \to \infty, \quad x \neq 0.
 \end{equation}
 
+The modified Bessel function can be stated explicitly for $\nu = n + 1/2$ with $n \in \mathbb{Z}$,
 \begin{equation}\label{besselk_half}
-K_{n + 1/2, z} = \sqrt{\frac{\pi}{2z}} \sum_{j=0}^n \frac{(n + j)!}{j! (n-j)!} (2z)^{-j}e^{-z}, \quad z\in \mathcal{C}.
+K_{n + 1/2}(z) = \sqrt{\frac{\pi}{2z}} \sum_{j=0}^n \frac{(n + j)!}{j! (n-j)!} (2z)^{-j}e^{-z}, \quad z\in \mathcal{C}.
 \end{equation}
 
 \section{The incomplete gamma functions}\label{appendix_incomplete_gamma}
