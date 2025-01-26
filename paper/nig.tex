@@ -640,14 +640,14 @@ J_k = \int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\
 \end{equation}
 The integral $J_k$ is expressible in terms of modified Bessel functions after applying the binomial expansion
 \begin{equation}
-J_k = 2 \left(\frac{-(x-\mu)}{\beta}\right)^{2k+1} \left(\frac{\alpha}{\omega}\right)^{k+1} \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega).
+J_k = 2 \left(\frac{-(x-\mu)}{\beta}\right)^{2k+1} \left(\frac{\alpha}{\omega}\right)^{k+1} \sum_{j=0}^{2k+1} (-1)^j \binom{2k+1}{j} \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega).
 \end{equation}
 Then, we have the series expansion
 \begin{equation}\label{general_expansion_xmu_small_bessel}
 F(x;\alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha\delta e^{\delta \gamma + (x -\mu)\beta}}{\pi \omega}\sum_{k=0}^{\infty} \frac{A_k}{(2k+1)!!}\left(\frac{(x-\mu)^2\alpha}{\omega}\right)^k
 \end{equation}
 \begin{equation}
-A_k = \sum_{j=0}^{2k+1} (-1)^j \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega)
+A_k = \sum_{j=0}^{2k+1} (-1)^j \binom{2k+1}{j} \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega)
 \end{equation}
 Observe that the convergence of the series improves for large values of $\alpha$ and $\delta$, hence it can be considered as a uniform asymptotic expansion with respect to these parameters. The first three coefficients $A_k$ are
 \begin{align*}
