@@ -1,4 +1,5 @@
 #include <cmath>
+#include <unordered_map>
 
 #include <nig.hpp>
 #include <constants.hpp>
@@ -29,6 +30,77 @@ double incgamma_series_xmu(
   const double eps = 5e-15
 )
 {}
+
+
+double hermite_series_xmu(
+  const double x,
+  const double alpha,
+  const double beta,
+  const double mu,
+  const double delta,
+  const size_t maxiter = 100,
+  const double eps = 5e-15
+)
+{
+  // Parameters
+  const double gamma = std::sqrt(alpha * alpha - beta * beta);
+
+  // Constants
+  const double da = delta * alpha;
+  const double xmu = x - mu;
+  const double xmub = xmu * beta;
+  const double oda = 2.0 / da;
+  const double z = -0.5 * alpha / (beta * beta * delta);
+  const double C = alpha / xmu * constants::oneopi * std::exp(delta * gamma - da);
+
+  // Bessel recursion: First three terms
+  const double k0 = specfun::bessel_k0_scaled(da);
+  const double k1 = specfun::bessel_k1_scaled(da);
+
+  std::unordered_map<int, double> bessel_map;
+  bessel_map.insert({0, k0});
+  bessel_map.insert({1, k1});
+  bessel_map.insert({2, k0 + oda * k1});
+
+  // Start recursion
+  double v = 1.0;
+  double s = 0.0;
+  double sp = s;
+
+  for (size_t k = 0; k < maxiter; k++)
+  {
+    // Computer polynomial A(k). First iteration   
+    double u = 1.0;
+    double r = 1.0 / std::tgamma(k + 1);
+    double sA = r * k1;
+
+    for (size_t j = 1; j < floor(k / 2) + 1; j++)
+    {
+      if (bessel_map.find(j+1) == bessel_map.end())
+      {
+        // Apply Bessel recursion
+        double cached = std::fma(j * oda, bessel_map[j], bessel_map[j-1]);
+        bessel_map.insert({j+1, cached});
+      }
+      
+      u *= z;
+      r *= (2.0 * j - k - 1) * (2.0 * j - k - 2) / j;
+      sA += r * u * bessel_map[j+1];
+    }
+
+    // New term
+    v *= xmub;
+    s += sA * v / (k + 1);
+
+    // Check convergence
+    if (std::fabs(1.0 - s / sp) < eps)
+      return std::fma(C, s, nig_x_eq_mu(alpha, beta, delta));
+    else
+      sp = s;
+  }
+
+  return -1.0;
+}
 
 
 double hermite_series_beta(
@@ -188,5 +260,6 @@ double nig_general(
 )
 {
   // return asymptotic_delta(x, alpha, beta, mu, delta);
-  return asymptotic_xmu(x, alpha, beta, mu, delta);
+  // return asymptotic_xmu(x, alpha, beta, mu, delta);
+  return hermite_series_xmu(x, alpha, beta, mu, delta);
 }
