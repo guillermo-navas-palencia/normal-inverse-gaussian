@@ -18,7 +18,72 @@ double bessel_series_xmu(
   const size_t maxiter = 100,
   const double eps = 5e-15
 )
-{}
+{
+  // Parameters
+  const double gamma = std::sqrt(alpha * alpha - beta * beta);  
+  const double xmu = x - mu;
+  const double omega = std::hypot(xmu, delta);
+
+  // Constants
+  const double xmu2 = xmu * xmu;
+  const double aw = alpha * omega;
+  const double oaw = 2.0 / aw;
+  const double z = -omega * beta / alpha / xmu;
+  const double v = xmu2 * alpha / omega;
+
+  const double C = delta * xmu * alpha / omega * constants::oneopi * std::exp(
+    delta * gamma + xmu * beta - aw);
+
+  // Bessel recursion: First three terms
+  const double k0 = specfun::bessel_k0_scaled(aw);
+  const double k1 = specfun::bessel_k1_scaled(aw);
+
+  std::unordered_map<int, double> bessel_map;
+  bessel_map.insert({0, k0});
+  bessel_map.insert({1, k1});
+
+  // Start recursion
+  double t = C;
+  double s = 0.0;
+  double sp = s;
+
+  for (size_t k = 0; k < maxiter; k++)
+  {
+    // Compute polynomial A(k). First iteration
+    if (bessel_map.find(k+1) == bessel_map.end()) {
+      double cached = bessel_map[k - 1] + k * oaw * bessel_map[k];
+      bessel_map.insert({k + 1, cached});
+    }
+
+    double sA = bessel_map[k + 1];
+    double u = 1.0;
+    double r = 1.0;
+
+    for (size_t j = 1; j <= 2 * k + 1; j++)
+    {
+      int m = k + 1 - j;
+      int am = std::fabs(m);
+
+      u *= z;
+      r *= (2.0 * k + 2 - j) / j;
+      sA += r * u * bessel_map[am];
+    }
+
+    // New term
+    t /= (2 * k + 1);
+    s += t * sA;
+
+    // Check convergence
+    if (std::fabs(1.0 - s / sp) < eps) {
+      return 0.5 + s;
+    } else {
+      t *= v;
+      sp = s;
+    }
+  }
+
+  return -1.0;
+}
 
 
 double incgamma_series_xmu(
@@ -74,7 +139,7 @@ double hermite_series_xmu(
     double r = 1.0 / std::tgamma(k + 1);
     double sA = r * k1;
 
-    for (size_t j = 1; j < floor(k / 2) + 1; j++)
+    for (size_t j = 1; j <= floor(k / 2); j++)
     {
       if (bessel_map.find(j+1) == bessel_map.end())
       {
@@ -149,7 +214,7 @@ double hermite_series_beta(
     double r = 1.0 / std::tgamma(k + 1);
     double sB = r * k0;
 
-    for (size_t j = 1; j < floor(k / 2) + 1; j++)
+    for (size_t j = 1; j <= floor(k / 2); j++)
     {
       if (bessel_map.find(j) == bessel_map.end())
       {
@@ -174,6 +239,8 @@ double hermite_series_beta(
       sp = s;
     }
   }
+
+  return -1.0;
 }
 
 
@@ -323,6 +390,7 @@ double nig_general(
 {
   // return asymptotic_delta(x, alpha, beta, mu, delta);
   // return asymptotic_xmu(x, alpha, beta, mu, delta);
-  // return hermite_series_xmu(x, alpha, beta, mu, delta);
-  return hermite_series_beta(x, alpha, beta, mu, delta);
+  return hermite_series_xmu(x, alpha, beta, mu, delta);
+  // return hermite_series_beta(x, alpha, beta, mu, delta);
+  // return bessel_series_xmu(x, alpha, beta, mu, delta);
 }
