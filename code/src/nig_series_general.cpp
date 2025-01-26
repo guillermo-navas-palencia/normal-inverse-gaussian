@@ -89,14 +89,16 @@ double hermite_series_xmu(
     }
 
     // New term
-    v *= xmub;
     s += sA * v / (k + 1);
 
     // Check convergence
-    if (std::fabs(1.0 - s / sp) < eps)
+    if (std::fabs(1.0 - s / sp) < eps) {
       return std::fma(C, s, nig_x_eq_mu(alpha, beta, delta));
-    else
+    } else {
+      v *= xmub;
       sp = s;
+    }
+      
   }
 
   return -1.0;
@@ -112,7 +114,67 @@ double hermite_series_beta(
   const size_t maxiter = 100,
   const double eps = 5e-15
 )
-{}
+{
+  // Parameters
+  const double gamma = std::sqrt(alpha * alpha - beta * beta);  
+  const double xmu = x - mu;
+  const double omega = std::hypot(xmu, delta);
+
+  // Constants
+  const double xmu2 = xmu * xmu;
+  const double xmub = xmu * beta;
+  const double gw = gamma * omega;
+  const double ogw = 2.0 / gw;
+  const double z = -0.5 * omega / (gamma * xmu2);
+  const double C = -beta * delta * constants::oneopi * std::exp(gamma * delta - gw);
+
+  // Bessel recursion: First three terms
+  const double k0 = specfun::bessel_k0_scaled(gw);
+  const double k1 = specfun::bessel_k1_scaled(gw);
+
+  std::unordered_map<int, double> bessel_map;
+  bessel_map.insert({-1, k1});
+  bessel_map.insert({0, k0});
+  bessel_map.insert({1, k1});
+
+  // Start recursion
+  double v = 1.0;
+  double s = 0.0;
+  double sp = s;
+
+  for (size_t k = 0; k < maxiter; k++)
+  {
+    // Compute polynomial B(k). First iteration
+    double u = 1.0;
+    double r = 1.0 / std::tgamma(k + 1);
+    double sB = r * k0;
+
+    for (size_t j = 1; j < floor(k / 2) + 1; j++)
+    {
+      if (bessel_map.find(j) == bessel_map.end())
+      {
+        // Apply Bessel recursion
+        double cached = std::fma((j - 1) * ogw, bessel_map[j-1], bessel_map[j-2]);
+        bessel_map.insert({j, cached});
+      }
+      
+      u *= z;
+      r *= (2.0 * j - k - 1) * (2.0 * j - k - 2) / j;
+      sB += r * u * bessel_map[j];
+    }
+
+    // New term
+    s += sB * v / (k + 1);
+
+    // Check convergence
+    if (std::fabs(1.0 - s / sp) < eps) {
+      return std::fma(C, s, nig_beta_eq_zero(x, gamma, mu, delta));
+    } else {
+      v *= xmub;
+      sp = s;
+    }
+  }
+}
 
 
 double asymptotic_delta(
@@ -261,5 +323,6 @@ double nig_general(
 {
   // return asymptotic_delta(x, alpha, beta, mu, delta);
   // return asymptotic_xmu(x, alpha, beta, mu, delta);
-  return hermite_series_xmu(x, alpha, beta, mu, delta);
+  // return hermite_series_xmu(x, alpha, beta, mu, delta);
+  return hermite_series_beta(x, alpha, beta, mu, delta);
 }
