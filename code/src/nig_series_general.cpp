@@ -360,7 +360,7 @@ double asymptotic_xmu(
 
     // Check convergence
     if (std::fabs(1.0 - s / sp) < eps) {
-      return (beta > 0.0) ? s : 1.0 + s;
+      return (xmu < 0.0) ? s : 1.0 + s;
     } else {
       rp = r;
       qp = q;
@@ -380,22 +380,36 @@ double nig_general(
   const double delta
 )
 {
-  // return asymptotic_delta(x, alpha, beta, mu, delta);
-  // return asymptotic_xmu(x, alpha, beta, mu, delta);
-  // return hermite_series_xmu(x, alpha, beta, mu, delta);
-  // return hermite_series_beta(x, alpha, beta, mu, delta);
-  // return bessel_series_xmu(x, alpha, beta, mu, delta);
-  // return incgamma_series_xmu(x, alpha, beta, mu, delta);
 
-  double hxmu = hermite_series_xmu(x, alpha, beta, mu, delta);
-  double hbeta = hermite_series_beta(x, alpha, beta, mu, delta);
-  double bxmu = bessel_series_xmu(x, alpha, beta, mu, delta);
+  // const double gamma = std::sqrt(alpha * alpha - beta * beta);  
+  // const double xmu = x - mu;
+  // const double omega = std::hypot(xmu, delta);
 
-  std::setprecision(16);
-  std::cout << "hermite series xmu  = " << hxmu << std::endl;
-  std::cout << "bessel series xmu   = " << bxmu << std::endl;
-  std::cout << "hermite series beta = " << hbeta << std::endl;
+  // const double xmu2 = xmu * xmu;
+  // const double absbeta = std::fabs(beta);
 
-  return 0;
+  // const bool use_hb_series_c1 = (absbeta <= 1.0) & (gamma >= 1.5);
+  // const bool use_hb_series_c2 = (absbeta <= 0.5) & (gamma >= 0.75);
+  // const bool use_hxmu_series = (xmu2 <= 2.25) & (delta >= 2.5);
+  // const bool use_bxmu_series_c1 = (xmu2 <= 3.0) & (delta >= 1.0);
+  // const bool use_bxmu_series_c2 = (absbeta <= 1.5) & (gamma >= 0.75);
 
+  // const bool use_asymp_delta = (absbeta >= 0.5 * alpha) & (delta >= 15.0) & (xmu2 <= 20);
+  // const bool use_asymp_xmu = (xmu2 >= 100.0) & (alpha >= 0.25 * omega);
+
+  // if (use_hb_series_c1 | use_hb_series_c2) {
+  //   return hermite_series_beta(x, alpha, beta, mu, delta);
+  // } else if (use_hxmu_series) {
+  //   return hermite_series_xmu(x, alpha, beta, mu, delta);
+  // } else if (use_bxmu_series_c1 & use_bxmu_series_c2) {
+  //   return bessel_series_xmu(x, alpha, beta, mu, delta);
+  // } else if (use_asymp_delta) {
+  //   return asymptotic_delta(x, alpha, beta, mu, delta);
+  // } else if (use_asymp_xmu) {
+  //   return asymptotic_xmu(x, alpha, beta, mu, delta);
+  // } else {
+  //   return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+  // }
+
+  return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
 }

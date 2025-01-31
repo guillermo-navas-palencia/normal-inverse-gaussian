@@ -12,13 +12,14 @@ def arg_mpmathify(x, alpha, beta, mu, delta):
 
 
 def normcdf(x):
-    return erfc(-x / sqrt(2)) / 2
+    return erfc(-x / sqrt(mp.mpf('2'))) / mp.mpf('2')
 
 
 def fun_phi(t, x, alpha, beta, mu, delta):
-    gamma = sqrt(alpha ** 2 - beta ** 2)
-    C = delta / sqrt(2 * pi)
-    return C * normcdf((x - (mu + beta * t)) / sqrt(t)) * t ** (-3/2) * exp(-(delta - gamma * t) ** 2 / 2 / t)
+    two = mp.mpf('2')
+    gamma = sqrt(alpha ** two - beta ** two)
+    C = delta / sqrt(two * pi)
+    return C * normcdf((x - (mu + beta * t)) / sqrt(t)) * t ** mp.mpf('-3/2') * exp(-(delta - gamma * t) ** two / two / t)
 
 
 def quad_nig(x, alpha, beta, mu, delta, a=mp.zero, b=inf, digits=50):

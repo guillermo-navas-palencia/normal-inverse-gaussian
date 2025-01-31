@@ -1,0 +1,14 @@
+{
+    "name": "test_general_large",
+    "n_samples": 5000,
+    "x_min": -10.0,
+    "x_max": 10.0,
+    "alpha_min": 0.001,
+    "alpha_max": 50.0,
+    "beta_min": -50.0,
+    "beta_max": 50.0,
+    "mu_min": -10.0,
+    "mu_max": 10.0,
+    "delta_min": 0.001,
+    "delta_max": 50.0
+}
