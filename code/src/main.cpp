@@ -229,11 +229,24 @@ int main()
   // double mu = 0.5;
   // double delta = 0.44;
 
-  double x = -10.001;
-  double alpha = 10.1;
-  double beta = 0.01;
-  double mu = 0.0;
-  double delta = 10.1;
+  // double x = -10.001;
+  // double alpha = 10.1;
+  // double beta = 0.01;
+  // double mu = 0.0;
+  // double delta = 10.1;
+
+
+  // double x = -8.4225766762857;
+  // double alpha = 31.868020489892327;
+  // double beta = 2.909485103079405;
+  // double mu = 3.508092277225469;
+  // double delta = 7.68266528485528;
+
+  double x = 6.48268858972976;
+  double alpha = 5.8658756769982503;
+  double beta = -4.033615437659919;
+  double mu = 5.488481336969706;
+  double delta = 28.79863300717489;
 
   double result1 = nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   std::cout << std::setprecision(16) << result1 << std::endl;
