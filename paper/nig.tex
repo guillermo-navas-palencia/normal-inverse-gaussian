@@ -818,7 +818,7 @@ The integral is expressible in terms of modified Bessel function
 \int_0^{\infty} t^{-k-2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2 + \beta^2}{2}t} \mathop{dt} = 2 \left(\frac{\alpha}{\delta}\right)^{k + 1} K_{k+1}(\alpha \delta),
 \end{equation}
 where we use the fact that $\gamma^2+ \beta^2 = \alpha^2$. After rearranging terms, we have for $\beta > 0$
-\begin{align}
+\begin{align}\label{general_asymptotic_delta}
 F(x; \alpha, \beta, \mu, \delta) &= \frac{\alpha e^{\delta \gamma}}{\pi \beta}\sum_{k=0}^{\infty} \frac{(-1)^k}{k!} \Gamma(2k + 1, -(x-\mu)\beta)\left(\frac{\alpha}{2\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)\\
  &=\frac{\alpha e^{\delta \gamma}}{\pi \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta)\frac{\Gamma(2k+1)}{\Gamma(k+1)}\left(-\frac{\alpha}{2\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)\\
  &=\frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta) \Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta),
@@ -849,7 +849,7 @@ F(\mu; \alpha, \beta, \mu, \delta) = \frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \
 %where we assumed $\text{sign}((\mu-x)\beta) = 1$.
 
 In a similar manner, using instead the expansion in \eqref{phi_expansion_incgamma_t_small}, we obtain for $x-\mu < 0$ the asymptotic expansion
-\begin{equation}
+\begin{equation}\label{general_asymptotic_xmu}
 F(x; \alpha, \beta, \mu, \delta) = -\frac{\delta e^{\delta\gamma}}{\pi (x-\mu)}\sum_{k=0}^{\infty}\frac{(-1)^k}{k!}\Gamma(2k + 1, -(x-\mu)\beta) \left(\frac{\omega}{2\gamma (x-\mu)^2}\right) K_k(\gamma \omega),
 \end{equation}
 and use $1 + F(x; \alpha, \beta, \mu, \delta)$ for $x-\mu > 0$. The same comments about the computation of the series using the recurrence of the upper incomplete gamma and modified Bessel function apply.
@@ -1067,7 +1067,7 @@ Mention the numerical integration method implemented in other libraries where th
 \section{Numerical experiments}
 
 TODO: small and large region configurations.
-Hard instances. Cases where mpmath does not converge requiring 100 digits of precision. We increase to 300 digits. Success: absolute relative error $< 5\cdot 10^{-13}$. '-' errors $> 10^{-10}$.
+Hard instances. Cases where mpmath does not converge requiring 100 digits of precision. We increase to 300 digits. Success: absolute relative error $< 5\cdot 10^{-13}$. '-' errors $> 10^{-10}$. Python using ctypes, comparable to SciPy using quad integration. Operating system and processor.
 
 \subsection{Case $\beta = 0$}
 
@@ -1226,13 +1226,13 @@ TODO: add special section where only integration is used. This is needed since t
 Library & Region & Success & Median & Mean & Time (s) & Time ($\mu s$)\\
 \hline
 SciPy & Small & 3983 / 5000 (79.66\%) &  $1.78\cdot 10^{-15}$ & $1.89 \cdot 10^{-5}$ & 2.53 & 506\\
-Paper & Small & 4939 / 5000 (100\%) & $3.89\cdot 10^{-15}$ & $1.01\cdot 10^{-13}$ & 0.12 & 24\\
+Paper & Small & 4939 / 5000 (98.78\%) & $3.89\cdot 10^{-15}$ & $1.01\cdot 10^{-13}$ & 0.12 & 24\\
 	\hline\
-SciPy & Large & \\
-Paper & Large & \\
+SciPy & Large & 2949 / 4296 (68.65\%) & $4.49\cdot 10^{-14}$ & $7.91\cdot 10^{-3}$ & 2.79 & 559\\
+Paper & Large & 4296 / 4296 (100\%) & $6.66\cdot 10^{-16}$ & $1.09\cdot 10^{-14}$ & 0.44 &88\\
 	\hline\
-SciPy & Large (hard) & \\
-Paper & Large (hard) & \\
+SciPy & Large (hard) & 74 / 704 (10.37\%)\\
+Paper & Large (hard) & 415 / 704 (58.95\%) \\
 	\hline
 	\end{tabular}}
 	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$.}
@@ -1254,6 +1254,45 @@ Series \eqref{general_beta_small_hermite_series} & 597 (11.94\%) & 0 & $8.88\cdo
 	\end{tabular}}
 	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
 	\label{table_methods_case_general_small}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 3344 (77.84\%) & 0 & $2.22\cdot 10^{-16}$ & $7.77\cdot 10^{-16}$ & $5.19\cdot 10^{-15}$ & $4.54\cdot 10^{-13}$\\
+Series \eqref{general_expansion_xmu_small_bessel} & 9 (0.21\%) & $2.22\cdot 10^{-16}$ & $1.11\cdot 10^{-15}$ & $2.00\cdot 10^{-15}$ & $1.09\cdot 10^{-14}$ & $1.46\cdot 10^{-13}$\\
+Series \eqref{general_xmu_small_hermite_series} & 516 (12.01\%) & 0 & $2.22\cdot 10^{-16}$ & $6.66\cdot 10^{-16}$ & $8.83\cdot 10^{-15}$ & $4.90\cdot 10^{-13}$\\
+Series \eqref{general_beta_small_hermite_series} & 156 (3.63\%) & 0 & $4.44\cdot 10^{-16}$ & $2.33\cdot 10^{-15}$ & $1.87\cdot 10^{-14}$ & $4.71\cdot 10^{-13}$\\
+Asymptotic \eqref{general_asymptotic_xmu} & 13 (0.30\%) &  0 & 0 & 0 & 0 & $2.11\cdot 10^{-14}$\\
+Asymptotic \eqref{general_asymptotic_delta} & 258 (6.01\%) &  0 & 0 & 0 & 0 & $3.62\cdot 10^{-13}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_general_large}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 391 (57.00\%)\\
+Series \eqref{general_expansion_xmu_small_bessel} & 2 (0.29\%)\\
+Series \eqref{general_xmu_small_hermite_series} & 516 (12.01\%) & 0 & $2.22\cdot 10^{-16}$ & $6.66\cdot 10^{-16}$ & $8.83\cdot 10^{-15}$ & $4.90\cdot 10^{-13}$\\
+Series \eqref{general_beta_small_hermite_series} & 156 (3.63\%) & 0 & $4.44\cdot 10^{-16}$ & $2.33\cdot 10^{-15}$ & $1.87\cdot 10^{-14}$ & $4.71\cdot 10^{-13}$\\
+Asymptotic \eqref{general_asymptotic_xmu} & 13 (0.30\%) &  0 & 0 & 0 & 0 & $2.11\cdot 10^{-14}$\\
+Asymptotic \eqref{general_asymptotic_delta} & 258 (6.01\%) &  0 & 0 & 0 & 0 & $3.62\cdot 10^{-13}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_general_large}
 \end{table}
 
 \section{Conclusions}
