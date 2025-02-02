@@ -397,7 +397,7 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
     1 & 10 & 1/5 & 5 & 50.64 &  25 & $1.9\cdot 10^{-29}$ & $4.0\cdot 10^{-21}$\\
     3 & 10 & 1/5 & 10 & 103.85 & 53 & $2.4\cdot 10^{-36}$ & $1.4\cdot 10^{-19}$\\
     10 & 1/10 & 1/5 & 10 & 1 & 53 & $3.8\cdot 10^{-18}$ & $3.9\cdot 10^{-18}$\\
-	\hline\\
+	\hline
 	\end{tabular}}
 	\caption{The remainder of the series expansion  \eqref{expansion_xmu_b0_positive} and bound \eqref{bound_remainder_xmu_b0_positive}, estimating $N$ using \eqref{N_expansion_xmu_b0_positive} to achieve machine precision.}
 	\label{table_bound_remainder_xmu_b0_positive}
@@ -501,7 +501,7 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
 	1 & 1/10 & 1/5 & 1/100 & 0.08 & 179,715 & 5 & $1.3 \cdot 10^{-21}$ & 4 & $2.4 \cdot 10^{-17}$\\
 	5 & 1 & 1/5 & 1/100 & 4.8 & 5,645,686 & 18 & $1.1 \cdot 10^{-22}$ & 15 & $1.5 \cdot 10^{-17}$\\
 	20 & 1/100 & 1/5 & 1/100 & 0.198 & 84,914,922 & 6 & $1.1 \cdot 10^{-22}$ & 5 & $4.5 \cdot 10^{-19}$\\
-	\hline\\
+	\hline
 	\end{tabular}}
 	\caption{Absolute error and bound \eqref{bound_remainder_xmu_b0_positive} estimating $N$ using \eqref{N_expansion_xmu_b0_positive} for the series expansion  \eqref{expansion_xmu_b0_positive} with machine-precision absolute error.}
 	\label{table_bound_remainder_xmu_b0_positive_large_N}
@@ -523,7 +523,7 @@ R_N < \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} \frac{1}{2\alpha\omega}\
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
 We use the expansion derived in \eqref{phi_expansion_incgamma_t_small} as a starting point, taking $a = x-\mu$ and $b = 0$. Similar to the derivation of the expansion in \eqref{expansion_xmu_b0_alternating}, we interchange summation and integration, and the resulting integral is expressible in closed-form as a modified Bessel function, see Equation \eqref{bessel_integral}. Thus, for $x - \mu < 0$ we have the alternating asymptotic expansion
-\begin{align}
+\begin{align}\label{asymptotic_expansion_xmu_b0}
 F(x; \alpha, 0, \mu, \delta) &= \frac{\delta e^{\delta \alpha}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^{k+1}}{k!} \frac{\Gamma(2k + 1)}{2^k (x-\mu)^{2k + 1}} \int_0^{\infty} t^{k-1} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt} \nonumber \\
 &= -\frac{\delta e^{\delta \alpha}}{\pi (x-\mu)} \sum_{k=0}^{\infty}\frac{(-1)^k\Gamma(2k + 1)}{k!} \left(\frac{\omega}{2(x-\mu)^2\alpha}\right)^k K_k(\alpha \omega).
 \end{align}
@@ -695,7 +695,7 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & $N$ & $R_N$ & Bound \eqref{lower_i
 	1/3 & 5 & -1 & 1/4 & 1 & 50 & $2.5\cdot 10^{-72}$ & $2.6\cdot 10^{-72}$ & $2.4\cdot 10^{-73}$ & $2.8\cdot 10^{-73}$\\
 	4 & 15 & -6 & 7/2 &  10 & 20 & $2.7\cdot 10^{-60}$ & $5.6\cdot 10^{-60}$ & $6.5\cdot 10^{-61}$ & $8.6\cdot 10^{-63}$\\
 2/10 & 1 & 1/2 & 1/10 & 1/ 2 & 50 &  $1.1\cdot 10^{-33}$ & $1.1\cdot 10^{-33}$ & $7.9\cdot 10^{-34}$ & $9.8\cdot 10^{-34}$\\
-	\hline\\
+	\hline
 	\end{tabular}}
 	\caption{Comparison of various approximations (\eqref{remainder_approx1} and \eqref{remainder_approx2}) and the upper bound \eqref{lower_incomplete_gamma_bound} for the estimation of the remainder \eqref{general_xmu_remainder_integral}.}
 	\label{table_bound_remainder_xmu_general}
@@ -752,6 +752,8 @@ The expansion converges rapidly for small $|x-\mu|$ and fixed values of the rest
 \end{equation}
 However, one must take into account that forward recurrence for positive parameters $a$ and $z$ is unstable; we refer to \cite[\S 13]{Temme1996} for details on how to deal with unstable recurrence relations.
 
+TODO: comment about the fact that caching modified Bessel functions is not necessary. No storage required. Consider the odd and even case for the recursion of gamma and modified Bessel. Numerical instability prevents its implementation in double-precision arithmetic. 
+
 \subsubsection{Expansion $|x-\mu| \to 0$ in terms of Hermite polynomials}
 Furthermore, we obtain an additional series expansion in terms of Hermite polynomials and the special case $x=\mu$, $F(\mu; \alpha, \beta, \mu, \delta)$. As in previous derivations, our starting point is the substitution of the term $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ in \eqref{integral_phi}
 by the Hermite-type expansion derived in \eqref{phi_expansion_a_small}. After inserting the expansion we have
@@ -786,7 +788,7 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & \eqref{general_expansion_xmu_small
 	2/10 & 1 & 1/2 & 1/10 & 1/2 & 22 & 25 & 19\\
 	2 & 3 & 2 & 1 & 2 & 42 & 152 & 52\\
 	3 & 5 & 1/2 & 1 & 4 & 29 & 63 & 66\\
-	\hline\\
+	\hline
 	\end{tabular}}
 	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$.}
 	\label{table_xmu_general_n_terms}
@@ -798,7 +800,7 @@ For the case $\beta \to 0$, we follow closely the derivation of the Hermite-type
 F(x; \alpha, \beta, \mu, \delta) = F(x; \gamma, 0, \mu, \delta) + \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^k (-\beta)^{k+1}}{(k+1)! 2^{k/2}} \int_0^{\infty} H_k\left(\frac{x-\mu}{\sqrt{2t}}\right) t^{k/2 - 1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
 \end{equation}
 We may apply some algebraic manipulations to obtain an expansion in the same form as \eqref{general_xmu_small_hermite_series}, obtaining
-\begin{equation}
+\begin{equation}\label{general_beta_small_hermite_series}
 F(x; \alpha, \beta, \mu, \delta) = F(x; \gamma, 0, \mu, \delta) -\frac{\beta \delta e^{\delta \gamma}}{\pi}\sum_{k=0}^{\infty} \frac{(\beta(x-\mu))^k}{k+1}B_k,
 \end{equation}
 \begin{equation}
@@ -858,6 +860,8 @@ For large $\gamma$, we employ the uniform asymptotic described in Section \ref{u
 F(x; \alpha, \beta, \mu, \delta) = \frac{\gamma \delta e^{\delta \gamma}}{2\sqrt{\pi}} \sum_{k=0}^{\infty} \frac{2^k c_k\left(\frac{\delta}{\gamma}\right) Q_k\left(\frac{\gamma\delta}{2}\right)}{\gamma^{2k}}, \quad \gamma \to \infty.
 \end{equation}
 
+
+TODO: expansion for $\beta \to 0$ is also asymptotic for $\gamma \to \inf$, but requires small $|x-\mu|$.
 
 \subsection{Numerical integration}\label{section_numerical_integration}
 \subsubsection{Integrand in terms of the error function}
@@ -1061,6 +1065,196 @@ Mention the numerical integration method implemented in other libraries where th
 
 
 \section{Numerical experiments}
+
+TODO: small and large region configurations.
+Hard instances. Cases where mpmath does not converge requiring 100 digits of precision. We increase to 300 digits. Success: absolute relative error $< 5\cdot 10^{-13}$. '-' errors $> 10^{-10}$.
+
+\subsection{Case $\beta = 0$}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccc|cc}
+\hline
+Library & Region & Success & Median & Mean & Time (s) & Time ($\mu s$)\\
+\hline
+SciPy & Small & 3952 / 5000 (79.04\%) &  $9.44\cdot 10^{-16}$ & $9.90 \cdot 10^{-4}$ & 2.45 & 490\\
+Paper & Small & 4988 / 5000 (99.76\%) & $2.66\cdot 10^{-15}$ & $1.53\cdot 10^{-14}$ & 0.11 & 21\\
+	\hline\
+SciPy & Large & 3549 / 4868 (72.90\%) & $1.49\cdot 10^{-14}$ & $5.63\cdot 10^{-3}$ & 2.60 & 535\\
+Paper & Large & 4868 / 4868 (100\%) & $1.11\cdot 10^{-15}$ & $1.27\cdot 10^{-14}$ & 0.22 & 45\\
+	\hline\
+SciPy & Large (hard) & 25 / 132 (18.94\%) & $1.44\cdot 10^{-4}$ & $6.45\cdot 10^{-3}$ & 0.028 & 214\\
+Paper & Large (hard) & 127 / 132 (96.21\%) & $2.46\cdot 10^{-14}$ & $8.84\cdot 10^{-14}$ & 0.002 & 12\\
+	\hline
+	\end{tabular}}
+	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$.}
+	\label{table_comparison_case_beta_eq_zero}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 4121 (82.42\%) & 0 & $1.22\cdot 10^{-15}$ & $4.15\cdot 10^{-15}$ & $1.44\cdot 10^{-14}$ & $8.40\cdot 10^{-13}$\\
+Series \eqref{expansion_xmu_b0_positive} & 879 (17.58\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $1.11\cdot 10^{-15}$ & $6.58\cdot 10^{-14}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_beta_eq_zero_small}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 3137 (64.44\%) & 0 & $3.33\cdot 10^{-16}$ & $8.88\cdot 10^{-16}$ & $4.11\cdot 10^{-15}$ & $4.84\cdot 10^{-13}$\\
+Series \eqref{expansion_xmu_b0_positive} & 810 (16.64\%) & 0 & $3.33\cdot 10^{-16}$ & $1.33\cdot 10^{-15}$ & $8.41\cdot 10^{-15}$ & $4.28\cdot 10^{-13}$\\
+Asymptotic \eqref{asymptotic_expansion_xmu_b0} & 620 (12.74\%) & 0 & 0 & 0 & $2.54\cdot 10^{-14}$ & $2.31\cdot 10^{-13}$\\
+Asymptotic \eqref{uniform_expansion_a_large} & 301 (6.18\%) & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-15}$ & $1.24\cdot 10^{-14}$ & $3.46\cdot 10^{-14}$ & $2.26\cdot 10^{-13}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the large region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_beta_eq_zero_large}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 22 (16.67\%) & 0 & $6.94\cdot 10^{-16}$ & $3.66\cdot 10^{-15}$ & $1.76\cdot 10^{-15}$ & $5.98\cdot 10^{-14}$\\
+Series \eqref{expansion_xmu_b0_positive} & 7 (5.30\%) & $4.44\cdot 10^{-16}$ & $6.11\cdot 10^{-16}$ & $2.00\cdot 10^{-15}$ & $5.39\cdot 10^{-13}$ & $3.22\cdot 10^{-12}$\\
+Asymptotic \eqref{asymptotic_expansion_xmu_b0} & 100 (75.76\%) & $8.88\cdot 10^{-16}$ & $1.35\cdot 10^{-14}$ & $3.00\cdot 10^{-14}$ & $5.57\cdot 10^{-14}$ & $1.30\cdot 10^{-13}$\\
+Asymptotic \eqref{uniform_expansion_a_large} & 3 (2.27\%) & $5.76\cdot 10^{-13}$ & $8.84\cdot 10^{-13}$ & $1.19\cdot 10^{-12}$ & $1.42\cdot 10^{-12}$ & $1.64\cdot 10^{-12}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_beta_eq_zero_large}
+\end{table}
+
+
+\subsection{Case $x = \mu$}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccc|cc}
+\hline
+Library & Region & Success & Median & Mean & Time (s) & Time ($\mu s$)\\
+\hline
+SciPy & Small & 4838 / 5000 (96.76\%) &  $8.88\cdot 10^{-16}$ & $8.40 \cdot 10^{-11}$ & 2.02 & 405\\
+Paper & Small & 5000 / 5000 (100\%) & $2.22\cdot 10^{-16}$ & $9.60\cdot 10^{-16}$ & 0.03 & 7\\
+	\hline\
+SciPy & Large & 3084 / 4548 (67.81\%) & $1.96\cdot 10^{-15}$ & $1.34\cdot 10^{-12}$ & 2.58 & 516\\
+Paper & Large & 4548 / 4548 (100\%) & $6.66\cdot 10^{-16}$ & $8.25\cdot 10^{-15}$ & 0.27 & 53\\
+	\hline\
+SciPy & Large (hard) & 8 / 452 (1.77\%) & $1.26\cdot 10^{-1}$ & $1.65\cdot 10^{-1}$ & 0.104 & 229\\
+Paper & Large (hard) & 425 / 452 (94.03\%) & $3.86\cdot 10^{-14}$ & $2.47\cdot 10^{-12}$ & 0.024 & 53\\
+	\hline
+	\end{tabular}}
+	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$.}
+	\label{table_comparison_case_x_eq_mu}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 949 (18.48\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-16}$ & $6.00\cdot 10^{-15}$\\
+Series \eqref{series_x=mu_2} & 4051 (81.02\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $5.55\cdot 10^{-16}$ & $2.48\cdot 10^{-13}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_x_eq_mu_small}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 4289 (94.31\%) & 0 & $2.22\cdot 10^{-16}$ & $5.55\cdot 10^{-16}$ & $3.77\cdot 10^{-15}$ & $4.81\cdot 10^{-13}$\\
+Series \eqref{series_x=mu_2} & 126 (2.77\%) & 0 & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-16}$ & $1.67\cdot 10^{-15}$ & $2.60\cdot 10^{-13}$\\
+Asymptotic \eqref{expansion_x_eq_mu_large_delta} & 133 (2.92\%) & $5.55\cdot 10^{-16}$ & $1.70\cdot 10^{-14}$ & $2.70\cdot 10^{-14}$ & $4.30\cdot 10^{-14}$ & $1.15\cdot 10^{-13}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the large region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_x_eq_mu_large}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 204 (45.13\%) & $2.22\cdot 10^{-16}$ & $1.73\cdot 10^{-14}$ & $3.22\cdot 10^{-14}$ & $4.73\cdot 10^{-14}$ & $1.19\cdot 10^{-13}$\\
+Series \eqref{series_x=mu_2} & 1 (0.22\%) & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$\\
+Asymptotic \eqref{expansion_x_eq_mu_large_delta} & 247 (54.65\%) & 0 & $3.09\cdot 10^{-14}$ & $5.43\cdot 10^{-14}$ & $9.60\cdot 10^{-14}$ & $-$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_x_eq_mu_large}
+\end{table}
+
+
+\subsection{General case}
+
+TODO: add special section where only integration is used. This is needed since the proposed algorithm is not that reliable compared to those described for special cases.
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccc|cc}
+\hline
+Library & Region & Success & Median & Mean & Time (s) & Time ($\mu s$)\\
+\hline
+SciPy & Small & 3983 / 5000 (79.66\%) &  $1.78\cdot 10^{-15}$ & $1.89 \cdot 10^{-5}$ & 2.53 & 506\\
+Paper & Small & 4939 / 5000 (100\%) & $3.89\cdot 10^{-15}$ & $1.01\cdot 10^{-13}$ & 0.12 & 24\\
+	\hline\
+SciPy & Large & \\
+Paper & Large & \\
+	\hline\
+SciPy & Large (hard) & \\
+Paper & Large (hard) & \\
+	\hline
+	\end{tabular}}
+	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$.}
+	\label{table_comparison_case_general}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 3585 (71.70\%) & 0 & $6.66\cdot 10^{-16}$ & $5.00\cdot 10^{-15}$ & $1.78\cdot 10^{-14}$ & $7.56\cdot 10^{-11}$\\
+Series \eqref{general_expansion_xmu_small_bessel} & 212 (4.24\%) & 0 & $4.44\cdot 10^{-16}$ & $1.61\cdot 10^{-15}$ & $1.14\cdot 10^{-14}$ & $2.68\cdot 10^{-12}$\\
+Series \eqref{general_xmu_small_hermite_series} & 606 (12.12\%) & 0 & $3.33\cdot 10^{-16}$ & $8.88\cdot 10^{-16}$ & $5.30\cdot 10^{-15}$ & $3.08\cdot 10^{-11}$\\
+Series \eqref{general_beta_small_hermite_series} & 597 (11.94\%) & 0 & $8.88\cdot 10^{-16}$ & $4.22\cdot 10^{-15}$ & $1.47\cdot 10^{-14}$ & $1.70\cdot 10^{-12}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_general_small}
+\end{table}
 
 \section{Conclusions}
 
