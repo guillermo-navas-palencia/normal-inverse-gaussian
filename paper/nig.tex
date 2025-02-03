@@ -37,7 +37,7 @@
 \usepackage[toc,page]{appendix}
 
 \newcommand{\cmark}{\ding{51}}%
-\floatname{algorithm}{Procedure}
+%\floatname{algorithm}{Procedure}
 \renewcommand{\algorithmicrequire}{\textbf{Input:}}
 \renewcommand{\algorithmicensure}{\textbf{Output:}}
 
@@ -1059,10 +1059,84 @@ Mention the numerical integration method implemented in other libraries where th
 
 \subsection{Implementation}\label{subsection_implementation}
 
+Decision tree. Machine Learning approach.
+
 \subsubsection{Case $\beta = 0$}
+
+
+{\centering
+\begin{minipage}{.8\linewidth}
+  \begin{algorithm}[H]
+  \caption{Algorithm for special case $\beta = 0$, $F(x; \alpha, 0, \mu, \delta)$}\label{alg:case_beta_eq_zero}
+\begin{algorithmic}
+\Require $x \in \mathbb{R}$, $\alpha > 0$, $\mu \in \mathbb{R}$, $\delta > 0$
+\Ensure $F(x; \alpha, 0, \mu, \delta)$
+\State $C_1$ = $|x-\mu| \le 5$ and $\alpha / \omega \le 0.25$ and $\delta/2 \ge |x-\mu| $
+\State $C_2$ = $(x-\mu)^2 \le 1.25$ and $\alpha / \omega \le 1$
+\If{($C_1$ or $C_2$) and $\delta \ge 1$}
+    \State series expansion \eqref{expansion_xmu_b0_positive}
+\ElsIf{$(x-\mu)^2 \le 2.5$ and $\alpha \ge 5$ and $\delta \ge 10$ and $\delta \alpha \ge 200$}
+    \State uniform asymptotic expansion \eqref{uniform_expansion_a_large}
+\ElsIf{$(x-\mu)^2 \ge 70$ and $\alpha / \omega \ge 1$}
+    \State asymptotic expansion \eqref{asymptotic_expansion_xmu_b0}
+\Else
+	\State numerical integration \eqref{truncated_integral}
+\EndIf
+\end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
+
 \subsubsection{Case $x = \mu$}
+
+{\centering
+\begin{minipage}{.85\linewidth}
+  \begin{algorithm}[H]
+  \caption{Algorithm for special case $x=\mu$, $F(\mu; \alpha, \beta, \mu, \delta)$}\label{alg:case_x_eq_mu}
+\begin{algorithmic}
+\Require $x \in \mathbb{R}$, $\alpha > 0$, $0 \le |\beta| < \alpha$, $\delta > 0$
+\Ensure $F(\mu; \alpha, \beta, \mu, \delta)$
+\If{$\alpha \le 10$ and $\delta \le 10$ and $|\beta| \le 1.5$ and $|\beta| / \alpha \le 0.9$}
+    \State series expansion \eqref{series_x=mu_2}
+\ElsIf{$|\beta| / \alpha \ge 0.75$ and $\delta \alpha \ge 300$ and $\delta \ge 15$}
+    \State uniform asymptotic expansion \eqref{expansion_x_eq_mu_large_delta}
+\Else
+	\State numerical integration \eqref{truncated_integral}
+\EndIf
+\end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
+
 \subsubsection{General case}
 
+{\centering
+\begin{minipage}{.85\linewidth}
+  \begin{algorithm}[H]
+  \caption{Algorithm for $F(x; \alpha, \beta, \mu, \delta)$}\label{alg:case_general}
+\begin{algorithmic}
+\Require $x \in \mathbb{R}$, $\alpha > 0$, $0 \le |\beta| < \alpha$, $\mu \in \mathbb{R}$, $\delta > 0$
+\Ensure $F(x; \alpha, \beta, \mu, \delta)$
+\If{($|\beta| \le 1$ and $\gamma \ge 1.5$) or ($|\beta| \le 0.5$ and $\gamma \ge 0.75$)}
+    \State series expansion \eqref{general_beta_small_hermite_series}
+\ElsIf{$(x-\mu)^2 \le 2.25$ and $\delta \ge 2.5$}
+    \State series expansion \eqref{general_xmu_small_hermite_series}
+\ElsIf{$(x-\mu)^2 \le 3$ and $\delta \ge 1$ and $|\beta| \le 1.5$ and $\gamma \ge 0.75$}
+	\State series expansion \eqref{general_expansion_xmu_small_bessel}
+\ElsIf{$(x-\mu)^2 \le 20$ and $\alpha \ge 5$ and $|\beta| / \alpha \ge 0.5$ and $\delta \ge 15$}
+	\State asymptotic expansion \eqref{general_asymptotic_delta}
+\ElsIf{$(x-\mu)^2 \ge 100$ and $\alpha / \omega \ge 0.25$ and $\gamma \ge 10$ and $\delta \le 10$ and $\alpha / |\beta| \ge 5$}
+	\State asymptotic expansion \eqref{general_asymptotic_xmu}
+\Else
+	\State numerical integration \eqref{truncated_integral}
+\EndIf
+\end{algorithmic}
+  \end{algorithm}
+\end{minipage}
+\par
+}
 
 \section{Numerical experiments}
 
@@ -1231,11 +1305,11 @@ Paper & Small & 4939 / 5000 (98.78\%) & $3.89\cdot 10^{-15}$ & $1.01\cdot 10^{-1
 SciPy & Large & 2949 / 4296 (68.65\%) & $4.49\cdot 10^{-14}$ & $7.91\cdot 10^{-3}$ & 2.79 & 559\\
 Paper & Large & 4296 / 4296 (100\%) & $6.66\cdot 10^{-16}$ & $1.09\cdot 10^{-14}$ & 0.44 &88\\
 	\hline\
-SciPy & Large (hard) & 74 / 704 (10.37\%)\\
-Paper & Large (hard) & 415 / 704 (58.95\%) \\
+SciPy & Large (hard) & 70 / 704 (9.94\%) & $0.16\cdot 10^{-1}$ & $*$ & 0.16 & 223\\
+Paper & Large (hard) & 409 / 704 (58.10\%) & $8.07\cdot 10^{-14}$ & $*$ & 0.07 & 95\\
 	\hline
 	\end{tabular}}
-	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$.}
+	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$. $*$: infinity.}
 	\label{table_comparison_case_general}
 \end{table}
 
@@ -1283,12 +1357,12 @@ Asymptotic \eqref{general_asymptotic_delta} & 258 (6.01\%) &  0 & 0 & 0 & 0 & $3
 \hline
 Method & Count & min & 25\% & Median & 75\% & max\\
 \hline
-Integration \eqref{truncated_integral} & 391 (57.00\%)\\
-Series \eqref{general_expansion_xmu_small_bessel} & 2 (0.29\%)\\
-Series \eqref{general_xmu_small_hermite_series} & 516 (12.01\%) & 0 & $2.22\cdot 10^{-16}$ & $6.66\cdot 10^{-16}$ & $8.83\cdot 10^{-15}$ & $4.90\cdot 10^{-13}$\\
-Series \eqref{general_beta_small_hermite_series} & 156 (3.63\%) & 0 & $4.44\cdot 10^{-16}$ & $2.33\cdot 10^{-15}$ & $1.87\cdot 10^{-14}$ & $4.71\cdot 10^{-13}$\\
-Asymptotic \eqref{general_asymptotic_xmu} & 13 (0.30\%) &  0 & 0 & 0 & 0 & $2.11\cdot 10^{-14}$\\
-Asymptotic \eqref{general_asymptotic_delta} & 258 (6.01\%) &  0 & 0 & 0 & 0 & $3.62\cdot 10^{-13}$\\
+Integration \eqref{truncated_integral} & 400 (56.82\%) & $2.22\cdot 10^{-15}$ & $2.75\cdot 10^{-14}$ & $4.76\cdot 10^{-14}$ & $7.70\cdot 10^{-14}$ & $-$ \\
+Series \eqref{general_expansion_xmu_small_bessel} & 2 (0.29\%) & $9.32\cdot 10^{-13}$ & $1.67\cdot 10^{-11}$ & $3.24\cdot 10^{-11}$ & $4.81\cdot 10^{-11}$ & $6.81\cdot 10^{-11}$\\
+Series \eqref{general_xmu_small_hermite_series} & 155 (22.02\%) & $9.99\cdot 10^{-16}$ & $1.11\cdot 10^{-12}$ & $3.75\cdot 10^{-10}$ & $-$ & $-$\\
+Series \eqref{general_beta_small_hermite_series} & 13 (1.85\%) & $2.55\cdot 10^{-13}$ & $7.09\cdot 10^{-13}$ & $1.62\cdot 10^{-12}$ & $7.45\cdot 10^{-12}$ & $7.96\cdot 10^{-11}$\\
+Asymptotic \eqref{general_asymptotic_xmu} & 14 (1.99\%) & $2.66\cdot 10^{-15}$ & $5.22\cdot 10^{-14}$ & $3.65\cdot 10^{-12}$ & $2.08\cdot 10^{-10}$ & $-$\\
+Asymptotic \eqref{general_asymptotic_delta} & 120 (17.05\%) & $2.11\cdot 10^{-15}$ & $3.87\cdot 10^{-13}$ & $1.02\cdot 10^{-9}$ & $-$ & $-$\\
 	\hline
 	\end{tabular}}
 	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
