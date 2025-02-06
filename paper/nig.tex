@@ -1155,8 +1155,15 @@ We relax tolerance constraints to reduce the use of numerical integration (the m
 
 \section{Numerical experiments}
 
-TODO: small and large region configurations.
+Publicly available implementations of the normal inverse Gaussian distribution are scarce. For example, this statistical distribution is not included in widely used numerical libraries such as Boost [ref], GNU Scientific Library (GSL) [ref] or CERN ROOT [ref] to mention a few. To the author knowledge the two exceptions are SciPy \texttt{stats.norminvgauss} [ref] and R packages \texttt{GeneralizedHyperbolic} [ref]. The implementation of the cumulative distribution function in both libraries is based on the use of numerical integration. SciPy performs direct computation via adaptive gaussian quadrature [ref - scipy docs]. \texttt{GeneralizedHyperbolic} partitions the real line into multiple regions and the numerical integration routine in used in each to integrate the density function. R integrate performs adaptive quadrature of univariate functions [QUADPACK ref]\footnote{https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/integrate}.
+
+
+Define hard instance: cases where mpmath does not converge performing computation using 100 digits of precision. These cases are recomputed increasing the precision to 300 digits. Define symbol '-' meaning. Mention an alternative open-source library for arbitrary-precision calculation (arb) to double-check. Mathematica does not seem an option. In addition, using SciPy with double-precision arithmetic serves for time comparison purposes. 
 Hard instances. Cases where mpmath does not converge requiring 100 digits of precision. We increase to 300 digits. Success: absolute relative error $< 5\cdot 10^{-13}$. '-' errors $> 10^{-10}$. Python using ctypes, comparable to SciPy using quad integration. Operating system and processor.
+
+For each special case: show the definition of small and large instances. Bullet points, for each parameter. General comments about the need to resort to numerical integration for multiple cases. 
+
+It might be worth taking as an example the value of x to be evaluated when computing the quantile at 0.99, 0.999, 0.9999. It might happen that the values (x-mu) are generally small, so the series expansions will be more frequently used for these cases.
 
 \begin{itemize}
 \item Running Linux Ubuntu 24.04 via WSL | AMD processor.
@@ -1166,11 +1173,6 @@ experiments from Python, calling the compiled library using ctypes.
 \item  C++ optimization flags.
 \end{itemize}
 
-Define hard instance: cases where mpmath does not converge performing computation using 100 digits of precision. These cases are recomputed increasing the precision to 300 digits. Define symbol '-' meaning. Mention an alternative open-source library for arbitrary-precision calculation (arb) to double-check. Mathematica does not seem an option. In addition, using SciPy with double-precision arithmetic serves for time comparison purposes.
-
-For each special case: show the definition of small and large instances. Bullet points, for each parameter. General comments about the need to resort to numerical integration for multiple cases. 
-
-It might be worth taking as an example the value of x to be evaluated when computing the quantile at 0.99, 0.999, 0.9999. It might happen that the values (x-mu) are generally small, so the series expansions will be more frequently used for these cases.
 
 Overall comments:
 \begin{itemize}
@@ -1185,6 +1187,24 @@ these cases can he handled by one or various of the proposed expansions. e.g., L
 \end{itemize}
 
 \subsection{Case $\beta = 0$}
+
+\begin{table}[H]
+\centering
+\scalebox{0.9}
+{
+	\begin{tabular}{c|ccccc}
+	\hline
+	Region & $x$ & $\alpha$ & $\mu$ & $\delta$\\
+	\hline	
+	small & (-5, 5) & (0.001, 5) & (-5, 5) & (0.001, 5)\\
+	large & (-10, 10) & (0.001, 50) & (-10, 10) & (0.001, 50)\\
+	\hline	
+	\end{tabular}
+}
+\caption{Case $\beta = 0$: Parameter range for small and large region.}
+	\label{table_parameters_case_beta_eq_zero}
+\end{table}
+
 
 \begin{table}[H]
 	\centering
@@ -1261,6 +1281,23 @@ Asymptotic \eqref{uniform_expansion_a_large} & 3 (2.27\%) & $5.76\cdot 10^{-13}$
 \subsection{Case $x = \mu$}
 
 \begin{table}[H]
+\centering
+\scalebox{0.9}
+{
+	\begin{tabular}{c|cccc}
+	\hline
+	Region & $\alpha$ & $\beta$ & $\delta$\\
+	\hline	
+	small & (0.001, 5) & (-5, 5) & (0.001, 5)\\
+	large & (0.001, 50) & (-50, 50) & (0.001, 50)\\
+	\hline	
+	\end{tabular}
+}
+\caption{Case $x = \mu$: Parameter range for small and large region.}
+	\label{table_parameters_case_x_eq_mu}
+\end{table}
+
+\begin{table}[H]
 	\centering
 	\scalebox{0.9}{
 \begin{tabular}{ccccc|cc}
@@ -1332,6 +1369,23 @@ Asymptotic \eqref{expansion_x_eq_mu_large_delta} & 247 (54.65\%) & 0 & $3.09\cdo
 \subsection{General case}
 
 TODO: add special section where only integration is used. This is needed since the proposed algorithm is not that reliable compared to those described for special cases.
+
+\begin{table}[H]
+\centering
+\scalebox{0.9}
+{
+	\begin{tabular}{c|cccccc}
+	\hline
+	Region & $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$\\
+	\hline	
+	small & (-5, 5) & (0.001, 5) & (-5, 5) & (-5, 5) & (0.001, 5)\\
+	large & (-10, 10) & (0.001, 50) & (-50, 50) & (-10, 10) & (0.001, 50)\\
+	\hline	
+	\end{tabular}
+}
+\caption{General case: Parameter range for small and large region.}
+	\label{table_parameters_case_general}
+\end{table}
 
 \begin{table}[H]
 	\centering
@@ -1408,6 +1462,24 @@ Asymptotic \eqref{general_asymptotic_delta} & 120 (17.05\%) & $2.11\cdot 10^{-15
 	\end{tabular}}
 	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
 	\label{table_methods_case_general_large}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccc|cc}
+\hline
+Library & Region & Success & Median & Mean & Time (s) & Time ($\mu s$)\\
+\hline
+SciPy & Small & 3983 / 5000 (79.66\%) &  $1.78\cdot 10^{-15}$ & $1.89 \cdot 10^{-5}$ & 2.53 & 506\\
+Paper & Small & 4980 / 5000 (99.60\%) & $3.99\cdot 10^{-15}$ & $1.64\cdot 10^{-14}$ & 0.12 & 27\\
+	\hline\
+SciPy & Large & 3139 / 5000 (62.78\%) & $0.16\cdot 10^{-1}$ & $*$ & 2.74 & 550\\
+Paper & Large & 4964 / 5000 (99.28\%) & $8.07\cdot 10^{-14}$ & $*$ & 0.51 & 102\\
+	\hline
+	\end{tabular}}
+	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$. $*$: infinity.}
+	\label{table_comparison_case_general_integration}
 \end{table}
 
 \section{Conclusions}
