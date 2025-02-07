@@ -193,7 +193,7 @@ F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_
 \end{equation}
 \end{proposition}
 \begin{proof}
-This result can be derived from the sine transform in \eqref{integral_sine_transform} using integration by parts. As another option, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
+This result can be derived from the sine transform in \eqref{integral_sine_transform} using integration by parts. Instead, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
 \begin{equation*}
 \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} = \frac{1}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz}.
 \end{equation*}
@@ -230,11 +230,13 @@ To conclude, a discussion on the numerical integration methods for effective com
 %Use binomial theorem, and compute coefficients recursively (binomial sum of Bessel functions). Treat special case $\mu = 0$ and $\beta=0$.
 
 \section{Methods of computation}
-In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases. Subsequently, we discuss several approaches for computing the inverse of the CDF.
-\subsection{Special case $\beta = 0$}\label{section_special_case_beta_0}
-The case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution has been widely used in financial modelling, for example for pricing collateralized default obligations (CDO) \cite{Kalemanova2007}.
+In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases, $\beta = 0$ and $x=\mu$, respectively. In particular, we explore series expansions, asymptotic expansions, uniform asymptotic expansions and numerical integration. We emphasize that many of the techniques and numerical methods introduced in the sections devoted to the two special cases shall also be used to develop expansions of the general case in Section \ref{section_general_case}.
 
-We emphasize that many of the techniques and numerical methods introduced in this Section shall also be used to develop expansions of other special cases and the general case in Section \ref{section_general_case}.
+
+\subsection{Special case $\beta = 0$}\label{section_special_case_beta_0}
+The case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution has been widely used in financial modelling, for example for pricing collateralized default obligations (CDO) \cite{Kalemanova2007} and market risk \cite{Prause1999} where symmetric distributions are employed for modelling macro-economical factors as an fat-tailed alternative to the normal distribution.
+
+
 
 \subsubsection{Expansions $|x-\mu| \to 0$}
 For developing a series expansion for the case $|x-\mu| \to 0$, we start from the integral representation in \eqref{integral_phi}, after expanding the square
@@ -253,7 +255,7 @@ If we choose the expansion \eqref{phi_expansion_1} and interchange the order of 
 \begin{equation}\label{phi_expansion_integral_xmu_b0_alternating}
 F(x; \alpha, 0, \mu, \delta) = \frac{\delta e^{\delta \alpha}}{\sqrt{2\pi}} \sum_{k=0}^{\infty} \frac{(-1)^k (x-\mu)^{2k + 1}}{2^k k! (2k + 1)}\int_0^{\infty} t^{-k-2} e^{-\frac{\delta^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt},
 \end{equation}
-where the integral has a closed-form in terms of the modified Bessel function
+where the integral has a closed-form in terms of the modified Bessel function. In general,
 \begin{equation}\label{bessel_integral}
 \int_0^{\infty} t^{\lambda - 1}e^{-a/t - zt} \mathop{dt} = 2\left(\frac{\alpha}{z}\right)^{\lambda/2} K_{\lambda}(2\sqrt{\alpha z}).
 \end{equation}
@@ -382,7 +384,7 @@ and the ratio of convergence improves when $\delta \to \infty$, then it can be v
 \begin{equation*}
 T_k \sim \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2k}\sqrt{\frac{\pi}{e}}\frac{1}{\sqrt{4k + 2}}\left(\frac{2k + 2}{2k + 1}\right)^{k + \frac{1}{2}}, \quad k \to \infty,
 \end{equation*}
-where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial. It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} after estimating $N$ to achieve machine-precision absolute error using \eqref{N_expansion_xmu_b0_positive}. For small values of $\alpha\omega$ the bound is sharp, but it is conservative for larger values, precisely where the rate of convergence improves. As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced by selecting $N$ using the asymptotic estimate for $\alpha\omega \to \infty$ via binary search. Although, the bound might overestimate $N$ for some parameters, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should be selected as the method of computation given a certain parameter region. Table \ref{table_bound_remainder_xmu_b0_positive} also shows that for small $\delta$ and $\alpha\omega$, the required number of terms makes the series expansion impractical. In the next section, we present a convergence acceleration method to obtain a rapidly convergent series for theses cases.
+where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial. It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} after estimating $N$ to achieve machine-precision using \eqref{N_expansion_xmu_b0_positive}. For small values of $\alpha\omega$ the bound is sharp, but it is conservative for larger values, precisely where the rate of convergence improves. As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced by selecting $N$ using the asymptotic estimate for $\alpha\omega \to \infty$ via binary search. Although, the bound might overestimate $N$ for some parameters, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should be selected as the method of computation given a certain parameter region (see Section \ref{subsection_implementation}). Table \ref{table_bound_remainder_xmu_b0_positive} also shows that for small $\delta$ and $\alpha\omega$, the required number of terms makes the series expansion impractical. In the next section, we present a convergence acceleration method to obtain a rapidly convergent series for these cases.
 
 \begin{table}[H]
 	\centering
@@ -404,12 +406,10 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
 \end{table}
 
 \subsubsection{Convergence acceleration of the expansion $|x-\mu| \to 0$}
-Table \ref{table_bound_remainder_xmu_b0_positive} showed that for small values of $\delta$ and $\alpha \omega$ the required number of terms grows considerably, thereby, resorting to numerical integration (see Section \ref{section_numerical_integration}) might be a more efficient approach. Alternatively, a common technique to reduce the number of terms of slowly convergent series is to use series acceleration methods (Shank's transformation and Levin-type transformations among others). 
-Attempts to use Shank's transformation were unsuccessful; we did not observe a significant reduction in $N$ while achieving only around ten correct digits systematically for all cases. In addition, a major drawback is that Shank's acceleration requires higher-precision arithmetic to compensate for cancellation effects, discarding them for any implementation in double-precision arithmetic. 
+Table \ref{table_bound_remainder_xmu_b0_positive} showed that for small values of $\delta$ and $\alpha \omega$ the required number of terms grows considerably, thereby, resorting to numerical integration (see Section \ref{section_numerical_integration}) might be a more efficient approach. Alternatively, a common technique to reduce the number of terms of slowly convergent series is to use series acceleration methods (Shank's transformation and Levin-type transformations among others \cite{Gil2007}). 
+Attempts to use Shank's transformation were unsuccessful; we did not observe a significant reduction in $N$ while achieving only around ten correct digits systematically for all cases. In addition, a major drawback is that Shank's acceleration requires higher-precision arithmetic to compensate for cancellation effects, which makes us discard this option for an implementation in double-precision arithmetic. 
 
-In the following, we consider the use of exponentially improved asymptotic expansions. When the information about the remainder is available, this technique consists of re-expanding the remainder, obtaining an expansion exhibiting faster convergence. For further details, we refer to \cite[\S 14]{Olver1997}.
-
-Consider the convergent series expansion in \eqref{expansion_xmu_b0_positive_error_term}
+In the following, we investigate the use of exponentially improved asymptotic expansions. When the information about the remainder is available, this technique consists of re-expanding the remainder, obtaining an expansion exhibiting faster convergence. For further details, we refer to \cite[\S 14]{Olver1997}. Consider the convergent series expansion in \eqref{expansion_xmu_b0_positive_error_term}
 \begin{equation}
 F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi} \frac{(x-\mu)\alpha}{\omega} \left(\sum_{k=0}^{N-1} T_k + \sum_{k=N}^{\infty} T_k\right),
 \end{equation}
@@ -421,7 +421,7 @@ and remainder $R_N = \sum_{k=N}^{\infty} T_k$. An integral representation of $R_
 \begin{equation}\label{basset_integral}
 K_{k+1}(\alpha\omega) = \frac{\Gamma(k + 3/2)}{\sqrt{\pi}}\left(\frac{2\alpha}{\omega}\right)^{k+1} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{k + 3/2}} \mathop{dt}.
 \end{equation}
-Basset's integral is chosen to split the problematic term $\alpha\omega$. Thus, it follows that inserting \eqref{basset_integral} into the remainder in \eqref{expansion_xmu_b0_positive_error_term}, we obtain an integral representation of $R_N$
+Basset's integral is chosen to transform the term $\alpha\omega$ into $\alpha/\omega$. Thus, it follows that inserting \eqref{basset_integral} into the remainder in \eqref{expansion_xmu_b0_positive_error_term}, we have an integral representation of $R_N$
 \begin{align}\label{convergent_remainder_integral}
 R_N &= \frac{1}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right) \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{3/2}} \left[\sum_{k=N}^{\infty} \left(\frac{2z\alpha}{\omega (t^2 + \alpha^2)}\right)^k \frac{\Gamma(k + 3/2)}{(2k + 1)!!}\right] \mathop{dt}\nonumber\\
 &= C \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}.
@@ -435,7 +435,7 @@ Now, we expand the term $\cos(\omega t)$, recall that $\omega = \sqrt{\delta^2 +
 \begin{equation}\label{convergent_remainder_series_integral}
 R_N = C \sum_{k=0}^{\infty} \frac{(-1)^k \omega^{2k}}{(2k)!} \int_0^{\infty} \frac{t^{2k}}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt},
 \end{equation}
-and note that the integrals above converge for $k \le N$. Next, with the assistance of Mathematica \cite{Mathematica}, we obtain a closed-form expression for the previous integral in terms of the Gauss hypergeometric function $_2F_1(a, b; c; z)$
+and note that the integrals above converge for $k \le N$. Next, after various iterations with the assistance of Mathematica \cite{Mathematica}, we arrive to a closed-form expression for the previous integral in terms of the Gauss hypergeometric function $_2F_1(a, b; c; z)$
 \begin{equation}\label{convergent_remainder_inner_integral}
 \int_0^{\infty} \frac{t^{2k}}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt} = P_k + Q_k,
 \end{equation}
@@ -449,7 +449,7 @@ The Gauss hypergeometric function is defined by the hypergeometric series
 \begin{equation*}
 _2F_1(a, b; c; z) = \sum_{k=0}^{\infty} \frac{(a)_k (b)_k}{(c)_k k!} z^k,
 \end{equation*}
-where $(a)_k = \Gamma(a+k) / \Gamma(a)$ is the Pochhammer symbol or rising factorial. The series is defined on the disk $|z| < 1$, and by analytic continuation with respect to $z$ elsewhere. Substituting \eqref{convergent_remainder_inner_integral} in \eqref{convergent_remainder_series_integral}, we write $R_N$ as the sum of two series $R_N  = S_P + S_Q$ given by
+where $(a)_k = \Gamma(a+k) / \Gamma(a)$ is the Pochhammer symbol or rising factorial. The series is defined on the disk $|z| < 1$, and by analytic continuation with respect to $z$ elsewhere. Subsequently, substituting \eqref{convergent_remainder_inner_integral} in \eqref{convergent_remainder_series_integral}, we write $R_N$ as the sum of two series $R_N  = S_P + S_Q$ given by
 \begin{equation}\label{convergent_remainder_series_P}
 S_P = \frac{(2m)^N }{\alpha^{2N + 1} \omega\pi} \frac{\Gamma(N + 3/2)}{(2N + 1)!! (2N - 1)!!} \sum_{k=0}^{N} \frac{(-1)^k (\alpha\omega)^{2k}}{(2k)!} \Gamma(N + 1 - k) \Gamma(k - 1/2) \, _2F_1\left(1, N + 1 - k; \frac{3}{2} -k, 1 - \frac{m}{2\alpha^2}\right)
 \end{equation}
@@ -462,11 +462,11 @@ The sum $S_P$ is terminating at $k=N$ due to the term $\Gamma(N + 1 - k)$ in the
 \begin{equation}\label{convergent_accelerated_series_xmu_b0_positive}
 F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi} \frac{(x-\mu)\alpha}{\omega} \left(\sum_{k=0}^{N-1} T_k + S_P + S_Q\right).
 \end{equation}
-Subsequently, we focus on the determination of the optimal $N$ for a desired precision $\epsilon$. The smallest term in $S_P$ occurs when $k=N$
+Next, we focus on the determination of the optimal $N$ for a desired precision $\epsilon$. The smallest term in $S_P$ occurs when $k=N$, corresponding to
 \begin{equation}
-\frac{(-1)^N (\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) \, _2F_1\left(1, 1; \frac{3}{2} -N, 1 - \frac{m}{2\alpha^2}\right).
+S_P = \frac{(-1)^N (\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) \, _2F_1\left(1, 1; \frac{3}{2} -N, 1 - \frac{m}{2\alpha^2}\right).
 \end{equation}
-Moreover, taking the argument of $_2F_1$ in \eqref{convergent_remainder_series_P}
+Moreover, inspecting the argument of $_2F_1$ in \eqref{convergent_remainder_series_P},
 \begin{equation}
 1 - \frac{m}{2\alpha^2} = 1 - \left(\frac{x-\mu}{\omega}\right)^2 < 1,
 \end{equation}
@@ -474,7 +474,7 @@ we see that for $\alpha \omega \to 0$, $\delta \to 0$, the argument is close to 
 \begin{equation}
 \frac{(\sqrt{2m} \omega)^{2N}}{\alpha\omega \pi} \frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} = \epsilon.
 \end{equation}
-We use Stirling approximation of the ratio of gamma functions and double factorials
+An asymptotic approximation follows by using Stirling approximation of the ratio of gamma functions and double factorials
 \begin{equation}
 \frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} \sim \frac{\sqrt{\pi}}{4} \left(\frac{e}{N}\right)^{2N} 2^{-4N}, \quad N \to \infty.
 \end{equation}
@@ -482,7 +482,7 @@ obtaining a simplified equation
 \begin{equation}
 (\sqrt{2m} \omega)^{2N} \left(\frac{e}{N}\right)^{2N} 2^{-4N} = 4\sqrt{\pi}\alpha\omega\epsilon.
 \end{equation}
-The solution of the last equation permits a closed-form in terms of principal branch of the Lambert $W$ function
+The solution of the latter permits a closed-form in terms of principal branch of the Lambert $W$ function
 \begin{equation}\label{N_expansion_xmu_acc}
 N \approx - \frac{\log(A)}{W_0\left(-\frac{\log(A)}{2 e \sqrt{2m} \omega} \right)}, \quad A = 4\sqrt{\pi}\alpha\omega\epsilon.
 \end{equation}
@@ -508,7 +508,7 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
 \end{table}
 
 \begin{remark}
-A simpler bound for $R_N$, compared to \eqref{bound_remainder_xmu_b0_positive}, can be obtained from the integral representation in \eqref{convergent_remainder_integral} as follows
+A simpler bound for $R_N$, compared to \eqref{bound_remainder_xmu_b0_positive}, can be derived from the integral representation in \eqref{convergent_remainder_integral} as follows
 \begin{align*}
 R_N &= C \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}\\
 &\le \frac{C}{\left(2 - \frac{m}{\alpha^2}\right)} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \mathop{dt}\\
@@ -522,7 +522,7 @@ R_N < \frac{1}{1 - \left(\frac{x-\mu}{\omega}\right)^2} \frac{1}{2\alpha\omega}\
 \end{remark}
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
-We use the expansion derived in \eqref{phi_expansion_incgamma_t_small} as a starting point, taking $a = x-\mu$ and $b = 0$. Similar to the derivation of the expansion in \eqref{expansion_xmu_b0_alternating}, we interchange summation and integration, and the resulting integral is expressible in closed-form as a modified Bessel function, see Equation \eqref{bessel_integral}. Thus, for $x - \mu < 0$ we have the alternating asymptotic expansion
+To derive an asymptotic expansion for large $|x-\mu|$, we use the expansion derived in \eqref{phi_expansion_incgamma_t_small} as a starting point, taking $a = x-\mu$ and $b = 0$. Similar to the derivation of the expansion in \eqref{expansion_xmu_b0_alternating}, we interchange summation and integration, and the resulting integral is expressible in closed-form as a modified Bessel function, see Equation \eqref{bessel_integral}. Thus, for $x - \mu < 0$ we have the alternating asymptotic expansion
 \begin{align}\label{asymptotic_expansion_xmu_b0}
 F(x; \alpha, 0, \mu, \delta) &= \frac{\delta e^{\delta \alpha}}{2\pi} \sum_{k=0}^{\infty} \frac{(-1)^{k+1}}{k!} \frac{\Gamma(2k + 1)}{2^k (x-\mu)^{2k + 1}} \int_0^{\infty} t^{k-1} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt} \nonumber \\
 &= -\frac{\delta e^{\delta \alpha}}{\pi (x-\mu)} \sum_{k=0}^{\infty}\frac{(-1)^k\Gamma(2k + 1)}{k!} \left(\frac{\omega}{2(x-\mu)^2\alpha}\right)^k K_k(\alpha \omega).
@@ -576,17 +576,19 @@ F(x; \alpha, 0, \mu, \delta) = \frac{\alpha \delta e^{\delta \alpha}}{2 \sqrt{\p
 The expansion \eqref{uniform_expansion_a_large} is a uniform expansion as $\alpha \to \infty$, uniformly with respect to $\delta / \alpha > 0$. Note that large values of $\delta$ improves the rate of convergence of the expansion, as observed taking well-know asymptotic estimates for large argument of the modified Bessel function. We remark that expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} are also adequate for large values of $\alpha$ and $\delta$, but unlike the present expansion, the number of terms increases significantly when $|x-\mu| \gg 0$.
 
 \subsection{Special case $x = \mu$}
+The second special case of interest, $x = \mu$, is arguably less common and has fewer applications, but it is nonetheless required to obtain a robust implementation. In particular, the attentive reader might have noticed that none of the series expansions already introduced are suitable for this specific case.
+
 First consider the case $x = \mu$ and $\beta = 0$. Then, the distribution is symmetric and centered at $x = \mu$, and it follows that
 \begin{equation}
 F(\mu; \alpha, 0, \mu, \delta) = \frac{1}{2}.
 \end{equation}
 
-For the case $\beta \neq 0$, the integral representation of this special case is given by simple substitution in \eqref{integral_k1}
+Secondly, for the case $\beta \neq 0$, the integral representation of this special case is given by simple substitution in \eqref{integral_k1}
 \begin{equation}\label{integral_k1_x=mu}
 F(\mu; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{0} \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} e^{\beta t} \mathop{dt}.
 \end{equation}
 
-Using series expansion of the exponential function and interchanging the order of integration and summation in \eqref{integral_k1_x=mu} gives that
+Using the series expansion of the exponential function and interchanging the order of integration and summation in \eqref{integral_k1_x=mu} gives that
 \begin{equation*}
 F(\mu; \alpha, \beta, \mu, \delta) = 1 - \frac{\alpha \delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty}\frac{\beta^k}{k!}\int_{0}^{\infty} t^k \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} \mathop{dt}.
 \end{equation*}
@@ -613,7 +615,7 @@ F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma
 \end{equation}
 The latter expansion being more convenient since $\alpha \ge \gamma$.
 
-Furthermore, the asymptotic expansion defined in Equation \eqref{expansion_x_eq_mu_large_delta} can be employed for large values of $\delta$ and large $\alpha$, and its convergence improves as $\beta \sim \alpha$.
+Finally, to complement the series expansion, a special case of the asymptotic expansion defined in Equation \eqref{expansion_x_eq_mu_large_delta}, detailed in the next Section, can be employed for large values of $\delta$ and large $\alpha$, and its convergence improves as $\beta \sim \alpha$.
 
 
 \subsection{General case}\label{section_general_case}

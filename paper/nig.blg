@@ -1,51 +1,53 @@
-This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: nig.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
+Reallocating 'name_of_file' (item size: 1) to 4 items.
 Database file #1: bib.bib
 Warning--entry type for "Mathematica" isn't style-file defined
---line 968 of file bib.bib
+--line 1935 of file bib.bib
 Warning--empty booktitle in OEIS
 Warning--empty year in OEIS
-You've used 22 entries,
+You've used 23 entries,
             2118 wiz_defined-function locations,
-            648 strings with 7406 characters,
-and the built_in function-call counts, 5717 in all, are:
-= -- 553
-> -- 200
+            653 strings with 7504 characters,
+and the built_in function-call counts, 5999 in all, are:
+= -- 577
+> -- 218
 < -- 1
-+ -- 83
-- -- 60
-* -- 348
-:= -- 981
-add.period$ -- 66
-call.type$ -- 22
-change.case$ -- 90
++ -- 90
+- -- 66
+* -- 365
+:= -- 1031
+add.period$ -- 69
+call.type$ -- 23
+change.case$ -- 95
 chr.to.int$ -- 0
-cite$ -- 24
-duplicate$ -- 241
-empty$ -- 519
-format.name$ -- 60
-if$ -- 1192
+cite$ -- 25
+duplicate$ -- 253
+empty$ -- 541
+format.name$ -- 66
+if$ -- 1250
 int.to.chr$ -- 0
-int.to.str$ -- 22
-missing$ -- 26
-newline$ -- 113
-num.names$ -- 42
-pop$ -- 113
+int.to.str$ -- 23
+missing$ -- 28
+newline$ -- 118
+num.names$ -- 44
+pop$ -- 123
 preamble$ -- 1
-purify$ -- 75
+purify$ -- 80
 quote$ -- 0
-skip$ -- 152
+skip$ -- 158
 stack$ -- 0
-substring$ -- 317
-swap$ -- 24
+substring$ -- 322
+swap$ -- 25
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 74
+type$ -- 76
 warning$ -- 2
-while$ -- 57
-width$ -- 24
-write$ -- 234
+while$ -- 59
+width$ -- 25
+write$ -- 244
 (There were 3 warnings)
