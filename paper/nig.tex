@@ -619,10 +619,10 @@ Finally, to complement the series expansion, a special case of the asymptotic ex
 
 
 \subsection{General case}\label{section_general_case}
-Comment: me make use of the expansion for the two special cases detailed in previous sections.
+In the general case, we continue using similar techniques to devise a set of series expansions and asymptotic expansions. Two of the series expansions involving Hermite polynomials make use of the two special cases studied in detail in the preceding sections.
 
 \subsubsection{Expansions $|x-\mu| \to 0$ in terms of modified Bessel functions}
-We proceed to derive a series expansion for small $|x-\mu|$ following similar steps to those proposed for the special case $\beta = 0$. We use the expansion of $\Phi(x)$ in  \eqref{phi_expansion_2} to obtain
+We start deriving a series expansion for small $|x-\mu|$ following similar steps to those proposed for the special case $\beta = 0$. In the same manner, we use the expansion of $\Phi(x)$ in  \eqref{phi_expansion_2} to obtain
 %\begin{equation*}
 %F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
 %\end{equation*}
@@ -640,7 +640,7 @@ where we denote $J_k$ the integral just introduced
 \begin{equation}
 J_k = \int_0^{\infty} \left(t - \frac{x-\mu}{\beta}\right)^{2k+1} t^{-k-2} e^{-\frac{\omega^2}{2t} - \frac{\alpha^2}{2}t} \mathop{dt}.
 \end{equation}
-The integral $J_k$ is expressible in terms of modified Bessel functions after applying the binomial expansion
+The integral $J_k$ is expressible in terms of a finite series of modified Bessel functions after applying the binomial expansion
 \begin{equation}
 J_k = 2 \left(\frac{-(x-\mu)}{\beta}\right)^{2k+1} \left(\frac{\alpha}{\omega}\right)^{k+1} \sum_{j=0}^{2k+1} (-1)^j \binom{2k+1}{j} \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega).
 \end{equation}
@@ -651,7 +651,7 @@ F(x;\alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha\delta e^{\de
 \begin{equation}
 A_k = \sum_{j=0}^{2k+1} (-1)^j \binom{2k+1}{j} \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega)
 \end{equation}
-Observe that the convergence of the series improves for large values of $\alpha$ and $\delta$, hence it can be considered as a uniform asymptotic expansion with respect to these parameters. The first three coefficients $A_k$ are
+Observe that the convergence of the series improves for large values of $\alpha$ and $\delta$, hence it can be seen as a uniform asymptotic expansion with respect to these parameters. The first three coefficients $A_k$ are
 \begin{align*}
 A_0 &= -u K_0(z) + K_1(z)\\
 A_1 &= 3u^2 K_0(z) - u(3 + u^2) K_1(z) + K_2(z)\\
@@ -684,7 +684,7 @@ and the latter approximation of $|R_N|$ can be simplified further by considering
 \begin{equation}
 |R_N| \approx \sqrt{\frac{2\pi}{N}} \left(\frac{e\alpha^2}{2N}\right)^{-N} \frac{\beta^{2N + 1}}{(2N + 1)!!}.
 \end{equation}
-Observe that the approximation is only adequate for the case $\delta \to 0$ since its contribution is removed as a result of applying the specified asymptotic estimate. Table \ref{table_bound_remainder_xmu_general} compares the absolute value of the remainder in expression \eqref{general_xmu_remainder_integral}, $|R_N|$, with the upper bound using \eqref{lower_incomplete_gamma_bound} and the approximations in \eqref{remainder_approx1} and \eqref{remainder_approx2} for different parameters with small $|x-\mu|$. We can see that the bound is sharp for all cases considered, but requires the evaluation of an integral in terms of elementary functions. On the other hand, both approximations are close, only an order of magnitude off in most of the cases, and the approximation in terms of the modified Bessel function \eqref{remainder_approx2} might be seen as a suitable and fast approximation at least for small $\delta$.
+Observe that the approximation is only adequate for the case $\delta \to 0$ since its contribution is removed as a result of applying the specified asymptotic estimate. Table \ref{table_bound_remainder_xmu_general} compares the absolute value of the remainder in expression \eqref{general_xmu_remainder_integral}, $|R_N|$, with the upper bound using \eqref{lower_incomplete_gamma_bound} and the approximations in \eqref{remainder_approx1} and \eqref{remainder_approx2} for different sets of parameters with small $|x-\mu|$. We can see that the bound is sharp for all cases considered, but requires the evaluation of an integral in terms of non-elementary functions. On the other hand, both approximations are close, only an order of magnitude off in most of the cases, and the approximation in terms of the modified Bessel function \eqref{remainder_approx2} might be seen as a suitable and fast approximation at least for small $\delta$.
 
 \begin{table}[H]
 	\centering
@@ -713,7 +713,7 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & $N$ & $R_N$ & Bound \eqref{lower_i
 %\end{equation}
 
 \subsubsection{Expansion $|x-\mu| \to 0$ in terms of modified Bessel and incomplete gamma functions}
-We present an alternative derivation of a series expansion for small $|x-\mu|$ where the series coefficients are easier to compute via recurrence relations. The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
+In the following, we present an alternative derivation of a series expansion for small $|x-\mu|$ where the series coefficients are easier to compute via recurrence relations. The starting point is the integral representation in \eqref{integral_phi} after expanding the exponential
 %\begin{equation*}
 %F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
 %\end{equation*}
@@ -721,7 +721,7 @@ and replacing the term $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ by
 \begin{equation}\label{general_xmu_incgamma_integral}
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}} \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\int_0^{\infty}\Gamma\left(\frac{k+1}{2}, \frac{\beta^2}{2}t\right) t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
 \end{equation}
-Consider the ascending series of the incomplete gamma function given by \cite[\S 8.7]{NIST:DLMF}
+Next, consider the ascending series of the incomplete gamma function given by \cite[\S 8.7]{NIST:DLMF}
 \begin{equation}
 \Gamma(a, z) = \Gamma(a) - \gamma(a, z) = \Gamma(a) - \sum_{j=0}^{\infty} \frac{(-1)^j z^{a+j}}{j! (a+ j)},
 \end{equation}
@@ -730,7 +730,7 @@ and insert it into \eqref{general_xmu_incgamma_integral}, splitting the inner in
 T_1 &= \Gamma\left(\frac{k+1}{2}\right)\int_0^{\infty}t^{-3/2-k/2} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},\\
 T_2 &= \sum_{j=0}^{\infty} \frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)}\int_0^{\infty} t^{j-1} e^{-\frac{\omega^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt}.
 \end{align}
-Both integrals are expressible in terms of modified Bessel functions, respectively, resulting in the sums $S_1$ and $S_2$, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$. These series are defined as follows
+Both integrals are expressible in terms of modified Bessel functions, resulting in the sums $S_1$ and $S_2$, respectively, such that $F(x;\alpha, \beta, \mu, \delta) = C (S_1 - S2)$. These series are defined as follows
 \begin{align}
 S_1 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right)2 K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}},\\
 S_2 &= \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!}\sum_{j=0}^{\infty}\frac{(-1)^j \left(\frac{\beta^2}{2}\right)^{\frac{k+1}{2}+j}}{j! (\frac{k+1}{2}+ j)} 2 K_j(\omega \gamma) \left(\frac{\omega}{\gamma}\right)^j.
@@ -748,13 +748,11 @@ Rearranging terms, we obtain
 F(x;\alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\pi \sqrt{2}} \bigg[& \sum_{k=0}^{\infty}\frac{2^{k/2}(x-\mu)^k}{k!} \Gamma\left(\frac{k+1}{2}\right) K_{\frac{k+1}{2}}(\omega \gamma) \left(\frac{\gamma}{\omega}\right)^{\frac{k+1}{2}}\nonumber\\
 & + \sqrt{2}\sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\frac{\gamma \left(2k + 1, -(x-\mu)\beta\right)}{(x-\mu)^{2k+ 1}}  K_k(\omega \gamma) \left(\frac{\omega}{2\gamma}\right)^k \bigg]
 \end{align}
-The expansion converges rapidly for small $|x-\mu|$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid of large values for these two parameters. The computation of the lower incomplete gamma functions in the second series $S_2$ can be performed using the recurrence relation
+The expansion converges rapidly for small $|x-\mu|$ and fixed values of the rest of parameters. Moreover, the convergence improves when $\gamma \sim \omega$, also valid for large values of these two parameters. In principle, the computation of the lower incomplete gamma functions in the second series $S_2$ can be performed using the recurrence relation
 \begin{equation}
 \gamma(a +1, z) = a \gamma(a, z) - z^a e^{-z}.
 \end{equation}
-However, one must take into account that forward recurrence for positive parameters $a$ and $z$ is unstable; we refer to \cite[\S 13]{Temme1996} for details on how to deal with unstable recurrence relations.
-
-TODO: comment about the fact that caching modified Bessel functions is not necessary. No storage required. Consider the odd and even case for the recursion of gamma and modified Bessel. Numerical instability prevents its implementation in double-precision arithmetic. 
+However, one must take into account that forward recurrence for positive parameters $a$ and $z$ is unstable; we refer to \cite[\S 13]{Temme1996} for details on how to deal with unstable recurrence relations. Compared to the previous expansion, where modified Bessel functions are cached to avoid recalculations when evaluating coefficients $A_k$ in \eqref{general_expansion_xmu_small_bessel}, this series expansion is faster to evaluate since all the terms can be computed recursively.
 
 \subsubsection{Expansion $|x-\mu| \to 0$ in terms of Hermite polynomials}
 Furthermore, we obtain an additional series expansion in terms of Hermite polynomials and the special case $x=\mu$, $F(\mu; \alpha, \beta, \mu, \delta)$. As in previous derivations, our starting point is the substitution of the term $\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)$ in \eqref{integral_phi}
@@ -775,7 +773,11 @@ F(x; \alpha, \beta, \mu, \delta) = F(\mu; \alpha, \beta, \mu, \delta) + \frac{e^
 A_k = \sum_{j=0}^{\lfloor k/2 \rfloor} \frac{(-1)^j}{j!(k - 2j)!} \left(\frac{\alpha}{2\delta \beta^2}\right)^j K_{j+1}(\alpha \delta).
 \end{equation}
 
-Table \ref{table_xmu_general_n_terms} compares the number of terms of the three presented series expansion for the case $|x-\mu| \to 0$ for various sets of parameters to achieve a target accuracy of machine precision. As a first observation, we note that the Hermite-type expansion \eqref{general_xmu_small_hermite_series} appears to be the most efficient when $|x-\mu| \ll 1$. Also, in this regime, both series expansions \eqref{general_xmu_two_series} and \eqref{general_expansion_xmu_small_bessel} require a similar number of terms $N$. On the other hand, in the region $|x-\mu| \ge 1$, the expansion \eqref{general_expansion_xmu_small_bessel} becomes the most efficient in the cases considered.
+Table \ref{table_xmu_general_n_terms} compares the number of terms of the three presented series expansion for the case $|x-\mu| \to 0$ for various sets of parameters to achieve a machine-precision target accuracy. As a first observation, we note that the Hermite-type expansion \eqref{general_xmu_small_hermite_series} appears to be the most efficient when $|x-\mu| \ll 1$. Also, in this regime, both series expansions \eqref{general_xmu_two_series} and \eqref{general_expansion_xmu_small_bessel} require a similar number of terms $N$. On the other hand, in the region $|x-\mu| \ge 1$, the expansion \eqref{general_expansion_xmu_small_bessel} becomes the most efficient in the cases considered. 
+
+%General: comment on the complexity difference between the Hermite and Binomial series. Same $O(n^2)$ order by different leading factors.
+%Add note: similar number of terms according to table series [ref]. Estimate ratio function between complexities.
+%Quadratic (approximated shape. Could we use symbolic regression?? EXTRA)
 
 \begin{table}[H]
 	\centering
@@ -796,6 +798,18 @@ $x$ & $\alpha$ & $\beta$ & $\mu$ & $\delta$ & \eqref{general_expansion_xmu_small
 	\label{table_xmu_general_n_terms}
 \end{table}
 
+Note, however, that a complexity analysis gives a different picture. Given a number of terms $N$:
+\begin{itemize}
+\item Series expansion \eqref{general_expansion_xmu_small_bessel}: $(N + 1) (N + 2) \sim \mathcal{O}(N^2)$
+\item Series expansion \eqref{general_xmu_two_series}: $N_1 + N_2 \sim \mathcal{O}(N)$
+\item Series expansion \eqref{general_xmu_small_hermite_series}: $\frac{1}{2}\left(\lfloor\frac{N - 1}{2} \rfloor \left(\lfloor\frac{N - 1}{2} \rfloor + 1\right) + \lfloor\frac{N}{2} \rfloor \left(\lfloor\frac{N}{2} \rfloor + 1\right) + 2 (N + 1)\right) \sim \mathcal{O}(N^2)$
+\end{itemize}
+We turn our attention to the series expansions \eqref{general_expansion_xmu_small_bessel} and \eqref{general_xmu_small_hermite_series} because the fact that both require the storage of modified Bessel functions make them directly comparable. We remark that, although the series \eqref{general_expansion_xmu_small_bessel} might require fewer terms in some cases, asymptotically, it requires approximately 4 times more terms than \eqref{general_xmu_small_hermite_series}; taking the limit we have
+\begin{equation*}
+\lim_{N\to\infty} \frac{(N + 1) (N + 2)}{\frac{1}{2}\left(\lfloor\frac{N - 1}{2} \rfloor \left(\lfloor\frac{N - 1}{2} \rfloor + 1\right) + \lfloor\frac{N}{2} \rfloor \left(\lfloor\frac{N}{2} \rfloor + 1\right) + 2 (N + 1)\right)} = 4.
+\end{equation*}
+This observation shall be taken into consideration when designing the algorithm for the general case in Section \ref{subsection_implementation}.
+
 \subsubsection{Expansion $\beta \to 0$} 
 For the case $\beta \to 0$, we follow closely the derivation of the Hermite-type expansion for $|x-\mu| \to 0$ in \eqref{general_xmu_small_hermite_series}, hence some steps are omitted. In this case, the expansion involves the special case $\beta = 0$ studied in detail in Section \ref{section_special_case_beta_0}. Replacing the Hermite-type expansion defined in \eqref{phi_expansion_b_small} in integral \eqref{integral_phi}, we obtain
 \begin{equation}
@@ -811,7 +825,7 @@ B_k = \sum_{j=0}^{\lfloor k/2 \rfloor} \frac{(-1)^j}{j!(k - 2j)!} \left(\frac{\o
 where we can observe the similarity of the terms in both Hermite-type expansions.
 
 \subsubsection{Expansion $\delta \to \infty$}
-Starting from the integral representation in \eqref{integral_phi} and replacing the $\Phi\left(\frac{x-(\mu + \beta t)}{\sqrt{t}}\right)$ by the asymptotic expansion for $t\to \infty$ in \eqref{phi_expansion_at_inf} in terms of the incomplete gamma function. Taking $a = x -\mu$ and $b = -\beta$, we obtain
+Start from the integral representation in \eqref{integral_phi} replacing the term $\Phi\left(\frac{x-(\mu + \beta t)}{\sqrt{t}}\right)$ by the asymptotic expansion for $t\to \infty$ in \eqref{phi_expansion_at_inf} in terms of the incomplete gamma function. Taking $a = x -\mu$ and $b = -\beta$, we obtain
 \begin{equation}
 F(x; \alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{2\pi} \sum_{k=0}^{\infty}\frac{(-1)^{k+1}}{2^k k!} \frac{\Gamma(2k+1, -(x-\mu)\beta)}{(-\beta)^{2k+1}} \int_0^{\infty} t^{-k-2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2 + \beta^2}{2}t} \mathop{dt}.
 \end{equation}
@@ -830,9 +844,9 @@ and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We can rewrite the a
 \Gamma(a + 1, z) = a \Gamma(a, z) + z^a e^{-z}.
 \end{equation}
 
-Furthermore, the special case $x=\mu$ simplifies the asymptotic expansion considerably since $\Gamma(a, 0) = 1$ for $a > 0$, obtaining for $\beta > 0$
+Furthermore, the special case $x=\mu$ simplifies the asymptotic expansion considerably since $\Gamma(a, 0) = 1$ for $a > 0$, thus obtaining for $\beta > 0$
 \begin{equation}\label{expansion_x_eq_mu_large_delta}
-F(\mu; \alpha, \beta, \mu, \delta) = \frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty}\Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)
+F(\mu; \alpha, \beta, \mu, \delta) = \frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty}\Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta).
 \end{equation}
 
 \subsubsection{Expansion $|x-\mu| \to \infty$}
@@ -857,28 +871,29 @@ F(x; \alpha, \beta, \mu, \delta) = -\frac{\delta e^{\delta\gamma}}{\pi (x-\mu)}\
 and use $1 + F(x; \alpha, \beta, \mu, \delta)$ for $x-\mu > 0$. The same comments about the computation of the series using the recurrence of the upper incomplete gamma and modified Bessel function apply.
 
 \subsubsection{Uniform asymptotic $\gamma \to \infty, \gamma \sim \delta$ and $|x-\mu| \gg 0$}
-For large $\gamma$, we employ the uniform asymptotic described in Section \ref{uniform_expansion_alpha_large}. The only difference is the calculation of the coefficients $c_k(r)$ using the recurrence in \eqref{phi_expansion_at_u} with $a = x-\mu$ and $b = -\beta$. The resulting uniform asymptotic expansion reads
+For large $\gamma$, we can employ the uniform asymptotic described in Section \ref{uniform_expansion_alpha_large}. The only difference is the calculation of the coefficients $c_k(r)$ using the recurrence in \eqref{phi_expansion_at_u} with $a = x-\mu$ and $b = -\beta$. The resulting uniform asymptotic expansion reads
 \begin{equation}
 F(x; \alpha, \beta, \mu, \delta) = \frac{\gamma \delta e^{\delta \gamma}}{2\sqrt{\pi}} \sum_{k=0}^{\infty} \frac{2^k c_k\left(\frac{\delta}{\gamma}\right) Q_k\left(\frac{\gamma\delta}{2}\right)}{\gamma^{2k}}, \quad \gamma \to \infty.
 \end{equation}
 
-
-TODO: expansion for $\beta \to 0$ is also asymptotic for $\gamma \to \inf$, but requires small $|x-\mu|$.
+Similar to the comment in Section \ref{uniform_expansion_alpha_large}, the series expansion \eqref{general_beta_small_hermite_series} for $\beta \to 0$ can also be interpreted as an asymptotic for $\gamma \to \infty$, but only admits small values of $|x-\mu|$.
 
 \subsection{Numerical integration}\label{section_numerical_integration}
+
+For cases not covered by the described expansions, we have no other alternative than resorting to numerical integration. However, although numerical integration is an excellent backup method when series expansions are not appropriate, there is an important efficiency aspect to be considered since it might be orders of magnitude slower than series expansions. 
+
 \subsubsection{Integrand in terms of the error function}
-
-For cases do not covered by the described expansions, we need to resort to numerical integration. First, we focus on the Laplace-type integral \eqref{integral_phi}, whose integrand involves the complementary error function, since its evaluation is faster than the Bessel integral in \eqref{integral_k1}.
-
+First, we focus on the Laplace-type integral \eqref{integral_phi}, whose integrand involves the complementary error function.
+%, since its evaluation is faster than the Bessel integral in \eqref{integral_k1}.
 As a preliminary step, we truncate the improper integral \eqref{integral_phi} at some point $N > 0$, such that
 \begin{equation}\label{truncated_integral}
 I_N = \int_0^N \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} + \int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt},
 \end{equation}
 and $F(x; \alpha, \beta, \mu, \delta) = C I_N$, where $C = \frac{\delta e^{\delta \gamma}}{\sqrt{2\pi}}$. The truncation error can be bounded by
 \begin{equation}
-\int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{e^{-\frac{\delta^2}{2N}}}{N^{3/2}}\int_N^{\infty} e^{- \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2}.
+\int_N^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{e^{-\frac{\delta^2}{2N}}}{N^{3/2}}\int_N^{\infty} e^{- \frac{\gamma^2}{2}t} \mathop{dt} \le \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2},
 \end{equation}
-We can select $N$ for a desired absolute tolerance $\epsilon$ solving numerically the equation
+and we can select $N$ for a desired absolute tolerance $\epsilon$ solving numerically the equation
 \begin{equation}
 \frac{2 e^{-\frac{\delta^2}{2N} - \frac{\gamma^2}{2}N}}{N^{3/2} \gamma^2} = \frac{\epsilon}{C}.
 \end{equation}
@@ -894,12 +909,12 @@ implying that we can safely use this approximation when the following inequality
 \begin{equation}
 \delta \gamma e^{\delta\gamma} > \sqrt{\frac{27 \pi}{2}} \epsilon.
 \end{equation}
-Note that, from an implementation perspective, the use of the upper bound  \eqref{lambertW0_upper_bound} to estimate $N$ avoids overflow/underflow issues for large parameters by directly using logarithmic properties. 
+Note that, from an implementation perspective, the use of the upper bound  \eqref{lambertW0_upper_bound} to estimate $N$ comes in handy to avoid overflow/underflow issues for large parameters by direct use of logarithmic properties. 
 To accurately estimate $N$ to achieve a relative tolerance, we need an estimate of the order of magnitude of $I$. The integrand can be written as $e^{g(t)}$, where
 \begin{equation}
 g(t) = -\frac{\delta^2}{2t} - \frac{\gamma^2}{2}t - \frac{3}{2}\log(t) + \log\left(\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)\right),
 \end{equation}
-and
+and its derivative with respect to $t$
 \begin{equation}\label{saddle_point_equation}
 g'(t) = \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t} -\frac{1}{2}\left(\frac{x-\mu}{t^{3/2}} + \frac{\beta}{\sqrt{t}} \right)\frac{\phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)}{\Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right)}.
 \end{equation}
@@ -919,11 +934,11 @@ g'(t) \approx \frac{\delta^2 + (x-\mu)^2}{2t^2} -\frac{\alpha^2}{2} -\frac{3}{2t
 %\begin{equation*}
 %g'(t) \approx \frac{\delta^2}{2t^2} -\frac{\gamma^2}{2} -\frac{3}{2t} + \frac{(x-\mu)^2}{2t^2} + \frac{\beta(x-\mu)}{2t}, \quad t_0 = \frac{h + \sqrt{h^2 + \gamma^2 \left((x-\mu)^2 + \delta^2\right)}}{\gamma^2}, \quad h = \frac{\beta (x-\mu) - 3}{2}.
 %\end{equation*}
-The saddle point estimates $t_0$ computed by \eqref{saddle_point_1} or \eqref{saddle_point_2} is used as a starting point for the root-finding method. In particular, we find that the Newton's method setting an absolute error $10^{-4}$ only requires a few iterations (typically less than 5) to refine the initial estimate. After estimating $N$ using the estimated magnitude with the saddle point $t_0$, $\epsilon e^{g(t_0)}$, the truncated integral \eqref{truncated_integral} can be computed using standard numerical integration methods such as double exponential (tanh-sinh) quadrature or Gaussian quadrature (Gauss-Legendre). Technical details are discussed in Section \ref{algorithmic_numerical_integration}.
+The saddle point estimate $t_0$ computed by \eqref{saddle_point_1} or \eqref{saddle_point_2} is used as a starting point for the root-finding method. In particular, we find that the Newton's method setting an absolute error $10^{-4}$ only requires a few iterations (typically less than 5) to refine the initial estimate. After estimating $N$ using the calculated magnitude with the saddle point $t_0$, $\epsilon e^{g(t_0)}$, the truncated integral \eqref{truncated_integral} can be computed using standard numerical integration methods such as double exponential (tanh-sinh) quadrature or Gaussian quadrature (Gauss-Legendre). Technical details are discussed in Section \ref{algorithmic_numerical_integration}.
 
 
 \subsubsection{Integrand in terms of elementary functions}
-Most of the integral representations presented in Section \ref{properties_cdf} involve special functions in their integrands (e.g., $K_1(x)$ or $\erfc(x)$), which necessarily increases the computation cost of their evaluation. Therefore, for computational efficiency, it is generally preferred to evaluate integrals representable in terms of elementary functions. A suitable integral representation satisfying this requirement was given in \eqref{integral_sine_transform}. As previously described, the integral \eqref{integral_sine_transform} can be approximated by the truncated integral 
+Most of the integral representations presented in Section \ref{properties_cdf} involve special functions in their integrands (e.g., $K_1(x)$ or $\erfc(x)$), which necessarily increases the computation cost of their evaluation. Therefore, for computational efficiency, it is generally preferred to evaluate integrals representable in terms of elementary functions. A suitable integral representation satisfying this requirement was given in Equation \eqref{integral_sine_transform}. Following the steps previously described, the integral \eqref{integral_sine_transform} can be approximated by the truncated integral 
 \begin{equation}\label{truncated_integral_sine_transform}
 I_N = \int_0^N \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt} + \int_N^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right)}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\sin(\delta t)\mathop{dt},
 \end{equation}
@@ -960,7 +975,7 @@ where $\beta$ is neglected from the denominator. To select $N$, we take the simp
 \frac{e^{-(x-\mu)(N-\beta)}}{N} = \frac{\epsilon}{C} \longrightarrow N = \frac{1}{x-\mu}W_0\left(\frac{C e^{(x-\mu)\beta}}{\epsilon}\right).
 \end{equation}
 
-It is important to note that the integrand in \eqref{truncated_integral_sine_transform} becomes highly oscillatory for large $\delta$. Therefore, the direct computation in the presence of high oscillations leads to catastrophic cancellation, requiring a prohibited number of quadrature points for convergence. The literature on numerical quadrature methods for highly oscillatory integrals is extensive and we do not aim to cover it in detail. However, as an example, we show the application of the steepest descent method and its adequacy in this case. We transform the integral with sine kernel into the complex form
+It is crucial to mention that the integrand in \eqref{truncated_integral_sine_transform} becomes highly oscillatory as $\delta$ increases. Therefore, the direct computation in the presence of high oscillations leads to catastrophic cancellation, requiring a prohibited number of quadrature points for convergence. In the literature, there is a myriad of numerical quadrature methods for highly oscillatory integrals, and we encourage the interested reader to explore them.  Nevertheless,  in this work, we decided solely to investigate the application of the steepest descent method, which we found adequate for this case. We transform the integral with sine kernel into the complex form
 \begin{equation}\label{sine_transform_complex_integral}
 F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\Im\left(\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right) + \delta t i}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\mathop{dt}\right), \quad x-\mu > 0,
 \end{equation}
@@ -1011,7 +1026,7 @@ Recurrence relation in terms of ration of modified Bessel functions. More numeri
 \subsubsection{Handling large parameters}
 Exponent overflow issues in $\exp(\alpha \delta)$. Logarithmic transformation. Use scaled Bessel function.
 
-\subsubsection{Partial sums recurrence}
+\paragraph{Partial sums recurrence}
 As an example, series \eqref{expansion_xmu_b0_positive}. It is worth noticing that performing a naive computation of the terms $T_k$ in double-precision arithmetic for large $N$ poses underflow and overflow problems since the numerator (denominator) rapidly goes to infinity (zero) as $N$ increases. In Section \ref{subsection_evaluation_bessel_expansions}, we discuss alternative summation methods to avoid cancellation issues and precision loss for large $N$.
 
 \begin{equation}
@@ -1040,7 +1055,9 @@ Stopping criterion is
 
 \subsubsection{Comparison Bessel $K_0(x)$ and $K_1(x)$ algorithms}
 
-\subsection{Evaluation of asymptotic expansions}\label{algorithmic_asymptotic_expansions}
+Benchmark
+
+%\subsection{Evaluation of asymptotic expansions}\label{algorithmic_asymptotic_expansions}
 
 \subsection{Numerical integration}\label{algorithmic_numerical_integration}
 
@@ -1071,10 +1088,6 @@ Given the computational cost of choosing the optimal method, in practice, a set 
 and large regions of the parameters' domain and training a Machine Learning model to decide the regions where a method can obtain results with absolute relative error below tolerance. As a refinement, we simplify the model using a decision tree and rounding the boundaries. The result of the process are the algorithms 1-3.
 
 Numerical integration: dominant method, it is used as a backup method whenever series expansions and asymptotic expansions do not converge.
-
-General: comment on the complexity difference between the Hermite and Binomial series. Same $O(n^2)$ order by different leading factors.
-Add note: similar number of terms according to table series [ref]. Estimate ratio function between complexities.
-Quadratic (approximated shape. Could we use symbolic regression?? EXTRA)
 
 We relax tolerance constraints to reduce the use of numerical integration (the most robust and accurate method) with the goal of improving performance. Numerical integration can be up to 200 times slower than most of the derived series expansions.
 
@@ -1128,6 +1141,8 @@ We relax tolerance constraints to reduce the use of numerical integration (the m
 }
 
 \subsubsection{General case}
+
+Expansion $|x-\mu| \to 0$ in terms of incomplete gamma: Numerical instability prevents its implementation in double-precision arithmetic. 
 
 {\centering
 \begin{minipage}{.85\linewidth}
