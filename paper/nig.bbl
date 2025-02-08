@@ -1,5 +1,11 @@
 \begin{thebibliography}{10}
 
+\bibitem{Abramowitz1972}
+M.~Abramowitz and I.~A. Stegun.
+\newblock {\em Handbook of mathematical functions: with formulas, graphs, and
+  mathematical tables}.
+\newblock Dover Publications, 1964.
+
 \bibitem{Barndorff1997}
 O.~E. Barndorff-Nielsen.
 \newblock {Normal Inverse Gaussian Distributions and Stochastic Volatility
@@ -24,6 +30,12 @@ F.~E. Benth and J.~\v{S}altyte Benth.
   energy markets}.
 \newblock {\em International Journal of Theoretical and Applied Finance},
   07(02):177--192, 2004.
+
+\bibitem{Cody1993}
+W.~J. Cody.
+\newblock {Algorithm 715 : SPECFUN - a portable package of special function
+  routines and test drivers.}
+\newblock {\em ACM Trans. Math. Software}, 19(1), 1993.
 
 \bibitem{NIST:DLMF}
 {\it NIST Digital Library of Mathematical Functions}.
@@ -128,5 +140,12 @@ J.~G. Wendel.
 \bibitem{Mathematica}
 {Wolfram Research, Inc.}
 \newblock Mathematica 10.
+
+\bibitem{Xue2018}
+C.~Xue and S.~Deng.
+\newblock {Recursive Computation of Logarithmic Derivatives, Ratios, and
+  Products of Spheroidal Harmonics and Modified Bessel Functions and
+  Applications}.
+\newblock {\em Journal of Scientific Computing}, 75:128--156, 2018.
 
 \end{thebibliography}

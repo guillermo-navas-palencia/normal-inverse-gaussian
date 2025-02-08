@@ -229,7 +229,7 @@ To conclude, a discussion on the numerical integration methods for effective com
 %\end{equation}
 %Use binomial theorem, and compute coefficients recursively (binomial sum of Bessel functions). Treat special case $\mu = 0$ and $\beta=0$.
 
-\section{Methods of computation}
+\section{Methods of computation}\label{section_methods_of_computation}
 In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases, $\beta = 0$ and $x=\mu$, respectively. In particular, we explore series expansions, asymptotic expansions, uniform asymptotic expansions and numerical integration. We emphasize that many of the techniques and numerical methods introduced in the sections devoted to the two special cases shall also be used to develop expansions of the general case in Section \ref{section_general_case}.
 
 
@@ -1020,15 +1020,28 @@ where the resulting integrand prevents the evaluation of complex square roots. T
 
 \section{Algorithmic details and implementation}
 \subsection{Evaluation of Bessel-type expansions}
-Recurrence relation in terms of ration of modified Bessel functions. More numerically stable.
 \label{subsection_evaluation_bessel_expansions}
 
 \subsubsection{Handling large parameters}
-Exponent overflow issues in $\exp(\alpha \delta)$. Logarithmic transformation. Use scaled Bessel function.
+As observed, all the expansions introduced in Section \ref{section_methods_of_computation} involve the modified Bessel function. A common method to compute the modified Bessel function is based on the recurrence identity for consecutive neighbors \cite{Abramowitz1972}
+\begin{equation}
+K_{\nu + 1}(z) = K_{\nu - 1}(z) + \frac{2\nu}{z} K_{\nu}(z),
+\end{equation}
+given the initial values of the immediately previous two terms. However, for large order $\nu$ and large argument $z$, the recurrence is quickly affected by overflow/underflow issues. A common approach to circumvent this problem is the use of the exponentially scaled function (e.g., implemented in \cite{Cody1993}) defined as
+\begin{equation}
+K^*_{\nu}(z) = e^z K_{\nu}(z).
+\end{equation}
+Another method to obtain a stable recursion entails the ratio of modified Bessel functions defined as
+\begin{equation}
+r_{\nu}(z) = \frac{K_{\nu+1}(z)}{K_{\nu}(z)},
+\end{equation} 
+which satisfy the recurrence identity \cite{Xue2018}
+\begin{equation}
+r_{\nu}(z) = \frac{1}{r_{\nu - 1}(z)} + 2\frac{\nu}{z}.
+\end{equation}
+Furthermore, another option to handle large parameters is to apply logarithmic transformations \cite{Xue2018}, although we found that the forward recursion of the ratios combined with the use of the exponential scaling suffice to obtain a numerically stable implementation of the recursion.
 
-\paragraph{Partial sums recurrence}
-As an example, series \eqref{expansion_xmu_b0_positive}. It is worth noticing that performing a naive computation of the terms $T_k$ in double-precision arithmetic for large $N$ poses underflow and overflow problems since the numerator (denominator) rapidly goes to infinity (zero) as $N$ increases. In Section \ref{subsection_evaluation_bessel_expansions}, we discuss alternative summation methods to avoid cancellation issues and precision loss for large $N$.
-
+Finally, the evaluation of a series expansion using partial sums recurrence can also alleviate instability issues. As an example, we consider the series \eqref{expansion_xmu_b0_positive}
 \begin{equation}
 F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi}\frac{(x-\mu) \alpha}{\omega}S_K,
 \end{equation}
@@ -1044,14 +1057,14 @@ where
 \begin{equation}
 z = \frac{(x-\mu)^2 \alpha}{\omega}.
 \end{equation}
-Stopping criterion is
-\begin{equation}
-\left|1 - \frac{S_{K}}{S_{K-1}} \right| < \epsilon.
-\end{equation}
-
-\begin{itemize}
-\item Computation of 2F1, use partial sums recursion with Mathematica.
-\end{itemize}
+%Stopping criterion is
+%\begin{equation}
+%\left|1 - \frac{S_{K}}{S_{K-1}} \right| < \epsilon.
+%\end{equation}
+%
+%\begin{itemize}
+%\item Computation of 2F1, use partial sums recursion with Mathematica.
+%\end{itemize}
 
 \subsubsection{Comparison Bessel $K_0(x)$ and $K_1(x)$ algorithms}
 
