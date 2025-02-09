@@ -1084,23 +1084,20 @@ W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + 
 with maximum relative error of $3.5\cdot 10^{-3}$.
 
 \subsection{Implementation}\label{subsection_implementation}
+A reliable implementation of the cumulative distribution function for the normal inverse Gaussian distribution in double-precision arithmetic presents several difficulties. Consequently, it becomes necessary to find the right combination of methods to perform efficient and accurate computations on a wide range of the parameters' domain. To devise this combination (i.e., decide the method of choice in each parameter regime) one could formulate an optimization problem with two possible objective functions: minimization of terms (complexity) and maximization of robustness, or a blended approach (multi-objective optimization).
 
-Decision tree. Machine Learning approach \cite{Simpson2016}. Some details about ML model are out of the scope. The optimal regimes of applicability of the different series and asymptotic expansion could be derived using the information provided by the bounds on their remainders. To decide which method should be used in each regime, one could formulate an optimization problem with two possible objectives, minimization of terms (series complexity) and maximize robustness / reliability, or a blended approach (multi-objective optimization). 
-The achievable accuracy of each method can be effectively estimated by developing rigorous error bounds. In the absence of error bounds (or if the computation is too involved) linear search with a rough estimate (more adequate for asymptotic expansions). PhD thesis section 2.3.2.
-
-Given the computational cost of choosing the optimal method, in practice, a set of rules (logical expressions) generating a suboptimal solution might suffice. Our approach consists of generating a dataset covering small
-and large regions of the parameters' domain and training a Machine Learning model to decide the regions where a method can obtain results with absolute relative error below tolerance. As a refinement, we simplify the model using a decision tree and rounding the boundaries. The result of the process are the algorithms 1-3.
-
-Numerical integration: dominant method, it is used as a backup method whenever series expansions and asymptotic expansions do not converge.
-
-We relax tolerance constraints to reduce the use of numerical integration (the most robust and accurate method) with the goal of improving performance. Numerical integration can be up to 200 times slower than most of the derived series expansions.
-
-\subsubsection{Case $\beta = 0$}
-
+As discussed throughout this work, the achievable accuracy of each method can be effectively estimated by developing rigorous error bounds or, in the absence of error bounds, via linear search with a rough initial estimate. However, it is not always practical to obtain the optimal solution for each set of parameters, and a heuristic might suffice for the vast majority of cases. One can treat the problem of automatically choosing the most suitable method for each region as a classification problem where Machine Learning algorithms are suitable \cite{Simpson2016, Navas-Palencia2019}. More specifically, we can consider a multi-class problem, where each class corresponds to a method, or a multi-label classification problem since multiple methods might be selected for a given set of parameters.
+Our approach consists of generating a dataset covering small and large regions of the parameters' domain, computing the CDF via \texttt{mpmath} \cite{mpmath} using numerical quadrature, and training a decision tree for each method to decide the regions with absolute relative error below a prescribed tolerance of $5\cdot 10^{-13}$. As a refinement, we combine and simplify the model using another decision tree and rounding the boundaries. The result of the process are the algorithms 1-3. Some remarks:
+\begin{itemize}
+\item Numerical integration is used as a backup method whenever series expansions and asymptotic expansions are not suitable or, they fail to converge.
+\item Expansion $|x-\mu| \to 0$ in terms of the lower incomplete gamma function in \eqref{general_xmu_incgamma_integral} was discarded because numerical instability prevents its implementation in double-precision arithmetic.
+\item For asymptotic expansions, we slightly relaxed tolerance requirements to reduce the use of numerical integration to improve performance.
+\end{itemize}
 
 {\centering
 \begin{minipage}{.8\linewidth}
   \begin{algorithm}[H]
+  \small
   \caption{Algorithm for special case $\beta = 0$, $F(x; \alpha, 0, \mu, \delta)$}\label{alg:case_beta_eq_zero}
 \begin{algorithmic}
 \Require $x \in \mathbb{R}$, $\alpha > 0$, $\mu \in \mathbb{R}$, $\delta > 0$
@@ -1122,11 +1119,12 @@ We relax tolerance constraints to reduce the use of numerical integration (the m
 \par
 }
 
-\subsubsection{Case $x = \mu$}
+%\subsubsection{Case $x = \mu$}
 
 {\centering
 \begin{minipage}{.85\linewidth}
   \begin{algorithm}[H]
+  \small
   \caption{Algorithm for special case $x=\mu$, $F(\mu; \alpha, \beta, \mu, \delta)$}\label{alg:case_x_eq_mu}
 \begin{algorithmic}
 \Require $x \in \mathbb{R}$, $\alpha > 0$, $0 \le |\beta| < \alpha$, $\delta > 0$
@@ -1144,13 +1142,12 @@ We relax tolerance constraints to reduce the use of numerical integration (the m
 \par
 }
 
-\subsubsection{General case}
-
-Expansion $|x-\mu| \to 0$ in terms of incomplete gamma: Numerical instability prevents its implementation in double-precision arithmetic. 
+%\subsubsection{General case}
 
 {\centering
 \begin{minipage}{.85\linewidth}
   \begin{algorithm}[H]
+  \small
   \caption{Algorithm for $F(x; \alpha, \beta, \mu, \delta)$}\label{alg:case_general}
 \begin{algorithmic}
 \Require $x \in \mathbb{R}$, $\alpha > 0$, $0 \le |\beta| < \alpha$, $\mu \in \mathbb{R}$, $\delta > 0$

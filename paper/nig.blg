@@ -6,49 +6,49 @@ The style file: plain.bst
 Reallocating 'name_of_file' (item size: 1) to 4 items.
 Database file #1: bib.bib
 Warning--entry type for "Mathematica" isn't style-file defined
---line 968 of file bib.bib
+--line 967 of file bib.bib
 Warning--empty booktitle in Bailey2006TanhSinhHQ
 Warning--empty booktitle in OEIS
 Warning--empty year in OEIS
-You've used 31 entries,
+You've used 33 entries,
             2118 wiz_defined-function locations,
-            705 strings with 8934 characters,
-and the built_in function-call counts, 8479 in all, are:
-= -- 820
-> -- 325
+            715 strings with 9264 characters,
+and the built_in function-call counts, 8874 in all, are:
+= -- 860
+> -- 339
 < -- 2
-+ -- 133
-- -- 100
-* -- 519
-:= -- 1443
-add.period$ -- 94
-call.type$ -- 31
-change.case$ -- 134
++ -- 139
+- -- 104
+* -- 536
+:= -- 1518
+add.period$ -- 100
+call.type$ -- 33
+change.case$ -- 141
 chr.to.int$ -- 0
-cite$ -- 34
-duplicate$ -- 356
-empty$ -- 749
-format.name$ -- 100
-if$ -- 1775
+cite$ -- 36
+duplicate$ -- 374
+empty$ -- 781
+format.name$ -- 104
+if$ -- 1853
 int.to.chr$ -- 0
-int.to.str$ -- 31
+int.to.str$ -- 33
 missing$ -- 38
-newline$ -- 158
-num.names$ -- 60
-pop$ -- 170
+newline$ -- 168
+num.names$ -- 64
+pop$ -- 178
 preamble$ -- 1
-purify$ -- 113
+purify$ -- 119
 quote$ -- 0
-skip$ -- 230
+skip$ -- 242
 stack$ -- 0
-substring$ -- 466
-swap$ -- 43
+substring$ -- 476
+swap$ -- 46
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 104
+type$ -- 112
 warning$ -- 3
-while$ -- 83
-width$ -- 33
-write$ -- 329
+while$ -- 87
+width$ -- 35
+write$ -- 350
 (There were 4 warnings)

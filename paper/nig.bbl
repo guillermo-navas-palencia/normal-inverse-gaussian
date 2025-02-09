@@ -90,6 +90,18 @@ D.~B. Madan and E.~Seneta.
 \newblock {The Variance Gamma (V.G.) Model for Share Market Returns}.
 \newblock {\em The Journal of Business}, 63(4):511--524, 1990.
 
+\bibitem{mpmath}
+The mpmath~development team.
+\newblock {\em mpmath: a {P}ython library for arbitrary-precision
+  floating-point arithmetic (version 1.3.0)}, 2023.
+\newblock {\tt http://mpmath.org/}.
+
+\bibitem{Navas-Palencia2019}
+G.~Navas-Palencia.
+\newblock {\em {High-precision Computation of Uniform Asymptotic Expansions for
+  Special Functions}}.
+\newblock Phd thesis, Universitat Polit\`{e}cnica de Catalunya, 2019.
+
 \bibitem{Olver1997}
 F.~W.~J. Olver.
 \newblock {\em Asymptotics and Special Functions}.
