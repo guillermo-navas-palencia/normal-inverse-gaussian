@@ -839,7 +839,7 @@ F(x; \alpha, \beta, \mu, \delta) &= \frac{\alpha e^{\delta \gamma}}{\pi \beta}\s
  &=\frac{\alpha e^{\delta \gamma}}{\pi \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta)\frac{\Gamma(2k+1)}{\Gamma(k+1)}\left(-\frac{\alpha}{2\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta)\\
  &=\frac{\alpha e^{\delta \gamma}}{\pi^{3/2} \beta}\sum_{k=0}^{\infty} Q(2k + 1, -(x-\mu)\beta) \Gamma(k + 1/2)\left(-\frac{2\alpha}{\beta^2 \delta}\right)^k K_{k+1}(\alpha \delta),
 \end{align}
-and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We can rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x)$, see appendix \ref{appendix_incomplete_gamma}, to avoid ratios with large numerator and denominator. In addition, the evaluation of the upper incomplete gamma function , $\Gamma(a, z)$, and its regularized version via recurrence is numerically stable for positive parameters $a$ and $z$,
+and $1 + F(x; \alpha, \beta, \mu, \delta)$ for $\beta < 0$. We can rewrite the asymptotic series in terms of the regularized incomplete gamma function $Q(a, x) = \Gamma(a, x)/\Gamma(a)$, to avoid ratios with large numerator and denominator. In addition, the evaluation of the upper incomplete gamma function , $\Gamma(a, z)$, and its regularized version via recurrence is numerically stable for positive parameters $a$ and $z$,
 \begin{equation}
 \Gamma(a + 1, z) = a \Gamma(a, z) + z^a e^{-z}.
 \end{equation}
@@ -1170,223 +1170,43 @@ Our approach consists of generating a dataset covering small and large regions o
 \end{minipage}
 \par
 }
+\vspace{5mm}
+Finally, the resulting algorithm implemented in C++17 is freely available on GitHub: \url{https://github.com/guillermo-navas-palencia/normal-inverse-gaussian}.
 
 \section{Numerical experiments}
+The number of available open-source and commercial implementations of the normal inverse Gaussian distribution is limited. In the open-source space, this statistical distribution is not included in widely used numerical libraries such as Boost \cite{BoostLibrary}, GNU Scientific Library (GSL) \cite{GSL} or CERN ROOT \cite{ROOT} to mention a few. To the author's knowledge, the two exceptions are SciPy \texttt{stats.norminvgauss} \cite{scipy} and the R packages \texttt{GeneralizedHyperbolic}\footnote{\url{https://rdrr.io/rforge/GeneralizedHyperbolic/}} and \texttt{ghyp}\footnote{https://rdrr.io/cran/ghyp/}. The implementation of the cumulative distribution function in these libraries solely relies on the use of numerical integration, more specifically performing adaptive Gaussian quadrature using the Fortran library QUADPACK \cite{QUADPACK}. SciPy performs direct computation via adaptive Gaussian quadrature, whereas \texttt{GeneralizedHyperbolic} partitions the real line into multiple regions, and the numerical integration routine is used in each to integrate the density function.
 
-Publicly available implementations of the normal inverse Gaussian distribution are scarce. For example, this statistical distribution is not included in widely used numerical libraries such as Boost [ref], GNU Scientific Library (GSL) [ref] or CERN ROOT [ref] to mention a few. To the author knowledge the two exceptions are SciPy \texttt{stats.norminvgauss} [ref] and R packages \texttt{GeneralizedHyperbolic} [ref]. The implementation of the cumulative distribution function in both libraries is based on the use of numerical integration. SciPy performs direct computation via adaptive gaussian quadrature [ref - scipy docs]. \texttt{GeneralizedHyperbolic} partitions the real line into multiple regions and the numerical integration routine in used in each to integrate the density function. R integrate performs adaptive quadrature of univariate functions [QUADPACK ref]\footnote{https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/integrate}. Mention the numerical integration method implemented in other libraries where the NIG distribution is available. QUADPACK \cite{QUADPACK}
+We compare our implementation to the SciPy \texttt{stats.norminvgauss} since it seems the fastest and most robust of the aforementioned options. To test accuracy, we generate two sample sets, small and large, with $10^4$ instances for each special case and the general case. The small set, which mainly comprises small parameters, was generated to test the accuracy of the series expansions. On the other hand, the large set assesses the accuracy of the asymptotic expansions. For comparing accuracy, we take as a reference the value obtained by computing the truncated integral \eqref{truncated_integral} using \texttt{mpmath} with 100 digits of precision. A run is considered successful if the absolute relative error is below the threshold $5\cdot 10^{-13}$ ($\sim 200 \epsilon$).
+Furthermore, we define as hard instances cases where \texttt{mpmath} does not converge and an increment of working precision to 300 digits is required.  
+In terms of execution speed, we run the C++ compiled library from Python using \texttt{ctypes} to guarantee a fair comparison. Tests were run on an AMD Ryzen 7 5825U running at 2.0 GHz using the \texttt{clang} compiler with optimization flag \texttt{-O3}.
 
+Following, we outline the main observations for each of the cases:
 
-Define hard instance: cases where mpmath does not converge performing computation using 100 digits of precision. These cases are recomputed increasing the precision to 300 digits. Define symbol '-' meaning. Mention an alternative open-source library for arbitrary-precision calculation (arb) to double-check. Mathematica does not seem an option. In addition, using SciPy with double-precision arithmetic serves for time comparison purposes. 
-Hard instances. Cases where mpmath does not converge requiring 100 digits of precision. We increase to 300 digits. Success: absolute relative error $< 5\cdot 10^{-13}$. '-' errors $> 10^{-10}$. Python using ctypes, comparable to SciPy using quad integration. Operating system and processor.
-
-For each special case: show the definition of small and large instances. Bullet points, for each parameter. General comments about the need to resort to numerical integration for multiple cases. 
-
-It might be worth taking as an example the value of x to be evaluated when computing the quantile at 0.99, 0.999, 0.9999. It might happen that the values (x-mu) are generally small, so the series expansions will be more frequently used for these cases.
-
+\paragraph{Case $\beta = 0$}
 \begin{itemize}
-\item Running Linux Ubuntu 24.04 via WSL | AMD processor.
-\item  Implementation in C++17 (standard supporting bessel, check if C++11 would be fine).
-\item  Introduce SciPy implementation: adaptive quadrature Fortran code. For a fair time comparison, we run the
-experiments from Python, calling the compiled library using ctypes.
-\item  C++ optimization flags.
+\item Tables \ref{table_parameters_case_beta_eq_zero} and \ref{table_comparison_case_beta_eq_zero_summary} show the characteristics of the sample sets and the accuracy and performance summary. In terms of accuracy, the SciPy implementation has significantly higher mean absolute error for all the regions, and, therefore, a higher number of failures. In contrast, our implementation shows superior robustness, maintaining a mean error below $10^{-13}$. Regarding performance, our implementation is consistently around $10-20$ times faster than SciPy.
+\item Tables \ref{table_methods_case_beta_eq_zero_small} and \ref{table_methods_case_beta_eq_zero_large} show that numerical integration is used in above 60\% of the cases. However, the results in Table \ref{table_methods_case_beta_eq_zero_large_hard} show that for large hard instances, generally corresponding to the case where $|x-\mu|$ is large, the asymptotic expansion \eqref{asymptotic_expansion_xmu_b0} is the preferred choice.
 \end{itemize}
 
-
-Overall comments:
+\paragraph{Case $x = \mu$}
 \begin{itemize}
-\item Double-exponential implementation faster and more robust than adaptive quadrature.
-\item  Describe R libraries implementation: also based on adaptive quadrature. Similar algorithm.
-\item  An implementation solely based on numerical integration is possible, but on various regimes the use
-of series and asymptotic expansion can reliably complement with benefits in terms of CPU times.
-\item  The cdf quickly goes to 0/1 for large values of |x-mu|. The mpmath library requires additional precision for
-convergence in that regime, and the SciPy library struggles, returning incorrect values.
-\item  Taking examples from various papers, state the common configurations in finance/energy modelling. Ideally,
-these cases can he handled by one or various of the proposed expansions. e.g., Log returns
+\item Tables \ref{table_parameters_case_x_eq_mu} and \ref{table_comparison_case_x_eq_mu_summary} show the characteristics of the sample sets and the accuracy and performance summary. The SciPy shows more reliability in the small region, but its accuracy worsens in the large region, especially for hard instances, where just 1.77\% of these are computed successfully.
+\item In the small region, contrasting to the case $\beta = 0$, Table \ref{table_methods_case_general_small} shows that the series expansion \eqref{series_x=mu_2} can be safely chosen in more than $80\%$ of the instances hence the speedup compared to SciPy increases, being $\sim 60$ times faster.
+\item Tables \ref{table_methods_case_x_eq_mu_large} and \ref{table_methods_case_x_eq_mu_large_hard} shares the same conclusions than the case $\beta = 0$, numerical integration dominates in the large region, and for hard instances (large parameters $\alpha$ and/or $\delta$), the asymptotic expansion \eqref{expansion_x_eq_mu_large_delta} is effective.
 \end{itemize}
 
-\subsection{Case $\beta = 0$}
+\paragraph{General case}
+\begin{itemize}
+\item Tables \ref{table_parameters_case_general} and \ref{table_comparison_case_general_sumamry} show the characteristics of the sample sets and the accuracy and performance summary.
+\item Table \ref{table_methods_case_general_small} ...
+\item Tables \ref{table_methods_case_general_large} and \ref{table_methods_case_general_large_hard} ...
+\item Table \ref{table_comparison_case_general_integration} ... Double-exponential implementation faster and more robust than adaptive quadrature. An implementation solely based on numerical integration is possible, but on various regimes the use of series and asymptotic expansion can reliably complement with benefits in terms of CPU times.
+\item Explain $*$ indicating that mpmath struggles to converge with 300 digits and varying the integral upper bound $N$. mpmath systematically returns 0.
+\item  The cdf quickly goes to 0/1 for large values of |x-mu|. The mpmath library requires additional precision for convergence in that regime, and the SciPy library struggles, returning incorrect values. TODO: add special section where only integration is used. This is needed since the proposed algorithm is not that reliable compared to those described for special cases.
+\end{itemize}
 
-\begin{table}[H]
-\centering
-\scalebox{0.9}
-{
-	\begin{tabular}{c|ccccc}
-	\hline
-	Region & $x$ & $\alpha$ & $\mu$ & $\delta$\\
-	\hline	
-	small & (-5, 5) & (0.001, 5) & (-5, 5) & (0.001, 5)\\
-	large & (-10, 10) & (0.001, 50) & (-10, 10) & (0.001, 50)\\
-	\hline	
-	\end{tabular}
-}
-\caption{Case $\beta = 0$: Parameter range for small and large region.}
-	\label{table_parameters_case_beta_eq_zero}
-\end{table}
+Taking examples from various papers, state the common configurations in finance/energy modelling. Ideally, these cases can he handled by one or various of the proposed expansions. e.g., Log returns. It might be worth taking as an example the value of x to be evaluated when computing the quantile at 0.99, 0.999, 0.9999. It might happen that the values (x-mu) are generally small, so the series expansions will be more frequently used for these cases.
 
-
-\begin{table}[H]
-	\centering
-	\scalebox{0.9}{
-\begin{tabular}{ccccc|cc}
-\hline
-Library & Region & Success & Median & Mean & Time (s) & Time ($\mu s$)\\
-\hline
-SciPy & Small & 3952 / 5000 (79.04\%) &  $9.44\cdot 10^{-16}$ & $9.90 \cdot 10^{-4}$ & 2.45 & 490\\
-Paper & Small & 4988 / 5000 (99.76\%) & $2.66\cdot 10^{-15}$ & $1.53\cdot 10^{-14}$ & 0.11 & 21\\
-	\hline\
-SciPy & Large & 3549 / 4868 (72.90\%) & $1.49\cdot 10^{-14}$ & $5.63\cdot 10^{-3}$ & 2.60 & 535\\
-Paper & Large & 4868 / 4868 (100\%) & $1.11\cdot 10^{-15}$ & $1.27\cdot 10^{-14}$ & 0.22 & 45\\
-	\hline\
-SciPy & Large (hard) & 25 / 132 (18.94\%) & $1.44\cdot 10^{-4}$ & $6.45\cdot 10^{-3}$ & 0.028 & 214\\
-Paper & Large (hard) & 127 / 132 (96.21\%) & $2.46\cdot 10^{-14}$ & $8.84\cdot 10^{-14}$ & 0.002 & 12\\
-	\hline
-	\end{tabular}}
-	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$.}
-	\label{table_comparison_case_beta_eq_zero}
-\end{table}
-
-
-\begin{table}[H]
-	\centering
-	\scalebox{0.9}{
-\begin{tabular}{ccccccc}
-\hline
-Method & Count & min & 25\% & Median & 75\% & max\\
-\hline
-Integration \eqref{truncated_integral} & 4121 (82.42\%) & 0 & $1.22\cdot 10^{-15}$ & $4.15\cdot 10^{-15}$ & $1.44\cdot 10^{-14}$ & $8.40\cdot 10^{-13}$\\
-Series \eqref{expansion_xmu_b0_positive} & 879 (17.58\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $1.11\cdot 10^{-15}$ & $6.58\cdot 10^{-14}$\\
-	\hline
-	\end{tabular}}
-	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
-	\label{table_methods_case_beta_eq_zero_small}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\scalebox{0.9}{
-\begin{tabular}{ccccccc}
-\hline
-Method & Count & min & 25\% & Median & 75\% & max\\
-\hline
-Integration \eqref{truncated_integral} & 3137 (64.44\%) & 0 & $3.33\cdot 10^{-16}$ & $8.88\cdot 10^{-16}$ & $4.11\cdot 10^{-15}$ & $4.84\cdot 10^{-13}$\\
-Series \eqref{expansion_xmu_b0_positive} & 810 (16.64\%) & 0 & $3.33\cdot 10^{-16}$ & $1.33\cdot 10^{-15}$ & $8.41\cdot 10^{-15}$ & $4.28\cdot 10^{-13}$\\
-Asymptotic \eqref{asymptotic_expansion_xmu_b0} & 620 (12.74\%) & 0 & 0 & 0 & $2.54\cdot 10^{-14}$ & $2.31\cdot 10^{-13}$\\
-Asymptotic \eqref{uniform_expansion_a_large} & 301 (6.18\%) & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-15}$ & $1.24\cdot 10^{-14}$ & $3.46\cdot 10^{-14}$ & $2.26\cdot 10^{-13}$\\
-	\hline
-	\end{tabular}}
-	\caption{Precision metrics of the numerical methods used for computing in the large region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
-	\label{table_methods_case_beta_eq_zero_large}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\scalebox{0.9}{
-\begin{tabular}{ccccccc}
-\hline
-Method & Count & min & 25\% & Median & 75\% & max\\
-\hline
-Integration \eqref{truncated_integral} & 22 (16.67\%) & 0 & $6.94\cdot 10^{-16}$ & $3.66\cdot 10^{-15}$ & $1.76\cdot 10^{-15}$ & $5.98\cdot 10^{-14}$\\
-Series \eqref{expansion_xmu_b0_positive} & 7 (5.30\%) & $4.44\cdot 10^{-16}$ & $6.11\cdot 10^{-16}$ & $2.00\cdot 10^{-15}$ & $5.39\cdot 10^{-13}$ & $3.22\cdot 10^{-12}$\\
-Asymptotic \eqref{asymptotic_expansion_xmu_b0} & 100 (75.76\%) & $8.88\cdot 10^{-16}$ & $1.35\cdot 10^{-14}$ & $3.00\cdot 10^{-14}$ & $5.57\cdot 10^{-14}$ & $1.30\cdot 10^{-13}$\\
-Asymptotic \eqref{uniform_expansion_a_large} & 3 (2.27\%) & $5.76\cdot 10^{-13}$ & $8.84\cdot 10^{-13}$ & $1.19\cdot 10^{-12}$ & $1.42\cdot 10^{-12}$ & $1.64\cdot 10^{-12}$\\
-	\hline
-	\end{tabular}}
-	\caption{Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
-	\label{table_methods_case_beta_eq_zero_large}
-\end{table}
-
-
-\subsection{Case $x = \mu$}
-
-\begin{table}[H]
-\centering
-\scalebox{0.9}
-{
-	\begin{tabular}{c|cccc}
-	\hline
-	Region & $\alpha$ & $\beta$ & $\delta$\\
-	\hline	
-	small & (0.001, 5) & (-5, 5) & (0.001, 5)\\
-	large & (0.001, 50) & (-50, 50) & (0.001, 50)\\
-	\hline	
-	\end{tabular}
-}
-\caption{Case $x = \mu$: Parameter range for small and large region.}
-	\label{table_parameters_case_x_eq_mu}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\scalebox{0.9}{
-\begin{tabular}{ccccc|cc}
-\hline
-Library & Region & Success & Median & Mean & Time (s) & Time ($\mu s$)\\
-\hline
-SciPy & Small & 4838 / 5000 (96.76\%) &  $8.88\cdot 10^{-16}$ & $8.40 \cdot 10^{-11}$ & 2.02 & 405\\
-Paper & Small & 5000 / 5000 (100\%) & $2.22\cdot 10^{-16}$ & $9.60\cdot 10^{-16}$ & 0.03 & 7\\
-	\hline\
-SciPy & Large & 3084 / 4548 (67.81\%) & $1.96\cdot 10^{-15}$ & $1.34\cdot 10^{-12}$ & 2.58 & 516\\
-Paper & Large & 4548 / 4548 (100\%) & $6.66\cdot 10^{-16}$ & $8.25\cdot 10^{-15}$ & 0.27 & 53\\
-	\hline\
-SciPy & Large (hard) & 8 / 452 (1.77\%) & $1.26\cdot 10^{-1}$ & $1.65\cdot 10^{-1}$ & 0.104 & 229\\
-Paper & Large (hard) & 425 / 452 (94.03\%) & $3.86\cdot 10^{-14}$ & $2.47\cdot 10^{-12}$ & 0.024 & 53\\
-	\hline
-	\end{tabular}}
-	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$.}
-	\label{table_comparison_case_x_eq_mu}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\scalebox{0.9}{
-\begin{tabular}{ccccccc}
-\hline
-Method & Count & min & 25\% & Median & 75\% & max\\
-\hline
-Integration \eqref{truncated_integral} & 949 (18.48\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-16}$ & $6.00\cdot 10^{-15}$\\
-Series \eqref{series_x=mu_2} & 4051 (81.02\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $5.55\cdot 10^{-16}$ & $2.48\cdot 10^{-13}$\\
-	\hline
-	\end{tabular}}
-	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
-	\label{table_methods_case_x_eq_mu_small}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\scalebox{0.9}{
-\begin{tabular}{ccccccc}
-\hline
-Method & Count & min & 25\% & Median & 75\% & max\\
-\hline
-Integration \eqref{truncated_integral} & 4289 (94.31\%) & 0 & $2.22\cdot 10^{-16}$ & $5.55\cdot 10^{-16}$ & $3.77\cdot 10^{-15}$ & $4.81\cdot 10^{-13}$\\
-Series \eqref{series_x=mu_2} & 126 (2.77\%) & 0 & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-16}$ & $1.67\cdot 10^{-15}$ & $2.60\cdot 10^{-13}$\\
-Asymptotic \eqref{expansion_x_eq_mu_large_delta} & 133 (2.92\%) & $5.55\cdot 10^{-16}$ & $1.70\cdot 10^{-14}$ & $2.70\cdot 10^{-14}$ & $4.30\cdot 10^{-14}$ & $1.15\cdot 10^{-13}$\\
-	\hline
-	\end{tabular}}
-	\caption{Precision metrics of the numerical methods used for computing in the large region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
-	\label{table_methods_case_x_eq_mu_large}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\scalebox{0.9}{
-\begin{tabular}{ccccccc}
-\hline
-Method & Count & min & 25\% & Median & 75\% & max\\
-\hline
-Integration \eqref{truncated_integral} & 204 (45.13\%) & $2.22\cdot 10^{-16}$ & $1.73\cdot 10^{-14}$ & $3.22\cdot 10^{-14}$ & $4.73\cdot 10^{-14}$ & $1.19\cdot 10^{-13}$\\
-Series \eqref{series_x=mu_2} & 1 (0.22\%) & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$\\
-Asymptotic \eqref{expansion_x_eq_mu_large_delta} & 247 (54.65\%) & 0 & $3.09\cdot 10^{-14}$ & $5.43\cdot 10^{-14}$ & $9.60\cdot 10^{-14}$ & $-$\\
-	\hline
-	\end{tabular}}
-	\caption{Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
-	\label{table_methods_case_x_eq_mu_large}
-\end{table}
-
-
-\subsection{General case}
-
-TODO: add special section where only integration is used. This is needed since the proposed algorithm is not that reliable compared to those described for special cases.
 
 \begin{table}[H]
 \centering
@@ -1422,8 +1242,8 @@ SciPy & Large (hard) & 70 / 704 (9.94\%) & $0.16\cdot 10^{-1}$ & $*$ & 0.16 & 22
 Paper & Large (hard) & 409 / 704 (58.10\%) & $8.07\cdot 10^{-14}$ & $*$ & 0.07 & 95\\
 	\hline
 	\end{tabular}}
-	\caption{Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu| \to 0$. $*$: infinity.}
-	\label{table_comparison_case_general}
+	\caption{Summary of the accuracy and performance comparison for the general case. Symbol $*$ indicates infinity.}
+	\label{table_comparison_case_general_sumamry}
 \end{table}
 
 \begin{table}[H]
@@ -1479,7 +1299,7 @@ Asymptotic \eqref{general_asymptotic_delta} & 120 (17.05\%) & $2.11\cdot 10^{-15
 	\hline
 	\end{tabular}}
 	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
-	\label{table_methods_case_general_large}
+	\label{table_methods_case_general_large_hard}
 \end{table}
 
 \begin{table}[H]
@@ -1503,6 +1323,187 @@ Paper & Large & 4964 / 5000 (99.28\%) & $8.07\cdot 10^{-14}$ & $*$ & 0.51 & 102\
 \section{Conclusions}
 
 \appendix
+
+\section{Benchmark}
+
+\subsection{Case $\beta = 0$}
+\begin{table}[H]
+\centering
+\scalebox{0.9}
+{
+	\begin{tabular}{c|ccccc}
+	\hline
+	Region & $x$ & $\alpha$ & $\mu$ & $\delta$\\
+	\hline	
+	small & (-5, 5) & (0.001, 5) & (-5, 5) & (0.001, 5)\\
+	large & (-10, 10) & (0.001, 50) & (-10, 10) & (0.001, 50)\\
+	\hline	
+	\end{tabular}
+}
+\caption{Case $\beta = 0$: Parameter range for small and large region.}
+	\label{table_parameters_case_beta_eq_zero}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccc|cc}
+\hline
+Library & Region & Success & Median & Mean &  Time (s) & Time ($\mu s$)\\
+\hline
+SciPy & Small & 3952 / 5000 (79.04\%) &  $9.44\cdot 10^{-16}$ & $9.90 \cdot 10^{-4}$ & 2.45 & 490\\
+Paper & Small & 4988 / 5000 (99.76\%) & $2.66\cdot 10^{-15}$ & $1.53\cdot 10^{-14}$ & 0.11 & 21\\
+	\hline\
+SciPy & Large & 3549 / 4868 (72.90\%) & $1.49\cdot 10^{-14}$ & $5.63\cdot 10^{-3}$ & 2.60 & 535\\
+Paper & Large & 4868 / 4868 (100\%) & $1.11\cdot 10^{-15}$ & $1.27\cdot 10^{-14}$ & 0.22 & 45\\
+	\hline\
+SciPy & Large (hard) & 25 / 132 (18.94\%) & $1.44\cdot 10^{-4}$ & $6.45\cdot 10^{-3}$ & 0.028 & 214\\
+Paper & Large (hard) & 127 / 132 (96.21\%) & $2.46\cdot 10^{-14}$ & $8.84\cdot 10^{-14}$ & 0.002 & 12\\
+	\hline
+	\end{tabular}}
+	\caption{Summary of the accuracy and performance comparison for the case $\beta = 0$.}
+	\label{table_comparison_case_beta_eq_zero_summary}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 4121 (82.42\%) & 0 & $1.22\cdot 10^{-15}$ & $4.15\cdot 10^{-15}$ & $1.44\cdot 10^{-14}$ & $8.40\cdot 10^{-13}$\\
+Series \eqref{expansion_xmu_b0_positive} & 879 (17.58\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $1.11\cdot 10^{-15}$ & $6.58\cdot 10^{-14}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_beta_eq_zero_small}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 3137 (64.44\%) & 0 & $3.33\cdot 10^{-16}$ & $8.88\cdot 10^{-16}$ & $4.11\cdot 10^{-15}$ & $4.84\cdot 10^{-13}$\\
+Series \eqref{expansion_xmu_b0_positive} & 810 (16.64\%) & 0 & $3.33\cdot 10^{-16}$ & $1.33\cdot 10^{-15}$ & $8.41\cdot 10^{-15}$ & $4.28\cdot 10^{-13}$\\
+Asymptotic \eqref{asymptotic_expansion_xmu_b0} & 620 (12.74\%) & 0 & 0 & 0 & $2.54\cdot 10^{-14}$ & $2.31\cdot 10^{-13}$\\
+Asymptotic \eqref{uniform_expansion_a_large} & 301 (6.18\%) & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-15}$ & $1.24\cdot 10^{-14}$ & $3.46\cdot 10^{-14}$ & $2.26\cdot 10^{-13}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the large region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_beta_eq_zero_large}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 22 (16.67\%) & 0 & $6.94\cdot 10^{-16}$ & $3.66\cdot 10^{-15}$ & $1.76\cdot 10^{-15}$ & $5.98\cdot 10^{-14}$\\
+Series \eqref{expansion_xmu_b0_positive} & 7 (5.30\%) & $4.44\cdot 10^{-16}$ & $6.11\cdot 10^{-16}$ & $2.00\cdot 10^{-15}$ & $5.39\cdot 10^{-13}$ & $3.22\cdot 10^{-12}$\\
+Asymptotic \eqref{asymptotic_expansion_xmu_b0} & 100 (75.76\%) & $8.88\cdot 10^{-16}$ & $1.35\cdot 10^{-14}$ & $3.00\cdot 10^{-14}$ & $5.57\cdot 10^{-14}$ & $1.30\cdot 10^{-13}$\\
+Asymptotic \eqref{uniform_expansion_a_large} & 3 (2.27\%) & $5.76\cdot 10^{-13}$ & $8.84\cdot 10^{-13}$ & $1.19\cdot 10^{-12}$ & $1.42\cdot 10^{-12}$ & $1.64\cdot 10^{-12}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_beta_eq_zero_large_hard}
+\end{table}
+
+\subsection{Case $x=\mu$}
+
+\begin{table}[H]
+\centering
+\scalebox{0.9}
+{
+	\begin{tabular}{c|cccc}
+	\hline
+	Region & $\alpha$ & $\beta$ & $\delta$\\
+	\hline	
+	small & (0.001, 5) & (-5, 5) & (0.001, 5)\\
+	large & (0.001, 50) & (-50, 50) & (0.001, 50)\\
+	\hline	
+	\end{tabular}
+}
+\caption{Case $x = \mu$: Parameter range for small and large region.}
+	\label{table_parameters_case_x_eq_mu}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccc|cc}
+\hline
+Library & Region & Success & Median & Mean & Time (s) & Time ($\mu s$)\\
+\hline
+SciPy & Small & 4838 / 5000 (96.76\%) &  $8.88\cdot 10^{-16}$ & $8.40 \cdot 10^{-11}$ & 2.02 & 405\\
+Paper & Small & 5000 / 5000 (100\%) & $2.22\cdot 10^{-16}$ & $9.60\cdot 10^{-16}$ & 0.03 & 7\\
+	\hline\
+SciPy & Large & 3084 / 4548 (67.81\%) & $1.96\cdot 10^{-15}$ & $1.34\cdot 10^{-12}$ & 2.58 & 516\\
+Paper & Large & 4548 / 4548 (100\%) & $6.66\cdot 10^{-16}$ & $8.25\cdot 10^{-15}$ & 0.27 & 53\\
+	\hline\
+SciPy & Large (hard) & 8 / 452 (1.77\%) & $1.26\cdot 10^{-1}$ & $1.65\cdot 10^{-1}$ & 0.104 & 229\\
+Paper & Large (hard) & 425 / 452 (94.03\%) & $3.86\cdot 10^{-14}$ & $2.47\cdot 10^{-12}$ & 0.024 & 53\\
+	\hline
+	\end{tabular}}
+	\caption{Summary of the accuracy and performance comparison for the case $x=\mu$.}
+	\label{table_comparison_case_x_eq_mu_summary}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 949 (18.48\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-16}$ & $6.00\cdot 10^{-15}$\\
+Series \eqref{series_x=mu_2} & 4051 (81.02\%) & 0 & 0 & $2.22\cdot 10^{-16}$ & $5.55\cdot 10^{-16}$ & $2.48\cdot 10^{-13}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_x_eq_mu_small}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 4289 (94.31\%) & 0 & $2.22\cdot 10^{-16}$ & $5.55\cdot 10^{-16}$ & $3.77\cdot 10^{-15}$ & $4.81\cdot 10^{-13}$\\
+Series \eqref{series_x=mu_2} & 126 (2.77\%) & 0 & $2.22\cdot 10^{-16}$ & $4.44\cdot 10^{-16}$ & $1.67\cdot 10^{-15}$ & $2.60\cdot 10^{-13}$\\
+Asymptotic \eqref{expansion_x_eq_mu_large_delta} & 133 (2.92\%) & $5.55\cdot 10^{-16}$ & $1.70\cdot 10^{-14}$ & $2.70\cdot 10^{-14}$ & $4.30\cdot 10^{-14}$ & $1.15\cdot 10^{-13}$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the large region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_x_eq_mu_large}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scalebox{0.9}{
+\begin{tabular}{ccccccc}
+\hline
+Method & Count & min & 25\% & Median & 75\% & max\\
+\hline
+Integration \eqref{truncated_integral} & 204 (45.13\%) & $2.22\cdot 10^{-16}$ & $1.73\cdot 10^{-14}$ & $3.22\cdot 10^{-14}$ & $4.73\cdot 10^{-14}$ & $1.19\cdot 10^{-13}$\\
+Series \eqref{series_x=mu_2} & 1 (0.22\%) & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$ & $7.76\cdot 10^{-13}$\\
+Asymptotic \eqref{expansion_x_eq_mu_large_delta} & 247 (54.65\%) & 0 & $3.09\cdot 10^{-14}$ & $5.43\cdot 10^{-14}$ & $9.60\cdot 10^{-14}$ & $-$\\
+	\hline
+	\end{tabular}}
+	\caption{Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}
+	\label{table_methods_case_x_eq_mu_large_hard}
+\end{table}
+
+
 \section{The function $\Phi\left(\frac{a}{\sqrt{t}} + b\sqrt{t}\right)$}
 In this section, we present some results to be used throughout this work.
 
@@ -1681,39 +1682,39 @@ The modified Bessel function can be stated explicitly for $\nu = n + 1/2$ with $
 K_{n + 1/2}(z) = \sqrt{\frac{\pi}{2z}} \sum_{j=0}^n \frac{(n + j)!}{j! (n-j)!} (2z)^{-j}e^{-z}, \quad z\in \mathcal{C}.
 \end{equation}
 
-\section{The incomplete gamma functions}\label{appendix_incomplete_gamma}
-
-\begin{equation}
-Q(a, x) = \frac{\Gamma(a, x)}{\Gamma(a)}
-\end{equation}
-
-\begin{equation}
-P(a, x) = \frac{\gamma(a, x)}{\Gamma(a)}
-\end{equation}
-
-\begin{equation}
-\Gamma(a, x) + \gamma(a, x) = \Gamma(a)
-\end{equation}
-
-\begin{equation}
-P(a, x) + Q(a, x) = 1
-\end{equation}
-
-\begin{itemize}
-\item Series for integer $a$
-\item Recursions
-\end{itemize}
-
-
-When $a$ is a positive integer the incomplete gamma functions are given by a terminating series of the exponential function $e_n(z)$ \cite[\S 11]{Temme1996}
-\begin{equation}
-e_n(z) = \sum_{j=0}^n \frac{z^j}{j!}.
-\end{equation}
-For $n =0,1,\ldots,$
-\begin{align}
-\gamma(n + 1, z) &= n! \left[1 - e^{-z} e_n(z)\right]\\
-\Gamma(n + 1, z) &= n! e^{-z} e_n(z)
-\end{align}
+%\section{The incomplete gamma functions}\label{appendix_incomplete_gamma}
+%
+%\begin{equation}
+%Q(a, x) = \frac{\Gamma(a, x)}{\Gamma(a)}
+%\end{equation}
+%
+%\begin{equation}
+%P(a, x) = \frac{\gamma(a, x)}{\Gamma(a)}
+%\end{equation}
+%
+%\begin{equation}
+%\Gamma(a, x) + \gamma(a, x) = \Gamma(a)
+%\end{equation}
+%
+%\begin{equation}
+%P(a, x) + Q(a, x) = 1
+%\end{equation}
+%
+%\begin{itemize}
+%\item Series for integer $a$
+%\item Recursions
+%\end{itemize}
+%
+%
+%When $a$ is a positive integer the incomplete gamma functions are given by a terminating series of the exponential function $e_n(z)$ \cite[\S 11]{Temme1996}
+%\begin{equation}
+%e_n(z) = \sum_{j=0}^n \frac{z^j}{j!}.
+%\end{equation}
+%For $n =0,1,\ldots,$
+%\begin{align}
+%\gamma(n + 1, z) &= n! \left[1 - e^{-z} e_n(z)\right]\\
+%\Gamma(n + 1, z) &= n! e^{-z} e_n(z)
+%\end{align}
 
 \bibliographystyle{plain}
 \bibliography{bib}

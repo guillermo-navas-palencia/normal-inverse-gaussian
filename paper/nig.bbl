@@ -36,6 +36,16 @@ F.~E. Benth and J.~\v{S}altyte Benth.
 \newblock {\em International Journal of Theoretical and Applied Finance},
   07(02):177--192, 2004.
 
+\bibitem{BoostLibrary}
+Boost.
+\newblock {Boost C++ Libraries}.
+\newblock \url{http://www.boost.org/}, 2025.
+
+\bibitem{ROOT}
+R.~Brun and et~al.
+\newblock {ROOT - An Object Oriented Data Analysis Framework}.
+\newblock {\em Proceedings AIHENP'96 Workshop}, 1996.
+
 \bibitem{Cody1993}
 W.~J. Cody.
 \newblock {Algorithm 715 : SPECFUN - a portable package of special function
@@ -47,6 +57,11 @@ W.~J. Cody.
 \newblock http://dlmf.nist.gov/, Release 1.0.14 of 2016-12-21.
 \newblock F.~W.~J. Olver, A.~B. {Olde Daalhuis}, D.~W. Lozier, B.~I. Schneider,
   R.~F. Boisvert, C.~W. Clark, B.~R. Miller and B.~V. Saunders, eds.
+
+\bibitem{GSL}
+Galassi et~al.
+\newblock {\em {Gnu Scientific Library: Reference Manual (3rd Ed.)}}.
+\newblock Network Theory Ltd., 2003.
 
 \bibitem{Gaunt2016}
 R.~E. Gaunt.
@@ -69,6 +84,10 @@ A.~Hoorfar and M.~Hassani.
 \newblock {Inequalities on the Lambert function and hyperpower function}.
 \newblock {\em JIPAM. Journal of Inequalities in Pure \& Applied Mathematics},
   9(2), 2008.
+
+\bibitem{scipy}
+E.~Jones, T.~Oliphant, P.~Peterson, et~al.
+\newblock {SciPy}: Open source scientific tools for {Python}, 2001--.
 
 \bibitem{Kalemanova2007}
 A.~Kalemanova, B.~Schmid, and R.~Werner.
