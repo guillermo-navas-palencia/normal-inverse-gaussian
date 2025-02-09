@@ -6,6 +6,11 @@ M.~Abramowitz and I.~A. Stegun.
   mathematical tables}.
 \newblock Dover Publications, 1964.
 
+\bibitem{Bailey2006TanhSinhHQ}
+D.~H. Bailey.
+\newblock {Tanh-Sinh High-Precision Quadrature}.
+\newblock 2006.
+
 \bibitem{Barndorff1997}
 O.~E. Barndorff-Nielsen.
 \newblock {Normal Inverse Gaussian Distributions and Stochastic Volatility
@@ -120,6 +125,13 @@ J.~Segura.
   Bessel functions}.
 \newblock {\em Journal of Mathematical Analysis and Applications},
   526(1):127211, 2023.
+
+\bibitem{Simpson2016}
+M.~C. Simpson, Q.~Yi, and J.~Kalita.
+\newblock Automatic algorithm selection in computational software using machine
+  learning.
+\newblock In {\em 2016 15th IEEE International Conference on Machine Learning
+  and Applications (ICMLA)}, pages 355--360, 2016.
 
 \bibitem{OEIS}
 N.~J.~A. Sloane.

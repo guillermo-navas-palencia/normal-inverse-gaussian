@@ -1069,41 +1069,23 @@ z = \frac{(x-\mu)^2 \alpha}{\omega}.
 \subsubsection{Performance comparison modified Bessel functions $K_0(x)$ and $K_1(x)$}
 The computation of the two special cases, $K_0(x)$ and $K_1(x)$, of the modified Bessel function is required in several series expansions to apply the forward recurrence relation described in the previous section, so it is essential to guarantee a good performance. Since the C++17 standard, the function \texttt{std::cyl\_bessel\_k} was made available, but some recent performance experiments\footnote{\url{https://nag.com/insights/quant-essentials-normdist/}} for the function \texttt{std::erfc} encouraged us to perform a benchmarking exercise. In particular, we compare \texttt{std::cyl\_bessel\_k} with our own C++ implementation of the minimax rational approximation in SPECFUN \cite{Cody1993}, functions \texttt{CALCK0} and \texttt{CALCK1}, respectively.
 
-Setup:
+The experiments have been performed on an AMD Ryzen 7 5825U running at 2.0 GHz using compilers \texttt{clang} 18.1.3 and \texttt{gcc} 13.3.0. with compiler optimization flag \texttt{-O3} on Linux. In this experiment, we evaluate $K_0(x)$ on $10^5$ evenly spaced points in the interval $x \in (0, 700)$. The timings in seconds show that the minimax rational approximation, evaluated on the described hardware and compilers, is approximately two orders of magnitude faster:
 \begin{itemize}
-\item Processor:
-\item Compilers
-\item Number of cases and range.
+\item \texttt{std::cyl\_bessel\_k}: $5.9 \cdot 10^{-3}$.
+\item SPECFUN: $8.1 \cdot 10^{-5}$.
 \end{itemize}
-
-TODO: comment about not claiming the same behaviour in other hardware configurations and compilers (Windows, for instance).
-
+The same differences are obtained when evaluating $K_1(x)$.
 
 \subsection{Numerical integration}\label{algorithmic_numerical_integration}
-
-Double-exponential quadrature: \cite{Takahasi1973}.
-
-Approximation $W_{-1}(z)$ with maximum relative error of $3.5e{-3}$ presented in \cite{Barry2004}
+For the computation of the truncated half-line integral in \eqref{truncated_integral}, we choose the double-exponential quadrature method, also known as tanh-sinh quadrature, originally developed in \cite{Takahasi1973}. The double-exponential quadrature has risen in popularity in scientific computing, and compared to the classical Gaussian quadratures, computing the nodes and weights for integration is fast while effectively handling endpoint singularities. Our C++ implementation is inspired by the Python library \texttt{tanh-sinh} \url{https://github.com/sigma-py/tanh-sinh} which carefully implements many of the optimizations described in \cite{Bailey2006TanhSinhHQ}. In particular, it includes an analysis of the determination of the optimal step size, and the number of quadrature points by level, which demands multiple evaluations of the Lambert $W$ function $W_{-1}(z)$. For that purpose, as an optimization, we replace its exact computation by the approximation in \cite{Barry2004}
 \begin{equation}
-W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + \log(-z)}{2}}\right)^{-1}\right), \quad	a = 0.3205.
+W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + \log(-z)}{2}}\right)^{-1}\right), \quad	a = 0.3205,
 \end{equation}
-
-
-\begin{itemize}
-\item Estimate $h$
-\item Estimate number of iteration by level. Using $W_{-1}(x)$.
-\end{itemize}
-
-TODO: describe algorithm and reference. Use of approximation for Lambert W function and references.
-
-Mention the numerical integration method implemented in other libraries where the NIG distribution is available. QUADPACK \cite{QUADPACK}. Implementation inspired by the Python library \texttt{tanh-sinh} \url{https://github.com/sigma-py/tanh-sinh}.
-
-%\subsubsection{Comparison complementary error function algorithms}
-
+with maximum relative error of $3.5\cdot 10^{-3}$.
 
 \subsection{Implementation}\label{subsection_implementation}
 
-Decision tree. Machine Learning approach. Some details about ML model are out of the scope. The optimal regimes of applicability of the different series and asymptotic expansion could be derived using the information provided by the bounds on their remainders. To decide which method should be used in each regime, one could formulate an optimization problem with two possible objectives, minimization of terms (series complexity) and maximize robustness / reliability, or a blended approach (multi-objective optimization). 
+Decision tree. Machine Learning approach \cite{Simpson2016}. Some details about ML model are out of the scope. The optimal regimes of applicability of the different series and asymptotic expansion could be derived using the information provided by the bounds on their remainders. To decide which method should be used in each regime, one could formulate an optimization problem with two possible objectives, minimization of terms (series complexity) and maximize robustness / reliability, or a blended approach (multi-objective optimization). 
 The achievable accuracy of each method can be effectively estimated by developing rigorous error bounds. In the absence of error bounds (or if the computation is too involved) linear search with a rough estimate (more adequate for asymptotic expansions). PhD thesis section 2.3.2.
 
 Given the computational cost of choosing the optimal method, in practice, a set of rules (logical expressions) generating a suboptimal solution might suffice. Our approach consists of generating a dataset covering small
@@ -1194,7 +1176,7 @@ Expansion $|x-\mu| \to 0$ in terms of incomplete gamma: Numerical instability pr
 
 \section{Numerical experiments}
 
-Publicly available implementations of the normal inverse Gaussian distribution are scarce. For example, this statistical distribution is not included in widely used numerical libraries such as Boost [ref], GNU Scientific Library (GSL) [ref] or CERN ROOT [ref] to mention a few. To the author knowledge the two exceptions are SciPy \texttt{stats.norminvgauss} [ref] and R packages \texttt{GeneralizedHyperbolic} [ref]. The implementation of the cumulative distribution function in both libraries is based on the use of numerical integration. SciPy performs direct computation via adaptive gaussian quadrature [ref - scipy docs]. \texttt{GeneralizedHyperbolic} partitions the real line into multiple regions and the numerical integration routine in used in each to integrate the density function. R integrate performs adaptive quadrature of univariate functions [QUADPACK ref]\footnote{https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/integrate}.
+Publicly available implementations of the normal inverse Gaussian distribution are scarce. For example, this statistical distribution is not included in widely used numerical libraries such as Boost [ref], GNU Scientific Library (GSL) [ref] or CERN ROOT [ref] to mention a few. To the author knowledge the two exceptions are SciPy \texttt{stats.norminvgauss} [ref] and R packages \texttt{GeneralizedHyperbolic} [ref]. The implementation of the cumulative distribution function in both libraries is based on the use of numerical integration. SciPy performs direct computation via adaptive gaussian quadrature [ref - scipy docs]. \texttt{GeneralizedHyperbolic} partitions the real line into multiple regions and the numerical integration routine in used in each to integrate the density function. R integrate performs adaptive quadrature of univariate functions [QUADPACK ref]\footnote{https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/integrate}. Mention the numerical integration method implemented in other libraries where the NIG distribution is available. QUADPACK \cite{QUADPACK}
 
 
 Define hard instance: cases where mpmath does not converge performing computation using 100 digits of precision. These cases are recomputed increasing the precision to 300 digits. Define symbol '-' meaning. Mention an alternative open-source library for arbitrary-precision calculation (arb) to double-check. Mathematica does not seem an option. In addition, using SciPy with double-precision arithmetic serves for time comparison purposes. 
