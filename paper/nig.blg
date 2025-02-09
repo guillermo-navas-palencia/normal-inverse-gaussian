@@ -9,45 +9,45 @@ Warning--entry type for "Mathematica" isn't style-file defined
 --line 968 of file bib.bib
 Warning--empty booktitle in OEIS
 Warning--empty year in OEIS
-You've used 26 entries,
+You've used 29 entries,
             2118 wiz_defined-function locations,
-            672 strings with 8021 characters,
-and the built_in function-call counts, 6791 in all, are:
-= -- 655
-> -- 251
+            694 strings with 8609 characters,
+and the built_in function-call counts, 7779 in all, are:
+= -- 755
+> -- 300
 < -- 1
-+ -- 103
-- -- 76
-* -- 412
-:= -- 1170
-add.period$ -- 78
-call.type$ -- 26
-change.case$ -- 108
++ -- 123
+- -- 92
+* -- 483
+:= -- 1339
+add.period$ -- 88
+call.type$ -- 29
+change.case$ -- 124
 chr.to.int$ -- 0
-cite$ -- 28
-duplicate$ -- 286
-empty$ -- 607
-format.name$ -- 76
-if$ -- 1413
+cite$ -- 31
+duplicate$ -- 320
+empty$ -- 682
+format.name$ -- 92
+if$ -- 1615
 int.to.chr$ -- 0
-int.to.str$ -- 26
-missing$ -- 32
-newline$ -- 133
-num.names$ -- 50
-pop$ -- 137
+int.to.str$ -- 29
+missing$ -- 36
+newline$ -- 148
+num.names$ -- 56
+pop$ -- 152
 preamble$ -- 1
-purify$ -- 91
+purify$ -- 105
 quote$ -- 0
-skip$ -- 181
+skip$ -- 203
 stack$ -- 0
-substring$ -- 362
-swap$ -- 28
+substring$ -- 428
+swap$ -- 31
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 86
+type$ -- 96
 warning$ -- 2
-while$ -- 67
-width$ -- 28
-write$ -- 276
+while$ -- 77
+width$ -- 31
+write$ -- 309
 (There were 3 warnings)

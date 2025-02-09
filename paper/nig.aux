@@ -120,6 +120,7 @@
 \newlabel{saddle_point_1}{{3.109}{16}{}{}{}}
 \newlabel{saddle_point_2}{{3.110}{16}{}{}{}}
 \citation{gradshteyn2007}
+\citation{Ooura1991}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}Integrand in terms of elementary functions}{17}{}\protected@file@percent }
 \newlabel{truncated_integral_sine_transform}{{3.111}{17}{}{}{}}
 \newlabel{sine_transform_complex_integral}{{3.116}{17}{}{}{}}
@@ -127,21 +128,23 @@
 \citation{Cody1993}
 \citation{Xue2018}
 \citation{Xue2018}
-\citation{Barry2004}
+\citation{Cody1993}
 \newlabel{sine_transform_complex_integral_non_oscillatory}{{3.118}{18}{}{}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Algorithmic details and implementation}{18}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Evaluation of Bessel-type expansions}{18}{}\protected@file@percent }
 \newlabel{subsection_evaluation_bessel_expansions}{{4.1}{18}{}{}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Handling large parameters}{18}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Comparison Bessel $K_0(x)$ and $K_1(x)$ algorithms}{18}{}\protected@file@percent }
+\citation{Takahasi1973}
+\citation{Barry2004}
+\citation{QUADPACK}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Performance comparison modified Bessel functions $K_0(x)$ and $K_1(x)$}{19}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Numerical integration}{19}{}\protected@file@percent }
 \newlabel{algorithmic_numerical_integration}{{4.2}{19}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Comparison complementary error function algorithms}{19}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Implementation}{19}{}\protected@file@percent }
 \newlabel{subsection_implementation}{{4.3}{19}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Case $\beta = 0$}{19}{}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Algorithm for special case $\beta = 0$, $F(x; \alpha , 0, \mu , \delta )$}}{19}{}\protected@file@percent }
-\newlabel{alg:case_beta_eq_zero}{{1}{19}{}{}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Case $\beta = 0$}{20}{}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Algorithm for special case $\beta = 0$, $F(x; \alpha , 0, \mu , \delta )$}}{20}{}\protected@file@percent }
+\newlabel{alg:case_beta_eq_zero}{{1}{20}{}{}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Case $x = \mu $}{20}{}\protected@file@percent }
 \@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Algorithm for special case $x=\mu $, $F(\mu ; \alpha , \beta , \mu , \delta )$}}{20}{}\protected@file@percent }
 \newlabel{alg:case_x_eq_mu}{{2}{20}{}{}{}}
@@ -156,10 +159,10 @@
 \newlabel{table_comparison_case_beta_eq_zero}{{6}{21}{}{}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}}{21}{}\protected@file@percent }
 \newlabel{table_methods_case_beta_eq_zero_small}{{7}{21}{}{}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Precision metrics of the numerical methods used for computing in the large region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}}{21}{}\protected@file@percent }
-\newlabel{table_methods_case_beta_eq_zero_large}{{8}{21}{}{}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}}{21}{}\protected@file@percent }
-\newlabel{table_methods_case_beta_eq_zero_large}{{9}{21}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Precision metrics of the numerical methods used for computing in the large region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}}{22}{}\protected@file@percent }
+\newlabel{table_methods_case_beta_eq_zero_large}{{8}{22}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}}{22}{}\protected@file@percent }
+\newlabel{table_methods_case_beta_eq_zero_large}{{9}{22}{}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Case $x = \mu $}{22}{}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Case $x = \mu $: Parameter range for small and large region.}}{22}{}\protected@file@percent }
 \newlabel{table_parameters_case_x_eq_mu}{{10}{22}{}{}{}}
@@ -171,10 +174,9 @@
 \newlabel{table_methods_case_x_eq_mu_large}{{13}{22}{}{}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces Precision metrics of the numerical methods used for computing in the large (hard) region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}}{22}{}\protected@file@percent }
 \newlabel{table_methods_case_x_eq_mu_large}{{14}{22}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}General case}{22}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces General case: Parameter range for small and large region.}}{22}{}\protected@file@percent }
-\newlabel{table_parameters_case_general}{{15}{22}{}{}{}}
-\citation{NIST:DLMF}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}General case}{23}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces General case: Parameter range for small and large region.}}{23}{}\protected@file@percent }
+\newlabel{table_parameters_case_general}{{15}{23}{}{}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {16}{\ignorespaces Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu | \to 0$. $*$: infinity.}}{23}{}\protected@file@percent }
 \newlabel{table_comparison_case_general}{{16}{23}{}{}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {17}{\ignorespaces Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}}{23}{}\protected@file@percent }
@@ -183,29 +185,25 @@
 \newlabel{table_methods_case_general_large}{{18}{23}{}{}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {19}{\ignorespaces Precision metrics of the numerical methods used for computing in the small region. The errors are the absolute relative errors compared to the reference solutions obtained using mpmath. Percentiles: 25, 50 (median), 75.}}{23}{}\protected@file@percent }
 \newlabel{table_methods_case_general_large}{{19}{23}{}{}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {20}{\ignorespaces Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu | \to 0$. $*$: infinity.}}{23}{}\protected@file@percent }
-\newlabel{table_comparison_case_general_integration}{{20}{23}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{23}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {A}The function $\Phi \left (\frac  {a}{\sqrt  {t}} + b\sqrt  {t}\right )$}{23}{}\protected@file@percent }
+\citation{NIST:DLMF}
 \citation{OEIS}
 \citation{Temme2015}
+\@writefile{lot}{\contentsline {table}{\numberline {20}{\ignorespaces Comparison on the number of terms to achieve machine precision with the three series expansions for $|x-\mu | \to 0$. $*$: infinity.}}{24}{}\protected@file@percent }
+\newlabel{table_comparison_case_general_integration}{{20}{24}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusions}{24}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}The function $\Phi \left (\frac  {a}{\sqrt  {t}} + b\sqrt  {t}\right )$}{24}{}\protected@file@percent }
 \newlabel{integral_erfc_ab}{{A.1}{24}{}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Expansions $t$}{24}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {A.1.1}Expansion $t \to 0$}{24}{}\protected@file@percent }
 \newlabel{phi_expansion_incgamma_t_small}{{A.2}{24}{}{}{}}
-\newlabel{phi_expansion_besselk}{{A.8}{24}{}{}{}}
+\newlabel{phi_expansion_besselk}{{A.8}{25}{}{}{}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {A.1.2}Expansion $t \to \infty $}{25}{}\protected@file@percent }
 \newlabel{phi_expansion_incgamma}{{A.9}{25}{}{}{}}
 \newlabel{phi_expansion_at_inf}{{A.13}{25}{}{}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {A.1.3}Expansion $t \to u$}{25}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {A.1.3}Expansion $t \to u$}{26}{}\protected@file@percent }
 \newlabel{phi_expansion_at_u}{{A.14}{26}{}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Expansion $a \to 0$}{26}{}\protected@file@percent }
 \newlabel{phi_expansion_a_small}{{A.17}{26}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Expansion $b \to 0$}{26}{}\protected@file@percent }
-\newlabel{phi_expansion_b_small}{{A.18}{26}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{26}{}\protected@file@percent }
-\newlabel{besselk_x_to_0}{{B.1}{26}{}{}{}}
-\newlabel{besselk_x_to_inf}{{B.2}{26}{}{}{}}
 \citation{Temme1996}
 \bibstyle{plain}
 \bibdata{bib}
@@ -215,6 +213,15 @@
 \bibcite{Bateman1954}{4}
 \bibcite{Benth2004}{5}
 \bibcite{Cody1993}{6}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Expansion $b \to 0$}{27}{}\protected@file@percent }
+\newlabel{phi_expansion_b_small}{{A.18}{27}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}The modified Bessel function of the second kind}{27}{}\protected@file@percent }
+\newlabel{besselk_x_to_0}{{B.1}{27}{}{}{}}
+\newlabel{besselk_x_to_inf}{{B.2}{27}{}{}{}}
+\newlabel{besselk_order_to_inf}{{B.3}{27}{}{}{}}
+\newlabel{besselk_half}{{B.4}{27}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}The incomplete gamma functions}{27}{}\protected@file@percent }
+\newlabel{appendix_incomplete_gamma}{{C}{27}{}{}{}}
 \bibcite{NIST:DLMF}{7}
 \bibcite{Gaunt2016}{8}
 \bibcite{Gil2007}{9}
@@ -223,20 +230,19 @@
 \bibcite{Kalemanova2007}{12}
 \bibcite{Lebedev1972}{13}
 \bibcite{Luke1972}{14}
-\newlabel{besselk_order_to_inf}{{B.3}{27}{}{}{}}
-\newlabel{besselk_half}{{B.4}{27}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {C}The incomplete gamma functions}{27}{}\protected@file@percent }
-\newlabel{appendix_incomplete_gamma}{{C}{27}{}{}{}}
 \bibcite{Madan1990}{15}
 \bibcite{Olver1997}{16}
-\bibcite{Paolella2007}{17}
-\bibcite{Prause1999}{18}
-\bibcite{Segura2023}{19}
-\bibcite{OEIS}{20}
-\bibcite{Temme1990c}{21}
-\bibcite{Temme1996}{22}
-\bibcite{Temme2015}{23}
-\bibcite{Wendel1948}{24}
-\bibcite{Mathematica}{25}
-\bibcite{Xue2018}{26}
+\bibcite{Ooura1991}{17}
+\bibcite{Paolella2007}{18}
+\bibcite{QUADPACK}{19}
+\bibcite{Prause1999}{20}
+\bibcite{Segura2023}{21}
+\bibcite{OEIS}{22}
+\bibcite{Takahasi1973}{23}
+\bibcite{Temme1990c}{24}
+\bibcite{Temme1996}{25}
+\bibcite{Temme2015}{26}
+\bibcite{Wendel1948}{27}
+\bibcite{Mathematica}{28}
+\bibcite{Xue2018}{29}
 \gdef \@abspage@last{28}

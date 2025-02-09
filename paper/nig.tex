@@ -975,7 +975,7 @@ where $\beta$ is neglected from the denominator. To select $N$, we take the simp
 \frac{e^{-(x-\mu)(N-\beta)}}{N} = \frac{\epsilon}{C} \longrightarrow N = \frac{1}{x-\mu}W_0\left(\frac{C e^{(x-\mu)\beta}}{\epsilon}\right).
 \end{equation}
 
-It is crucial to mention that the integrand in \eqref{truncated_integral_sine_transform} becomes highly oscillatory as $\delta$ increases. Therefore, the direct computation in the presence of high oscillations leads to catastrophic cancellation, requiring a prohibited number of quadrature points for convergence. In the literature, there is a myriad of numerical quadrature methods for highly oscillatory integrals, and we encourage the interested reader to explore them.  Nevertheless,  in this work, we decided solely to investigate the application of the steepest descent method, which we found adequate for this case. We transform the integral with sine kernel into the complex form
+It is crucial to mention that the integrand in \eqref{truncated_integral_sine_transform} becomes highly oscillatory as $\delta$ increases. Therefore, the direct computation in the presence of high oscillations leads to catastrophic cancellation, requiring a prohibited number of quadrature points for convergence. In the literature, there is a myriad of numerical quadrature methods for highly oscillatory integrals, for example \cite{Ooura1991}, and we encourage the interested reader to explore them.  Nevertheless,  in this work, we decided solely to investigate the application of the steepest descent method, which we found adequate for this case. We transform the integral with sine kernel into the complex form
 \begin{equation}\label{sine_transform_complex_integral}
 F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{e^{\delta \gamma}}{\pi}\Im\left(\int_0^{\infty} \frac{t e^{-(x-\mu)\left(\sqrt{t^2 + \alpha^2} - \beta\right) + \delta t i}}{\sqrt{t^2 + \alpha^2}\left(\sqrt{t^2 + \alpha^2} - \beta\right)}\mathop{dt}\right), \quad x-\mu > 0,
 \end{equation}
@@ -1066,13 +1066,22 @@ z = \frac{(x-\mu)^2 \alpha}{\omega}.
 %\item Computation of 2F1, use partial sums recursion with Mathematica.
 %\end{itemize}
 
-\subsubsection{Comparison Bessel $K_0(x)$ and $K_1(x)$ algorithms}
+\subsubsection{Performance comparison modified Bessel functions $K_0(x)$ and $K_1(x)$}
+The computation of the two special cases, $K_0(x)$ and $K_1(x)$, of the modified Bessel function is required in several series expansions to apply the forward recurrence relation described in the previous section, so it is essential to guarantee a good performance. Since the C++17 standard, the function \texttt{std::cyl\_bessel\_k} was made available, but some recent performance experiments\footnote{\url{https://nag.com/insights/quant-essentials-normdist/}} for the function \texttt{std::erfc} encouraged us to perform a benchmarking exercise. In particular, we compare \texttt{std::cyl\_bessel\_k} with our own C++ implementation of the minimax rational approximation in SPECFUN \cite{Cody1993}, functions \texttt{CALCK0} and \texttt{CALCK1}, respectively.
 
-Benchmark
+Setup:
+\begin{itemize}
+\item Processor:
+\item Compilers
+\item Number of cases and range.
+\end{itemize}
 
-%\subsection{Evaluation of asymptotic expansions}\label{algorithmic_asymptotic_expansions}
+TODO: comment about not claiming the same behaviour in other hardware configurations and compilers (Windows, for instance).
+
 
 \subsection{Numerical integration}\label{algorithmic_numerical_integration}
+
+Double-exponential quadrature: \cite{Takahasi1973}.
 
 Approximation $W_{-1}(z)$ with maximum relative error of $3.5e{-3}$ presented in \cite{Barry2004}
 \begin{equation}
@@ -1087,9 +1096,9 @@ W_{-1}(z) \approx \log(-z) - \frac{2}{a} \left(1 - \left(1 + a \sqrt{-\frac{1 + 
 
 TODO: describe algorithm and reference. Use of approximation for Lambert W function and references.
 
-Mention the numerical integration method implemented in other libraries where the NIG distribution is available.
+Mention the numerical integration method implemented in other libraries where the NIG distribution is available. QUADPACK \cite{QUADPACK}. Implementation inspired by the Python library \texttt{tanh-sinh} \url{https://github.com/sigma-py/tanh-sinh}.
 
-\subsubsection{Comparison complementary error function algorithms}
+%\subsubsection{Comparison complementary error function algorithms}
 
 
 \subsection{Implementation}\label{subsection_implementation}

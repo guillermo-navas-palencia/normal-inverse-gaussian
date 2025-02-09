@@ -91,14 +91,26 @@ F.~W.~J. Olver.
 \newblock A. K. Peters, Wellesley, MA, 1997.
 \newblock Reprint, with corrections, of original Academic Press edition, 1974.
 
+\bibitem{Ooura1991}
+T.~Ooura and M.~Mori.
+\newblock The double exponential formula for oscillatory functions over the
+  half infinite interval.
+\newblock {\em Journal of Computational and Applied Mathematics},
+  38(1):353--360, 1991.
+
 \bibitem{Paolella2007}
 M.~S. Paolella.
 \newblock {\em Intermediate Probability: A Computational Approach}.
 \newblock John Wiley \& Sons, Ltd, 2007.
 
+\bibitem{QUADPACK}
+R.~Piessens, E.~de~Doncker-Kapenga, C.W. {\"U}berhuber, and D.K. Kahaner.
+\newblock {\em {QUADPACK: A Subroutine Package for Automatic Integration}}.
+\newblock Springer Series in Computational Mathematics. Springer-Verlag, 1983.
+
 \bibitem{Prause1999}
 K.~Prause.
-\newblock {\em {The Generalized Hyperbolic Model: Estiamtion, Financial
+\newblock {\em {The Generalized Hyperbolic Model: Estimation, Financial
   Derivatives, and Risk Measures}}.
 \newblock PhD thesis, University of Freiburg, 1999.
 
@@ -112,6 +124,12 @@ J.~Segura.
 \bibitem{OEIS}
 N.~J.~A. Sloane.
 \newblock The {On}-{L}ine {E}ncyclopedia of {I}nteger {S}equences.
+
+\bibitem{Takahasi1973}
+H.~Takahasi and M.~Mori.
+\newblock {Double Exponential Formulas for Numerical Integration}.
+\newblock {\em Publications of the Research Institute for Mathematical
+  Sciences}, 9:721--741, 1973.
 
 \bibitem{Temme1990c}
 N.~M. Temme.
