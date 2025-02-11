@@ -1206,14 +1206,14 @@ Following, we outline the main observations for each of the cases:
 
 
 \section{Conclusions}
-Ideas:
-\begin{itemize}
-\item The results demonstrate that our algorithm offers a superior balance between speed and accuracy compared to other methods. It is also able to handle edge cases more effectively, making it a suitable choice for a wide range of applications.
-\item A few possible optimizations of the series expansions are worth pointing out, especially for those absolutely convergent. The working precision could also be increased using quadruple precision [ref PhD thesis] and still being faster than numerical integration.
-\item Numerical integration using Gauss-Legendre with a pre-determined number of quadrature points.
-\item Implementation of the integral expressible in terms of elementary functions for small $\delta$. It would also be interesting ...
-\item The techniques used to develop many of the presented expansions are, of course, of interest to devise similar results for the generalized Hyperbolic distribution.
-\end{itemize}
+In the work presented, we developed and implemented an algorithm for fast and robust computation of the normal inverse Gaussian cumulative distribution function.
+With a thorough treatment, we showed the effectiveness of combining multiple series and asymptotic expansions with numerical integration to obtain significant
+acceleration compared to current open-source implementations while keeping accuracy to near machine precision.
+
+Several potential improvements remain to be explored in future work. First, the convergent series expansion could be computed by increasing the working precision to quadruple
+precision using quadruple precision floating-point calculations. Second, it would also be interesting to study using a fixed number of Gauss-Legendre quadrature points instead of the double-exponential quadrature, and it might be worth investigating the performance of implementing the integral expressible in terms of elementary functions for small $\delta$ values.
+
+Lastly, the techniques introduced throughout this work for developing many of the expansions can, of course, be seamlessly extendible to develop efficient algorithms for the computation of the generalized hyperbolic distribution and other special cases, such as the variance gamma distribution.
 
 \section{Acknowledgements}
 

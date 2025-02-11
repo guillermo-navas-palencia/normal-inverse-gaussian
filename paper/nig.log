@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.11.27)  9 FEB 2025 23:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.11.27)  11 FEB 2025 01:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1006,7 +1006,7 @@ L3 programming layer <2024-01-04>
 Here is how much of TeX's memory you used:
  20618 strings out of 474486
  399191 string characters out of 5741866
- 1966542 words of memory out of 5000000
+ 1967542 words of memory out of 5000000
  42481 multiletter control sequences out of 15000+600000
  577044 words of font info for 106 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1050,7 +1050,7 @@ Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Users/g
 uillermo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam
 10.pfb><C:/Users/guillermo/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
 fonts/symbols/msbm10.pfb>
-Output written on nig.pdf (29 pages, 563467 bytes).
+Output written on nig.pdf (29 pages, 563762 bytes).
 PDF statistics:
  264 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
