@@ -83,6 +83,9 @@
 %\newpage
 \section{Introduction}
 
+The normal inverse Gaussian distribution (NIG) is a four-parameter distribution introduced by Barndorff-Nielsen in 1977 [cite].  The NIG is the case of the
+generalized hyperbolic (GH) distribution when the parameter lambda = -1/2.
+
 Applications:
 \begin{itemize}
 \item Generalized Hyperbolic distribution \cite{Prause1999}
@@ -91,10 +94,22 @@ Applications:
 \item NIG in volatility modelling: \cite{Barndorff1997}
 \end{itemize}
 
-The use of the modified Bessel function of the second kind, here simply called modified Bessel function, will be omnipresent.
+Applications:
+- Some of the numerous applications include financial modelling.
+- Particularly relevant in finance.
+- Distribution in the symmetric case widely used (popular) in finance for modelling returns in mathhematical finance.
+- Statistical applications: Clustering with the multivariate normal inverse Gaussian distribution
+
+In this work, we focus on computational aspects...
+
+Paper structure
 
 
 \section{Distribution properties}
+
+As the NIG distribution is a special case of the GH distribution, distributional properties can be inferred from results for the GH distribution.
+Convolution and infinity divisible.
+
 
 REVIEW: \cite{Paolella2007}. A special type of mixture, called the variance-mean mixture of normals. It is defined as a mixture of normal distributions such that the mean and variance of the mixed distribution is in a special (affine-linear) relation. Consider $Z$ is a positive random variable following an incomplete Gaussian distribution, and $\mu$ and $\beta$ are constants. The variance-mean mixture distribution
 \begin{equation}
@@ -118,6 +133,8 @@ NOTES
 \end{itemize}
 
 \subsection{Density function}
+The normal inverse Gaussian (NIG) distribution denote by NIG(alpha, beta, mu, delta) has probability density function (PDF)...
+
 The density function is given as
 \begin{equation}
 f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alpha\sqrt{\delta^2 + (x-\mu)^2}\right)}{\sqrt{\delta^2 + (x-\mu)^2}} e^{\delta \gamma + \beta(x-\mu)}
@@ -125,7 +142,8 @@ f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alp
 
 Parameterization: Standard case $\mu = 0$ and $\delta = 1$. The parameters have the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. Where $\mu$ is the location of the density, $\beta$ is the skewness parameter, $\alpha$ measures the heaviness of the tails.
 
-If the parameter $\beta \neq 0$, then the distribution will usually be skewed.
+If the parameter $\beta \neq 0$, then the distribution will usually be skewed. 
+The use of the modified Bessel function of the second kind, here simply called modified Bessel function, will be omnipresent.
 
 \subsection{Cumulative distribution function}\label{properties_cdf}
 The cumulative distribution function is given by
