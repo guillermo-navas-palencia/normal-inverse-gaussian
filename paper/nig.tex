@@ -981,16 +981,16 @@ where we use the fact that $|\sin(\delta t)| \le 1$, and a bound for the latter 
 \end{equation*}
 Hence, one can obtain
 \begin{equation}
-|T_N| \le \sqrt{\frac{\pi}{2}} \frac{\sqrt{N^2 + \alpha^2}(\sqrt{N^2 + \alpha^2} + 1)}{(\sqrt{N^2 + \alpha^2} - \beta)\left(N^2 + \alpha^2\right)^{3/4}} e^{-(x-\mu)\left(\sqrt{N^2 + \alpha^2} - \beta\right)}.
+|T_N| \le  \sqrt{\frac{\pi}{2}}\frac{\sqrt{N^2 + \alpha^2}}{\sqrt{N^2 + \alpha^2} - \beta} \frac{(x-\mu)\sqrt{N^2 + \alpha^2} + 1}{\left((x-\mu) \sqrt{N^2 + \alpha^2}\right)^{3/2}} e^{-(x-\mu)\left(\sqrt{N^2 + \alpha^2} - \beta\right)}.
 \end{equation}
 \end{remark}
-Although the derived bounds are accurate, the inversion to obtain $N$ is far from trivial. In contrast, a practical bound, improving as $N$ increases $(N \gg \alpha > |\beta|)$ is given by
+Although the derived bounds are accurate, the inversion to obtain $N$ is far from trivial. In contrast, a practical approximation, improving as $N$ increases $(N \gg \alpha > |\beta|)$ is given by
 \begin{equation}
-|T_N| \le \frac{e^{-(x-\mu)(N - \beta)}}{N - \beta} \approx \frac{e^{-(x-\mu)(N-\beta)}}{N},
+|T_N| \approx \sqrt{\frac{\pi}{2}} \frac{e^{-(x-\mu)N}}{(x-\mu) N}.
 \end{equation}
-where $\beta$ is neglected from the denominator. To select $N$, we take the simplified bound and equate to a prescribed accuracy $\epsilon$. The solution admits a closed-form in terms of $W_0(z)$
+To select $N$, we take the simplified bound and equate to a prescribed accuracy $\epsilon$. The solution admits a closed-form in terms of $W_0(z)$
 \begin{equation}
-\frac{e^{-(x-\mu)(N-\beta)}}{N} = \frac{\epsilon}{C} \longrightarrow N = \frac{1}{x-\mu}W_0\left(\frac{C e^{(x-\mu)\beta}}{\epsilon}\right).
+\frac{e^{-(x-\mu)N}}{(x-\mu)N} = \frac{\epsilon}{C} \longrightarrow N = \frac{1}{x-\mu}W_0\left(\frac{C \sqrt{\frac{\pi}{2}}}{\epsilon}\right).
 \end{equation}
 
 It is crucial to mention that the integrand in \eqref{truncated_integral_sine_transform} becomes highly oscillatory as $\delta$ increases. Therefore, the direct computation in the presence of high oscillations leads to catastrophic cancellation, requiring a prohibited number of quadrature points for convergence. In the literature, there is a myriad of numerical quadrature methods for highly oscillatory integrals, for example \cite{Ooura1991}, and we encourage the interested reader to explore them.  Nevertheless,  in this work, we decided solely to investigate the application of the steepest descent method, which we found adequate for this case. We transform the integral with sine kernel into the complex form
