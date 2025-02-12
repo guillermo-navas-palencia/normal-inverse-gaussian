@@ -143,16 +143,16 @@ Y.~L. Luke.
 \newblock Inequalities for generalized hypergeometric functions.
 \newblock {\em Journal of Approximation Theory}, 5(1):41--65, 1972.
 
-\bibitem{Madan1990}
-D.~B. Madan and E.~Seneta.
-\newblock {The Variance Gamma (V.G.) Model for Share Market Returns}.
-\newblock {\em The Journal of Business}, 63(4):511--524, 1990.
-
 \bibitem{mpmath}
 The mpmath~development team.
 \newblock {\em mpmath: a {P}ython library for arbitrary-precision
   floating-point arithmetic (version 1.3.0)}, 2023.
 \newblock {\tt http://mpmath.org/}.
+
+\bibitem{Navas-Palencia_thesis2016}
+G.~Navas-Palencia.
+\newblock Portfolio credit risk: Models and numerical methods.
+\newblock Master's thesis, Universitat Polit\`{e}cnica de Catalunya, 2016.
 
 \bibitem{Navas-Palencia2018a}
 G.~Navas-Palencia.

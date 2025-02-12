@@ -12,43 +12,43 @@ Warning--empty booktitle in OEIS
 Warning--empty year in OEIS
 You've used 46 entries,
             2118 wiz_defined-function locations,
-            802 strings with 11452 characters,
-and the built_in function-call counts, 12953 in all, are:
-= -- 1262
-> -- 520
+            798 strings with 11417 characters,
+and the built_in function-call counts, 12814 in all, are:
+= -- 1248
+> -- 514
 < -- 5
-+ -- 211
-- -- 162
-* -- 792
-:= -- 2191
++ -- 209
+- -- 160
+* -- 773
+:= -- 2176
 add.period$ -- 138
 call.type$ -- 46
-change.case$ -- 206
+change.case$ -- 205
 chr.to.int$ -- 0
 cite$ -- 49
-duplicate$ -- 533
-empty$ -- 1113
-format.name$ -- 162
-if$ -- 2720
+duplicate$ -- 530
+empty$ -- 1100
+format.name$ -- 160
+if$ -- 2690
 int.to.chr$ -- 0
 int.to.str$ -- 46
-missing$ -- 50
+missing$ -- 49
 newline$ -- 232
 num.names$ -- 90
 pop$ -- 248
 preamble$ -- 1
-purify$ -- 172
+purify$ -- 171
 quote$ -- 0
-skip$ -- 372
+skip$ -- 370
 stack$ -- 0
-substring$ -- 718
-swap$ -- 82
+substring$ -- 693
+swap$ -- 81
 text.length$ -- 5
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 162
 warning$ -- 3
-while$ -- 126
+while$ -- 124
 width$ -- 48
 write$ -- 488
 (There were 4 warnings)

@@ -83,9 +83,9 @@
 %\newpage
 \section{Introduction}
 
-The normal inverse Gaussian distribution (NIG) is a flexible four-parameter distribution introduced by Barndorff-Nielsen in 1977 \cite{Barndorff1977}, which arises as a particular case of the generalized hyperbolic distribution. In the last two decades, it has gained significant popularity in various fields due to its desirable properties and the ability to model a wide range of shapes,  particularly suited for skewed and heavy-tailed data. 
+The normal inverse Gaussian (NIG) distribution is a flexible four-parameter distribution introduced by Barndorff-Nielsen in 1977 \cite{Barndorff1977}, which arises as a particular case of the generalized hyperbolic (GH) distribution. In the last two decades, it has gained significant popularity in various fields due to its desirable properties and the ability to model a wide range of shapes,  particularly suited for skewed and heavy-tailed data. 
 
-The NIG distribution was initially introduced in the context of financial data modelling, with applications in option pricing to capture non-Gaussian asset returns \cite{Eriksson2009}, credit risk management and credit derivatives for pricing collateralized default obligations \cite{Prause1999, Kalemanova2007}, stochastic modelling of energy derivatives \cite{Benth2004} and stochastic volatility modelling \cite{Barndorff1997}. Besides the numerous applications in financial modelling, it has found applications in wireless communication and remote sensing \cite{Hanssen2001, Solbo2004}, turbulence and fluid dynamics \cite{Hedevang2013}, astrophysics \cite{Louarn2024} and reliability analysis \cite{Xu2022}.
+The NIG distribution was initially introduced in the context of financial data modelling, with applications in option pricing to capture non-Gaussian asset returns \cite{Eriksson2009}, portfolio risk management and credit derivatives for pricing collateralized default obligations \cite{Prause1999, Kalemanova2007, Navas-Palencia_thesis2016}, stochastic modelling of energy derivatives \cite{Benth2004} and stochastic volatility modelling \cite{Barndorff1997}. Besides the numerous applications in financial modelling, it has found applications in wireless communication and remote sensing \cite{Hanssen2001, Solbo2004}, turbulence and fluid dynamics \cite{Hedevang2013}, astrophysics \cite{Louarn2024} and reliability analysis \cite{Xu2022}.
 %
 %\paragraph{ChatGPT comments}
 %\begin{itemize}
@@ -132,62 +132,54 @@ The outline of the paper is as follows. In Section 2, we revisit the distributio
 
 \section{Distribution properties}
 
-As the NIG distribution is a special case of the GH distribution, distributional properties can be inferred from results for the GH distribution.
-Convolution and infinity divisible.
-
-
-REVIEW: \cite{Paolella2007}. A special type of mixture, called the variance-mean mixture of normals. It is defined as a mixture of normal distributions such that the mean and variance of the mixed distribution is in a special (affine-linear) relation. Consider $Z$ is a positive random variable following an incomplete Gaussian distribution, and $\mu$ and $\beta$ are constants. The variance-mean mixture distribution
+The NIG distribution is defined as a normal variance-mean mixture distribution, where the mixing distribution for the variance follows an inverse Gaussian (IG) distribution \cite{Paolella2007}. Consider $Z$ is a positive random variable following an distribution, $Z \sim \mathcal{IG}(\delta \gamma, \gamma^2)$ and $\mu$ and $\beta$ are constants. If $X \sim \mathcal{NIG}(\alpha, \beta, \mu, \delta)$, then
 \begin{equation}
-Z \sim \mathcal{IG}(\delta \gamma, \gamma^2), \quad X \,|\, Z \sim \mathcal{N}(\mu + \beta Z, Z),
+X \,|\, Z \sim \mathcal{N}(\mu + \beta Z, Z).
 \end{equation}
-where $\gamma = \sqrt{\alpha^2 - \beta^2}$. The domain of the parameters is
+The NIG distribution parameters\footnote{We use the parameterization dominating the literature. We refer to \cite{Paolella2007} and \cite{Prause1999} for an overview of different parameterizations.} have the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. If $\beta = 0$, the distribution is symmetric and centered around $\mu$. The domain of the parameters is
 \begin{equation}
 0 \le |\beta| < \alpha, \quad \mu \in \mathbb{R}, \quad \delta  > 0.
 \end{equation}
+In addition, two related parameters are typically used to simplify notation are
+\begin{equation}
+\omega = \sqrt{(x-\mu)^2 + \delta^2}, \quad \gamma = \sqrt{\alpha^2 - \beta^2}.
+\end{equation}
 
-Define $\omega = \sqrt{(x-\mu)^2 + \delta^2}$.
+Since the NIG distribution is a special case of the GH distribution, distributional properties, such as being closed under convolution and infinity divisibility, can also be inferred from results for the GH distribution.
 
-NOTES
-\begin{itemize}
-\item $\mu$: location parameter
-\item Scale-invariant parameterization
-\item Moment generating function
-\item First four moments and reference to the paper of generalized hyperbolic distribution moments.
-\item The family of generalized hyperbolic distributions is obtained by mixing normals using the generalized inverse Gaussian family of weights.
-\item Parameterization options. Use of the parameterization dominating the literature.
-\end{itemize}
+%\begin{itemize}
+%\item Scale-invariant parameterization
+%\item Moment generating function
+%\item First four moments and reference to the paper of generalized hyperbolic distribution moments.
+%\item The family of generalized hyperbolic distributions is obtained by mixing normals using the generalized inverse Gaussian family of weights.
+%\item Parameterization options. Use of the parameterization dominating the literature.
+%\end{itemize}
 
 \subsection{Density function}
-The normal inverse Gaussian (NIG) distribution denote by NIG(alpha, beta, mu, delta) has probability density function (PDF)...
-
-The density function is given as
+The NIG distribution has probability density function
 \begin{equation}
-f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alpha\sqrt{\delta^2 + (x-\mu)^2}\right)}{\sqrt{\delta^2 + (x-\mu)^2}} e^{\delta \gamma + \beta(x-\mu)}
+f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alpha\sqrt{\delta^2 + (x-\mu)^2}\right)}{\sqrt{\delta^2 + (x-\mu)^2}} e^{\delta \sqrt{\alpha^2 - \beta^2} + \beta(x-\mu)} = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alpha\omega\right)}{\omega} e^{\delta \gamma + \beta(x-\mu)},
 \end{equation}
-
-Parameterization: Standard case $\mu = 0$ and $\delta = 1$. The parameters have the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. Where $\mu$ is the location of the density, $\beta$ is the skewness parameter, $\alpha$ measures the heaviness of the tails.
-
-If the parameter $\beta \neq 0$, then the distribution will usually be skewed. 
-The use of the modified Bessel function of the second kind, here simply called modified Bessel function, will be omnipresent.
+where $K_1(x)$ is the modified Bessel function of the second kind \cite[\S 10]{NIST:DLMF},  hereafter called modified Bessel function. This function is ubiquitous throughout this work, and for completeness and as a reference, some of its main properties are described in the Appendix \ref{appendix_modified_bessel}. As an additional note, the case $\mu = 0$ and $\delta = 1$ is often defined as the standardized form.
 
 \subsection{Cumulative distribution function}\label{properties_cdf}
-The cumulative distribution function is given by
+The cumulative distribution function has the common integral representation,
 \begin{equation}\label{integral_k1}
-F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{x} \frac{K_1\left(\alpha\sqrt{\delta^2 + (t-\mu)^2}\right)}{\sqrt{\delta^2 + (t-\mu)^2}} e^{\beta(t-\mu)} \mathop{dt}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{x} \frac{K_1\left(\alpha\sqrt{\delta^2 + (t-\mu)^2}\right)}{\sqrt{\delta^2 + (t-\mu)^2}} e^{\beta(t-\mu)} \mathop{dt}.
 \end{equation}
 
+On the other hand, using the variance-mean mixture distribution properties, we have
 \begin{equation}\label{integral_phi}
-F(x; \alpha, \beta, \mu, \delta) = \frac{\delta}{\sqrt{2\pi}}\int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{(\delta - \gamma t)^2}{2t}} \mathop{dt}
+F(x; \alpha, \beta, \mu, \delta) = \frac{\delta}{\sqrt{2\pi}}\int_{0}^{\infty} \Phi\left(\frac{x - (\mu +\beta t)}{\sqrt{t}}\right) t^{-3/2} e^{-\frac{(\delta - \gamma t)^2}{2t}} \mathop{dt},
 \end{equation}
-
-Also denote the reflection formula
+where $\Phi(x)$ is standard normal cumulative distribution function. From the latter integral, it follows from the reflection formula of $\Phi(x) = 1 - \Phi(-x)$ that
 \begin{equation}\label{cdf_mirror}
-\tilde{F}(x; \alpha, \beta, \mu, \delta) = 1- F(-x; \alpha, -\beta, -\mu, \delta),
+\tilde{F}(x; \alpha, \beta, \mu, \delta) = 1- F(-x; \alpha, -\beta, -\mu, \delta).
 \end{equation}
-which follows from the reflection formula of $\Phi(x) = 1 - \Phi(-x)$.
+The relation becomes critical to extend the domain of applicability of multiple expansions derived in the next section. Furthermore, it can also help to minimize numerical issues when computing the complementarity cumulative distribution function or survival function.
 
 \subsubsection{Alternative integral representations}
-We obtain the following alternative integral representations in terms other special functions. More interestingly, we derive an integral representation in terms of elementary functions. Although these representations have restrictions on the sign of $x-\mu$, the use of the reflection formula \eqref{cdf_mirror} permits the computation on the whole domain.
+We obtain the following alternative integral representations in terms of other special functions. More interestingly, we derive an integral representation in terms of elementary functions. Although these representations have restrictions on the sign of $x-\mu$, the use of the reflection formula \eqref{cdf_mirror} permits the computation on the whole domain.
 
 \begin{proposition} An incomplete Laplace-type integral representation in terms of modified Bessel function $K_0(x)$ is given by
 \begin{equation}\label{integral_k0}
@@ -259,7 +251,7 @@ where
 \tau = \arcsinh\left(\frac{x - \mu}{\delta}\right) - \theta.
 \end{equation}
 
-To conclude, a discussion on the numerical integration methods for effective computation of the previous integrals is presented in Section \ref{section_numerical_integration}.
+To conclude, a discussion on the numerical integration methods for effective computation of some the previous integrals is presented in Section \ref{section_numerical_integration}.
 
 %\subsection{Moments and cumulants}
 %
@@ -1720,7 +1712,7 @@ The Hermite-type expansion for the case $b \to 0$ is obtained analogously after 
 F(t; a, b) = \Phi\left(\frac{a}{\sqrt{t}}\right) + e^{-\frac{a^2 t}{2}}\sqrt{\frac{t}{2\pi}} \sum_{k=0}^{\infty}\frac{(-1)^k b^{k+1}}{(k + 1)!}\left(\frac{t}{2}\right)^{k/2} H_k\left(\frac{a}{\sqrt{2t}}\right).
 \end{equation}
 
-\section{The modified Bessel function of the second kind}
+\section{The modified Bessel function of the second kind}\label{appendix_modified_bessel}
 For small values of $x$ we have
 \begin{equation}\label{besselk_x_to_0}
 K_{\nu}(x) \sim \frac{2^{|\nu| - 1} \Gamma(|\nu|)}{x^{|\nu|}}, \quad x \to 0, \quad \nu \neq 0.
