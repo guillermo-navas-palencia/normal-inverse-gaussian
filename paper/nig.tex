@@ -78,7 +78,11 @@
 \begin{document}
 \maketitle
 
-\abstract{Abstract}
+\abstract{
+In this paper, we obtain various series and asymptotic expansions involving the modified Bessel function of the second kind for the cumulative distribution of the normal inverse Gaussian distribution. The new expansions accelerate computations and complement the standard numerical integration available in current software. We also provide a detailed description of the algorithm and its corresponding implementation in C++. The performance and accuracy of the algorithm are extensively tested and benchmarked with open-source implementations, offering superior accuracy and speed-ups of a factor from 5 to 60.
+}
+
+
 %\tableofcontents
 %\newpage
 \section{Introduction}
@@ -136,7 +140,7 @@ The NIG distribution is defined as a normal variance-mean mixture distribution, 
 \begin{equation}
 X \,|\, Z \sim \mathcal{N}(\mu + \beta Z, Z).
 \end{equation}
-The NIG distribution parameters\footnote{We use the parameterization dominating the literature. We refer to \cite{Paolella2007} and \cite{Prause1999} for an overview of different parameterizations.} have the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. If $\beta = 0$, the distribution is symmetric and centered around $\mu$. The domain of the parameters is
+The NIG distribution parameters\footnote{We use the parameterization dominating the literature. We refer to \cite{Paolella2007} and \cite{Prause1999} for an overview of different parameterizations.} admit the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. If $\beta = 0$, the distribution is symmetric and centered around $\mu$. The domain of the parameters is
 \begin{equation}
 0 \le |\beta| < \alpha, \quad \mu \in \mathbb{R}, \quad \delta  > 0.
 \end{equation}
@@ -145,7 +149,7 @@ In addition, two related parameters are typically used to simplify notation are
 \omega = \sqrt{(x-\mu)^2 + \delta^2}, \quad \gamma = \sqrt{\alpha^2 - \beta^2}.
 \end{equation}
 
-Since the NIG distribution is a special case of the GH distribution, distributional properties, such as being closed under convolution and infinity divisibility, can also be inferred from results for the GH distribution.
+Since the NIG distribution is a special case of the GH distribution, distributional properties, such as being closed under convolution and infinite divisibility, can also be inferred from results for the GH distribution.
 
 %\begin{itemize}
 %\item Scale-invariant parameterization
@@ -176,7 +180,7 @@ where $\Phi(x)$ is standard normal cumulative distribution function. From the la
 \begin{equation}\label{cdf_mirror}
 \tilde{F}(x; \alpha, \beta, \mu, \delta) = 1- F(-x; \alpha, -\beta, -\mu, \delta).
 \end{equation}
-The relation becomes critical to extend the domain of applicability of multiple expansions derived in the next section. Furthermore, it can also help to minimize numerical issues when computing the complementarity cumulative distribution function or survival function.
+The relation becomes critical to extend the domain of applicability of multiple expansions derived in the next section. Furthermore, it can also help to minimize numerical issues when computing the complementarity cumulative distribution function or survival function. Finally, authors in \cite{Kalemanova2007} propose applying a logarithmic transformation to transform the interval of integration to $[0, 1]$, arguing better numerics.
 
 \subsubsection{Alternative integral representations}
 We obtain the following alternative integral representations in terms of other special functions. More interestingly, we derive an integral representation in terms of elementary functions. Although these representations have restrictions on the sign of $x-\mu$, the use of the reflection formula \eqref{cdf_mirror} permits the computation on the whole domain.
@@ -1257,7 +1261,7 @@ Second, it would also be interesting to evaluate the use of fixed-order Gauss-Le
 Lastly, the techniques introduced throughout this work for developing many of the expansions can, of course, be seamlessly extendible to develop efficient algorithms for the computation of the generalized hyperbolic distribution and other special cases, such as the variance gamma distribution.
 
 \section{Acknowledgements}
-Amparo Gil and Javier Segura from the University of Cantabria for reviewing the preprint version and suggestions.
+We would like to thank Amparo Gil and Javier Segura from the University of Cantabria for reviewing the preprint version and suggestions / guidance / useful remarks.
 
 \appendix
 
@@ -1713,24 +1717,23 @@ F(t; a, b) = \Phi\left(\frac{a}{\sqrt{t}}\right) + e^{-\frac{a^2 t}{2}}\sqrt{\fr
 \end{equation}
 
 \section{The modified Bessel function of the second kind}\label{appendix_modified_bessel}
-For small values of $x$ we have
+In this appendix, we state some properties used in this work. For small values of $x$ we have
 \begin{equation}\label{besselk_x_to_0}
 K_{\nu}(x) \sim \frac{2^{|\nu| - 1} \Gamma(|\nu|)}{x^{|\nu|}}, \quad x \to 0, \quad \nu \neq 0.
 \end{equation}
 
-Asymptotic behaviour with respect to the argument
+The asymptotic behaviour with respect to the argument $x$
 \begin{equation}\label{besselk_x_to_inf}
-K_{\nu}(x) \sim \sqrt{\frac{\pi}{2x}} e^{-x}, \quad x \to \infty, \quad \nu \in \mathbb{R}.
+K_{\nu}(x) \sim \sqrt{\frac{\pi}{2x}} e^{-x}, \quad x \to \infty, \quad \nu \in \mathbb{R},
 \end{equation}
-
-Asymptotic behaviour with respect to the order
+and with respect to the order $\nu$
 \begin{equation}\label{besselk_order_to_inf}
 K_{\nu}(x) \sim \sqrt{\frac{\pi}{2\nu}}\left(\frac{ex}{2\nu}\right)^{-\nu}, \quad \nu \to \infty, \quad x \neq 0.
 \end{equation}
 
-The modified Bessel function can be stated explicitly for $\nu = n + 1/2$ with $n \in \mathbb{Z}$,
+For $\nu = n + 1/2$ with $n \in \mathbb{Z}$, the modified Bessel function can be stated explicitly
 \begin{equation}\label{besselk_half}
-K_{n + 1/2}(z) = \sqrt{\frac{\pi}{2z}} \sum_{j=0}^n \frac{(n + j)!}{j! (n-j)!} (2z)^{-j}e^{-z}, \quad z\in \mathcal{C}.
+K_{n + 1/2}(z) = \sqrt{\frac{\pi}{2z}} \sum_{j=0}^n \frac{(n + j)!}{j! (n-j)!} (2z)^{-j}e^{-z}, \quad z\in \mathbb{C}.
 \end{equation}
 
 %\section{The incomplete gamma functions}\label{appendix_incomplete_gamma}
