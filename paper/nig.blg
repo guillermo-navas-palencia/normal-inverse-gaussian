@@ -10,45 +10,45 @@ Warning--entry type for "Mathematica" isn't style-file defined
 Warning--empty booktitle in Bailey2006TanhSinhHQ
 Warning--empty booktitle in OEIS
 Warning--empty year in OEIS
-You've used 37 entries,
+You've used 46 entries,
             2118 wiz_defined-function locations,
-            737 strings with 9676 characters,
-and the built_in function-call counts, 9862 in all, are:
-= -- 949
-> -- 395
-< -- 2
-+ -- 161
-- -- 122
-* -- 583
-:= -- 1692
-add.period$ -- 111
-call.type$ -- 37
-change.case$ -- 159
+            802 strings with 11452 characters,
+and the built_in function-call counts, 12953 in all, are:
+= -- 1262
+> -- 520
+< -- 5
++ -- 211
+- -- 162
+* -- 792
+:= -- 2191
+add.period$ -- 138
+call.type$ -- 46
+change.case$ -- 206
 chr.to.int$ -- 0
-cite$ -- 40
-duplicate$ -- 410
-empty$ -- 864
-format.name$ -- 122
-if$ -- 2060
+cite$ -- 49
+duplicate$ -- 533
+empty$ -- 1113
+format.name$ -- 162
+if$ -- 2720
 int.to.chr$ -- 0
-int.to.str$ -- 37
-missing$ -- 41
-newline$ -- 187
-num.names$ -- 72
-pop$ -- 210
+int.to.str$ -- 46
+missing$ -- 50
+newline$ -- 232
+num.names$ -- 90
+pop$ -- 248
 preamble$ -- 1
-purify$ -- 134
+purify$ -- 172
 quote$ -- 0
-skip$ -- 274
+skip$ -- 372
 stack$ -- 0
-substring$ -- 496
-swap$ -- 50
-text.length$ -- 2
+substring$ -- 718
+swap$ -- 82
+text.length$ -- 5
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 126
+type$ -- 162
 warning$ -- 3
-while$ -- 95
-width$ -- 39
-write$ -- 388
+while$ -- 126
+width$ -- 48
+write$ -- 488
 (There were 4 warnings)

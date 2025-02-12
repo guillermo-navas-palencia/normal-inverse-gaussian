@@ -83,26 +83,51 @@
 %\newpage
 \section{Introduction}
 
-The normal inverse Gaussian distribution (NIG) is a four-parameter distribution introduced by Barndorff-Nielsen in 1977 [cite].  The NIG is the case of the
-generalized hyperbolic (GH) distribution when the parameter lambda = -1/2.
+The normal inverse Gaussian distribution (NIG) is a flexible four-parameter distribution introduced by Barndorff-Nielsen in 1977 \cite{Barndorff1977}, which arises as a particular case of the generalized hyperbolic distribution. In the last two decades, it has gained significant popularity in various fields due to its desirable properties and the ability to model a wide range of shapes,  particularly suited for skewed and heavy-tailed data. 
 
-Applications:
-\begin{itemize}
-\item Generalized Hyperbolic distribution \cite{Prause1999}
-\item Variance-Gamma \cite{Madan1990}
-\item NIG in Energy markets: \cite{Benth2004}
-\item NIG in volatility modelling: \cite{Barndorff1997}
-\end{itemize}
+The NIG distribution was initially introduced in the context of financial data modelling, with applications in option pricing to capture non-Gaussian asset returns \cite{Eriksson2009}, credit risk management and credit derivatives for pricing collateralized default obligations \cite{Prause1999, Kalemanova2007}, stochastic modelling of energy derivatives \cite{Benth2004} and stochastic volatility modelling \cite{Barndorff1997}. Besides the numerous applications in financial modelling, it has found applications in wireless communication and remote sensing \cite{Hanssen2001, Solbo2004}, turbulence and fluid dynamics \cite{Hedevang2013}, astrophysics \cite{Louarn2024} and reliability analysis \cite{Xu2022}.
+%
+%\paragraph{ChatGPT comments}
+%\begin{itemize}
+%\item Finance and Risk Management / Econometrics / Insurance and Actual Science [TO COMPRESS - SIMILAR]:
+%\begin{itemize}
+%\item Stock Returns Modeling: The NIG distribution is often used to model financial returns, as it can capture asymmetry and heavy tails better than the normal distribution.
+%\item Option Pricing: It provides a better fit for asset returns than normal models, improving risk assessment in derivative pricing. \cite{Eriksson2009}.
+%\item Value at Risk (VaR) and Expected Shortfall (ES): Used in risk management to estimate the probability of extreme losses.
+%\item Value at Risk (VaR) and Expected Shortfall (ES): Used in risk management to estimate the probability of extreme losses.
+%\item Credit Risk Analysis: Helps in modeling credit spreads and default probabilities.
+%\item Modeling Claim Size Distributions: Provides a better fit for insurance claims, which often exhibit heavy tails.
+%\item Reinsurance Pricing: Helps in assessing extreme loss probabilities.
+%\item Generalized Hyperbolic distribution \cite{Prause1999} \cite{Kalemanova2007}
+%\item Variance-Gamma \cite{Madan1990}
+%\item NIG in Energy markets: 
+%\item NIG in volatility modelling: \cite{Barndorff1997}
+%\end{itemize}
+%\item Engineering and Signal Processing
+%\begin{itemize}
+%\item Wireless Communication: Used to model signal fading in communication channels. \cite{Hanssen2001}. Impulsive noise in sonar, radar, and communication channels. Impulsive noise in the ocean acoustic channel.
+%\item Image Processing: Applied in edge detection and texture modeling. \cite{Solbo2004}.
+%\end{itemize}
+%\item Physics and Geophysics
+%\begin{itemize}
+%\item Turbulence and Fluid Dynamics: Used in modeling the distribution of turbulent velocity fluctuations \cite{Hedevang2013}.
+%\item Earthquake Modeling: Helps describe the distribution of seismic event magnitudes.
+%\item Solar wind proton distribution \cite{Louarn2024}.
+%\end{itemize}
+%\item Reliability Analysis: The NIG distribution has been applied in reliability engineering to model failure times and assess system reliability. Its ability to accurately represent data with heavy tails makes it suitable for predicting the likelihood of rare but significant failure events. \cite{Xu2022}.
+%\end{itemize}
+%
+%
+%Applications:
+%- Some of the numerous applications include financial modelling.
+%- Particularly relevant in finance.
+%- Distribution in the symmetric case widely used (popular) in finance for modelling returns in mathhematical finance.
+%- Statistical applications: Clustering with the multivariate normal inverse Gaussian distribution
 
-Applications:
-- Some of the numerous applications include financial modelling.
-- Particularly relevant in finance.
-- Distribution in the symmetric case widely used (popular) in finance for modelling returns in mathhematical finance.
-- Statistical applications: Clustering with the multivariate normal inverse Gaussian distribution
+In this work, we focus on deriving series and asymptotic expansions to efficiently compute the cumulative distribution function of the normal inverse Gaussian. The new expansions, derived from the Laplace-type integral representation, are proposed to complement the direct use of numerical integration methods, the latter being the method used in all the implementations publicly available. 
 
-In this work, we focus on computational aspects...
+The outline of the paper is as follows. In Section 2, we revisit the distribution properties of the NIG distribution and introduce the derivation of alternative integral representation for the cumulative distribution function. Then, in Section 3, we derive and analyse a variety of series expansions and asymptotic expansions for two special cases and the general case, providing a rigorous calculation of error bounds. In addition, we provided a detailed treatment of the strategies to compute two possible integral representations using different quadrature methods. Section 4 presents an extensive discussion on algorithmic aspects to ease its implementation. After that, in Section 5, we assess the performance and accuracy of the proposed algorithms. Finally, Section 6 presents our conclusions and several possible enhancements.
 
-Paper structure
 
 
 \section{Distribution properties}
@@ -252,7 +277,7 @@ In this Section, we describe the methods used for efficient computation of the C
 
 
 \subsection{Special case $\beta = 0$}\label{section_special_case_beta_0}
-The case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution has been widely used in financial modelling, for example for pricing collateralized default obligations (CDO) \cite{Kalemanova2007} and market risk \cite{Prause1999} where symmetric distributions are employed for modelling macro-economical factors as an fat-tailed alternative to the normal distribution.
+The case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution has been widely used in financial modelling, for example for pricing collateralized default obligations \cite{Kalemanova2007} and market risk \cite{Prause1999} where symmetric distributions are employed for modelling macro-economical factors as an fat-tailed alternative to the normal distribution.
 
 
 
@@ -822,7 +847,7 @@ Note, however, that a complexity analysis gives a different picture. Given a num
 \item Series expansion \eqref{general_xmu_two_series}: $N_1 + N_2 \sim \mathcal{O}(N)$
 \item Series expansion \eqref{general_xmu_small_hermite_series}: $\frac{1}{2}\left(\lfloor\frac{N - 1}{2} \rfloor \left(\lfloor\frac{N - 1}{2} \rfloor + 1\right) + \lfloor\frac{N}{2} \rfloor \left(\lfloor\frac{N}{2} \rfloor + 1\right) + 2 (N + 1)\right) \sim \mathcal{O}(N^2)$
 \end{itemize}
-We turn our attention to the series expansions \eqref{general_expansion_xmu_small_bessel} and \eqref{general_xmu_small_hermite_series} because the fact that both require the storage of modified Bessel functions make them directly comparable. We remark that, although the series \eqref{general_expansion_xmu_small_bessel} might require fewer terms in some cases, asymptotically, it requires approximately 4 times more terms than \eqref{general_xmu_small_hermite_series}; taking the limit we have
+We turn our attention to the series expansions \eqref{general_expansion_xmu_small_bessel} and \eqref{general_xmu_small_hermite_series} because the fact that both require the storage of modified Bessel functions make them directly comparable. We remark that, although the series \eqref{general_expansion_xmu_small_bessel} might require fewer terms in some cases, asymptotically, it requires 4 times more terms than \eqref{general_xmu_small_hermite_series}; indeed taking the limit we have
 \begin{equation*}
 \lim_{N\to\infty} \frac{(N + 1) (N + 2)}{\frac{1}{2}\left(\lfloor\frac{N - 1}{2} \rfloor \left(\lfloor\frac{N - 1}{2} \rfloor + 1\right) + \lfloor\frac{N}{2} \rfloor \left(\lfloor\frac{N}{2} \rfloor + 1\right) + 2 (N + 1)\right)} = 4.
 \end{equation*}
@@ -984,11 +1009,11 @@ Hence, one can obtain
 |T_N| \le  \sqrt{\frac{\pi}{2}}\frac{\sqrt{N^2 + \alpha^2}}{\sqrt{N^2 + \alpha^2} - \beta} \frac{(x-\mu)\sqrt{N^2 + \alpha^2} + 1}{\left((x-\mu) \sqrt{N^2 + \alpha^2}\right)^{3/2}} e^{-(x-\mu)\left(\sqrt{N^2 + \alpha^2} - \beta\right)}.
 \end{equation}
 \end{remark}
-Although the derived bounds are accurate, the inversion to obtain $N$ is far from trivial. In contrast, a practical approximation, improving as $N$ increases $(N \gg \alpha > |\beta|)$ is given by
+Although the derived bounds are sharp, the inversion to obtain $N$ is far from trivial. In contrast, a practical approximation, improving as $N$ increases $(N \gg \alpha > |\beta|)$ is given by
 \begin{equation}
 |T_N| \approx \sqrt{\frac{\pi}{2}} \frac{e^{-(x-\mu)N}}{(x-\mu) N}.
 \end{equation}
-To select $N$, we take the simplified bound and equate to a prescribed accuracy $\epsilon$. The solution admits a closed-form in terms of $W_0(z)$
+To select $N$, we take the approximation and equate to a prescribed accuracy $\epsilon$. The solution admits a closed-form in terms of $W_0(z)$
 \begin{equation}
 \frac{e^{-(x-\mu)N}}{(x-\mu)N} = \frac{\epsilon}{C} \longrightarrow N = \frac{1}{x-\mu}W_0\left(\frac{C \sqrt{\frac{\pi}{2}}}{\epsilon}\right).
 \end{equation}
@@ -1226,15 +1251,21 @@ Following, we outline the main observations for each of the cases:
 \section{Conclusions}
 In the work presented, we developed and implemented an algorithm for fast and robust computation of the normal inverse Gaussian cumulative distribution function.
 With a thorough treatment, we showed the effectiveness of combining multiple series and asymptotic expansions with numerical integration to obtain significant
-acceleration compared to current open-source implementations while keeping accuracy to near machine precision.
+acceleration compared to current state-of-the-art open-source implementations while keeping accuracy to near machine precision.
 
-Several potential improvements remain to be explored in future work. First, the convergent series expansion could be computed by increasing the working precision to quadruple
-precision using quadruple precision floating-point calculations. Second, it would also be interesting to study using a fixed number of Gauss-Legendre quadrature points instead of the double-exponential quadrature, and it might be worth investigating the performance of implementing the integral expressible in terms of elementary functions for small $\delta$ values.
+Several potential improvements remain to be explored in future work. 
+First, the parameter regime of the convergent series expansions could be widened if computed increasing the working precision to long double (80-bit) or quadruple precision (128 bit), taking into account that quadruple precision is not natively supported in hardware, and necessarily it must be simulated\footnote{For example, using libquadmath, the GCC Quad-Precision Math Library.}, which in turn produces a code at least 10x slower. An alternative is using double-double precision (approximately 30 digits), an approach implemented in libraries such as QD library \cite{Hida2001}, and it was successfully implemented for the computation of special functions \cite{Navas-Palencia2018a}. 
+
+%First, the convergent series expansion could be computed by increasing the working precision to quadruple
+%precision using quadruple precision floating-point calculations. 
+Second, it would also be interesting to evaluate the use of fixed-order Gauss-Legendre quadrature instead of the double-exponential quadrature, studying the appropriate number of quadrature points for different regions of the parameters' domain. In addition, it might be worth investigating the implementation of the integral expressible in terms of elementary function for small $\delta$ values. 
+
+%Second, it would also be interesting to study using a fixed number of Gauss-Legendre quadrature points instead of the double-exponential quadrature, and it might be worth investigating the performance of implementing the integral expressible in terms of elementary functions for small $\delta$ values.
 
 Lastly, the techniques introduced throughout this work for developing many of the expansions can, of course, be seamlessly extendible to develop efficient algorithms for the computation of the generalized hyperbolic distribution and other special cases, such as the variance gamma distribution.
 
 \section{Acknowledgements}
-
+Amparo Gil and Javier Segura from the University of Cantabria for reviewing the preprint version and suggestions.
 
 \appendix
 

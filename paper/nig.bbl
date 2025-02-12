@@ -11,6 +11,13 @@ D.~H. Bailey.
 \newblock {Tanh-Sinh High-Precision Quadrature}.
 \newblock 2006.
 
+\bibitem{Barndorff1977}
+O.~Barndorff-Nielsen.
+\newblock Exponentially decreasing distributions for the logarithm of particle
+  size.
+\newblock {\em Proceedings of the Royal Society of London. A. Mathematical and
+  Physical Sciences}, 353(1674):401--419, 1977.
+
 \bibitem{Barndorff1997}
 O.~E. Barndorff-Nielsen.
 \newblock {Normal Inverse Gaussian Distributions and Stochastic Volatility
@@ -58,6 +65,12 @@ W.~J. Cody.
 \newblock F.~W.~J. Olver, A.~B. {Olde Daalhuis}, D.~W. Lozier, B.~I. Schneider,
   R.~F. Boisvert, C.~W. Clark, B.~R. Miller and B.~V. Saunders, eds.
 
+\bibitem{Eriksson2009}
+A.~Eriksson, E.~Ghysels, and F.~Wang.
+\newblock {The Normal Inverse Gaussian Distribution and the Pricing of
+  Derivatives}.
+\newblock {\em The Journal of Derivatives}, 16:23--27, 2009.
+
 \bibitem{GSL}
 Galassi et~al.
 \newblock {\em {Gnu Scientific Library: Reference Manual (3rd Ed.)}}.
@@ -79,6 +92,26 @@ I.~S. Gradshteyn and I.~M. Ryzhik.
 \newblock {\em Table of integrals, series, and products}.
 \newblock Elsevier/Academic Press, Amsterdam, seventh edition, 2007.
 
+\bibitem{Hanssen2001}
+A.~Hanssen and T.A. Oigard.
+\newblock {The normal inverse Gaussian distribution: a versatile model for
+  heavy-tailed stochastic processes}.
+\newblock In {\em 2001 IEEE International Conference on Acoustics, Speech, and
+  Signal Processing. Proceedings (Cat. No.01CH37221)}, volume~6, pages
+  3985--3988, 2001.
+
+\bibitem{Hedevang2013}
+E.~Hedevang and J.~Schmiegel.
+\newblock A causal continuous-time stochastic model for the turbulent energy
+  cascade in a helium jet flow.
+\newblock {\em Journal of Turbulence}, 14(11):1--26, 2013.
+
+\bibitem{Hida2001}
+Y.~Hida, X.~S. Li, and D.~H. Bailey.
+\newblock Algorithms for quad-double precision floating point arithmetic.
+\newblock In {\em Proceedings 15th IEEE Symposium on Computer Arithmetic.
+  ARITH-15 2001}, pages 155--162, 2001.
+
 \bibitem{Hoorfar2008}
 A.~Hoorfar and M.~Hassani.
 \newblock {Inequalities on the Lambert function and hyperpower function}.
@@ -99,6 +132,12 @@ N.~N. Lebedev.
 \newblock {\em Special Functions and Their Applications}.
 \newblock Dover Publications, 1972.
 
+\bibitem{Louarn2024}
+P.~Louarn, A.~Fedorov, and L.~et~al. Prech.
+\newblock {Skewness and kurtosis of solar wind proton distribution functions:
+  The normal inverse-Gaussian model and its implications}.
+\newblock {\em Astronomy \& Astrophysics}, 682, 2024.
+
 \bibitem{Luke1972}
 Y.~L. Luke.
 \newblock Inequalities for generalized hypergeometric functions.
@@ -114,6 +153,12 @@ The mpmath~development team.
 \newblock {\em mpmath: a {P}ython library for arbitrary-precision
   floating-point arithmetic (version 1.3.0)}, 2023.
 \newblock {\tt http://mpmath.org/}.
+
+\bibitem{Navas-Palencia2018a}
+G.~Navas-Palencia.
+\newblock Fast and accurate algorithm for the generalized exponential integral
+  ${E}_{\nu}(x)$ for positive real order.
+\newblock {\em Numerical Algorithms}, 77(2):603--630, 2018.
 
 \bibitem{Navas-Palencia2019}
 G.~Navas-Palencia.
@@ -168,6 +213,12 @@ M.~C. Simpson, Q.~Yi, and J.~Kalita.
 N.~J.~A. Sloane.
 \newblock The {On}-{L}ine {E}ncyclopedia of {I}nteger {S}equences.
 
+\bibitem{Solbo2004}
+S.~Solbø and T.~Eltoft.
+\newblock {Homomorphic wavelet-based statistical despeckling of SAR images}.
+\newblock {\em Geoscience and Remote Sensing, IEEE Transactions on}, 42:711 --
+  721, 2004.
+
 \bibitem{Takahasi1973}
 H.~Takahasi and M.~Mori.
 \newblock {Double Exponential Formulas for Numerical Integration}.
@@ -201,6 +252,12 @@ J.~G. Wendel.
 \bibitem{Mathematica}
 {Wolfram Research, Inc.}
 \newblock Mathematica 10.
+
+\bibitem{Xu2022}
+J.~Xu, L.~Li, and Z.~Lu.
+\newblock {An Adaptive Mixture of Normal-Inverse Gaussian Distributions for
+  Structural Reliability Analysis}.
+\newblock {\em Journal of Engineering Mechanics}, 148, 2022.
 
 \bibitem{Xue2018}
 C.~Xue and S.~Deng.
