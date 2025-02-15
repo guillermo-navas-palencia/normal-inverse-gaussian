@@ -79,7 +79,7 @@
 \maketitle
 
 \abstract{
-In this paper, we obtain various series and asymptotic expansions involving the modified Bessel function of the second kind for the cumulative distribution of the normal inverse Gaussian distribution. The new expansions accelerate computations and complement the standard numerical integration available in current software. We also provide a detailed description of the algorithm and its corresponding implementation in C++. The performance and accuracy of the algorithm are extensively tested and benchmarked with open-source implementations, offering superior accuracy and speed-ups of a factor from 5 to 60.
+In this paper, we obtain various series and asymptotic expansions involving the modified Bessel function of the second kind for the normal inverse Gaussian cumulative distribution function. The new expansions accelerate computations, complementing the numerical integration methods implemented in statistical software packages. We also provide a detailed description of the algorithm and its corresponding implementation in C++. The performance and accuracy of the algorithm are extensively tested and benchmarked with open-source implementations, offering superior accuracy and speed-ups of a factor from 5 to 60.
 }
 
 
@@ -128,28 +128,25 @@ The NIG distribution was initially introduced in the context of financial data m
 %- Distribution in the symmetric case widely used (popular) in finance for modelling returns in mathhematical finance.
 %- Statistical applications: Clustering with the multivariate normal inverse Gaussian distribution
 
-In this work, we focus on deriving series and asymptotic expansions to efficiently compute the cumulative distribution function of the normal inverse Gaussian. The new expansions, derived from the Laplace-type integral representation, are proposed to complement the direct use of numerical integration methods, the latter being the method used in all the implementations publicly available. 
+In this work, we focus on deriving series and asymptotic expansions to efficiently compute the cumulative distribution function of the normal inverse Gaussian. The new expansions, derived from the Laplace-type integral representation, are proposed to complement the direct use of numerical integration methods, the latter being the method of choice in all the implementations publicly available. 
 
-The outline of the paper is as follows. In Section 2, we revisit the distribution properties of the NIG distribution and introduce the derivation of alternative integral representation for the cumulative distribution function. Then, in Section 3, we derive and analyse a variety of series expansions and asymptotic expansions for two special cases and the general case, providing a rigorous calculation of error bounds. In addition, we provided a detailed treatment of the strategies to compute two possible integral representations using different quadrature methods. Section 4 presents an extensive discussion on algorithmic aspects to ease its implementation. After that, in Section 5, we assess the performance and accuracy of the proposed algorithms. Finally, Section 6 presents our conclusions and several possible enhancements.
+The outline of the paper is as follows. In Section 2, we revisit the distribution properties of the NIG distribution and introduce alternative integral representations for the cumulative distribution function. Then, in Section 3, we derive and analyse a variety of series expansions and asymptotic expansions for two special cases and the general case, calculating, in many cases, rigorous error bounds. In addition, we provided a detailed treatment of the strategies to compute two possible integral representations using different quadrature methods. Section 4 presents an extensive discussion on algorithmic aspects to ease its implementation to the practitioners. After that, in Section 5, we assess the performance and accuracy of the proposed algorithms. Finally, Section 6 presents our conclusions and several possible enhancements.
 
 
 
 \section{Distribution properties}
 
-The NIG distribution is defined as a normal variance-mean mixture distribution, where the mixing distribution for the variance follows an inverse Gaussian (IG) distribution \cite{Paolella2007}. Consider $Z$ is a positive random variable following an distribution, $Z \sim \mathcal{IG}(\delta \gamma, \gamma^2)$ and $\mu$ and $\beta$ are constants. If $X \sim \mathcal{NIG}(\alpha, \beta, \mu, \delta)$, then
+The NIG distribution is defined as a normal variance-mean mixture distribution, where the mixing distribution for the variance follows an inverse Gaussian (IG) distribution \cite{Paolella2007}. Consider $Z$ is a positive random variable following a distribution, $Z \sim \mathcal{IG}(\delta \gamma, \gamma^2)$ and $\mu$ and $\beta$ are constants. If $X \sim \mathcal{NIG}(\alpha, \beta, \mu, \delta)$, then
 \begin{equation}
-X \,|\, Z \sim \mathcal{N}(\mu + \beta Z, Z).
+X \,|\, Z \sim \mathcal{N}(\mu + \beta Z, Z),
 \end{equation}
-The NIG distribution parameters\footnote{We use the parameterization dominating the literature. We refer to \cite{Paolella2007} and \cite{Prause1999} for an overview of different parameterizations.} admit the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location parameter and $\delta$ the scale parameter. If $\beta = 0$, the distribution is symmetric and centered around $\mu$. The domain of the parameters is
+where $\gamma = \sqrt{\alpha^2 - \beta^2}$.
+The NIG distribution parameters\footnote{We use the parameterization dominating the literature. We refer to \cite{Paolella2007} and \cite{Prause1999} for an overview of different parameterizations.} admit the following interpretation: $\alpha$ is the tail heaviness, $\beta$ is the asymmetry or skewness, $\mu$ is the location and $\delta$ the scaling. If $\beta = 0$, the distribution is symmetric and centered around $\mu$. The domain of the parameters is
 \begin{equation}
 0 \le |\beta| < \alpha, \quad \mu \in \mathbb{R}, \quad \delta  > 0.
 \end{equation}
-In addition, two related parameters are typically used to simplify notation are
-\begin{equation}
-\omega = \sqrt{(x-\mu)^2 + \delta^2}, \quad \gamma = \sqrt{\alpha^2 - \beta^2}.
-\end{equation}
-
-Since the NIG distribution is a special case of the GH distribution, distributional properties, such as being closed under convolution and infinite divisibility, can also be inferred from results for the GH distribution.
+In addition, a related parameter typically used to simplify notation is $\omega = \sqrt{(x-\mu)^2 + \delta^2}$.
+Since the NIG distribution is a special case of the GH distribution, distributional properties, such as being closed under convolution and infinite divisibility, can also be inferred from results for the GH distribution \cite{Paolella2007}.
 
 %\begin{itemize}
 %\item Scale-invariant parameterization
@@ -167,7 +164,7 @@ f(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta}{\pi} \frac{K_1\left(\alp
 where $K_1(x)$ is the modified Bessel function of the second kind \cite[\S 10]{NIST:DLMF},  hereafter called modified Bessel function. This function is ubiquitous throughout this work, and for completeness and as a reference, some of its main properties are described in the Appendix \ref{appendix_modified_bessel}. As an additional note, the case $\mu = 0$ and $\delta = 1$ is often defined as the standardized form.
 
 \subsection{Cumulative distribution function}\label{properties_cdf}
-The cumulative distribution function has the common integral representation,
+The cumulative distribution function has the common integral representation from its density function,
 \begin{equation}\label{integral_k1}
 F(x; \alpha, \beta, \mu, \delta) = \frac{\alpha \delta e^{\delta \gamma}}{\pi} \int_{-\infty}^{x} \frac{K_1\left(\alpha\sqrt{\delta^2 + (t-\mu)^2}\right)}{\sqrt{\delta^2 + (t-\mu)^2}} e^{\beta(t-\mu)} \mathop{dt}.
 \end{equation}
@@ -180,10 +177,10 @@ where $\Phi(x)$ is standard normal cumulative distribution function. From the la
 \begin{equation}\label{cdf_mirror}
 \tilde{F}(x; \alpha, \beta, \mu, \delta) = 1- F(-x; \alpha, -\beta, -\mu, \delta).
 \end{equation}
-The relation becomes critical to extend the domain of applicability of multiple expansions derived in the next section. Furthermore, it can also help to minimize numerical issues when computing the complementarity cumulative distribution function or survival function. Finally, authors in \cite{Kalemanova2007} propose applying a logarithmic transformation to transform the interval of integration to $[0, 1]$, arguing better numerics.
+The relation becomes indispensable to extend the domain of applicability of multiple expansions derived in the next section. Furthermore, it can also help to minimize numerical issues when computing the complementarity cumulative distribution function or survival function. Finally, authors in \cite{Kalemanova2007} propose applying a logarithmic transformation to transform the integration interval to $[0, 1]$, arguing better numerics.
 
 \subsubsection{Alternative integral representations}
-We obtain the following alternative integral representations in terms of other special functions. More interestingly, we derive an integral representation in terms of elementary functions. Although these representations have restrictions on the sign of $x-\mu$, the use of the reflection formula \eqref{cdf_mirror} permits the computation on the whole domain.
+Following, we obtain alternative integral representations in terms of other special functions. Particularly interesting is the derivation of an integral representation in terms of elementary functions. Although these representations have restrictions on the sign of $x-\mu$, the use of the reflection formula \eqref{cdf_mirror} permits the computation on the whole domain.
 
 \begin{proposition} An incomplete Laplace-type integral representation in terms of modified Bessel function $K_0(x)$ is given by
 \begin{equation}\label{integral_k0}
@@ -191,7 +188,7 @@ F(x; \alpha, \beta, \mu, \delta) = \frac{\sqrt{2}\delta e^{\delta \gamma}}{\pi}\
 \end{equation}
 \end{proposition}
 \begin{proof}
-Consider the integral representation of the function $\Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right)$
+Consider the integral representation of the function $\Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right)$ in \cite[\S 7.7]{NIST:DLMF}
 \begin{equation*}
 \Phi\left(\frac{x-\mu}{\sqrt{t}} -\beta \sqrt{t} \right) = \sqrt{\frac{t}{\pi}} e^{-\frac{(x-\mu)^2}{2t}}\int_{\beta/\sqrt{2}}^{\infty} e^{-(tu^2 - \sqrt{2}(x-\mu) u)} \mathop{du}.
 \end{equation*}
@@ -199,7 +196,7 @@ Replacing in \eqref{integral_phi} and interchanging the order of integration, we
 \begin{equation*}
 F(x; \alpha, \beta, \mu, \delta) = \frac{\delta e^{\delta \gamma}}{\sqrt{2}\pi} \int_{\beta/\sqrt{2}}^{\infty} e^{\sqrt{2}(x-\mu) u} \int_{0}^{\infty} t^{-1} e^{-\frac{\left((x-\mu)^2 + \delta^2\right)}{2t} - \left(\frac{\gamma^2}{2} + u^2\right)t} \mathop{dt} \mathop{du}.
 \end{equation*}
-The observation that the inner integral can be represented in terms of the modified Bessel function $K_0(x)$
+Observing that the inner integral can be represented in terms of the modified Bessel function $K_0(x)$, we get
 \begin{equation*}
 \int_{0}^{\infty} t^{-1} e^{-\frac{\left((x-\mu)^2 + \delta^2\right)}{2t} - \left(\frac{\gamma^2}{2} + u^2\right)t} \mathop{dt} = 2 K_0\left(2\sqrt{\frac{(x-\mu)^2 + \delta^2}{2}} \sqrt{\frac{\gamma^2}{2} + t^2}\right).
 \end{equation*}
@@ -232,7 +229,7 @@ F(x; \alpha, \beta, \mu, \delta) = 1 - \frac{\delta e^{\delta \gamma}}{\pi}\int_
 \end{equation}
 \end{proposition}
 \begin{proof}
-This result can be derived from the sine transform in \eqref{integral_sine_transform} using integration by parts. Instead, we can use the cosine transform \cite[\S 1.4]{Bateman1954}
+This result can be derived from the sine transform in \eqref{integral_sine_transform} using integration by parts or using the cosine transform \cite[\S 1.4]{Bateman1954}
 \begin{equation*}
 \frac{K_1\left(\alpha\sqrt{\delta^2 + t^2}\right)}{\sqrt{\delta^2 + t^2}} = \frac{1}{\alpha t}\int_0^{\infty} e^{-t\sqrt{z^2 + \alpha^2}} \cos(\delta z) \mathop{dz}.
 \end{equation*}
@@ -269,13 +266,11 @@ To conclude, a discussion on the numerical integration methods for effective com
 %Use binomial theorem, and compute coefficients recursively (binomial sum of Bessel functions). Treat special case $\mu = 0$ and $\beta=0$.
 
 \section{Methods of computation}\label{section_methods_of_computation}
-In this Section, we describe the methods used for efficient computation of the CDF for the general case and various special cases, $\beta = 0$ and $x=\mu$, respectively. In particular, we explore series expansions, asymptotic expansions, uniform asymptotic expansions and numerical integration. We emphasize that many of the techniques and numerical methods introduced in the sections devoted to the two special cases shall also be used to develop expansions of the general case in Section \ref{section_general_case}.
+In this Section, we describe the methods used for efficient computation of the cumulative distribution function for the general case and various special cases, $\beta = 0$ and $x=\mu$, respectively. In particular, we explore series expansions, asymptotic expansions, uniform asymptotic expansions and numerical integration. We emphasize that many of the techniques and numerical methods introduced in the sections devoted to the two special cases shall also be used to develop expansions of the general case in Section \ref{section_general_case}.
 
 
 \subsection{Special case $\beta = 0$}\label{section_special_case_beta_0}
-The case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution has been widely used in financial modelling, for example for pricing collateralized default obligations \cite{Kalemanova2007} and market risk \cite{Prause1999} where symmetric distributions are employed for modelling macro-economical factors as an fat-tailed alternative to the normal distribution.
-
-
+As mentioned earlier, the case $\beta = 0$ corresponds to the symmetric case. The symmetric NIG distribution, but also the cases where $\beta \to 0$, has been widely used in financial modelling for modelling macro-economical factors as a fat-tailed alternative to the normal distribution. In this Section, we develop convergent series expansions, uniform asymptotic expansion and asymptotic expansions for this special case.
 
 \subsubsection{Expansions $|x-\mu| \to 0$}
 For developing a series expansion for the case $|x-\mu| \to 0$, we start from the integral representation in \eqref{integral_phi}, after expanding the square
