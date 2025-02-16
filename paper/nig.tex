@@ -388,9 +388,9 @@ C < \left(\frac{x-\mu}{\omega}\right)^2 \frac{N + 3/2 + \sqrt{(N + 3/2)^2 + (\al
 
 To study the regime of applicability for the expansion, we can estimate the required number of terms $N$ equating the bound of $T_N$ in \eqref{bound_TN_xmu_b0_positive} times the normalizing factor with the requested absolute error $\epsilon$ and solving for $N$, which gives
 \begin{equation}\label{N_expansion_xmu_b0_positive}
-N \approx -\frac{\Re(W_{-1}(D))}{4 \log(A)} + \frac{1}{2}, \quad A = \frac{x-\mu}{\omega}, \quad B = \frac{A\delta e^{\delta \alpha}}{2\omega\pi}, \quad C = \frac{\epsilon^2}{B^2 \pi}, \quad D = -\frac{4 \log(A)}{C A^2}
+N \approx -\frac{\Re(W_{-1}(D))}{\log(A^4)} - \frac{1}{2}, \quad A = \frac{x-\mu}{\omega}, \quad B = \frac{A\delta e^{\delta \alpha}}{2\omega\pi}, \quad C = \frac{\epsilon^2}{B^2 \pi}, \quad D = -\frac{\log(A^4)}{C A^2}
 \end{equation}
-where $W_k(x)$ denotes the Lambert $W$ function \cite[\S 4.13]{NIST:DLMF}. The branch $k=-1$ is used to obtain the maximum real $N$. Note that since $A < 1$ by definition, $D > 0$. When $C A^2$ is tiny, $W_{-1}(D)$ can be approximated as $\Re(W_{-1}(D)) \sim \log(D) - \log(\log(D))$ using the first two terms of the asymptotic expansion in \cite[\S 4.13.10]{NIST:DLMF}.
+where $W_k(x)$ denotes the Lambert $W$ function \cite[\S 4.13]{NIST:DLMF}. The branch $k=-1$ is used to obtain the maximum real $N$. Note that since $A^2 < 1$ by definition, $D > 0$. When $C A^2$ is tiny, $W_{-1}(D)$ can be approximated as $\Re(W_{-1}(D)) \sim \log(D) - \log(\log(D))$ using the first two terms of the asymptotic expansion in \cite[\S 4.13.10]{NIST:DLMF}.
 
 The previous analysis performed on the expansion \eqref{expansion_xmu_b0_positive} is repeated for the alternating expansion \eqref{expansion_xmu_b0_alternating}. The main results are summarized below for the purpose of brevity. The expansion \eqref{expansion_xmu_b0_alternating} rewritten including the remainder term follows
 \begin{equation}
@@ -402,7 +402,7 @@ The last omitted term $T_N$ satisfies\footnote{The corresponding upper bound for
 \end{equation} 
 and the number of terms $N$ can be determined employing the Lambert $W$ function for a given error $\epsilon$
 \begin{equation}
-N \approx \frac{\Re(W_{-1}(D)) + \log(A)}{2 \log(A)}, \quad A = \frac{x-\mu}{\delta}, \quad B = \frac{A e^{\delta \alpha}}{\pi}, \quad C = \frac{\epsilon}{B}, \quad D = -\frac{\log(A)}{CA}.
+N \approx -\frac{\Re(W_{-1}(D))}{\log(A^2)} - \frac{1}{2}, \quad A = \frac{x-\mu}{\delta}, \quad B = \frac{A e^{\delta \alpha}}{\pi}, \quad C = \frac{\epsilon}{B}, \quad D = -\frac{\log(A)}{CA}.
 \end{equation}
 
 Now we are in position to compare both series and their respective domains of applicability. A first important observation is that the alternating series \eqref{expansion_xmu_b0_alternating} does not converge when $|x - \mu| > \delta$, and the number of terms $N$ increases rapidly when $|x - \mu| \sim \delta$. In contrast, the series \eqref{expansion_xmu_b0_positive} is absolutely convergent. The convergence of the latter can be reliably assessed applying to $T_k$ in \eqref{expansion_xmu_b0_positive_error_term} the asymptotic estimates of $K_{k+1}(\alpha\omega)$ for $\alpha \omega \to 0$ and $\alpha \omega \to \infty$, \eqref{besselk_x_to_0} and \eqref{besselk_x_to_inf}, respectively:
@@ -418,7 +418,7 @@ and the ratio of convergence improves when $\delta \to \infty$, then it can be v
 \begin{equation*}
 T_k \sim \frac{1}{\alpha\omega}\left(\frac{x-\mu}{\omega}\right)^{2k}\sqrt{\frac{\pi}{e}}\frac{1}{\sqrt{4k + 2}}\left(\frac{2k + 2}{2k + 1}\right)^{k + \frac{1}{2}}, \quad k \to \infty,
 \end{equation*}
-where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial. It remains to analyze the accuracy of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} after estimating $N$ to achieve machine-precision using \eqref{N_expansion_xmu_b0_positive}. For small values of $\alpha\omega$ the bound is sharp, but it is conservative for larger values, precisely where the rate of convergence improves. As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced by selecting $N$ using the asymptotic estimate for $\alpha\omega \to \infty$ via binary search. Although, the bound might overestimate $N$ for some parameters, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should be selected as the method of computation given a certain parameter region (see Section \ref{subsection_implementation}). Table \ref{table_bound_remainder_xmu_b0_positive} also shows that for small $\delta$ and $\alpha\omega$, the required number of terms makes the series expansion impractical. In the next section, we present a convergence acceleration method to obtain a rapidly convergent series for these cases.
+where we use the asymptotic estimate of modified Bessel function for large order \eqref{besselk_order_to_inf} and apply Stirling's approximation for the double factorial. It remains to analyze the quality of the bound in \eqref{bound_remainder_xmu_b0_positive} for different parameters. Table \ref{table_bound_remainder_xmu_b0_positive} shows the effectiveness of the bound \eqref{bound_remainder_xmu_b0_positive} after estimating $N$ to achieve machine-precision using \eqref{N_expansion_xmu_b0_positive}. For small values of $\alpha\omega$ the bound is sharp, whereas it is conservative for larger values, precisely where the rate of convergence improves. As a remark, the estimation of $N$ for large $\alpha\omega$ can be enhanced by selecting $N$ using the asymptotic estimate for $\alpha\omega \to \infty$ via binary search. Although, the bound might overestimate $N$ for some parameters, the main purpose of the estimation of $N$ using \eqref{N_expansion_xmu_b0_positive} is to decide whether the series expansion should be selected as the method of computation given a certain parameter region (see Section \ref{subsection_implementation}). Table \ref{table_bound_remainder_xmu_b0_positive} also shows that for small $\delta$ and $\alpha\omega$, the required number of terms makes the series expansion impractical. In the next section, we present a convergence acceleration method to obtain a rapidly convergent series for these cases.
 
 \begin{table}[H]
 	\centering
@@ -440,8 +440,8 @@ $x$ & $\alpha$ & $\mu$ & $\delta$ & $\alpha\omega$ & $N$ \eqref{N_expansion_xmu_
 \end{table}
 
 \subsubsection{Convergence acceleration of the expansion $|x-\mu| \to 0$}
-Table \ref{table_bound_remainder_xmu_b0_positive} showed that for small values of $\delta$ and $\alpha \omega$ the required number of terms grows considerably, thereby, resorting to numerical integration (see Section \ref{section_numerical_integration}) might be a more efficient approach. Alternatively, a common technique to reduce the number of terms of slowly convergent series is to use series acceleration methods (Shank's transformation and Levin-type transformations among others \cite{Gil2007}). 
-Attempts to use Shank's transformation were unsuccessful; we did not observe a significant reduction in $N$ while achieving only around ten correct digits systematically for all cases. In addition, a major drawback is that Shank's acceleration requires higher-precision arithmetic to compensate for cancellation effects, which makes us discard this option for an implementation in double-precision arithmetic. 
+Table \ref{table_bound_remainder_xmu_b0_positive} showed that for small values of $\delta$ and $\alpha \omega$ the required number of terms grows considerably, thereby, resorting to numerical integration (see Section \ref{section_numerical_integration}) might be a more efficient approach. Alternatively, a common technique to reduce the number of terms of slowly convergent series is to use series acceleration methods (Shank's transformation and Levin-type transformations among others \cite[\S 9]{Gil2007}). 
+Attempts to use Shank's transformation were unsuccessful; we did not observe a significant reduction in the number of terms $N$ while achieving only around ten correct digits systematically for all cases. In addition, a major drawback is that Shank's acceleration requires higher-precision arithmetic to compensate for cancellation effects, which makes us discard this option for an implementation in double-precision arithmetic. 
 
 In the following, we investigate the use of exponentially improved asymptotic expansions. When the information about the remainder is available, this technique consists of re-expanding the remainder, obtaining an expansion exhibiting faster convergence. For further details, we refer to \cite[\S 14]{Olver1997}. Consider the convergent series expansion in \eqref{expansion_xmu_b0_positive_error_term}
 \begin{equation}
@@ -451,11 +451,11 @@ where
 \begin{equation}
 T_k = \frac{K_{k+1}(\alpha\omega)}{(2k + 1)!!} z^k, \quad z = \frac{(x-\mu)^2 \alpha}{\omega}.
 \end{equation}
-and remainder $R_N = \sum_{k=N}^{\infty} T_k$. An integral representation of $R_N$ can be obtained using Basset's integral \cite[\S 10.32.11]{NIST:DLMF} representation of the modified Bessel function
+and remainder $R_N = \sum_{k=N}^{\infty} T_k$. An integral representation of $R_N$ can be obtained using Basset's integral \cite[\S 10.32.11]{NIST:DLMF} representation of the modified Bessel function, defined as
 \begin{equation}\label{basset_integral}
 K_{k+1}(\alpha\omega) = \frac{\Gamma(k + 3/2)}{\sqrt{\pi}}\left(\frac{2\alpha}{\omega}\right)^{k+1} \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{k + 3/2}} \mathop{dt}.
 \end{equation}
-Basset's integral is chosen to transform the term $\alpha\omega$ into $\alpha/\omega$. Thus, it follows that inserting \eqref{basset_integral} into the remainder in \eqref{expansion_xmu_b0_positive_error_term}, we have an integral representation of $R_N$
+Basset's integral is chosen to transform the term $\alpha\omega$ into $\alpha/\omega$. Thus, inserting \eqref{basset_integral} into the remainder in \eqref{expansion_xmu_b0_positive_error_term}, we have an integral representation of $R_N$
 \begin{align}\label{convergent_remainder_integral}
 R_N &= \frac{1}{\sqrt{\pi}} \left(\frac{2\alpha}{\omega}\right) \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{3/2}} \left[\sum_{k=N}^{\infty} \left(\frac{2z\alpha}{\omega (t^2 + \alpha^2)}\right)^k \frac{\Gamma(k + 3/2)}{(2k + 1)!!}\right] \mathop{dt}\nonumber\\
 &= C \int_0^{\infty} \frac{\cos(\omega t)}{(t^2 + \alpha^2)^{N + 3/2}} \frac{1}{\left(2 - \frac{m}{t^2+ \alpha^2}\right)} \mathop{dt}.
@@ -496,7 +496,7 @@ The sum $S_P$ is terminating at $k=N$ due to the term $\Gamma(N + 1 - k)$ in the
 \begin{equation}\label{convergent_accelerated_series_xmu_b0_positive}
 F(x;\alpha, 0, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \alpha}}{\pi} \frac{(x-\mu)\alpha}{\omega} \left(\sum_{k=0}^{N-1} T_k + S_P + S_Q\right).
 \end{equation}
-Next, we focus on the determination of the optimal $N$ for a desired precision $\epsilon$. The smallest term in $S_P$ occurs when $k=N$, corresponding to
+Next, we focus on determining the optimal $N$ for a desired precision $\epsilon$. The smallest term in $S_P$ occurs when $k=N$, corresponding to
 \begin{equation}
 S_P = \frac{(-1)^N (\alpha\omega)^{2N}}{(2N)!} \Gamma(N - 1/2) \, _2F_1\left(1, 1; \frac{3}{2} -N, 1 - \frac{m}{2\alpha^2}\right).
 \end{equation}
@@ -512,7 +512,7 @@ An asymptotic approximation follows by using Stirling approximation of the ratio
 \begin{equation}
 \frac{\Gamma(N - 1/2)\Gamma(N + 3/2)}{(2N)!(2N + 1)!! (2N - 1)!!} \sim \frac{\sqrt{\pi}}{4} \left(\frac{e}{N}\right)^{2N} 2^{-4N}, \quad N \to \infty.
 \end{equation}
-obtaining a simplified equation
+obtaining the simplified equation
 \begin{equation}
 (\sqrt{2m} \omega)^{2N} \left(\frac{e}{N}\right)^{2N} 2^{-4N} = 4\sqrt{\pi}\alpha\omega\epsilon.
 \end{equation}
@@ -521,7 +521,7 @@ The solution of the latter permits a closed-form in terms of principal branch of
 N \approx - \frac{\log(A)}{W_0\left(-\frac{\log(A)}{2 e \sqrt{2m} \omega} \right)}, \quad A = 4\sqrt{\pi}\alpha\omega\epsilon.
 \end{equation}
 
-Table \ref{table_bound_remainder_xmu_b0_positive_large_N} shows the estimated number of terms of the accelerated convergent series \eqref{convergent_accelerated_series_xmu_b0_positive}, $N_{acc}$, and the actual number of terms $N^*$ to achieve machine-precision for small values of $\alpha\omega$ and $\delta$. The first and more notable observation is the reduction in the number of terms compared with convergent series \eqref{N_expansion_xmu_b0_positive}, especially for $\alpha \le 1$. The second observation is the accuracy of the estimate in $N_{acc}$ in \eqref{N_expansion_xmu_b0_positive}, which only seems to slightly underestimate $N$ for large $\alpha\omega$.
+Table \ref{table_bound_remainder_xmu_b0_positive_large_N} shows the estimated number of terms of the accelerated convergent series \eqref{convergent_accelerated_series_xmu_b0_positive}, $N_{acc}$, and the actual number of terms $N^*$ to achieve machine-precision for small values of $\alpha\omega$ and $\delta$. The first and most notable observation is the reduction in the number of terms compared with the convergent series \eqref{N_expansion_xmu_b0_positive}, especially for $\alpha \le 1$. The second observation is the accuracy of the estimate in $N_{acc}$ in \eqref{N_expansion_xmu_b0_positive}, which only seems to underestimate $N$ for large $\alpha\omega$ slightly.
 
 \begin{table}[H]
 	\centering
@@ -610,9 +610,9 @@ F(x; \alpha, 0, \mu, \delta) = \frac{\alpha \delta e^{\delta \alpha}}{2 \sqrt{\p
 The expansion \eqref{uniform_expansion_a_large} is a uniform expansion as $\alpha \to \infty$, uniformly with respect to $\delta / \alpha > 0$. Note that large values of $\delta$ improves the rate of convergence of the expansion, as observed taking well-know asymptotic estimates for large argument of the modified Bessel function. We remark that expansions \eqref{expansion_xmu_b0_alternating} and \eqref{expansion_xmu_b0_positive} are also adequate for large values of $\alpha$ and $\delta$, but unlike the present expansion, the number of terms increases significantly when $|x-\mu| \gg 0$.
 
 \subsection{Special case $x = \mu$}
-The second special case of interest, $x = \mu$, is arguably less common and has fewer applications, but it is nonetheless required to obtain a robust implementation. In particular, the attentive reader might have noticed that none of the series expansions already introduced are suitable for this specific case.
+The second special case of interest, $x = \mu$, is arguably less common and has fewer applications, but it is nonetheless required to obtain a robust implementation. In particular, the attentive reader might have noticed that none of the series expansions previously introduced are suitable for this specific case.
 
-First consider the case $x = \mu$ and $\beta = 0$. Then, the distribution is symmetric and centered at $x = \mu$, and it follows that
+First, consider the case $x = \mu$ and $\beta = 0$, corresponding to the case where the distribution is symmetric and centred at $x = \mu$, consequently it follows that
 \begin{equation}
 F(\mu; \alpha, 0, \mu, \delta) = \frac{1}{2}.
 \end{equation}
@@ -647,10 +647,7 @@ Similarly, using \eqref{phi_expansion_2} yields
 \begin{equation}\label{series_x=mu_2}
 F(\mu; \alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{\delta e^{\delta \gamma}}{\pi} \sum_{k=0}^{\infty} \frac{(-\beta)^{2k+1}}{(2k + 1)!!} \left(\frac{\delta}{\alpha}\right)^k K_k(\alpha \delta).
 \end{equation}
-The latter expansion being more convenient since $\alpha \ge \gamma$.
-
-Finally, to complement the series expansion, a special case of the asymptotic expansion defined in Equation \eqref{expansion_x_eq_mu_large_delta}, detailed in the next Section, can be employed for large values of $\delta$ and large $\alpha$, and its convergence improves as $\beta \sim \alpha$.
-
+The latter expansion being more convenient since $\alpha \ge \gamma$. Finally, to complement the series expansion, a special case of the asymptotic expansion defined in Equation \eqref{expansion_x_eq_mu_large_delta}, detailed in the next section, can be employed for large values of $\delta$ and large $\alpha$, and its convergence improves as $\beta \sim \alpha$.
 
 \subsection{General case}\label{section_general_case}
 In the general case, we continue using similar techniques to devise a set of series expansions and asymptotic expansions. Two of the series expansions involving Hermite polynomials make use of the two special cases studied in detail in the preceding sections.
@@ -678,7 +675,7 @@ The integral $J_k$ is expressible in terms of a finite series of modified Bessel
 \begin{equation}
 J_k = 2 \left(\frac{-(x-\mu)}{\beta}\right)^{2k+1} \left(\frac{\alpha}{\omega}\right)^{k+1} \sum_{j=0}^{2k+1} (-1)^j \binom{2k+1}{j} \left(\frac{\omega \beta}{\alpha (x-\mu)}\right)^j K_{k + 1 - j}(\alpha \omega).
 \end{equation}
-Then, we have the series expansion
+Thus, we have the series expansion
 \begin{equation}\label{general_expansion_xmu_small_bessel}
 F(x;\alpha, \beta, \mu, \delta) = \frac{1}{2} + \frac{(x-\mu)\alpha\delta e^{\delta \gamma + (x -\mu)\beta}}{\pi \omega}\sum_{k=0}^{\infty} \frac{A_k}{(2k+1)!!}\left(\frac{(x-\mu)^2\alpha}{\omega}\right)^k
 \end{equation}
@@ -714,11 +711,11 @@ Since the use of this bound introduces a term involving $t$ in the denominator, 
 |R_N| &\approx \frac{e^{-\beta(x-\mu)}}{(2N + 1)!!} I_N \label{remainder_approx1}\\
 &\approx \frac{2 \beta^{2N + 1}}{(2N + 1)!!}\left(\frac{\omega}{\alpha}\right)^N K_N(\alpha \omega) \quad (|x-\mu| \to 0) \label{remainder_approx2},
 \end{align}
-and the latter approximation of $|R_N|$ can be simplified further by considering the asymptotic approximation in \eqref{besselk_order_to_inf}, which gives us
+and the latter approximation of $|R_N|$ can be simplified further by considering the asymptotic estimate in \eqref{besselk_order_to_inf}, which gives us
 \begin{equation}
 |R_N| \approx \sqrt{\frac{2\pi}{N}} \left(\frac{e\alpha^2}{2N}\right)^{-N} \frac{\beta^{2N + 1}}{(2N + 1)!!}.
 \end{equation}
-Observe that the approximation is only adequate for the case $\delta \to 0$ since its contribution is removed as a result of applying the specified asymptotic estimate. Table \ref{table_bound_remainder_xmu_general} compares the absolute value of the remainder in expression \eqref{general_xmu_remainder_integral}, $|R_N|$, with the upper bound using \eqref{lower_incomplete_gamma_bound} and the approximations in \eqref{remainder_approx1} and \eqref{remainder_approx2} for different sets of parameters with small $|x-\mu|$. We can see that the bound is sharp for all cases considered, but requires the evaluation of an integral in terms of non-elementary functions. On the other hand, both approximations are close, only an order of magnitude off in most of the cases, and the approximation in terms of the modified Bessel function \eqref{remainder_approx2} might be seen as a suitable and fast approximation at least for small $\delta$.
+Observe that the approximation is only adequate for the case $\delta \to 0$ since its contribution is removed as a result of applying the specified asymptotic estimate. Table \ref{table_bound_remainder_xmu_general} compares the absolute value of the remainder in expression \eqref{general_xmu_remainder_integral}, $|R_N|$, with the upper bound using \eqref{lower_incomplete_gamma_bound} and the approximations in \eqref{remainder_approx1} and \eqref{remainder_approx2} for different sets of parameters with small $|x-\mu|$. We can see that the bound \eqref{lower_incomplete_gamma_bound} is sharp for all cases considered, but requires the evaluation of an integral in terms of non-elementary functions. On the other hand, both approximations are close, only an order of magnitude off in most of the cases, and the approximation in terms of the modified Bessel function \eqref{remainder_approx2} might be seen as a suitable and fast approximation at least for small $\delta$.
 
 \begin{table}[H]
 	\centering
