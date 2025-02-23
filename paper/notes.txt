@@ -1,0 +1,87 @@
+Projects:
+
+- Python/C++: Optimized stochastic differential equations (support CPU and GPU)
+- C++: Best statistical distribution library -> interface to various programming languages
+- LLM: Symbolic definite integration with mpmath => Asymptotic integral Mathematica: AsymptoticIntegrate
+
+
+GENERAL:
+Check algorithm fontsize generalized exponential integral
+
+
+IMPLEMENTATION:
+===============
+Add table for general case: only integration 
+
+Some details about ML model are out of the scope.
+
+The optimal regimes of applicability of the different series and asymptotic expansion could be
+derived using the information provided by the bounds on their remainders. To decide which method
+should be used in each regime, one could formulate an optimization problem with two possible objectives,
+minimization of terms (series complexity) and maximize robustness / reliability, or a blended approach
+(multi-objective optimization).
+
+Given the computational cost of choosing the optimal method, in practice, a set of rules (logical expressions) generating a suboptimal solution might suffice. Our approach consists of generating a dataset covering small
+and large regions of the parameters' domain and training a Machine Learning model to decide the regions where a method can obtain results with absolute relative error below tolerance. As a refinement, we simplify
+the model using a decision tree and rounding the boundaries. The result of the process are the algorithms 1-3.
+
+Numerical integration: dominant method, it is used as a backup method whenever series expansions and asymptotic expansions do not
+converge.
+
+The achievable accuracy of each method can be effectively estimated by developing rigorous error bounds. In the absence of error bounds (or if the computation is too involved) linear search with a rough estimate (more adequate for asymptotic expansions). PhD thesis section 2.3.2.
+
+General: comment on the complexity difference between the Hermite and Binomial series. Same O(n^2) order by different leading factors.
+Add note: -> similar number of terms according to table series [ref] -> Estimate ratio function between complexities.
+Quadratic (approximated shape -> Could we use symbolic regression?? EXTRA)
+
+
+We relax tolerance constraints to reduce the use of numerical integration (the most robust and accurate method) with the goal of improving performance. Numerical integration can be up to 200 times slower than most of the derived series expansions.
+
+Machine learning references (ICMS 2024 | Machine Learning within CAS)
+- Optimise Computer Algebra Systems. Algorithm selection for Symbolic Integration using Machine Learning.
+- Reference PhD thesis.
+- Human-designed heuristics: Rigorous upper bounds for the series remainder (error bounds) can be used to optimize.
+- Given prescribed accuracy eps, obtain N for each method. Choose the method with the lowest N -> N*.
+	- Assumption 1: same complexity
+	- Assumption 2: error-free computations (exact | arbitrary-precision)
+	- Using assumption 1: multi-objective => lowest N* | lowest complexity
+
+- Multi-class target: class = method. Classification problem.
+- Decision-making tasks to develop algorithm / "optimal combination of methods".
+- Affect runtime and possibility to achieve the required accuracy.
+- Performance based on speed & output quality.
+- Minimize complexity -> O(n) > O(n^2)
+
+NUMERICAL EXPERIMENTS:
+======================
+- Running Linux Ubuntu 24.04 via WSL | AMD processor.
+- Implementation in C++17 (standard supporting bessel, check if C++11 would be fine).
+- Introduce SciPy implementation: adaptive quadrature Fortran code. For a fair time comparison, we run the
+experiments from Python, calling the compiled library using ctypes.
+- C++ optimization flags.
+
+
+Define hard instance: cases where mpmath does not converge performing computation using 100 digits of precision.
+These cases are recomputed increasing the precision to 300 digits. Define symbol '-' meaning. Mention alternative
+open-source library for arbitrary-precision calculation (arb) to double-check. Mathematica does not seem an option.
+In addition, using SciPy with double-precision arithmetic serves for time comparison purposes.
+
+For each special case: show the definition of small and large instances. Bullet points, for each parameter.
+General comments about the need to resort to numerical integration for multiple cases. 
+
+It might be worth taking as an example the value of x to be evaluated when computing the quantile at 0.99, 0.999, 0.9999.
+It might happen that the values (x-mu) are generally small, then the series expansions will be more frequently used
+for theses cases.
+
+Overall comments:
+- Double-exponential implementation faster and more robust than adaptive quadrature.
+- Describe R libraries implementation: also based on adaptive quadrature. Similar algorithm.
+- An implementation solely based on numerical integration is possible, but on various regimes the use
+of series and asymptotic expansion can reliably complement with benefits in terms of CPU times.
+- The cdf quickly goes to 0/1 for large values of |x-mu|. The mpmath library requires additional precision for
+convergence in that regime, and the SciPy library struggles, returning incorrect values.
+- Taking examples from various papers, state the common configurations in finance/energy modelling. Ideally,
+these cases can he handled by one or various of the proposed expansions. e.g., Log returns
+
+REFERENCE ML:
+- Applying machine learning to the problem of choosing a heuristic to select the variable ordering for cylindrical algebraic decomposition: https://arxiv.org/pdf/1404.6369

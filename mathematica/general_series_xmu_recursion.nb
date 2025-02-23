@@ -1,0 +1,488 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     15209,        478]
+NotebookOptionsPosition[     14182,        437]
+NotebookOutlinePosition[     14530,        452]
+CellTagsIndexPosition[     14487,        449]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Sum", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Binomial", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"2", "k"}], "+", "1"}], ",", "j"}], "]"}], 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"-", "x"}], ")"}], "^", "j"}], " ", "*", " ", 
+    RowBox[{"BesselK", "[", 
+     RowBox[{
+      RowBox[{"k", " ", "+", " ", "1", "  ", "-", "j"}], ",", "y"}], "]"}]}], 
+   " ", ",", 
+   RowBox[{"{", 
+    RowBox[{"j", ",", "0", ",", 
+     RowBox[{
+      RowBox[{"2", "k"}], "+", "1"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.942330536882149*^9, 3.942330595277747*^9}, {
+   3.9423378843434105`*^9, 3.9423379259275527`*^9}, {3.942338369444211*^9, 
+   3.9423383936287737`*^9}, {3.9423384295913568`*^9, 3.942338466398489*^9}, 
+   3.94233901283299*^9, {3.9423390559459534`*^9, 3.942339064988106*^9}, {
+   3.9423391924117193`*^9, 3.942339200532955*^9}, {3.9423392321846547`*^9, 
+   3.9423392326212997`*^9}, {3.9423398094290257`*^9, 
+   3.9423398250971937`*^9}, {3.9423418708851757`*^9, 3.942341902646417*^9}, {
+   3.9423424921158676`*^9, 3.942342495294244*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"DifferenceRoot", "[", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[FormalY]", ",", "\[FormalN]"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "\[FormalN]"}], "+", 
+            RowBox[{"2", " ", "k"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{"1", "-", "\[FormalN]", "+", 
+            RowBox[{"2", " ", "k"}]}], ")"}], " ", 
+          SuperscriptBox["x", "2"], " ", "y", " ", 
+          RowBox[{"\[FormalY]", "[", "\[FormalN]", "]"}]}], "-", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "\[FormalN]"}], "+", 
+            RowBox[{"2", " ", "k"}]}], ")"}], " ", "x", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "\[FormalN]"}], "+", 
+            RowBox[{"2", " ", 
+             SuperscriptBox["\[FormalN]", "2"]}], "-", 
+            RowBox[{"2", " ", "k"}], "-", 
+            RowBox[{"2", " ", "\[FormalN]", " ", "k"}], "+", 
+            RowBox[{"x", " ", "y"}], "-", 
+            RowBox[{"\[FormalN]", " ", "x", " ", "y"}], "+", 
+            RowBox[{"2", " ", "k", " ", "x", " ", "y"}]}], ")"}], " ", 
+          RowBox[{"\[FormalY]", "[", 
+           RowBox[{"1", "+", "\[FormalN]"}], "]"}]}], "-", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", "\[FormalN]"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SuperscriptBox["\[FormalN]", "2"], " ", "x"}], "-", 
+            RowBox[{"6", " ", "\[FormalN]", " ", "k", " ", "x"}], "+", 
+            RowBox[{"4", " ", 
+             SuperscriptBox["k", "2"], " ", "x"}], "+", 
+            RowBox[{"2", " ", "y"}], "+", 
+            RowBox[{"\[FormalN]", " ", "y"}]}], ")"}], " ", 
+          RowBox[{"\[FormalY]", "[", 
+           RowBox[{"2", "+", "\[FormalN]"}], "]"}]}], "+", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", "\[FormalN]"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{"2", "+", "\[FormalN]"}], ")"}], " ", "y", " ", 
+          RowBox[{"\[FormalY]", "[", 
+           RowBox[{"3", "+", "\[FormalN]"}], "]"}]}]}], "\[Equal]", "0"}], 
+       ",", 
+       RowBox[{
+        RowBox[{"\[FormalY]", "[", "0", "]"}], "\[Equal]", "0"}], ",", 
+       RowBox[{
+        RowBox[{"\[FormalY]", "[", "1", "]"}], "\[Equal]", 
+        RowBox[{"BesselK", "[", 
+         RowBox[{
+          RowBox[{"1", "+", "k"}], ",", "y"}], "]"}]}], ",", 
+       RowBox[{
+        RowBox[{"\[FormalY]", "[", "2", "]"}], "\[Equal]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "x"}], "-", 
+            RowBox[{"2", " ", "k", " ", "x"}]}], ")"}], " ", 
+          RowBox[{"BesselK", "[", 
+           RowBox[{"k", ",", "y"}], "]"}]}], "+", 
+         RowBox[{"BesselK", "[", 
+          RowBox[{
+           RowBox[{"1", "+", "k"}], ",", "y"}], "]"}]}]}]}], "}"}]}], "]"}], 
+   "]"}], "[", 
+  RowBox[{"2", " ", 
+   RowBox[{"(", 
+    RowBox[{"1", "+", "k"}], ")"}]}], "]"}]], "Output",
+ CellChangeTimes->{
+  3.942330597701523*^9, {3.9423378902350025`*^9, 3.9423379267731485`*^9}, {
+   3.9423384315370035`*^9, 3.9423384756800194`*^9}, 3.94233853412444*^9, {
+   3.942339817084353*^9, 3.942339826769111*^9}, {3.942341874987997*^9, 
+   3.942341903212739*^9}, 3.942342495725339*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"f", "[", "k_", "]"}], ":=", 
+  RowBox[{"Sum", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Binomial", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"2", "k"}], " ", "+", " ", "1"}], ",", "j"}], "]"}], 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"-", "x"}], ")"}], "^", "j"}], " ", "*", " ", 
+     RowBox[{"BesselK", "[", 
+      RowBox[{
+       RowBox[{"k", " ", "+", " ", "1", "  ", "-", "j"}], ",", "y"}], "]"}]}],
+     ",", 
+    RowBox[{"{", 
+     RowBox[{"j", ",", "0", ",", 
+      RowBox[{
+       RowBox[{"2", "k"}], "+", "1"}]}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.9423306879241123`*^9, 3.942330693171584*^9}, 
+   3.942339096890669*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"f", "[", 
+  RowBox[{"-", "1"}], "]"}]], "Input",
+ CellChangeTimes->{{3.9423306964493775`*^9, 3.942330698096548*^9}, {
+  3.9423381642623496`*^9, 3.942338175134554*^9}}],
+
+Cell[BoxData["0"], "Output",
+ CellChangeTimes->{
+  3.94233070158599*^9, {3.942338167372012*^9, 3.9423381759478717`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"f", "[", "0", "]"}]], "Input",
+ CellChangeTimes->{{3.9423381773943696`*^9, 3.942338178377887*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"-", "x"}], " ", 
+   RowBox[{"BesselK", "[", 
+    RowBox[{"0", ",", "y"}], "]"}]}], "+", 
+  RowBox[{"BesselK", "[", 
+   RowBox[{"1", ",", "y"}], "]"}]}]], "Output",
+ CellChangeTimes->{3.942338178862141*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"FunctionExpand", "[", 
+   RowBox[{"f", "[", "1", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.9423425105596247`*^9, {3.9423433618220425`*^9, 3.942343366758566*^9}},
+ NumberMarks->False],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"1", "+", 
+     RowBox[{"3", " ", 
+      SuperscriptBox["x", "2"]}]}], ")"}], " ", 
+   RowBox[{"BesselK", "[", 
+    RowBox[{"0", ",", "y"}], "]"}]}], "-", 
+  FractionBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "2"}], "+", 
+      RowBox[{"x", " ", 
+       RowBox[{"(", 
+        RowBox[{"3", "+", 
+         SuperscriptBox["x", "2"]}], ")"}], " ", "y"}]}], ")"}], " ", 
+    RowBox[{"BesselK", "[", 
+     RowBox[{"1", ",", "y"}], "]"}]}], "y"]}]], "Output",
+ CellChangeTimes->{3.9423424216315823`*^9, 3.942342511087278*^9, 
+  3.9423433671643343`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"FunctionExpand", "[", 
+   RowBox[{"f", "[", "2", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.9423424599954724`*^9, 3.9423424693079567`*^9}, {
+  3.9423425147050657`*^9, 3.942342515966649*^9}, {3.9423433782031555`*^9, 
+  3.9423433812213974`*^9}}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"-", "y"}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "4"}], "+", 
+      RowBox[{"x", " ", 
+       RowBox[{"(", 
+        RowBox[{"5", "+", 
+         RowBox[{"10", " ", 
+          SuperscriptBox["x", "2"]}], "+", 
+         SuperscriptBox["x", "4"]}], ")"}], " ", "y"}]}], ")"}], " ", 
+    RowBox[{"BesselK", "[", 
+     RowBox[{"0", ",", "y"}], "]"}]}], "+", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"8", "+", 
+      RowBox[{"y", " ", 
+       RowBox[{"(", 
+        RowBox[{"y", "+", 
+         RowBox[{"x", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "2"}], " ", 
+             RowBox[{"(", 
+              RowBox[{"5", "+", 
+               SuperscriptBox["x", "4"]}], ")"}]}], "+", 
+            RowBox[{"5", " ", "x", " ", 
+             RowBox[{"(", 
+              RowBox[{"2", "+", 
+               SuperscriptBox["x", "2"]}], ")"}], " ", "y"}]}], ")"}]}]}], 
+        ")"}]}]}], ")"}], " ", 
+    RowBox[{"BesselK", "[", 
+     RowBox[{"1", ",", "y"}], "]"}]}]}], 
+  SuperscriptBox["y", "2"]]], "Output",
+ CellChangeTimes->{{3.9423424608763356`*^9, 3.942342469626252*^9}, 
+   3.94234251637152*^9, 3.942343381831626*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"FunctionExpand", "[", 
+   RowBox[{"f", "[", "3", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.942342637820799*^9, 3.9423426379746485`*^9}, {
+  3.9423433972129393`*^9, 3.9423434000230775`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["1", 
+   SuperscriptBox["y", "3"]], 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"y", " ", 
+     RowBox[{"(", 
+      RowBox[{"24", "+", 
+       RowBox[{"y", " ", 
+        RowBox[{"(", 
+         RowBox[{"y", "+", 
+          RowBox[{"x", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "4"}], " ", 
+              RowBox[{"(", 
+               RowBox[{"7", "+", 
+                SuperscriptBox["x", "6"]}], ")"}]}], "+", 
+             RowBox[{"7", " ", "x", " ", 
+              RowBox[{"(", 
+               RowBox[{"3", "+", 
+                RowBox[{"5", " ", 
+                 SuperscriptBox["x", "2"]}], "+", 
+                SuperscriptBox["x", "4"]}], ")"}], " ", "y"}]}], ")"}]}]}], 
+         ")"}]}]}], ")"}], " ", 
+     RowBox[{"BesselK", "[", 
+      RowBox[{"0", ",", "y"}], "]"}]}], "-", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "48"}], "+", 
+       RowBox[{"8", " ", "x", " ", 
+        RowBox[{"(", 
+         RowBox[{"7", "+", 
+          SuperscriptBox["x", "6"]}], ")"}], " ", "y"}], "-", 
+       RowBox[{"2", " ", 
+        RowBox[{"(", 
+         RowBox[{"4", "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["x", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{"3", "+", 
+             SuperscriptBox["x", "4"]}], ")"}]}]}], ")"}], " ", 
+        SuperscriptBox["y", "2"]}], "+", 
+       RowBox[{"x", " ", 
+        RowBox[{"(", 
+         RowBox[{"7", "+", 
+          RowBox[{"35", " ", 
+           SuperscriptBox["x", "2"]}], "+", 
+          RowBox[{"21", " ", 
+           SuperscriptBox["x", "4"]}], "+", 
+          SuperscriptBox["x", "6"]}], ")"}], " ", 
+        SuperscriptBox["y", "3"]}]}], ")"}], " ", 
+     RowBox[{"BesselK", "[", 
+      RowBox[{"1", ",", "y"}], "]"}]}]}], ")"}]}]], "Output",
+ CellChangeTimes->{3.9423426384139023`*^9, 3.942343400772607*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FullSimplify", "[", 
+  RowBox[{"FunctionExpand", "[", 
+   RowBox[{"f", "[", "4", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.9423427056094866`*^9, 3.942342707347067*^9}, {
+  3.942343454408226*^9, 3.9423434584553766`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox["1", 
+   SuperscriptBox["y", "4"]], 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "y"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", "192"}], "+", 
+       RowBox[{"24", " ", "x", " ", 
+        RowBox[{"(", 
+         RowBox[{"9", "+", 
+          SuperscriptBox["x", "8"]}], ")"}], " ", "y"}], "-", 
+       RowBox[{"12", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          RowBox[{"3", " ", 
+           SuperscriptBox["x", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{"4", "+", 
+             SuperscriptBox["x", "6"]}], ")"}]}]}], ")"}], " ", 
+        SuperscriptBox["y", "2"]}], "+", 
+       RowBox[{"x", " ", 
+        RowBox[{"(", 
+         RowBox[{"3", "+", 
+          SuperscriptBox["x", "2"]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{"3", "+", 
+          RowBox[{"27", " ", 
+           SuperscriptBox["x", "2"]}], "+", 
+          RowBox[{"33", " ", 
+           SuperscriptBox["x", "4"]}], "+", 
+          SuperscriptBox["x", "6"]}], ")"}], " ", 
+        SuperscriptBox["y", "3"]}]}], ")"}], " ", 
+     RowBox[{"BesselK", "[", 
+      RowBox[{"0", ",", "y"}], "]"}]}], "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"384", "-", 
+       RowBox[{"48", " ", "x", " ", 
+        RowBox[{"(", 
+         RowBox[{"9", "+", 
+          SuperscriptBox["x", "8"]}], ")"}], " ", "y"}], "+", 
+       RowBox[{"72", " ", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          RowBox[{"4", " ", 
+           SuperscriptBox["x", "2"]}], "+", 
+          SuperscriptBox["x", "8"]}], ")"}], " ", 
+        SuperscriptBox["y", "2"]}], "-", 
+       RowBox[{"8", " ", "x", " ", 
+        RowBox[{"(", 
+         RowBox[{"9", "+", 
+          RowBox[{"21", " ", 
+           SuperscriptBox["x", "2"]}], "+", 
+          RowBox[{"9", " ", 
+           SuperscriptBox["x", "6"]}], "+", 
+          SuperscriptBox["x", "8"]}], ")"}], " ", 
+        SuperscriptBox["y", "3"]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          RowBox[{"36", " ", 
+           SuperscriptBox["x", "2"]}], "+", 
+          RowBox[{"126", " ", 
+           SuperscriptBox["x", "4"]}], "+", 
+          RowBox[{"84", " ", 
+           SuperscriptBox["x", "6"]}], "+", 
+          RowBox[{"9", " ", 
+           SuperscriptBox["x", "8"]}]}], ")"}], " ", 
+        SuperscriptBox["y", "4"]}]}], ")"}], " ", 
+     RowBox[{"BesselK", "[", 
+      RowBox[{"1", ",", "y"}], "]"}]}]}], ")"}]}]], "Output",
+ CellChangeTimes->{3.9423427078315496`*^9, 3.942343459466945*^9}]
+}, Open  ]]
+},
+WindowSize->{1080, 1877},
+WindowMargins->{{-1088, Automatic}, {Automatic, -8}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 1088, 26, 31, "Input"],
+Cell[1671, 50, 3458, 88, 80, "Output"]
+}, Open  ]],
+Cell[5144, 141, 704, 22, 31, "Input"],
+Cell[CellGroupData[{
+Cell[5873, 167, 191, 4, 31, "Input"],
+Cell[6067, 173, 120, 2, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6224, 180, 122, 2, 31, "Input"],
+Cell[6349, 184, 252, 8, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6638, 197, 251, 6, 31, "Input"],
+Cell[6892, 205, 634, 21, 59, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7563, 231, 309, 6, 31, "Input"],
+Cell[7875, 239, 1247, 39, 59, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9159, 283, 256, 5, 31, "Input"],
+Cell[9418, 290, 1907, 57, 83, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11362, 352, 254, 5, 31, "Input"],
+Cell[11619, 359, 2547, 75, 116, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+
