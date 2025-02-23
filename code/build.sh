@@ -7,9 +7,8 @@ SOURCE_DIR="$PROJECT_ROOT/src"
 INCLUDE_DIR="$PROJECT_ROOT/include"
 
 # compile
-clang -c -O3 -Wall -fpic -march=native -std=c++17 -mfma $SOURCE_DIR/*.cpp \
+g++ -c -O3 -Wall -fpic -march=native -std=c++17 -mfma $SOURCE_DIR/*.cpp \
   -I $INCLUDE_DIR
-
 
 # # build library
 g++ *.o -o test.out

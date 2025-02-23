@@ -17,9 +17,6 @@
 #include <constants.hpp>
 #include <nig.hpp>
 
-#include <iostream>
-#include <iomanip>
-
 
 double norm_cdf(const double x)
 {
