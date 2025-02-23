@@ -396,39 +396,39 @@ double nig_general(
 )
 {
 
-  const double gamma = std::sqrt(alpha * alpha - beta * beta);  
-  const double xmu = x - mu;
-  const double omega = std::hypot(xmu, delta);
+  // const double gamma = std::sqrt(alpha * alpha - beta * beta);  
+  // const double xmu = x - mu;
+  // const double omega = std::hypot(xmu, delta);
 
-  const double xmu2 = xmu * xmu;
-  const double absbeta = std::fabs(beta);
+  // const double xmu2 = xmu * xmu;
+  // const double absbeta = std::fabs(beta);
 
-  const bool use_hb_series_c1 = (absbeta <= 1.0) & (gamma >= 1.5);
-  const bool use_hb_series_c2 = (absbeta <= 0.5) & (gamma >= 0.75);
-  const bool use_hxmu_series = (xmu2 <= 2.25) & (delta >= 2.5);
-  const bool use_bxmu_series_c1 = (xmu2 <= 3.0) & (delta >= 1.0);
-  const bool use_bxmu_series_c2 = (absbeta <= 1.5) & (gamma >= 0.75);
+  // const bool use_hb_series_c1 = (absbeta <= 1.0) & (gamma >= 1.5);
+  // const bool use_hb_series_c2 = (absbeta <= 0.5) & (gamma >= 0.75);
+  // const bool use_hxmu_series = (xmu2 <= 2.25) & (delta >= 2.5);
+  // const bool use_bxmu_series_c1 = (xmu2 <= 3.0) & (delta >= 1.0);
+  // const bool use_bxmu_series_c2 = (absbeta <= 1.5) & (gamma >= 0.75);
 
-  const bool use_asymp_delta_1 = (absbeta >= 0.5 * alpha) & (delta >= 15.0);
-  const bool use_asymp_delta_2 = (xmu2 <= 20) & (alpha >= 5.0);
-  const bool use_asymp_xmu_1 = (xmu2 >= 100.0) & (alpha >= 0.25 * omega);
-  const bool use_asymp_xmu_2 = (gamma >= 10) & (alpha >= 5 * absbeta) & (delta <= 10);
+  // const bool use_asymp_delta_1 = (absbeta >= 0.5 * alpha) & (delta >= 15.0);
+  // const bool use_asymp_delta_2 = (xmu2 <= 20) & (alpha >= 5.0);
+  // const bool use_asymp_xmu_1 = (xmu2 >= 100.0) & (alpha >= 0.25 * omega);
+  // const bool use_asymp_xmu_2 = (gamma >= 10) & (alpha >= 5 * absbeta) & (delta <= 10);
 
-  if (use_hb_series_c1 | use_hb_series_c2) {
-    return hermite_series_beta(x, alpha, beta, mu, delta);
-  } else if (use_hxmu_series) {
-    return hermite_series_xmu(x, alpha, beta, mu, delta);
-  } else if (use_bxmu_series_c1 & use_bxmu_series_c2) {
-    return bessel_series_xmu(x, alpha, beta, mu, delta);
-  } else if (use_asymp_delta_1 & use_asymp_delta_2) {
-    // std::cout << "use_asymp_delta" << std::endl;
-    return asymptotic_delta(x, alpha, beta, mu, delta);
-  } else if (use_asymp_xmu_1 & use_asymp_xmu_2) {
-    // std::cout << "asymptotic_xmu" << std::endl;
-    return asymptotic_xmu(x, alpha, beta, mu, delta);
-  } else {
-    return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
-  }
+  // if (use_hb_series_c1 | use_hb_series_c2) {
+  //   return hermite_series_beta(x, alpha, beta, mu, delta);
+  // } else if (use_hxmu_series) {
+  //   return hermite_series_xmu(x, alpha, beta, mu, delta);
+  // } else if (use_bxmu_series_c1 & use_bxmu_series_c2) {
+  //   return bessel_series_xmu(x, alpha, beta, mu, delta);
+  // } else if (use_asymp_delta_1 & use_asymp_delta_2) {
+  //   // std::cout << "use_asymp_delta" << std::endl;
+  //   return asymptotic_delta(x, alpha, beta, mu, delta);
+  // } else if (use_asymp_xmu_1 & use_asymp_xmu_2) {
+  //   // std::cout << "asymptotic_xmu" << std::endl;
+  //   return asymptotic_xmu(x, alpha, beta, mu, delta);
+  // } else {
+  //   return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+  // }
 
-  // return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
+  return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
 }

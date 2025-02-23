@@ -409,6 +409,8 @@ def generate_accuracy_summary_x_eq_mu(
 
     # Algorithmic choice
     df['target'] = (~mask_err).astype(int)
+    # df = df[~mask_err & ~mask_inf]
+
     df['rba'] = df['beta'] / df['alpha']
     df['da'] = df['delta'] * df['alpha']
     df['method'] = 'integration'
@@ -473,6 +475,7 @@ def generate_accuracy_summary_general(
     print(f'Cases err < {max_err}: {n_errors} ({n_errors / n_samples:.2%})')    
 
     # Algorithmic choice
+    df = df[~mask_inf]
     df['target'] = (~mask_err).astype(int)
 
     df['omega'] = np.sqrt(df['delta'] ** 2 + (df['x'] - df['mu']) ** 2)
@@ -487,28 +490,28 @@ def generate_accuracy_summary_general(
 
     df['method'] = 'integration'
 
-    criteria_asymp_mu_1 = (df['xmu2'] >= 100) & (df['alpha'] >= 0.25 * df['omega'])
-    criteria_asymp_mu_2 = (df['gamma'] >= 10) & (df['alpha'] >= 5 * df['absbeta']) & (df['delta'] <= 10)
-    criteria_asymp_mu = criteria_asymp_mu_1 & criteria_asymp_mu_2
-    df.loc[criteria_asymp_mu, 'method'] = 'asymptotic_mu'
+    # criteria_asymp_mu_1 = (df['xmu2'] >= 100) & (df['alpha'] >= 0.25 * df['omega'])
+    # criteria_asymp_mu_2 = (df['gamma'] >= 10) & (df['alpha'] >= 5 * df['absbeta']) & (df['delta'] <= 10)
+    # criteria_asymp_mu = criteria_asymp_mu_1 & criteria_asymp_mu_2
+    # df.loc[criteria_asymp_mu, 'method'] = 'asymptotic_mu'
 
-    criteria_asymp_delta_1 = (df['absbeta'] >= 0.5 * df['alpha']) & (df['delta'] >= 15)
-    criteria_asymp_delta_2 = (df['xmu2'] <= 20) & (df['alpha'] >= 5)
-    criteria_asymp_delta = criteria_asymp_delta_1 & criteria_asymp_delta_2
-    df.loc[criteria_asymp_delta, 'method'] = 'asymptotic_delta'
+    # criteria_asymp_delta_1 = (df['absbeta'] >= 0.5 * df['alpha']) & (df['delta'] >= 15)
+    # criteria_asymp_delta_2 = (df['xmu2'] <= 20) & (df['alpha'] >= 5)
+    # criteria_asymp_delta = criteria_asymp_delta_1 & criteria_asymp_delta_2
+    # df.loc[criteria_asymp_delta, 'method'] = 'asymptotic_delta'
 
-    criteria_bxmu_1 = (df['xmu2'] <= 3) & (df['delta'] >= 1)
-    criteria_bxmu_2 = (df['absbeta'] <= 1.5) & (df['gamma'] >= 0.75)
-    criteria_bxmu = criteria_bxmu_1 & criteria_bxmu_2
-    df.loc[criteria_bxmu, 'method'] = 'bessel_series_xmu'
+    # criteria_bxmu_1 = (df['xmu2'] <= 3) & (df['delta'] >= 1)
+    # criteria_bxmu_2 = (df['absbeta'] <= 1.5) & (df['gamma'] >= 0.75)
+    # criteria_bxmu = criteria_bxmu_1 & criteria_bxmu_2
+    # df.loc[criteria_bxmu, 'method'] = 'bessel_series_xmu'
 
-    criteria_hxmu = (df['xmu2'] <= 2.25) & (df['delta'] >= 2.5)
-    df.loc[criteria_hxmu, 'method'] = 'hermite_series_xmu'
+    # criteria_hxmu = (df['xmu2'] <= 2.25) & (df['delta'] >= 2.5)
+    # df.loc[criteria_hxmu, 'method'] = 'hermite_series_xmu'
 
-    criteria_hb_1 = (df['absbeta'] <= 1) & (df['gamma'] >= 1.5)
-    criteria_hb_2 = (df['absbeta'] <= 0.5) & (df['gamma'] >= 0.75)
-    criteria_hb = criteria_hb_1 & criteria_hb_2
-    df.loc[criteria_hb, 'method'] = 'hermite_series_beta'
+    # criteria_hb_1 = (df['absbeta'] <= 1) & (df['gamma'] >= 1.5)
+    # criteria_hb_2 = (df['absbeta'] <= 0.5) & (df['gamma'] >= 0.75)
+    # criteria_hb = criteria_hb_1 & criteria_hb_2
+    # df.loc[criteria_hb, 'method'] = 'hermite_series_beta'
 
     print(df['method'].value_counts())
     print(df.groupby('method')[['target', 'relerr_gnp']].describe().to_string())
@@ -550,20 +553,24 @@ def run_test_set_timing(name: str) -> None:
     print(f'cpp  : {elapsed_cpp:.4f}s')
 
 if __name__ == '__main__':
-    name = 'test_general_large'
+    # name = 'test_x_eq_mu_large_mpmath_accurate'
     # name = 'test_general_small_mpmath_accurate'
-    # name = 'test_general_large'
+    # name = 'test_general_large_mpmath_accurate'
+    # name = 'test_x_eq_mu_large_mpmath_accurate'
+    # name = 'test_general_large_mpmath_accurate'
+    # name = 'test_x_eq_mu_small'
+    name = 'test_general_large'
 
     # 1. Test accuracy comparing with mpmath and SciPy implementations
     # test_accuracy(name=name)
-    # run_test_set_with_benchmark(name=name)
-    rerun_test_set_mpmath_accurate(name=name)
+    run_test_set_with_benchmark(name=name)
+    # rerun_test_set_mpmath_accurate(name=name)
 
     # 2. Generate test summary
     # generate_accuracy_summary_beta_eq_zero(name=name)
     # generate_accuracy_summary_x_eq_mu(name=name)
-    # generate_accuracy_summary_general(name=name)
+    generate_accuracy_summary_general(name=name)
 
     # 3. Timing SciPy vs C++ via ctypes
-    # run_test_set_timing(name=name)
+    run_test_set_timing(name=name)
 

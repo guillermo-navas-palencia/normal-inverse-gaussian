@@ -12,7 +12,7 @@ def arg_mpmathify(x, alpha, beta, mu, delta):
 
 
 def normcdf(x):
-    return erfc(-x / sqrt(2)) / 2
+    return erfc(-x / sqrt(mp.mpf('2'))) / mp.mpf('2')
 
 
 def fun_phi(t, x, alpha, beta, mu, delta):

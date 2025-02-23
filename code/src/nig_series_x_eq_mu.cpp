@@ -143,7 +143,7 @@ double nig_x_eq_mu(const double alpha, const double beta, const double delta)
 
   double rba = std::fabs(beta) / alpha;
 
-  if ((alpha <= 10.0) & (delta <= 10.0) & (beta <= 1.5) & (rba <= 0.9))
+  if ((alpha <= 10.0) & (delta <= 10.0) & (std::fabs(beta) <= 1.5) & (rba <= 0.9))
     return bessel_series(alpha, beta, delta);
   else if ((rba >= 0.75) & (delta * alpha >= 300.0) & (delta >= 15.0))
     return asymptotic_delta(alpha, beta, delta);
