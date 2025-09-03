@@ -16,6 +16,9 @@
 #include <nig.hpp>
 #include <specfun.hpp>
 
+#include <iomanip>
+#include <iostream>
+
 
 double bessel_series(
   const double x,
@@ -78,6 +81,7 @@ double bessel_series(
 
     // Check convergence
     if (std::fabs(1.0 - sp / s) < eps){
+      // std::cout << "bessel series beta=0 iterations: " << k << std::endl;
       if (scaled)
         return std::fma(xmu, std::exp(C + std::log(s)), 0.5);
       else
@@ -182,6 +186,7 @@ double asymptotic_alpha(
     s = std::fma(num * ck, qk, s);
 
     if (std::fabs(1.0 - sp / s) < eps) {
+      // std::cout << "asymptotic alpha beta=0 iterations: " << k << std::endl;
       return C * s;
     } else {
       c0 = c1;
@@ -286,16 +291,26 @@ double nig_beta_eq_zero(
   const bool use_asymp_alpha_c2 = (alpha >= 5.0) & (delta >= 10.0);
   const bool use_asymp_xmu = (xmu2 >= 70) & (aow >= 1.0);
 
+  // double St = 3000.0;
+  // std::cout << "\nbessel_series series beta = 0" << std::endl;
+  // std::cout << std::setprecision(16) << St * bessel_series(x, alpha, mu, delta, 100, 1e-8) << std::endl;
+  // std::cout << "\nasymptotic_alpha series beta = 0" << std::endl;
+  // std::cout << std::setprecision(16) << St * asymptotic_alpha(x, alpha, mu, delta, 100, 1e-8) << std::endl;
+
   if ((use_series_c1 | use_series_c2) & use_series_c3) {
+    // std::cout << "bessel_series" << std::endl;
     return bessel_series(x, alpha, mu, delta);
   } else if (use_asymp_alpha_c1 & use_asymp_alpha_c2) {
+    // std::cout << "asymptotic_alpha" << std::endl;
     return asymptotic_alpha(x, alpha, mu, delta);
   } else if (use_asymp_xmu) {
+    // std::cout << "asymptotic_xmu" << std::endl;
     if (xmu < 0.0)
       return asymptotic_xmu(x, alpha, mu, delta);
     else
       return 1.0 - asymptotic_xmu(-x, alpha, -mu, delta);
   } else {
+    // std::cout << "nig_integration" << std::endl;
     return nig_integration(x, alpha, 0.0, mu, delta, 1e-13, 14);
   }
 }

@@ -18,6 +18,9 @@
 #include <constants.hpp>
 #include <specfun.hpp>
 
+#include <iomanip>
+#include <iostream>
+
 
 double bessel_series_xmu(
   const double x,
@@ -85,6 +88,7 @@ double bessel_series_xmu(
 
     // Check convergence
     if (std::fabs(1.0 - s / sp) < eps) {
+      // std::cout << "iteration: " << k << std::endl;
       return 0.5 + s;
     } else {
       t *= v;
@@ -157,6 +161,7 @@ double hermite_series_xmu(
 
     // Check convergence
     if (std::fabs(1.0 - s / sp) < eps) {
+      // std::cout << "iteration: " << k << std::endl;
       return std::fma(C, s, nig_x_eq_mu(alpha, beta, delta));
     } else {
       v *= xmub;
@@ -232,6 +237,7 @@ double hermite_series_beta(
 
     // Check convergence
     if (std::fabs(1.0 - s / sp) < eps) {
+      // std::cout << "iteration: " << k << std::endl;
       return std::fma(C, s, nig_beta_eq_zero(x, gamma, mu, delta));
     } else {
       v *= xmub;
@@ -410,17 +416,38 @@ double nig_general(
   const bool use_asymp_xmu_1 = (xmu2 >= 100.0) & (alpha >= 0.25 * omega);
   const bool use_asymp_xmu_2 = (gamma >= 10) & (alpha >= 5 * absbeta) & (delta <= 10);
 
+  // all methods
+  // double St = 3000.0;
+  // std::cout << "\nHermite series beta -> 0" << std::endl;
+  // std::cout << std::setprecision(16) << St * hermite_series_beta(x, alpha, beta, mu, delta, 100, 1e-4) << std::endl;
+  // std::cout << std::setprecision(16) << St * hermite_series_beta(x, alpha, beta, mu, delta, 100, 1e-8) << std::endl;
+
+  // std::cout << "\nBessel series |x-mu| -> 0" << std::endl;
+  // std::cout << std::setprecision(16) << St * bessel_series_xmu(x, alpha, beta, mu, delta, 100, 1e-4) << std::endl;
+  // std::cout << std::setprecision(16) << St * bessel_series_xmu(x, alpha, beta, mu, delta, 100, 1e-8) << std::endl;
+
+  // std::cout << "\nHermite series |x-mu| -> 0" << std::endl;
+  // std::cout << std::setprecision(16) << St * hermite_series_xmu(x, alpha, beta, mu, delta, 100, 1e-4) << std::endl;
+  // std::cout << std::setprecision(16) << St * hermite_series_xmu(x, alpha, beta, mu, delta, 100, 1e-8) << std::endl;
+
+
   if (use_hb_series_c1 | use_hb_series_c2) {
+    // std::cout << "hermite_series_beta" << std::endl;
     return hermite_series_beta(x, alpha, beta, mu, delta);
   } else if (use_hxmu_series) {
+    // std::cout << "hermite_series_xmu" << std::endl;
     return hermite_series_xmu(x, alpha, beta, mu, delta);
   } else if (use_bxmu_series_c1 & use_bxmu_series_c2) {
+    // std::cout << "bessel_series_xmu" << std::endl;
     return bessel_series_xmu(x, alpha, beta, mu, delta);
   } else if (use_asymp_delta_1 & use_asymp_delta_2) {
+    // std::cout << "asymptotic_delta" << std::endl;
     return asymptotic_delta(x, alpha, beta, mu, delta);
   } else if (use_asymp_xmu_1 & use_asymp_xmu_2) {
+    // std::cout << "asymptotic_xmu" << std::endl;
     return asymptotic_xmu(x, alpha, beta, mu, delta);
   } else {
+    // std::cout << "nig_integration" << std::endl;
     return nig_integration(x, alpha, beta, mu, delta, 1e-13, 14);
   }
 
