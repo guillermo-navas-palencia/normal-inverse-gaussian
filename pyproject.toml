@@ -9,7 +9,7 @@ description = "Normal Inverse Gaussian cumulative distribution function"
 readme = "README.rst"
 license = { file = "LICENSE" }
 requires-python = ">=3.9"
-dependencies = []
+dependencies = ["numpy>=1.23"]
 
 [project.urls]
 Repository = "https://github.com/gnava/normal-inverse-gaussian"

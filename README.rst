@@ -41,11 +41,32 @@ needed; scikit-build-core handles the compilation transparently.
 Usage
 =====
 
+Two interfaces are provided.
+
+**Wikipedia parametrisation** (α, β, μ, δ):
+
 .. code-block:: python
 
    from nig import nig_cdf
 
-   result = nig_cdf(x=2.0, alpha=2.0, beta=-0.4, mu=1.75, delta=2.0)
+   nig_cdf(x=2.0, alpha=2.0, beta=-0.4, mu=1.75, delta=2.0)
+
+**SciPy-compatible parametrisation** — drop-in replacement for
+``scipy.stats.norminvgauss``:
+
+.. code-block:: python
+
+   from nig import norminvgauss
+
+   # unbound call (same signature as scipy.stats.norminvgauss.cdf)
+   norminvgauss.cdf(x=2.0, a=4.0, b=-0.8, loc=1.75, scale=2.0)
+
+   # frozen distribution
+   dist = norminvgauss(a=4.0, b=-0.8, loc=1.75, scale=2.0)
+   dist.cdf(2.0)
+
+The relationship between the two parametrisations is
+``a = alpha * delta``, ``b = beta * delta``, ``loc = mu``, ``scale = delta``.
 
 
 Citation
