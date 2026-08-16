@@ -1,0 +1,19 @@
+[build-system]
+requires = ["scikit-build-core>=0.9", "pybind11>=2.13"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "nig"
+version = "0.1.0"
+description = "Normal Inverse Gaussian cumulative distribution function"
+readme = "README.rst"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.23"]
+
+[project.urls]
+Repository = "https://github.com/gnava/normal-inverse-gaussian"
+
+[tool.scikit-build]
+cmake.build-type = "Release"
+wheel.packages = ["nig"]
